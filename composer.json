@@ -1,0 +1,47 @@
+{
+  "name": "arrowsphere/public-api-client",
+  "type": "library",
+  "description": "The official PHP client for ArrowSphere's public API",
+  "keywords": [
+    "arrowsphere",
+    "rest",
+    "api"
+  ],
+  "license": "MIT",
+  "homepage": "https://www.arrow.com/ecs/na/solutions/cloud/arrowsphere/",
+  "support": {
+    "issues": "https://github.com/ArrowSphere/public-api-client/issues",
+    "source": "https://github.com/ArrowSphere/public-api-client"
+  },
+  "authors": [
+    {
+      "name": "Pierre Feyssaguet",
+      "email": "pfeyssaguet@gmail.com"
+    }
+  ],
+  "require": {
+    "php": ">=7.2.0",
+    "ext-curl": "*",
+    "ext-json": "*",
+    "curl/curl": "^1.6 || ^2.0"
+  },
+  "require-dev": {
+    "illuminate/validation": "^5.5 || ^6.0 || ^7.0",
+    "phpunit/phpunit": "^8.5 || ^9.3"
+  },
+  "autoload": {
+    "psr-4": {
+      "ArrowSphere\\PublicApiClient\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "ArrowSphere\\PublicApiClient\\Tests\\": "tests/"
+    }
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

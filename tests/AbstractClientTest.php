@@ -1,0 +1,46 @@
+<?php
+
+namespace ArrowSphere\PublicApiClient\Tests;
+
+use ArrowSphere\PublicApiClient\AbstractClient;
+use ArrowSphere\PublicApiClient\AbstractEntity;
+use Curl\Curl;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
+
+/**
+ * Class AbstractClientTest
+ */
+abstract class AbstractClientTest extends TestCase
+{
+    /** @var MockObject|Curl $curler */
+    protected $curler;
+
+    /** @var AbstractClient */
+    protected $client;
+
+    protected const MOCKED_CLIENT_CLASS = null;
+
+    /**
+     * Initialization of the mocked curler and the API client.
+     */
+    public function setUp(): void
+    {
+        // For the tests we want the validation to happen
+        AbstractEntity::$enableValidation = true;
+
+        $this->curler = $this->getMockBuilder(Curl::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+
+        $class = static::MOCKED_CLIENT_CLASS;
+
+        if ($class === null) {
+            self::fail('You should override const MOCKED_CLIENT_CLASS in your class ' . get_class($this));
+        }
+
+        $this->client = new $class($this->curler);
+        $this->client->setUrl('https://www.test.com');
+        $this->client->setApiKey('123456');
+    }
+}
