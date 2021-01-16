@@ -1,7 +1,7 @@
-# MarketPlace
+# Markeplace
 
 ## General information
-A marketPlace is defined by country ISO code (ISO 3166-1). Region managed by an arrow representative Office. 
+A marketplace is defined by country ISO code (ISO 3166-1). Region managed by an arrow representative Office. 
 
 ## Example
 

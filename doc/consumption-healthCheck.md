@@ -3,7 +3,7 @@
 ## General information
 This endpoint allowed everyone to know if the consumption data are accurate or not. The consumption is link to the daily accuracy of consumption vendor API.
 The granularity of this endpoint based on 3 attributes :
-- [MarketPlace](general-marketPlace.md) (US / CA / FR etc)
+- [MarketPlace](general-marketplace.md) (US / CA / FR etc)
 - Vendor (Microsoft / IBM etc)
 - [Classification](catalog-classification.md) (IAAS / SAAS)
 

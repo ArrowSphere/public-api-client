@@ -7,6 +7,7 @@ use ArrowSphere\PublicApiClient\Catalog\ClassificationClient;
 use ArrowSphere\PublicApiClient\Catalog\OfferClient;
 use ArrowSphere\PublicApiClient\Catalog\ProgramClient;
 use ArrowSphere\PublicApiClient\Catalog\ServiceClient;
+use ArrowSphere\PublicApiClient\General\CheckDomainClient;
 use ArrowSphere\PublicApiClient\General\WhoamiClient;
 use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
 
@@ -21,6 +22,16 @@ class PublicApiClient extends AbstractClient
     public function getWhoamiClient(): WhoamiClient
     {
         return (new WhoamiClient($this->curler))
+            ->setUrl($this->url)
+            ->setApiKey($this->apiKey);
+    }
+
+    /**
+     * @return CheckDomainClient
+     */
+    public function getCheckDomainClient(): CheckDomainClient
+    {
+        return (new CheckDomainClient($this->curler))
             ->setUrl($this->url)
             ->setApiKey($this->apiKey);
     }

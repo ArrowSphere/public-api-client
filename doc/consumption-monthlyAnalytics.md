@@ -14,7 +14,7 @@ A Monthly analytics item is managed by the ```MonthlyAnalyticsItem``` entity.
 
 | Field            | Type                     | Example     | Description                                                     |
 |------------------|--------------------------|-------------|-----------------------------------------------------------------|
-| marketPlace      | ```string```             | FR          | The marketPlace attached to this split                          |
+| marketPlace      | ```string```             | FR          | The marketplace attached to this split                          |
 | vendor           | ```string```             | Microsoft   | The vendor attached to this split                               |
 | classification   | ```string```             | SAAS        | The classification attached of this split                       |
 | tag              | ```string/null```        | Pax8        | The tag attached of this split                                  |
