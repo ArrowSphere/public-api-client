@@ -14,6 +14,9 @@ abstract class ConstantEnum extends AbstractEnum {
     /** @var string marketPlace index */
     public const MARKETPLACE = 'marketplace';
 
+    /** @var string subscription index */
+    public const LICENSE = 'license';
+
     /** @var string tax index */
     public const TAG = 'tag';
 }

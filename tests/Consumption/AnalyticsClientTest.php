@@ -47,11 +47,15 @@ class AnalyticsClientTest extends AbstractClientTest
             "usdPrice": {
                 "arrowBuyPrice": 975550.55,
                 "resellerBuyPrice": 1025302.09,
+                "listBuyPrice": 1025302.09,
+                "endCustomerBuyPrice": null,
                 "currency": "USD"
             },
             "localPrice": {
                 "arrowBuyPrice": 838778.34,
                 "resellerBuyPrice": 881554.72,
+                "listBuyPrice": 1025302.09,
+                "endCustomerBuyPrice": 1025302.09,
                 "currency": "EUR"
             }
         }
@@ -95,10 +99,14 @@ JSON;
             "tag": null,
             "usdPrice": {
                 "resellerBuyPrice": 1025302.09,
+                "listBuyPrice": 1025302.09,
+                "endCustomerBuyPrice": null,
                 "currency": "USD"
             },
             "localPrice": {
                 "resellerBuyPrice": 881554.72,
+                "listBuyPrice": 1025302.09,
+                "endCustomerBuyPrice": 123,
                 "currency": "EUR"
             }
         }

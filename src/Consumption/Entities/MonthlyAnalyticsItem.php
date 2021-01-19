@@ -5,6 +5,7 @@ namespace ArrowSphere\PublicApiClient\Consumption\Entities;
 use ArrowSphere\PublicApiClient\AbstractEntity;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\General\Enum\ClassificationEnum;
+use ReflectionException;
 
 class MonthlyAnalyticsItem extends AbstractEntity
 {
@@ -16,20 +17,26 @@ class MonthlyAnalyticsItem extends AbstractEntity
     public const COLUMN_USDPRICE = 'usdPrice';
     public const COLUMN_RESELLERPRICE = 'resellerBuyPrice';
     public const COLUMN_ARROWPRICE = 'arrowBuyPrice';
+    public const COLUMN_ENDCUSTOMERPRICE = 'endCustomerBuyPrice';
+    public const COLUMN_LISTPRICE = 'listBuyPrice';
     public const COLUMN_CURRENCY = 'currency';
     public const COLUMN_MONTH = 'month';
 
     protected const VALIDATION_RULES = [
-        self::COLUMN_VENDOR                                         => 'string|required',
-        self::COLUMN_MARKETPLACE                                    => 'string|required',
-        self::COLUMN_CLASSIFICATION                                 => 'string|required',
-        self::COLUMN_TAG                                            => 'string|nullable|present',
-        self::COLUMN_USDPRICE . '.' . self::COLUMN_RESELLERPRICE    => 'numeric|required',
-        self::COLUMN_USDPRICE . '.' . self::COLUMN_ARROWPRICE       => 'numeric',
-        self::COLUMN_USDPRICE . '.' . self::COLUMN_CURRENCY         => 'string|required',
-        self::COLUMN_LOCALPRICE . '.' . self::COLUMN_RESELLERPRICE  => 'numeric|required',
-        self::COLUMN_LOCALPRICE . '.' . self::COLUMN_ARROWPRICE     => 'numeric',
-        self::COLUMN_LOCALPRICE . '.' . self::COLUMN_CURRENCY       => 'string|required',
+        self::COLUMN_VENDOR                                           => 'string|required',
+        self::COLUMN_MARKETPLACE                                      => 'string|required',
+        self::COLUMN_CLASSIFICATION                                   => 'string|required',
+        self::COLUMN_TAG                                              => 'string|nullable|present',
+        self::COLUMN_USDPRICE . '.' . self::COLUMN_RESELLERPRICE      => 'numeric|required',
+        self::COLUMN_USDPRICE . '.' . self::COLUMN_ARROWPRICE         => 'numeric',
+        self::COLUMN_USDPRICE . '.' . self::COLUMN_ENDCUSTOMERPRICE   => 'numeric|nullable',
+        self::COLUMN_USDPRICE . '.' . self::COLUMN_LISTPRICE          => 'numeric|required',
+        self::COLUMN_USDPRICE . '.' . self::COLUMN_CURRENCY           => 'string|required',
+        self::COLUMN_LOCALPRICE . '.' . self::COLUMN_RESELLERPRICE    => 'numeric|required',
+        self::COLUMN_LOCALPRICE . '.' . self::COLUMN_ARROWPRICE       => 'numeric',
+        self::COLUMN_LOCALPRICE . '.' . self::COLUMN_ENDCUSTOMERPRICE => 'numeric|required',
+        self::COLUMN_LOCALPRICE . '.' . self::COLUMN_LISTPRICE        => 'numeric|required',
+        self::COLUMN_LOCALPRICE . '.' . self::COLUMN_CURRENCY         => 'string|required',
     ];
 
     /** @var string */
@@ -56,7 +63,7 @@ class MonthlyAnalyticsItem extends AbstractEntity
     /**
      * MonthlyAnalyticsItem constructor.
      * @param array $data
-     * @throws EntityValidationException
+     * @throws EntityValidationException|ReflectionException
      */
     public function __construct(array $data)
     {

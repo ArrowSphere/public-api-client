@@ -14,11 +14,13 @@ class PriceAnalyticsItemTest extends TestCase
     public function testHealthCheckItemSerialisation(): void
     {
         $price = new PriceAnalyticsItem([
-            "arrowBuyPrice"    => 975550.55,
-            "resellerBuyPrice" => 1025302.09,
-            "currency"         => "USD"
+            "arrowBuyPrice"       => 975550.55,
+            "resellerBuyPrice"    => 1025302.09,
+            "listBuyPrice"        => 1025302.09,
+            "endCustomerBuyPrice" => 123,
+            "currency"            => "USD"
         ]);
 
-        self::assertEquals('{"resellerBuyPrice":1025302.09,"arrowBuyPrice":975550.55,"currency":"USD"}', json_encode($price));
+        self::assertEquals('{"resellerBuyPrice":1025302.09,"arrowBuyPrice":975550.55,"listBuyPrice":1025302.09,"endCustomerBuyPrice":123,"currency":"USD"}', json_encode($price));
     }
 }
