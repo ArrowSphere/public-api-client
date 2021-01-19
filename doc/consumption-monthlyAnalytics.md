@@ -7,6 +7,7 @@ The granularity of this endpoint based on the following attributes :
 - [MarketPlace](general-marketPlace.md) (US / CA / FR etc)
 - Vendor (Microsoft / IBM etc)
 - [Classification](catalog-classification.md) (IAAS / SAAS)
+- [Licence](licenses.md)  reference (XSP1234 / XSP54)
 - Tag, filter data on a specific tag (Pax8 / TELENOR etc)
 
 ## Entity
@@ -24,11 +25,13 @@ A Monthly analytics item is managed by the ```MonthlyAnalyticsItem``` entity.
 
 Description of ```PriceAnalyticsItem```
 
-| Field            | Type               | Example     | Description                                                 |
-|------------------|--------------------|-------------|-------------------------------------------------------------|
-| resellerBuyPrice | ```float```        | 1367.67     | The reseller buy price                                      |
-| arrowBuyPrice    | ```float/null```   | 134.34      | The arrow buy price, can be null if it is call by an MSP    |
-| currency         | ```string```       | EUR         | The currency attached to the arrow and reseller price       |
+| Field                  | Type               | Example     | Description                                                 |
+|------------------------|--------------------|-------------|-------------------------------------------------------------|
+| resellerBuyPrice       | ```float```        | 1367.67     | The reseller buy price                                      |
+| arrowBuyPrice          | ```float/null```   | 134.34      | The arrow buy price, can be null if it is call by an MSP    |
+| endCustomerBuyPrice    | ```float/null```   | 345.32      | The end cutomer buy price, can be null for usd case         |
+| listBuyPrice           | ```float```        | 563.34      | The list buy price                                          |
+| currency               | ```string```       | EUR         | The currency attached to the arrow and reseller price       |
 
 ## Usage
 
@@ -44,7 +47,7 @@ $client = (new AnalyticsClient())
     ->setUrl(URL)
     ->setApiKey(API_KEY);
 
-$items = $client->getMonthly('2020-05', ['SAAS'], ['Microsoft'], ['US'], 'Pax8');
+$items = $client->getMonthly('2020-05', ['SAAS'], ['Microsoft'], ['US'], ['XSP43'], 'Pax8');
 
 foreach ($items as $item) {
     echo $item->getVendor() . '->' . $item->getLocalPrice()->getResellerBuyPrice() . PHP_EOL;
@@ -57,6 +60,7 @@ You can get montly analytics item by calling the ```getMonthly()``` method with 
 - ```array $classification```: the [classification](catalog-classification.md) (ex. ```'SAAS'```)
 - ```array $vendor```: (ex. ```'microsoft'```)
 - ```array $marketPlace```: the [MarketPlace](general-marketPlace.md) (ex. ```'FR'```)
+- ```array $license```: the license reference (ex. ```'XSP43'```)
 - ```string $tag```: The filter tag (ex. ```'Pax8'```)
 
 Please note that all parameters are case-insensitive.
