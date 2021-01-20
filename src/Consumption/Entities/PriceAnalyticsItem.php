@@ -52,7 +52,7 @@ class PriceAnalyticsItem extends AbstractEntity
         if (isset($data[self::COLUMN_ARROWPRICE])) {
             $this->arrowBuyPrice = $data[self::COLUMN_ARROWPRICE];
         }
-        if (isset($data[self::COLUMN_ARROWPRICE])) {
+        if (isset($data[self::COLUMN_ENDCUSTOMERPRICE])) {
             $this->endCustomerBuyPrice = $data[self::COLUMN_ENDCUSTOMERPRICE];
         }
     }
