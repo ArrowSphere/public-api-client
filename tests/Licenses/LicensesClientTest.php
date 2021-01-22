@@ -8,6 +8,7 @@ use ArrowSphere\PublicApiClient\Licenses\Entities\License;
 use ArrowSphere\PublicApiClient\Licenses\Entities\LicenseFindResult;
 use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
+use GuzzleHttp\Psr7\Response;
 
 /**
  * Class OfferClientTest
@@ -43,11 +44,20 @@ class LicensesClientTest extends AbstractClientTest
             LicensesClient::DATA_HIGHLIGHT => true,
         ];
 
-        $this->curler->response = 'OK USA';
-
-        $this->curler->expects(self::once())
+        $this->httpClient
+            ->expects(self::once())
             ->method('post')
-            ->with('https://www.test.com/licenses/find?abc=def&ghi=0&page=2&per_page=15', json_encode($postData));
+            ->with(
+                'https://www.test.com/licenses/find?abc=def&ghi=0&page=2&per_page=15',
+                [
+                    'headers' => [
+                        'apiKey'       => '123456',
+                        'Content-Type' => 'application/json',
+                    ],
+                    'body'    => json_encode($postData),
+                ]
+            )
+            ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->findRaw($postData, [
             'abc' => 'def',
@@ -82,9 +92,20 @@ class LicensesClientTest extends AbstractClientTest
             LicensesClient::DATA_HIGHLIGHT => true,
         ];
 
-        $this->curler->response = <<<JSON
-{
-JSON;
+        $this->httpClient
+            ->expects(self::once())
+            ->method('post')
+            ->with(
+                'https://www.test.com/licenses/find?abc=def&ghi=0&page=2&per_page=15',
+                [
+                    'headers' => [
+                        'apiKey'       => '123456',
+                        'Content-Type' => 'application/json',
+                    ],
+                    'body'    => json_encode($postData),
+                ]
+            )
+            ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
         $this->client->find($postData, 15, 2, [
@@ -119,7 +140,8 @@ JSON;
             ],
             LicensesClient::DATA_HIGHLIGHT => true,
         ];
-        $this->curler->response = <<<JSON
+
+        $response = <<<JSON
 {
     "licenses": [
         {
@@ -321,9 +343,20 @@ JSON;
 }
 JSON;
 
-        $this->curler->expects(self::once())
+        $this->httpClient
+            ->expects(self::once())
             ->method('post')
-            ->with('https://www.test.com/licenses/find?abc=def&ghi=0&per_page=15', json_encode($postData));
+            ->with(
+                'https://www.test.com/licenses/find?abc=def&ghi=0&per_page=15',
+                [
+                    'headers' => [
+                        'apiKey'       => '123456',
+                        'Content-Type' => 'application/json',
+                    ],
+                    'body'    => json_encode($postData),
+                ]
+            )
+            ->willReturn(new Response(200, [], $response));
 
         $findResult = $this->client->find($postData, 15, 1, [
             'abc' => 'def',
@@ -346,7 +379,7 @@ JSON;
                 [
                     'value' => 'IBM',
                     'count' => 21,
-                ]
+                ],
             ],
             $filter->getValues()
         );
@@ -362,7 +395,7 @@ JSON;
                 [
                     'value' => 'IaaS',
                     'count' => 1316,
-                ]
+                ],
             ],
             $filter->getValues()
         );

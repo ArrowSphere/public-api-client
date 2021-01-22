@@ -3,8 +3,10 @@
 namespace ArrowSphere\PublicApiClient\Licenses;
 
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Licenses\Entities\FindResult;
+use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Class LicensesClient
@@ -53,14 +55,17 @@ class LicensesClient extends AbstractLicensesClient
     /**
      * @param array $postData
      * @param array $parameters
+     *
      * @return string
+     * @throws PublicApiClientException
+     * @throws NotFoundException
+     * @throws GuzzleException
      */
     public function findRaw(array $postData, array $parameters = []): string
     {
         $this->path = self::FIND_PATH;
-        $this->curler->setHeader('Content-Type', 'application/json');
 
-        return $this->post($postData, $parameters);
+        return $this->post($postData, $parameters, ['Content-Type' => 'application/json']);
     }
 
     /**

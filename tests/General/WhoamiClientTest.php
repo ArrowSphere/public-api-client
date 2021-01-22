@@ -8,6 +8,7 @@ use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\General\Entities\Whoami;
 use ArrowSphere\PublicApiClient\General\WhoamiClient;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
+use GuzzleHttp\Psr7\Response;
 
 /**
  * Class CategoryClientTest
@@ -24,11 +25,11 @@ class WhoamiClientTest extends AbstractClientTest
      */
     public function testGetWhoamiRaw(): void
     {
-        $this->curler->response = 'OK USA';
-
-        $this->curler->expects(self::once())
+        $this->httpClient
+            ->expects(self::once())
             ->method('get')
-            ->with('https://www.test.com/whoami');
+            ->with('https://www.test.com/whoami')
+            ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getWhoamiRaw();
     }
@@ -40,7 +41,9 @@ class WhoamiClientTest extends AbstractClientTest
      */
     public function testGetWhoamiWithInvalidResponse(): void
     {
-        $this->curler->response = '{';
+        $this->httpClient
+            ->method('get')
+            ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
         $this->client->getWhoami();
@@ -53,7 +56,7 @@ class WhoamiClientTest extends AbstractClientTest
      */
     public function testGetWhoami(): void
     {
-        $this->curler->response = <<<JSON
+        $response = <<<JSON
 {
   "status": 200,
   "data": {
@@ -77,9 +80,10 @@ class WhoamiClientTest extends AbstractClientTest
 }
 JSON;
 
-        $this->curler->expects(self::once())
+        $this->httpClient->expects(self::once())
             ->method('get')
-            ->with('https://www.test.com/whoami');
+            ->with('https://www.test.com/whoami')
+            ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getWhoami();
 

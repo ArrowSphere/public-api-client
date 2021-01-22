@@ -4,10 +4,10 @@ namespace ArrowSphere\PublicApiClient\Tests\Catalog;
 
 use ArrowSphere\PublicApiClient\Catalog\Entities\Service;
 use ArrowSphere\PublicApiClient\Catalog\ServiceClient;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
+use GuzzleHttp\Psr7\Response;
 
 /**
  * Class ServiceClientTest
@@ -24,11 +24,11 @@ class ServiceClientTest extends AbstractClientTest
      */
     public function testGetServicesRaw(): void
     {
-        $this->curler->response = 'OK USA';
-
-        $this->curler->expects(self::once())
+        $this->httpClient
+            ->expects(self::once())
             ->method('get')
-            ->with('https://www.test.com/catalog/categories/SAAS/programs/microsoft/products');
+            ->with('https://www.test.com/catalog/categories/SAAS/programs/microsoft/products')
+            ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getServicesRaw('SAAS', 'microsoft');
     }
@@ -40,7 +40,11 @@ class ServiceClientTest extends AbstractClientTest
      */
     public function testGetServicesWithInvalidResponse(): void
     {
-        $this->curler->response = '{';
+        $this->httpClient
+            ->expects(self::once())
+            ->method('get')
+            ->with('https://www.test.com/catalog/categories/SAAS/programs/microsoft/products?per_page=100')
+            ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
         $services = $this->client->getServices('SAAS', 'microsoft');
@@ -54,20 +58,22 @@ class ServiceClientTest extends AbstractClientTest
      */
     public function testGetServicesWithPagination(): void
     {
-        $this->curler->response = json_encode([
+        $response = json_encode([
             'data'       => [],
             'pagination' => [
                 'total_page' => 3,
             ],
         ]);
 
-        $this->curler->expects(self::exactly(3))
+        $this->httpClient
+            ->expects(self::exactly(3))
             ->method('get')
             ->withConsecutive(
                 ['https://www.test.com/catalog/categories/SAAS/programs/microsoft/products?per_page=100'],
                 ['https://www.test.com/catalog/categories/SAAS/programs/microsoft/products?page=2&per_page=100'],
                 ['https://www.test.com/catalog/categories/SAAS/programs/microsoft/products?page=3&per_page=100']
-            );
+            )
+            ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getServices('SAAS', 'microsoft');
         iterator_to_array($test);
@@ -80,7 +86,7 @@ class ServiceClientTest extends AbstractClientTest
      */
     public function testGetServices(): void
     {
-        $this->curler->response = <<<JSON
+        $response = <<<JSON
 {
   "status": 200,
   "data": [
@@ -219,9 +225,11 @@ class ServiceClientTest extends AbstractClientTest
 }
 JSON;
 
-        $this->curler->expects(self::once())
+        $this->httpClient
+            ->expects(self::once())
             ->method('get')
-            ->with('https://www.test.com/catalog/categories/SAAS/programs/microsoft/products?per_page=100');
+            ->with('https://www.test.com/catalog/categories/SAAS/programs/microsoft/products?per_page=100')
+            ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getServices('SAAS', 'microsoft');
         $list = iterator_to_array($test);
@@ -256,11 +264,11 @@ JSON;
      */
     public function testGetServiceRaw(): void
     {
-        $this->curler->response = 'OK USA';
-
-        $this->curler->expects(self::once())
+        $this->httpClient
+            ->expects(self::once())
             ->method('get')
-            ->with('https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS');
+            ->with('https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS')
+            ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getServiceRaw('SAAS', 'microsoft', 'MS-0B-O365-ENTERPRIS');
     }
@@ -272,7 +280,11 @@ JSON;
      */
     public function testGetServiceWithInvalidResponse(): void
     {
-        $this->curler->response = '{';
+        $this->httpClient
+            ->expects(self::once())
+            ->method('get')
+            ->with('https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS')
+            ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
         $this->client->getService('SAAS', 'microsoft', 'MS-0B-O365-ENTERPRIS');
@@ -280,10 +292,11 @@ JSON;
 
     /**
      * @depends testGetServiceRaw
+     * @throws
      */
     public function testGetService(): void
     {
-        $this->curler->response = <<<JSON
+        $response = <<<JSON
 {
   "status": 200,
   "data": {
@@ -351,9 +364,11 @@ JSON;
 }
 JSON;
 
-        $this->curler->expects(self::once())
+        $this->httpClient
+            ->expects(self::once())
             ->method('get')
-            ->with('https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS');
+            ->with('https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS')
+            ->willReturn(new Response(200, [], $response));
 
         $service = $this->client->getService('SAAS', 'microsoft', 'MS-0B-O365-ENTERPRIS');
 
