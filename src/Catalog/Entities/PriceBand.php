@@ -41,8 +41,8 @@ class PriceBand extends AbstractEntity
         self::COLUMN_UNIT_TYPE            => 'required',
         self::COLUMN_RECURRING_TIME_UNIT  => 'required',
         self::COLUMN_CURRENCY             => 'required',
-        self::COLUMN_PERIOD_AS_HOURS      => 'required',
-        self::COLUMN_TERM_AS_HOURS        => 'required',
+        self::COLUMN_PERIOD_AS_HOURS      => 'required|numeric',
+        self::COLUMN_TERM_AS_HOURS        => 'required|numeric',
     ];
 
     /** @var int */

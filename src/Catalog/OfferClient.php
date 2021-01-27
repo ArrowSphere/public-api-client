@@ -51,11 +51,11 @@ class OfferClient extends AbstractCatalogClient
      * @param string $sku The sku of the offer
      * @param array $parameters The parameters to add to the URL
      *
-     * @return string|null The response
+     * @return string The response
      *
      * @throws PublicApiClientException
      */
-    public function getOfferDetailsRaw(string $classification, string $vendorCode, string $sku, array $parameters = []): ?string
+    public function getOfferDetailsRaw(string $classification, string $vendorCode, string $sku, array $parameters = []): string
     {
         $classification = urlencode($classification);
         $vendorCode = urlencode($vendorCode);
@@ -103,6 +103,8 @@ class OfferClient extends AbstractCatalogClient
      * @param array $parameters Parameters to append to the query string
      *
      * @return string The response
+     * @throws NotFoundException
+     * @throws PublicApiClientException
      */
     public function findRaw(array $postData, array $parameters = []): string
     {

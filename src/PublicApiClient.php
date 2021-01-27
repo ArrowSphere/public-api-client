@@ -4,6 +4,7 @@ namespace ArrowSphere\PublicApiClient;
 
 use ArrowSphere\PublicApiClient\Catalog\AddonClient;
 use ArrowSphere\PublicApiClient\Catalog\ClassificationClient;
+use ArrowSphere\PublicApiClient\Catalog\FamilyClient;
 use ArrowSphere\PublicApiClient\Catalog\OfferClient;
 use ArrowSphere\PublicApiClient\Catalog\ProgramClient;
 use ArrowSphere\PublicApiClient\Catalog\ServiceClient;
@@ -78,10 +79,21 @@ class PublicApiClient extends AbstractClient
 
     /**
      * @return ServiceClient
+     * @deprecated use getFamilyClient() instead
      */
     public function getServiceClient(): ServiceClient
     {
         return (new ServiceClient($this->client))
+            ->setUrl($this->url)
+            ->setApiKey($this->apiKey);
+    }
+
+    /**
+     * @return FamilyClient
+     */
+    public function getFamilyClient(): FamilyClient
+    {
+        return (new FamilyClient($this->curler))
             ->setUrl($this->url)
             ->setApiKey($this->apiKey);
     }

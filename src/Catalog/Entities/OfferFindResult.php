@@ -15,6 +15,7 @@ class OfferFindResult extends AbstractOffer
 
     protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
         self::COLUMN_HIGHLIGHT => 'array',
+        self::COLUMN_ID        => 'required',
     ];
 
     /** @var array */
@@ -53,11 +54,14 @@ class OfferFindResult extends AbstractOffer
         return $this->highlight;
     }
 
+    /**
+     * @return array
+     */
     public function jsonSerialize()
     {
         return array_merge(parent::jsonSerialize(), [
             'highlight' => $this->getHighlight(),
-            'id'        => $this->getId()
+            'id'        => $this->getId(),
         ]);
     }
 }
