@@ -6,6 +6,7 @@ use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\General\CheckDomainClient;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
+use GuzzleHttp\Psr7\Response;
 
 /**
  * Class CheckDomainClientTest
@@ -22,11 +23,11 @@ class CheckDomainClientTest extends AbstractClientTest
      */
     public function testCheckDomainRaw(): void
     {
-        $this->curler->response = 'OK USA';
-
-        $this->curler->expects(self::once())
+        $this->httpClient
+            ->expects(self::once())
             ->method('get')
-            ->with('https://www.test.com/vendors/foo/checkDomain/bar');
+            ->with('https://www.test.com/vendors/foo/checkDomain/bar')
+            ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->checkDomainRaw('foo', 'bar');
     }
@@ -37,7 +38,11 @@ class CheckDomainClientTest extends AbstractClientTest
      */
     public function testCheckDomainWithInvalidResponse(): void
     {
-        $this->curler->response = '{';
+        $this->httpClient
+            ->expects(self::once())
+            ->method('get')
+            ->with('https://www.test.com/vendors/foo/checkDomain/bar')
+            ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
         $this->client->checkDomain('foo', 'bar');
@@ -49,7 +54,7 @@ class CheckDomainClientTest extends AbstractClientTest
      */
     public function testCheckDomain(): void
     {
-        $this->curler->response = <<<JSON
+        $response = <<<JSON
 {
   "status": 200,
   "data": {
@@ -58,9 +63,11 @@ class CheckDomainClientTest extends AbstractClientTest
 }
 JSON;
 
-        $this->curler->expects(self::once())
+        $this->httpClient
+            ->expects(self::once())
             ->method('get')
-            ->with('https://www.test.com/vendors/foo/checkDomain/bar');
+            ->with('https://www.test.com/vendors/foo/checkDomain/bar')
+            ->willReturn(new Response(200, [], $response));
 
         self::assertTrue($this->client->checkDomain('foo', 'bar'));
     }
@@ -71,7 +78,7 @@ JSON;
      */
     public function testCheckDomainFalse(): void
     {
-        $this->curler->response = <<<JSON
+        $response = <<<JSON
 {
   "status": 200,
   "data": {
@@ -80,9 +87,11 @@ JSON;
 }
 JSON;
 
-        $this->curler->expects(self::once())
+        $this->httpClient
+            ->expects(self::once())
             ->method('get')
-            ->with('https://www.test.com/vendors/foo/checkDomain/bar');
+            ->with('https://www.test.com/vendors/foo/checkDomain/bar')
+            ->willReturn(new Response(200, [], $response));
 
         self::assertFalse($this->client->checkDomain('foo', 'bar'));
     }

@@ -8,6 +8,7 @@ use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
+use GuzzleHttp\Psr7\Response;
 
 /**
  * Class ClassificationClientTest
@@ -24,11 +25,11 @@ class ClassificationClientTest extends AbstractClientTest
      */
     public function testGetClassificationsRaw(): void
     {
-        $this->curler->response = 'OK USA';
-
-        $this->curler->expects(self::once())
+        $this->httpClient
+            ->expects(self::once())
             ->method('get')
-            ->with('https://www.test.com/catalog/categories');
+            ->with('https://www.test.com/catalog/categories')
+            ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getClassificationsRaw();
     }
@@ -40,7 +41,11 @@ class ClassificationClientTest extends AbstractClientTest
      */
     public function testGetClassificationsWithInvalidResponse(): void
     {
-        $this->curler->response = '{';
+        $this->httpClient
+            ->expects(self::once())
+            ->method('get')
+            ->with('https://www.test.com/catalog/categories')
+            ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
         $classifications = $this->client->getClassifications();
@@ -54,7 +59,7 @@ class ClassificationClientTest extends AbstractClientTest
      */
     public function testGetClassifications(): void
     {
-        $this->curler->response = <<<JSON
+        $response = <<<JSON
 {
   "status": 200,
   "data": [
@@ -86,9 +91,11 @@ class ClassificationClientTest extends AbstractClientTest
 }
 JSON;
 
-        $this->curler->expects(self::once())
+        $this->httpClient
+            ->expects(self::once())
             ->method('get')
-            ->with('https://www.test.com/catalog/categories');
+            ->with('https://www.test.com/catalog/categories')
+            ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getClassifications();
         $list = iterator_to_array($test);

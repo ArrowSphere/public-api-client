@@ -6,10 +6,11 @@ use ArrowSphere\PublicApiClient\Consumption\AnalyticsClient;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
+use GuzzleHttp\Psr7\Response;
+use ReflectionException;
 
 /**
  * Class AnalyticsClientTest
- * @package ArrowSphere\PublicApiClient\Tests\Consumption
  *
  * @property AnalyticsClient $client
  */
@@ -21,20 +22,25 @@ class AnalyticsClientTest extends AbstractClientTest
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function testGetMonthlyRaw() : void
+    public function testGetMonthlyRaw(): void
     {
-        $this->curler->response = 'OK USA';
-
-        $this->curler->expects(self::once())
+        $this->httpClient
+            ->expects(self::once())
             ->method('get')
-            ->with('https://www.test.com/consumption/analytics/monthly?month=2020-05');
+            ->with('https://www.test.com/consumption/analytics/monthly?month=2020-05')
+            ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getMonthlyRaw('2020-05');
     }
 
+    /**
+     * @depends testGetMonthlyRaw
+     * @throws PublicApiClientException
+     * @throws ReflectionException
+     */
     public function testGetMonthlyForArrow(): void
     {
-        $this->curler->response = <<<JSON
+        $response = <<<JSON
 {
     "status": 200,
     "data": [
@@ -62,9 +68,12 @@ class AnalyticsClientTest extends AbstractClientTest
     ]
 }
 JSON;
-        $this->curler->expects(self::once())
+
+        $this->httpClient
+            ->expects(self::once())
             ->method('get')
-            ->with('https://www.test.com/consumption/analytics/monthly?month=2020-10&classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR');
+            ->with('https://www.test.com/consumption/analytics/monthly?month=2020-10&classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR')
+            ->willReturn(new Response(200, [], $response));
 
         $items = $this->client->getMonthly(
             '2020-10',
@@ -85,9 +94,14 @@ JSON;
         self::assertEquals(881554.72, $items[0]->getLocalPrice()->getResellerBuyPrice());
     }
 
+    /**
+     * @depends testGetMonthlyRaw
+     * @throws PublicApiClientException
+     * @throws ReflectionException
+     */
     public function testGetMonthlyForReseller(): void
     {
-        $this->curler->response = <<<JSON
+        $response = <<<JSON
 {
     "status": 200,
     "data": [
@@ -113,9 +127,11 @@ JSON;
     ]
 }
 JSON;
-        $this->curler->expects(self::once())
+        $this->httpClient
+            ->expects(self::once())
             ->method('get')
-            ->with('https://www.test.com/consumption/analytics/monthly?month=2020-10&classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR');
+            ->with('https://www.test.com/consumption/analytics/monthly?month=2020-10&classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR')
+            ->willReturn(new Response(200, [], $response));
 
         $items = $this->client->getMonthly(
             '2020-10',
@@ -135,6 +151,4 @@ JSON;
         self::assertNull($items[0]->getLocalPrice()->getArrowBuyPrice());
         self::assertEquals(881554.72, $items[0]->getLocalPrice()->getResellerBuyPrice());
     }
-
-
 }

@@ -4,7 +4,7 @@ namespace ArrowSphere\PublicApiClient\Tests;
 
 use ArrowSphere\PublicApiClient\AbstractClient;
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use Curl\Curl;
+use GuzzleHttp\Client;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 
@@ -13,8 +13,8 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class AbstractClientTest extends TestCase
 {
-    /** @var MockObject|Curl $curler */
-    protected $curler;
+    /** @var MockObject|Client */
+    protected $httpClient;
 
     /** @var AbstractClient */
     protected $client;
@@ -29,9 +29,7 @@ abstract class AbstractClientTest extends TestCase
         // For the tests we want the validation to happen
         AbstractEntity::$enableValidation = true;
 
-        $this->curler = $this->getMockBuilder(Curl::class)
-            ->disableOriginalConstructor()
-            ->getMock();
+        $this->httpClient = $this->createMock(Client::class);
 
         $class = static::MOCKED_CLIENT_CLASS;
 
@@ -39,7 +37,7 @@ abstract class AbstractClientTest extends TestCase
             self::fail('You should override const MOCKED_CLIENT_CLASS in your class ' . get_class($this));
         }
 
-        $this->client = new $class($this->curler);
+        $this->client = new $class($this->httpClient);
         $this->client->setUrl('https://www.test.com');
         $this->client->setApiKey('123456');
     }

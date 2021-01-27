@@ -21,7 +21,7 @@ class PublicApiClient extends AbstractClient
      */
     public function getWhoamiClient(): WhoamiClient
     {
-        return (new WhoamiClient($this->curler))
+        return (new WhoamiClient($this->client))
             ->setUrl($this->url)
             ->setApiKey($this->apiKey);
     }
@@ -31,7 +31,7 @@ class PublicApiClient extends AbstractClient
      */
     public function getCheckDomainClient(): CheckDomainClient
     {
-        return (new CheckDomainClient($this->curler))
+        return (new CheckDomainClient($this->client))
             ->setUrl($this->url)
             ->setApiKey($this->apiKey);
     }
@@ -41,7 +41,7 @@ class PublicApiClient extends AbstractClient
      */
     public function getOfferClient(): OfferClient
     {
-        return (new OfferClient($this->curler))
+        return (new OfferClient($this->client))
             ->setUrl($this->url)
             ->setApiKey($this->apiKey);
     }
@@ -51,7 +51,7 @@ class PublicApiClient extends AbstractClient
      */
     public function getProgramClient(): ProgramClient
     {
-        return (new ProgramClient($this->curler))
+        return (new ProgramClient($this->client))
             ->setUrl($this->url)
             ->setApiKey($this->apiKey);
     }
@@ -61,7 +61,7 @@ class PublicApiClient extends AbstractClient
      */
     public function getAddonClient(): AddonClient
     {
-        return (new AddonClient($this->curler))
+        return (new AddonClient($this->client))
             ->setUrl($this->url)
             ->setApiKey($this->apiKey);
     }
@@ -71,7 +71,7 @@ class PublicApiClient extends AbstractClient
      */
     public function getClassificationClient(): ClassificationClient
     {
-        return (new ClassificationClient($this->curler))
+        return (new ClassificationClient($this->client))
             ->setUrl($this->url)
             ->setApiKey($this->apiKey);
     }
@@ -81,7 +81,7 @@ class PublicApiClient extends AbstractClient
      */
     public function getServiceClient(): ServiceClient
     {
-        return (new ServiceClient($this->curler))
+        return (new ServiceClient($this->client))
             ->setUrl($this->url)
             ->setApiKey($this->apiKey);
     }
@@ -91,7 +91,7 @@ class PublicApiClient extends AbstractClient
      */
     public function getLicensesClient(): LicensesClient
     {
-        return (new LicensesClient($this->curler))
+        return (new LicensesClient($this->client))
             ->setUrl($this->url)
             ->setApiKey($this->apiKey);
     }

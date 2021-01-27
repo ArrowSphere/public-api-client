@@ -4,7 +4,11 @@ namespace ArrowSphere\PublicApiClient;
 
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
-use Curl\Curl;
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\GuzzleException;
+use Psr\Http\Client\ClientInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\StreamInterface;
 
 /**
  * Class AbstractClient for interacting with the Public API endpoints
@@ -28,8 +32,8 @@ abstract class AbstractClient
     /** @var string The path of the endpoint */
     protected $path = '';
 
-    /** @var Curl The curler */
-    protected $curler;
+    /** @var ClientInterface */
+    protected $client;
 
     /** @var string The url of the request */
     protected $url;
@@ -46,13 +50,11 @@ abstract class AbstractClient
     /**
      * AbstractClient constructor.
      *
-     * @param Curl|null $curler
+     * @param ClientInterface|null $client
      */
-    public function __construct(Curl $curler = null)
+    public function __construct(ClientInterface $client = null)
     {
-        $this->curler = $curler ?? new Curl();
-        $this->curler->setOpt(CURLOPT_FOLLOWLOCATION, true);
-        $this->curler->setOpt(CURLOPT_HEADER, false);
+        $this->client = $client ?? new Client();
     }
 
     /**
@@ -65,7 +67,6 @@ abstract class AbstractClient
     public function setApiKey(string $apiKey): self
     {
         $this->apiKey = $apiKey;
-        $this->curler->setHeader(self::API_KEY, $this->apiKey);
 
         return $this;
     }
@@ -126,46 +127,49 @@ abstract class AbstractClient
      * Sends a GET request and returns the response
      *
      * @param array $parameters
+     *
+     * @param array $headers
+     *
      * @return string
+     * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    protected function get(array $parameters = []): string
+    protected function get(array $parameters = [], array $headers = []): string
     {
-        $this->curler->get($this->generateUrl($parameters));
+        $response = $this->client->get(
+            $this->generateUrl($parameters),
+            [
+                'headers' => $this->prepareHeaders($headers),
+            ]
+        );
 
-        return $this->getResponse();
+        return $this->getResponse($response);
     }
 
     /**
-     * @return string
+     * @param ResponseInterface $response
+     *
+     * @return StreamInterface
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    private function getResponse(): string
+    private function getResponse(ResponseInterface $response): StreamInterface
     {
-        $curler = $this->getCurler();
-        if ($curler->http_status_code === 404) {
+        $statusCode = $response->getStatusCode();
+        if ($statusCode === 404) {
             throw new NotFoundException(sprintf('Resource not found on URL %s', $this->getUrl()));
         }
 
-        if ($curler->http_status_code >= 400 && $curler->http_status_code <= 599) {
+        if ($statusCode >= 400 && $statusCode <= 599) {
             throw new PublicApiClientException(sprintf(
-                'Error: CURL status: %s. URL: %s',
-                $curler->http_status_code,
+                'Error: status code: %s. URL: %s',
+                $statusCode,
                 $this->getUrl()
             ));
         }
 
-        if ($curler->curl_error) {
-            throw new PublicApiClientException(sprintf(
-                'Error: CURL error: %s. URL: %s',
-                $curler->error_message,
-                $this->getUrl()
-            ));
-        }
-
-        return $this->curler->response;
+        return $response->getBody();
     }
 
     /**
@@ -186,20 +190,45 @@ abstract class AbstractClient
     }
 
     /**
+     * @param array $headers
+     *
+     * @return array
+     */
+    private function prepareHeaders(array $headers): array
+    {
+        return array_merge(
+            [
+                self::API_KEY => $this->apiKey,
+            ],
+            $headers
+        );
+    }
+
+    /**
      * Sends a POST request and returns the response
      *
      * @param array $payload
      *
      * @param array $parameters
-     * @return string
+     *
+     * @param array $headers
+     *
+     * @return StreamInterface
+     * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    protected function post(array $payload, array $parameters = []): string
+    protected function post(array $payload, array $parameters = [], array $headers = []): StreamInterface
     {
-        $this->curler->post($this->generateUrl($parameters), json_encode($payload));
+        $response = $this->client->post(
+            $this->generateUrl($parameters),
+            [
+                'headers' => $this->prepareHeaders($headers),
+                'body'    => json_encode($payload),
+            ]
+        );
 
-        return $this->getResponse();
+        return $this->getResponse($response);
     }
 
     /**
@@ -244,15 +273,5 @@ abstract class AbstractClient
         }
 
         return $params;
-    }
-
-    /**
-     * Returns the CURL object.
-     *
-     * @return Curl
-     */
-    public function getCurler(): Curl
-    {
-        return $this->curler;
     }
 }
