@@ -9,6 +9,8 @@ use Generator;
 
 /**
  * Class ServiceClient
+ *
+ * @deprecated use FamilyClient instead
  */
 class ServiceClient extends AbstractCatalogClient
 {

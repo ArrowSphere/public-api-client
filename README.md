@@ -43,9 +43,10 @@ echo "Hello " . $whoami->getCompanyName();
 ### Catalog clients
 - [Classification](doc/catalog-classification.md)
 - [Program](doc/catalog-program.md)
-- [Service](doc/catalog-service.md)
+- [Service](doc/catalog-service.md) (deprecated in favor of [Family](doc/catalog-family.md))
 - [Offer](doc/catalog-offer.md)
 - [Add-on](doc/catalog-addon.md)
+- [Family](doc/catalog-family.md)
 
 ### Consumption clients
 - [HealthCheck](doc/consumption-healthCheck.md)

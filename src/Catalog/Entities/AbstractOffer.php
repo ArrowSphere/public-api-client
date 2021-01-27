@@ -323,7 +323,7 @@ abstract class AbstractOffer extends AbstractEntity
     /**
      * Returns all the possible terms for this offer, as an array of number of hours.
      *
-     * @return int[]
+     * @return string[]
      */
     public function getAllTermsBand(): array
     {

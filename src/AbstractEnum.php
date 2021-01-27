@@ -5,6 +5,7 @@ namespace ArrowSphere\PublicApiClient;
 use ReflectionClass;
 
 abstract class AbstractEnum {
+    /** @var array */
     private static $constCacheArray = [];
 
     /**
@@ -13,7 +14,7 @@ abstract class AbstractEnum {
      */
     private static function getConstants()
     {
-        $calledClass = get_called_class();
+        $calledClass = static::class;
         if (!array_key_exists($calledClass, self::$constCacheArray)) {
             $reflect = new ReflectionClass($calledClass);
             self::$constCacheArray[$calledClass] = $reflect->getConstants();
@@ -36,7 +37,7 @@ abstract class AbstractEnum {
             return array_key_exists($name, $constants);
         }
 
-        return in_array(strtolower($name), array_keys(array_change_key_case($constants)));
+        return array_key_exists(strtolower($name), array_change_key_case($constants));
     }
 
     /**

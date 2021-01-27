@@ -41,7 +41,7 @@ abstract class AbstractClient
     /** @var string The API key */
     protected $apiKey;
 
-    /** @var string The page number */
+    /** @var int The page number */
     protected $page = 1;
 
     /** @var int The number of results per page */
@@ -112,11 +112,11 @@ abstract class AbstractClient
     /**
      * Sets the page number
      *
-     * @param string $page
+     * @param int $page
      *
      * @return AbstractClient
      */
-    public function setPage(string $page): self
+    public function setPage(int $page): self
     {
         $this->page = $page;
 
