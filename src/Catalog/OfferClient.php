@@ -110,6 +110,12 @@ class OfferClient extends AbstractCatalogClient
     {
         $this->path = self::FIND_PATH;
 
+        if (isset($postData[self::DATA_FILTERS])) {
+            $postData[self::DATA_FILTERS] = array_map(static function ($row) {
+                return is_array($row) ? array_values($row) : $row;
+            }, $postData[self::DATA_FILTERS]);
+        }
+
         return $this->post($postData, $parameters);
     }
 

@@ -3,11 +3,13 @@
 namespace ArrowSphere\PublicApiClient\Tests\Licenses;
 
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License;
 use ArrowSphere\PublicApiClient\Licenses\Entities\LicenseFindResult;
 use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Response;
 
 /**
@@ -19,6 +21,11 @@ class LicensesClientTest extends AbstractClientTest
 {
     protected const MOCKED_CLIENT_CLASS = LicensesClient::class;
 
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
     public function testFindRaw(): void
     {
         $this->client->setPage(2);
@@ -27,10 +34,12 @@ class LicensesClientTest extends AbstractClientTest
         $postData = [
             LicensesClient::DATA_KEYWORD   => 'office 365',
             LicensesClient::DATA_KEYWORDS  => [
-                License::COLUMN_CUSTOMER_NAME     => [
-                    'My customer',
+                License::COLUMN_CUSTOMER_NAME => [
+                    LicensesClient::KEYWORDS_VALUES   => [
+                        'My customer',
+                    ],
+                    LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
                 ],
-                LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
             ],
             LicensesClient::DATA_FILTERS   => [
                 License::COLUMN_VENDOR_CODE => [
@@ -68,6 +77,83 @@ class LicensesClientTest extends AbstractClientTest
     /**
      * @depends testFindRaw
      * @throws PublicApiClientException
+     * @throws NotFoundException
+     * @throws GuzzleException
+     */
+    public function testAssociativeArray(): void
+    {
+        $postData = [
+            LicensesClient::DATA_KEYWORD   => 'office 365',
+            LicensesClient::DATA_KEYWORDS  => [
+                License::COLUMN_CUSTOMER_NAME => [
+                    LicensesClient::KEYWORDS_VALUES   => [
+                        'first'  => 'My customer',
+                        'second' => 'Other',
+                    ],
+                    LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
+                ],
+            ],
+            LicensesClient::DATA_FILTERS   => [
+                License::COLUMN_VENDOR_CODE => [
+                    'first'  => 'Microsoft',
+                    'second' => 'IBM',
+                ],
+            ],
+            LicensesClient::DATA_SORT      => [
+                License::COLUMN_STATUS_CODE => LicensesClient::SORT_DESCENDING,
+            ],
+            LicensesClient::DATA_HIGHLIGHT => true,
+        ];
+
+        $expected = <<<JSON
+{
+    "keyword": "office 365",
+    "keywords": {
+        "customer_name": {
+            "values": [
+                "My customer",
+                "Other"
+            ],
+            "operator": "OR"
+        }
+    },
+    "filters": {
+        "vendor_code": [
+            "Microsoft",
+            "IBM"
+        ]
+    },
+    "sort": {
+        "status_code": "desc"
+    },
+    "highlight": true
+}
+JSON;
+
+        // This line is to have minified JSON because it's what will be generated in the payload
+        $expected = json_encode(json_decode($expected, true));
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('post')
+            ->with(
+                'https://www.test.com/licenses/find',
+                [
+                    'headers' => [
+                        'apiKey'       => '123456',
+                        'Content-Type' => 'application/json',
+                    ],
+                    'body'    => $expected,
+                ]
+            )
+            ->willReturn(new Response(200, [], 'OK USA'));
+
+        $this->client->findRaw($postData);
+    }
+
+    /**
+     * @depends testFindRaw
+     * @throws PublicApiClientException
      * @throws EntityValidationException
      */
     public function testFindWithInvalidResponse(): void
@@ -75,10 +161,12 @@ class LicensesClientTest extends AbstractClientTest
         $postData = [
             LicensesClient::DATA_KEYWORD   => 'office 365',
             LicensesClient::DATA_KEYWORDS  => [
-                License::COLUMN_CUSTOMER_NAME     => [
-                    'My customer',
+                License::COLUMN_CUSTOMER_NAME => [
+                    LicensesClient::KEYWORDS_VALUES   => [
+                        'My customer',
+                    ],
+                    LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
                 ],
-                LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
             ],
             LicensesClient::DATA_FILTERS   => [
                 License::COLUMN_VENDOR_CODE => [
@@ -125,9 +213,11 @@ class LicensesClientTest extends AbstractClientTest
             LicensesClient::DATA_KEYWORD   => 'office 365',
             LicensesClient::DATA_KEYWORDS  => [
                 License::COLUMN_CUSTOMER_NAME     => [
-                    'My customer',
+                    LicensesClient::KEYWORDS_VALUES   => [
+                        'My customer',
+                    ],
+                    LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
                 ],
-                LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
             ],
             LicensesClient::DATA_FILTERS   => [
                 License::COLUMN_VENDOR_CODE => [

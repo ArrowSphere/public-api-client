@@ -60,6 +60,65 @@ class OfferClientTest extends AbstractClientTest
 
     /**
      * @depends testFindRaw
+     */
+    public function testAssociativeArray(): void
+    {
+        $postData = [
+            OfferClient::DATA_KEYWORDS   => 'office 365',
+            OfferClient::DATA_FILTERS    => [
+                Offer::COLUMN_VENDOR => 'Microsoft',
+                Offer::COLUMN_SKU => [
+                    'first'  => 'ABC',
+                    'second' => 'DEF',
+                ],
+            ],
+            OfferClient::DATA_SORT       => [
+                Offer::COLUMN_NAME => OfferClient::SORT_DESCENDING,
+            ],
+            OfferClient::DATA_HIGHLIGHT  => true,
+            OfferClient::DATA_TOP_OFFERS => true,
+        ];
+
+        $expected = <<<JSON
+{
+    "keywords": "office 365",
+    "filters": {
+        "vendor": "Microsoft",
+        "sku": [
+            "ABC",
+            "DEF"
+        ]
+    },
+    "sort": {
+        "name": "desc"
+    },
+    "highlight": true,
+    "topOffers": true
+}
+JSON;
+
+        // This line is to have minified JSON because it's what will be generated in the payload
+        $expected = json_encode(json_decode($expected, true));
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('post')
+            ->with(
+                'https://www.test.com/catalog/find',
+                [
+                    'headers' => [
+                        'apiKey' => '123456',
+                    ],
+                    'body'    => $expected,
+                ]
+            )
+            ->willReturn(new Response(200, [], 'OK USA'));
+
+        $this->client->findRaw($postData);
+    }
+
+    /**
+     * @depends testFindRaw
      * @throws PublicApiClientException
      * @throws EntityValidationException
      */
