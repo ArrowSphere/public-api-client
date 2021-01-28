@@ -3,12 +3,17 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [0.1.3] - 2021-01-25
+## [0.2] - 2021-01-28
 ### Added
 - Family client
 
 ### Changed
 - The ```curl/curl``` dependency has been dropped and replaced by ```guzzlehttp/guzzle``` which is vastly more popular and has more features
+
+### Fixed
+- The ```OfferClient::find()``` method now reworks the "filters" field to make sure that when the values are arrays, they are list-arrays and not associative arrays
+- The ```LicensesClient::find()``` method now reworks the "filters" and the "values" field of the "keywords" field to make sure that when the values are arrays, they are list-arrays and not associative arrays
+- Fixed incorrect payload in the ```LicensesClientTest```
 
 ### Deprecated
 - ServiceClient: this is the old endpoint, the family client should now be used instead
