@@ -27,8 +27,8 @@ class ClassificationClientTest extends AbstractClientTest
     {
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/categories')
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/categories')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getClassificationsRaw();
@@ -43,8 +43,8 @@ class ClassificationClientTest extends AbstractClientTest
     {
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/categories')
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/categories')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
@@ -93,8 +93,8 @@ JSON;
 
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/categories')
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/categories')
             ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getClassifications();

@@ -27,8 +27,8 @@ class AddonClientTest extends AbstractClientTest
     {
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/05933B83-04D1-4AC6-BFCD-DBBBFC834483/addons')
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/05933B83-04D1-4AC6-BFCD-DBBBFC834483/addons')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getAddonsRaw('SAAS', 'microsoft', 'MS-1A-M365-ENT', '05933B83-04D1-4AC6-BFCD-DBBBFC834483');
@@ -43,8 +43,8 @@ class AddonClientTest extends AbstractClientTest
     {
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/05933B83-04D1-4AC6-BFCD-DBBBFC834483/addons?per_page=100')
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/05933B83-04D1-4AC6-BFCD-DBBBFC834483/addons?per_page=100')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
@@ -68,11 +68,11 @@ class AddonClientTest extends AbstractClientTest
 
         $this->httpClient
             ->expects(self::exactly(3))
-            ->method('get')
+            ->method('request')
             ->withConsecutive(
-                ['https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/05933B83-04D1-4AC6-BFCD-DBBBFC834483/addons?per_page=100'],
-                ['https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/05933B83-04D1-4AC6-BFCD-DBBBFC834483/addons?page=2&per_page=100'],
-                ['https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/05933B83-04D1-4AC6-BFCD-DBBBFC834483/addons?page=3&per_page=100']
+                ['get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/05933B83-04D1-4AC6-BFCD-DBBBFC834483/addons?per_page=100'],
+                ['get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/05933B83-04D1-4AC6-BFCD-DBBBFC834483/addons?page=2&per_page=100'],
+                ['get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/05933B83-04D1-4AC6-BFCD-DBBBFC834483/addons?page=3&per_page=100']
             )
             ->willReturn(new Response(200, [], $response));
 
@@ -286,8 +286,8 @@ JSON;
 
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/05933B83-04D1-4AC6-BFCD-DBBBFC834483/addons?per_page=100')
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/05933B83-04D1-4AC6-BFCD-DBBBFC834483/addons?per_page=100')
             ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getAddons('SAAS', 'microsoft', 'MS-1A-M365-ENT', '05933B83-04D1-4AC6-BFCD-DBBBFC834483');
@@ -435,8 +435,8 @@ JSON;
     {
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/05933B83-04D1-4AC6-BFCD-DBBBFC834483/addons/0F598EFE-F330-4D79-B79F-C9480BB7CE3E')
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/05933B83-04D1-4AC6-BFCD-DBBBFC834483/addons/0F598EFE-F330-4D79-B79F-C9480BB7CE3E')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getAddonRaw('SAAS', 'microsoft', 'MS-1A-M365-ENT', '05933B83-04D1-4AC6-BFCD-DBBBFC834483', '0F598EFE-F330-4D79-B79F-C9480BB7CE3E');
@@ -451,8 +451,8 @@ JSON;
     {
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/05933B83-04D1-4AC6-BFCD-DBBBFC834483/addons/0F598EFE-F330-4D79-B79F-C9480BB7CE3E')
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/05933B83-04D1-4AC6-BFCD-DBBBFC834483/addons/0F598EFE-F330-4D79-B79F-C9480BB7CE3E')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
@@ -563,8 +563,8 @@ JSON;
 JSON;
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/05933B83-04D1-4AC6-BFCD-DBBBFC834483/addons/0F598EFE-F330-4D79-B79F-C9480BB7CE3E')
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/05933B83-04D1-4AC6-BFCD-DBBBFC834483/addons/0F598EFE-F330-4D79-B79F-C9480BB7CE3E')
             ->willReturn(new Response(200, [], $response));
 
         $addon = $this->client->getAddon('SAAS', 'microsoft', 'MS-1A-M365-ENT', '05933B83-04D1-4AC6-BFCD-DBBBFC834483', '0F598EFE-F330-4D79-B79F-C9480BB7CE3E');

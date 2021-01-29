@@ -55,8 +55,9 @@ class LicensesClientTest extends AbstractClientTest
 
         $this->httpClient
             ->expects(self::once())
-            ->method('post')
+            ->method('request')
             ->with(
+                'post',
                 'https://www.test.com/licenses/find?abc=def&ghi=0&page=2&per_page=15',
                 [
                     'headers' => [
@@ -135,8 +136,9 @@ JSON;
 
         $this->httpClient
             ->expects(self::once())
-            ->method('post')
+            ->method('request')
             ->with(
+                'post',
                 'https://www.test.com/licenses/find',
                 [
                     'headers' => [
@@ -182,8 +184,9 @@ JSON;
 
         $this->httpClient
             ->expects(self::once())
-            ->method('post')
+            ->method('request')
             ->with(
+                'post',
                 'https://www.test.com/licenses/find?abc=def&ghi=0&page=2&per_page=15',
                 [
                     'headers' => [
@@ -435,8 +438,9 @@ JSON;
 
         $this->httpClient
             ->expects(self::once())
-            ->method('post')
+            ->method('request')
             ->with(
+                'post',
                 'https://www.test.com/licenses/find?abc=def&ghi=0&per_page=15',
                 [
                     'headers' => [

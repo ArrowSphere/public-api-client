@@ -22,8 +22,9 @@ class CatalogClientTest extends AbstractClientTest
 
         $this->httpClient
             ->expects(self::once())
-            ->method('post')
+            ->method('request')
             ->with(
+                'post',
                 'https://www.test.com/catalog/find?page=2&per_page=15', [
                     'headers' => [
                         'apiKey' => '123456',
@@ -47,8 +48,8 @@ class CatalogClientTest extends AbstractClientTest
     {
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/categories/myType/programs/myVendor/products')
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/categories/myType/programs/myVendor/products')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getServices('myType', 'myVendor');
@@ -65,11 +66,11 @@ class CatalogClientTest extends AbstractClientTest
 
         $this->httpClient
             ->expects(self::exactly(3))
-            ->method('get')
+            ->method('request')
             ->withConsecutive(
-                ['https://www.test.com/catalog/categories/myType/programs/myVendor/products?per_page=100'],
-                ['https://www.test.com/catalog/categories/myType/programs/myVendor/products?page=2&per_page=100'],
-                ['https://www.test.com/catalog/categories/myType/programs/myVendor/products?page=3&per_page=100']
+                ['get', 'https://www.test.com/catalog/categories/myType/programs/myVendor/products?per_page=100'],
+                ['get', 'https://www.test.com/catalog/categories/myType/programs/myVendor/products?page=2&per_page=100'],
+                ['get', 'https://www.test.com/catalog/categories/myType/programs/myVendor/products?page=3&per_page=100']
             )
             ->willReturn(new Response(200, [], $response));
 
@@ -81,8 +82,8 @@ class CatalogClientTest extends AbstractClientTest
     {
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/details/myType/myVendor/mySku')
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/details/myType/myVendor/mySku')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getDetails('myType', 'myVendor', 'mySku');
@@ -92,8 +93,8 @@ class CatalogClientTest extends AbstractClientTest
     {
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/details/myType/myVendor/mySku?enabled=0')
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/details/myType/myVendor/mySku?enabled=0')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getDetails('myType', 'myVendor', 'mySku', ['enabled' => 0]);

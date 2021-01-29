@@ -27,8 +27,8 @@ class WhoamiClientTest extends AbstractClientTest
     {
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/whoami')
+            ->method('request')
+            ->with('get', 'https://www.test.com/whoami')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getWhoamiRaw();
@@ -42,7 +42,8 @@ class WhoamiClientTest extends AbstractClientTest
     public function testGetWhoamiWithInvalidResponse(): void
     {
         $this->httpClient
-            ->method('get')
+            ->method('request')
+            ->with('get', 'https://www.test.com/whoami')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
@@ -81,8 +82,8 @@ class WhoamiClientTest extends AbstractClientTest
 JSON;
 
         $this->httpClient->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/whoami')
+            ->method('request')
+            ->with('get', 'https://www.test.com/whoami')
             ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getWhoami();

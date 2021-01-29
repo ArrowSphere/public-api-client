@@ -26,8 +26,8 @@ class FamilyClientTest extends AbstractClientTest
     {
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/families/microsoft')
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/families/microsoft')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getFamiliesRaw('microsoft');
@@ -42,8 +42,8 @@ class FamilyClientTest extends AbstractClientTest
     {
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/families/microsoft?per_page=100')
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/families/microsoft?per_page=100')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
@@ -67,11 +67,11 @@ class FamilyClientTest extends AbstractClientTest
 
         $this->httpClient
             ->expects(self::exactly(3))
-            ->method('get')
+            ->method('request')
             ->withConsecutive(
-                ['https://www.test.com/catalog/families/microsoft?per_page=100'],
-                ['https://www.test.com/catalog/families/microsoft?page=2&per_page=100'],
-                ['https://www.test.com/catalog/families/microsoft?page=3&per_page=100']
+                ['get', 'https://www.test.com/catalog/families/microsoft?per_page=100'],
+                ['get', 'https://www.test.com/catalog/families/microsoft?page=2&per_page=100'],
+                ['get', 'https://www.test.com/catalog/families/microsoft?page=3&per_page=100']
             )
             ->willReturn(new Response(200, [], $response));
 
@@ -120,8 +120,8 @@ JSON;
 
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/families/microsoft?per_page=100')
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/families/microsoft?per_page=100')
             ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getFamilies('microsoft');
@@ -157,8 +157,8 @@ JSON;
     {
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/families/microsoft/MS-0B-O365-ENTERPRIS')
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/families/microsoft/MS-0B-O365-ENTERPRIS')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getFamilyRaw('microsoft', 'MS-0B-O365-ENTERPRIS');
@@ -173,8 +173,8 @@ JSON;
     {
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/families/microsoft/MS-0B-O365-ENTERPRIS')
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/families/microsoft/MS-0B-O365-ENTERPRIS')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
@@ -203,8 +203,8 @@ JSON;
 
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/families/microsoft/MS-0B-O365-ENTERPRIS')
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/families/microsoft/MS-0B-O365-ENTERPRIS')
             ->willReturn(new Response(200, [], $response));
 
         $family = $this->client->getFamily('microsoft', 'MS-0B-O365-ENTERPRIS');
