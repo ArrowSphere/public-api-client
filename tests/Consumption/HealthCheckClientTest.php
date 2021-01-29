@@ -27,8 +27,8 @@ class HealthCheckClientTest extends AbstractClientTest
     {
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/consumption/healthcheck?')
+            ->method('request')
+            ->with('get', 'https://www.test.com/consumption/healthcheck?')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getItemRaw();
@@ -61,8 +61,8 @@ class HealthCheckClientTest extends AbstractClientTest
 JSON;
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/consumption/healthcheck?classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR')
+            ->method('request')
+            ->with('get', 'https://www.test.com/consumption/healthcheck?classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR')
             ->willReturn(new Response(200, [], $response));
 
         $items = $this->client->getItem(
@@ -105,8 +105,8 @@ JSON;
 
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/consumption/healthcheck?classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR')
+            ->method('request')
+            ->with('get', 'https://www.test.com/consumption/healthcheck?classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR')
             ->willReturn(new Response(200, [], $response));
 
         $this->client->getItem(
@@ -143,8 +143,8 @@ JSON;
 
         $this->httpClient
             ->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/consumption/healthcheck?classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR')
+            ->method('request')
+            ->with('get', 'https://www.test.com/consumption/healthcheck?classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR')
             ->willReturn(new Response(200, [], $response));
 
         $this->client->getItem(

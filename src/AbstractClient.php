@@ -6,7 +6,6 @@ use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use Psr\Http\Client\ClientInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
 
@@ -32,7 +31,7 @@ abstract class AbstractClient
     /** @var string The path of the endpoint */
     protected $path = '';
 
-    /** @var ClientInterface */
+    /** @var Client */
     protected $client;
 
     /** @var string The url of the request */
@@ -50,9 +49,9 @@ abstract class AbstractClient
     /**
      * AbstractClient constructor.
      *
-     * @param ClientInterface|null $client
+     * @param Client|null $client
      */
-    public function __construct(ClientInterface $client = null)
+    public function __construct(Client $client = null)
     {
         $this->client = $client ?? new Client();
     }
@@ -137,7 +136,8 @@ abstract class AbstractClient
      */
     protected function get(array $parameters = [], array $headers = []): string
     {
-        $response = $this->client->get(
+        $response = $this->client->request(
+            'get',
             $this->generateUrl($parameters),
             [
                 'headers' => $this->prepareHeaders($headers),
@@ -220,7 +220,8 @@ abstract class AbstractClient
      */
     protected function post(array $payload, array $parameters = [], array $headers = []): StreamInterface
     {
-        $response = $this->client->post(
+        $response = $this->client->request(
+            'post',
             $this->generateUrl($parameters),
             [
                 'headers' => $this->prepareHeaders($headers),
