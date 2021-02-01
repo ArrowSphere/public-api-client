@@ -149,34 +149,7 @@ class AddonClientTest extends AbstractClientTest
         "offer": "/api/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/05933B83-04D1-4AC6-BFCD-DBBBFC834483"
       },
       "addonParents": [
-        "02C07B64-2CD3-4667-B014-561192FC5D1A",
-        "096FABDF-AEB1-43DB-B04B-FF453B0AFADC",
-        "0F797C58-3B74-40A8-BFA5-383440A99445",
-        "11D802D5-4295-44D5-B355-8EAFB184EF36",
-        "1A6E8918-D2B2-432D-83A6-68C16C5D408E",
-        "2B3B8D2D-10AA-4BE4-B5FD-7F2FEB0C3091",
-        "2F192EFE-608A-4C9C-9D19-2B0B70B0962E",
-        "31BEDF01-9E57-4ECE-A53A-D3656A563931",
-        "32B23C88-949F-4E5B-B500-A87EEC676B80",
-        "43EE8060-1930-4F17-A01B-9B3A296C6824",
-        "4F7ECAF1-E9D6-4CAC-9687-E22EB3DFDD70",
-        "64168B63-4BCC-41E0-B5CB-7DC548977620",
-        "6B551829-DE8C-41E5-8678-41D52C27AEE8",
-        "796B6B5F-613C-4E24-A17C-EBA730D49C02",
-        "8BA3FD99-CD7C-48B0-811B-E78F7A4A1B32",
-        "8BDBB60B-E526-43E9-92EF-AB760C8E0B72",
-        "96D36E53-7E42-4CA3-AE96-BD20E3098D8D",
-        "A044B16A-1861-4308-8086-A3A3B506FAC2",
-        "B456810A-C414-4E07-98FC-EF74E8175A09",
-        "C2CAA762-83F8-43C4-ACEC-ECAD58B69D1B",
-        "C3897426-9F49-4EAF-9B4D-7D9A1C72AEF7",
-        "C4158AA7-00E7-4CE1-9CF3-3CF8321F377A",
-        "CE139FE5-8BD5-47ED-A5BE-07C286F8B9E0",
-        "D27F14DF-AECE-49BD-B769-D4E28A24963E",
-        "DB5E0B1C-9CC3-459C-9D08-C61993959FD3",
-        "E016B974-A412-404F-98CD-DB92311AFB10",
-        "E9025A44-59B1-497B-A5BE-F148006549BA",
-        "F7AD4EAF-F2EF-42DC-B43C-425CE393435C"
+        "02C07B64-2CD3-4667-B014-561192FC5D1A"
       ],
       "logo": "https://websource.myportal.cloud/images/Microsoft.png",
       "icon": "https://websource.myportal.cloud/images/icon/Microsoft.png",
@@ -241,32 +214,7 @@ class AddonClientTest extends AbstractClientTest
         "addons": "/api/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/0F598EFE-F330-4D79-B79F-C9480BB7CE3E/addons"
       },
       "addonParents": [
-        "02C07B64-2CD3-4667-B014-561192FC5D1A",
-        "096FABDF-AEB1-43DB-B04B-FF453B0AFADC",
-        "0F797C58-3B74-40A8-BFA5-383440A99445",
-        "11D802D5-4295-44D5-B355-8EAFB184EF36",
-        "2C883339-EF9C-4CCE-81B8-E5ADEA60794C",
-        "2F192EFE-608A-4C9C-9D19-2B0B70B0962E",
-        "31BEDF01-9E57-4ECE-A53A-D3656A563931",
-        "4260988E-990D-479C-AE7B-F01CE8E1BB4D",
-        "4D8F3B90-29B3-4E7B-B37C-4A435DDEF1D9",
-        "4F7ECAF1-E9D6-4CAC-9687-E22EB3DFDD70",
-        "64168B63-4BCC-41E0-B5CB-7DC548977620",
-        "8A93D724-50EF-4293-B4F7-B28536DC3101",
-        "8BA3FD99-CD7C-48B0-811B-E78F7A4A1B32",
-        "8BDBB60B-E526-43E9-92EF-AB760C8E0B72",
-        "96D36E53-7E42-4CA3-AE96-BD20E3098D8D",
-        "A044B16A-1861-4308-8086-A3A3B506FAC2",
-        "B456810A-C414-4E07-98FC-EF74E8175A09",
-        "B9A1D576-43FD-464B-8AD9-4B1EAFC5DB77",
-        "C2CAA762-83F8-43C4-ACEC-ECAD58B69D1B",
-        "C3897426-9F49-4EAF-9B4D-7D9A1C72AEF7",
-        "C4158AA7-00E7-4CE1-9CF3-3CF8321F377A",
-        "CE139FE5-8BD5-47ED-A5BE-07C286F8B9E0",
-        "D6985A19-C58D-4352-88AE-9095D2FE8736",
-        "DB5E0B1C-9CC3-459C-9D08-C61993959FD3",
-        "DD08DAA2-BC6A-4BC6-A388-AE36118EFCA0",
-        "E016B974-A412-404F-98CD-DB92311AFB10"
+        "02C07B64-2CD3-4667-B014-561192FC5D1A"
       ],
       "logo": "https://websource.myportal.cloud/images/Microsoft.png",
       "icon": "https://websource.myportal.cloud/images/icon/Microsoft.png",
@@ -306,7 +254,7 @@ JSON;
         self::assertEquals(null, $addon->getEula());
         self::assertEquals('', $addon->getFeaturesPicture());
         self::assertEquals('Corporate', $addon->getBuyingProgram());
-        self::assertEquals(null, $addon->getPrerequisites());
+        self::assertEquals(["02C07B64-2CD3-4667-B014-561192FC5D1A"], $addon->getPrerequisites());
         self::assertEquals('', $addon->getConversionSkus());
         self::assertEquals(false, $addon->getIsTrial());
         self::assertEquals(true, $addon->getIsAddon());
@@ -372,7 +320,7 @@ JSON;
         self::assertEquals(null, $addon->getEula());
         self::assertEquals('', $addon->getFeaturesPicture());
         self::assertEquals('Corporate', $addon->getBuyingProgram());
-        self::assertEquals(null, $addon->getPrerequisites());
+        self::assertEquals(["02C07B64-2CD3-4667-B014-561192FC5D1A"], $addon->getPrerequisites());
         self::assertEquals('', $addon->getConversionSkus());
         self::assertEquals(false, $addon->getIsTrial());
         self::assertEquals(true, $addon->getIsAddon());
@@ -528,32 +476,7 @@ JSON;
       "addons": "/api/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers/0F598EFE-F330-4D79-B79F-C9480BB7CE3E/addons"
     },
     "addonParents": [
-      "02C07B64-2CD3-4667-B014-561192FC5D1A",
-      "096FABDF-AEB1-43DB-B04B-FF453B0AFADC",
-      "0F797C58-3B74-40A8-BFA5-383440A99445",
-      "11D802D5-4295-44D5-B355-8EAFB184EF36",
-      "2C883339-EF9C-4CCE-81B8-E5ADEA60794C",
-      "2F192EFE-608A-4C9C-9D19-2B0B70B0962E",
-      "31BEDF01-9E57-4ECE-A53A-D3656A563931",
-      "4260988E-990D-479C-AE7B-F01CE8E1BB4D",
-      "4D8F3B90-29B3-4E7B-B37C-4A435DDEF1D9",
-      "4F7ECAF1-E9D6-4CAC-9687-E22EB3DFDD70",
-      "64168B63-4BCC-41E0-B5CB-7DC548977620",
-      "8A93D724-50EF-4293-B4F7-B28536DC3101",
-      "8BA3FD99-CD7C-48B0-811B-E78F7A4A1B32",
-      "8BDBB60B-E526-43E9-92EF-AB760C8E0B72",
-      "96D36E53-7E42-4CA3-AE96-BD20E3098D8D",
-      "A044B16A-1861-4308-8086-A3A3B506FAC2",
-      "B456810A-C414-4E07-98FC-EF74E8175A09",
-      "B9A1D576-43FD-464B-8AD9-4B1EAFC5DB77",
-      "C2CAA762-83F8-43C4-ACEC-ECAD58B69D1B",
-      "C3897426-9F49-4EAF-9B4D-7D9A1C72AEF7",
-      "C4158AA7-00E7-4CE1-9CF3-3CF8321F377A",
-      "CE139FE5-8BD5-47ED-A5BE-07C286F8B9E0",
-      "D6985A19-C58D-4352-88AE-9095D2FE8736",
-      "DB5E0B1C-9CC3-459C-9D08-C61993959FD3",
-      "DD08DAA2-BC6A-4BC6-A388-AE36118EFCA0",
-      "E016B974-A412-404F-98CD-DB92311AFB10"
+      "02C07B64-2CD3-4667-B014-561192FC5D1A"
     ],
     "logo": "https://websource.myportal.cloud/images/Microsoft.png",
     "icon": "https://websource.myportal.cloud/images/icon/Microsoft.png",
@@ -571,13 +494,16 @@ JSON;
         self::assertEquals('description', $addon->getDescription());
         self::assertEquals('SAAS', $addon->getClassification());
         self::assertEquals('Microsoft 365 Domestic Calling Plan', $addon->getName());
+        self::assertEquals([], $addon->getAddons());
+        self::assertEquals(["02C07B64-2CD3-4667-B014-561192FC5D1A"], $addon->getPrerequisites());
+
         self::assertEquals([], $addon->getKeywords());
         self::assertEquals('', $addon->getFullFeatures());
         self::assertEquals('', $addon->getShortFeatures());
         self::assertEquals(null, $addon->getEula());
         self::assertEquals('', $addon->getFeaturesPicture());
         self::assertEquals('Corporate', $addon->getBuyingProgram());
-        self::assertEquals(null, $addon->getPrerequisites());
+        self::assertEquals(["02C07B64-2CD3-4667-B014-561192FC5D1A"], $addon->getPrerequisites());
         self::assertEquals('', $addon->getConversionSkus());
         self::assertEquals(false, $addon->getIsTrial());
         self::assertEquals(true, $addon->getIsAddon());
