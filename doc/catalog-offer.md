@@ -100,6 +100,8 @@ It should be used to display search results or to make a listing of offers.
 | classification   | ```string```      | SAAS                                 | The [classification](catalog-classification.md)                                                       |
 | customerCategory | ```string```      | Corporate                            | A category for the customer                                                                           |
 | hasAddons        | ```bool```        | true                                 | A flag to indicate whether the offer has add-on(s) or not                                             |
+| addons           | ```string[]```    | ['031C9E47-4802-4248-838E-778FB1D2CC05', '456YU676-4802-6789-FA34-778FB1D2CC05']                                 | A list of addon SKUs attached |
+| Prerequisites    | ```string[]```    | ['031C9E47-4802-4248-838E-778FB1D2CC05', '456YU676-4802-6789-FA34-778FB1D2CC05']                                 | A list of prerequisite SKUs attached |
 | highlight        | ```array```       | ['sku' => '<strong>ABC</strong>']    | An associative array which shows which values are to be highlighted based on the search keywords      |
 | id               | ```string```      | 45178cd297cf6e36488a13d211243227     | An internal identifier for the offer                                                                  |
 | isAddon          | ```bool```        | false                                | A flag to indicate whether the offer is an add-on or not                                              |

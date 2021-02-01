@@ -9,8 +9,6 @@ use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
  */
 class Offer extends AbstractOffer
 {
-    public const COLUMN_ADDONS = 'add_ons';
-
     public const COLUMN_BUYING_PROGRAM = 'buying_program';
 
     public const COLUMN_CONVERSION_SKUS = 'conversion_skus';
@@ -31,8 +29,6 @@ class Offer extends AbstractOffer
 
     public const COLUMN_ORDERABLE_SKU = 'orderable_sku';
 
-    public const COLUMN_PREREQUISITES = 'prerequisites';
-
     public const COLUMN_REQUIREMENTS = 'requirements';
 
     public const COLUMN_RELATED_OFFERS = 'related_offers';
@@ -42,14 +38,10 @@ class Offer extends AbstractOffer
     public const COLUMN_SHORT_FEATURES = 'short_features';
 
     protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLUMN_ADDONS          => 'array',
         self::COLUMN_CONVERSION_SKUS => 'array',
         self::COLUMN_IS_ENABLED      => 'required',
         self::COLUMN_RELATED_OFFERS  => 'array',
     ];
-
-    /** @var string[]|null */
-    private $addons;
 
     /** @var string|null */
     private $buyingProgram;
@@ -78,9 +70,6 @@ class Offer extends AbstractOffer
     /** @var string|null */
     private $orderableSku;
 
-    /** @var string[]|null */
-    private $prerequisites;
-
     /** @var string[] */
     private $relatedOffers;
 
@@ -103,7 +92,6 @@ class Offer extends AbstractOffer
     {
         parent::__construct($data);
 
-        $this->addons = $data[self::COLUMN_ADDONS] ?? null;
         $this->buyingProgram = $data[self::COLUMN_BUYING_PROGRAM] ?? null;
         $this->conversionSkus = $data[self::COLUMN_CONVERSION_SKUS] ?? null;
         $this->description = $data[self::COLUMN_DESCRIPTION] ?? null;
@@ -113,19 +101,10 @@ class Offer extends AbstractOffer
         $this->fullFeatures = $data[self::COLUMN_FULL_FEATURES] ?? null;
         $this->isEnabled = $data[self::COLUMN_IS_ENABLED];
         $this->orderableSku = $data[self::COLUMN_ORDERABLE_SKU] ?? null;
-        $this->prerequisites = $data[self::COLUMN_PREREQUISITES] ?? null;
         $this->relatedOffers = $data[self::COLUMN_RELATED_OFFERS] ?? [];
         $this->requirements = $data[self::COLUMN_REQUIREMENTS] ?? null;
         $this->serviceDescription = $data[self::COLUMN_SERVICE_DESCRIPTION] ?? null;
         $this->shortFeatures = $data[self::COLUMN_SHORT_FEATURES] ?? null;
-    }
-
-    /**
-     * @return string[]|null
-     */
-    public function getAddons(): ?array
-    {
-        return $this->addons;
     }
 
     /**
@@ -201,14 +180,6 @@ class Offer extends AbstractOffer
     }
 
     /**
-     * @return string[]|null
-     */
-    public function getPrerequisites(): ?array
-    {
-        return $this->prerequisites;
-    }
-
-    /**
      * @return string[]
      */
     public function getRelatedOffers(): array
@@ -246,7 +217,6 @@ class Offer extends AbstractOffer
     public function jsonSerialize()
     {
         return array_merge(parent::jsonSerialize(), [
-            self::COLUMN_ADDONS                => $this->getAddons(),
             self::COLUMN_BUYING_PROGRAM        => $this->getBuyingProgram(),
             self::COLUMN_CONVERSION_SKUS       => $this->getConversionSkus(),
             self::COLUMN_DESCRIPTION           => $this->getDescription(),
@@ -259,7 +229,6 @@ class Offer extends AbstractOffer
             self::COLUMN_SERVICE_DESCRIPTION   => $this->getServiceDescription(),
             self::COLUMN_FEATURES_PICTURE      => $this->getFeaturesPicture(),
             self::COLUMN_FULL_FEATURES         => $this->getFullFeatures(),
-            self::COLUMN_PREREQUISITES         => $this->getPrerequisites(),
             self::COLUMN_REQUIREMENTS          => $this->getRequirements(),
             self::COLUMN_SHORT_FEATURES        => $this->getShortFeatures(),
         ]);

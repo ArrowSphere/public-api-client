@@ -44,6 +44,8 @@ trait LegacyOfferConverterTrait
             Offer::COLUMN_SKU                   => $data['reference'],
             Offer::COLUMN_VENDOR                => $data['vendor'],
             Offer::COLUMN_VENDOR_CODE           => $data['program'],
+            Offer::COLUMN_ADDONS                => [],
+            Offer::COLUMN_PREREQUISITES         => $data['addonParents'] ?? [],
             //$data['associatedSubscriptionProgram'],
             Offer::COLUMN_DESCRIPTION           => $data['description'],
             Offer::COLUMN_HAS_ADDONS            => $data['hasAddon'],
