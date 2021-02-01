@@ -24,6 +24,8 @@ class OfferTest extends TestCase
             "thumbnail"                     => "https://websource.myportal.cloud/images/Office365.jpg",
             "customer_category"             => '',
             "category"                      => ["Productivity"],
+            "add_ons"                       => ["abc", "def"],
+            "prerequisites"                 => [],
             "has_addons"                    => false,
             "is_addon"                      => false,
             "is_trial"                      => false,
@@ -87,7 +89,7 @@ class OfferTest extends TestCase
             "eula"                          => "eula"
         ]);
 
-        self::assertEquals('{"category":["Productivity"],"customer_category":"","has_addons":false,"is_addon":false,"is_trial":false,"keywords":["Corporate"],"marketplace":"US","name":"Dynamics 365 Customer Voice Addl Responses","service_name":"Office 365 Business \u2013 (Corporate)","service_ref":"MS-0A-O365-BUSINESS","sku":"CAFF2897-D629-404A-A241-6B360E979609","thumbnail":"https:\/\/websource.myportal.cloud\/images\/Office365.jpg","type":"SAAS","vendor":"Microsoft","vendor_code":"microsoft","weight_forced":0,"weight_top_sales":11.173757047667863,"prices":[{"min_quantity":1,"max_quantity":10000000,"recurring_buy_price":50,"recurring_sell_price":70,"arrow_price":null,"term":"1 Year","unit_type":"LICENSE","recurring_time_unit":"per Month","currency":"USD","period_as_hours":720,"term_as_hours":8640},{"min_quantity":1,"max_quantity":10000000,"recurring_buy_price":600,"recurring_sell_price":800,"arrow_price":null,"term":"1 Year","unit_type":"LICENSE","recurring_time_unit":"per Year","currency":"USD","period_as_hours":8640,"term_as_hours":8640}],"add_ons":null,"buying_program":null,"conversion_skus":null,"description":"description","end_customer_features":null,"eula":"eula","isEnabled":true,"program.isEnabled":true,"orderable_sku":null,"related_offers":[],"service_description":null,"features_picture":null,"full_features":null,"prerequisites":null,"requirements":null,"short_features":null}', json_encode($offer));
+        self::assertEquals('{"add_ons":["abc","def"],"category":["Productivity"],"customer_category":"","has_addons":false,"is_addon":false,"is_trial":false,"keywords":["Corporate"],"marketplace":"US","prerequisites":[],"name":"Dynamics 365 Customer Voice Addl Responses","service_name":"Office 365 Business \u2013 (Corporate)","service_ref":"MS-0A-O365-BUSINESS","sku":"CAFF2897-D629-404A-A241-6B360E979609","thumbnail":"https:\/\/websource.myportal.cloud\/images\/Office365.jpg","type":"SAAS","vendor":"Microsoft","vendor_code":"microsoft","weight_forced":0,"weight_top_sales":11.173757047667863,"prices":[{"min_quantity":1,"max_quantity":10000000,"recurring_buy_price":50,"recurring_sell_price":70,"arrow_price":null,"term":"1 Year","unit_type":"LICENSE","recurring_time_unit":"per Month","currency":"USD","period_as_hours":720,"term_as_hours":8640},{"min_quantity":1,"max_quantity":10000000,"recurring_buy_price":600,"recurring_sell_price":800,"arrow_price":null,"term":"1 Year","unit_type":"LICENSE","recurring_time_unit":"per Year","currency":"USD","period_as_hours":8640,"term_as_hours":8640}],"buying_program":null,"conversion_skus":null,"description":"description","end_customer_features":null,"eula":"eula","isEnabled":true,"program.isEnabled":true,"orderable_sku":null,"related_offers":[],"service_description":null,"features_picture":null,"full_features":null,"requirements":null,"short_features":null}', json_encode($offer));
 
     }
 }

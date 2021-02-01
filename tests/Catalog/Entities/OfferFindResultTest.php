@@ -22,6 +22,8 @@ class OfferFindResultTest extends TestCase
             'customer_category' => 'my customer category',
             'has_addons'        => 'my has addons',
             'is_addon'          => 'my is addon',
+            'add_ons'           => [],
+            'prerequisites'     => [],
             'is_trial'          => 'my is trial',
             'keywords'          => ['my keywords'],
             'marketplace'       => 'my marketplace',
@@ -53,6 +55,7 @@ class OfferFindResultTest extends TestCase
 
         $expected = <<<JSON
 {
+    "add_ons": [],
     "category": [
         "my category"
     ],
@@ -64,6 +67,7 @@ class OfferFindResultTest extends TestCase
         "my keywords"
     ],
     "marketplace": "my marketplace",
+    "prerequisites": [],
     "name": "my name",
     "service_name": "my service name",
     "service_ref": "my service ref",
