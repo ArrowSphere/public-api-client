@@ -96,6 +96,7 @@ It should be used to display search results or to make a listing of offers.
 
 | Field            | Type              | Example                              | Description                                                                                           |
 |------------------|-------------------|--------------------------------------|-------------------------------------------------------------------------------------------------------|
+| addons              | ```string[]```    | ['123', '456']                       | An array containing the compatible add-ons for this offer                                             |
 | category         | ```string[]```    | ['Productivity']                     | An array of categories                                                                                |
 | classification   | ```string```      | SAAS                                 | The [classification](catalog-classification.md)                                                       |
 | customerCategory | ```string```      | Corporate                            | A category for the customer                                                                           |
@@ -107,6 +108,7 @@ It should be used to display search results or to make a listing of offers.
 | keywords         | ```string[]```    | ['Corporate']                        | An array of keywords                                                                                  |
 | marketplace      | ```string```      | US                                   | The marketplace of the catalog the offer comes from                                                   |
 | name             | ```string```      | Microsoft 365 Business Standard      | The name                                                                                              |
+| prerequisites       | ```string[]```    | ['123', '456']                       | An array containing the offers compatible with this add-on. Makes sense only for add-ons.             |
 | priceBands       | ```PriceBand[]``` | an array of [PriceBand](#PriceBand)  | An array of [PriceBand](#PriceBand) with calculated prices for the reseller                           |
 | programIsEnabled | ```bool```        | true                                 | A flag to indicate whether the program of the offer is enabled or not                                 |
 | serviceName      | ```string```      | Office 365 Business – (Corporate)    | The name of the [service](catalog-service.md)                                                         |

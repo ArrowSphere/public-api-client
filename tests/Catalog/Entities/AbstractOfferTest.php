@@ -24,6 +24,8 @@ class AbstractOfferTest extends TestCase
                     'keywords'          => ['my keyword'],
                     'marketplace'       => 'US',
                     'name'              => 'my offer name',
+                    'add_ons'           => [],
+                    'prerequisites'     => [],
                     'prices'            => [
                         [
                             'min_quantity'         => 0,
@@ -53,6 +55,7 @@ class AbstractOfferTest extends TestCase
 
         $expected = <<<JSON
 {
+    "add_ons": [],
     "category": [
         "my category"
     ],
@@ -64,6 +67,7 @@ class AbstractOfferTest extends TestCase
         "my keyword"
     ],
     "marketplace": "US",
+    "prerequisites": [],
     "name": "my offer name",
     "service_name": "my service name",
     "service_ref": "my service ref",

@@ -15,6 +15,10 @@ abstract class AbstractOffer extends AbstractEntity
 
     public const COLUMN_IS_ADDON = 'is_addon';
 
+    public const COLUMN_ADDONS = 'add_ons';
+
+    public const COLUMN_PREREQUISITES = 'prerequisites';
+
     public const COLUMN_IS_TRIAL = 'is_trial';
 
     public const COLUMN_KEYWORDS = 'keywords';
@@ -48,6 +52,8 @@ abstract class AbstractOffer extends AbstractEntity
         self::COLUMN_IS_ADDON          => 'required',
         self::COLUMN_IS_TRIAL          => 'required',
         self::COLUMN_KEYWORDS          => 'present|array',
+        self::COLUMN_ADDONS            => 'array',
+        self::COLUMN_PREREQUISITES     => 'array',
         self::COLUMN_MARKETPLACE       => 'required',
         self::COLUMN_NAME              => 'required',
         'prices'                       => 'required|array',
@@ -61,6 +67,9 @@ abstract class AbstractOffer extends AbstractEntity
         self::COLUMN_WEIGHT_FORCED     => 'required|numeric',
         self::COLUMN_WEIGHT_TOP_SALES  => 'required|numeric',
     ];
+
+    /** @var string[]|null */
+    private $addons;
 
     /** @var string[] */
     private $category;
@@ -88,6 +97,9 @@ abstract class AbstractOffer extends AbstractEntity
 
     /** @var string */
     private $name;
+
+    /** @var string[]|null */
+    private $prerequisites;
 
     /** @var PriceBand[] */
     private $priceBands;
@@ -129,6 +141,7 @@ abstract class AbstractOffer extends AbstractEntity
     {
         parent::__construct($data);
 
+        $this->addons = $data[self::COLUMN_ADDONS] ?? null;
         $this->category = $data[self::COLUMN_CATEGORY];
         $this->classification = $data[self::COLUMN_TYPE];
         $this->customerCategory = $data[self::COLUMN_CUSTOMER_CATEGORY];
@@ -141,6 +154,7 @@ abstract class AbstractOffer extends AbstractEntity
         $this->priceBands = array_map(static function (array $priceBandData) {
             return new PriceBand($priceBandData);
         }, $data['prices']);
+        $this->prerequisites = $data[self::COLUMN_PREREQUISITES] ?? null;
         $this->programIsEnabled = $data['program']['isEnabled'] ?? true;
         $this->serviceName = $data[self::COLUMN_SERVICE_NAME];
         $this->serviceRef = $data[self::COLUMN_SERVICE_REF];
@@ -184,6 +198,22 @@ abstract class AbstractOffer extends AbstractEntity
     public function getHasAddons(): bool
     {
         return $this->hasAddons;
+    }
+
+    /**
+     * @return string[]|null
+     */
+    public function getAddons(): ?array
+    {
+        return $this->addons;
+    }
+
+    /**
+     * @return string[]|null
+     */
+    public function getPrerequisites(): ?array
+    {
+        return $this->prerequisites;
     }
 
     /**
@@ -368,6 +398,7 @@ abstract class AbstractOffer extends AbstractEntity
     public function jsonSerialize()
     {
         return [
+            self::COLUMN_ADDONS            => $this->getAddons(),
             self::COLUMN_CATEGORY          => $this->getCategory(),
             self::COLUMN_CUSTOMER_CATEGORY => $this->getCustomerCategory(),
             self::COLUMN_HAS_ADDONS        => $this->getHasAddons(),
@@ -375,6 +406,7 @@ abstract class AbstractOffer extends AbstractEntity
             self::COLUMN_IS_TRIAL          => $this->getIsTrial(),
             self::COLUMN_KEYWORDS          => $this->getKeywords(),
             self::COLUMN_MARKETPLACE       => $this->getMarketplace(),
+            self::COLUMN_PREREQUISITES     => $this->getPrerequisites(),
             self::COLUMN_NAME              => $this->getName(),
             self::COLUMN_SERVICE_NAME      => $this->getServiceName(),
             self::COLUMN_SERVICE_REF       => $this->getServiceRef(),
