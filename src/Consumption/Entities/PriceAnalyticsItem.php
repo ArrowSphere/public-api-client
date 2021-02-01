@@ -24,7 +24,7 @@ class PriceAnalyticsItem extends AbstractEntity
     /** @var float */
     private $resellerBuyPrice;
 
-    /** @var float */
+    /** @var float|null */
     private $arrowBuyPrice;
 
     /** @var float */

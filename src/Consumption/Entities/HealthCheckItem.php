@@ -32,7 +32,7 @@ class HealthCheckItem extends AbstractEntity
     /** @var string */
     private $classification;
 
-    /** @var ColorEnum */
+    /** @var string */
     private $color;
 
     /** @var string */

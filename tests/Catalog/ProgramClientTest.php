@@ -4,10 +4,10 @@ namespace ArrowSphere\PublicApiClient\Tests\Catalog;
 
 use ArrowSphere\PublicApiClient\Catalog\Entities\Program;
 use ArrowSphere\PublicApiClient\Catalog\ProgramClient;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
+use GuzzleHttp\Psr7\Response;
 
 /**
  * Class ProgramClientTest
@@ -24,11 +24,11 @@ class ProgramClientTest extends AbstractClientTest
      */
     public function testGetProgramsRaw(): void
     {
-        $this->curler->response = 'OK USA';
-
-        $this->curler->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/categories/SAAS/programs');
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs')
+            ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getProgramsRaw('SAAS');
     }
@@ -40,29 +40,39 @@ class ProgramClientTest extends AbstractClientTest
      */
     public function testGetProgramsWithInvalidResponse(): void
     {
-        $this->curler->response = '{';
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs?per_page=100')
+            ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
         $programs = $this->client->getPrograms('SAAS');
         iterator_to_array($programs);
     }
 
+    /**
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
     public function testGetProgramsWithPagination(): void
     {
-        $this->curler->response = json_encode([
+        $response = json_encode([
             'data'       => [],
             'pagination' => [
                 'total_page' => 3,
             ],
         ]);
 
-        $this->curler->expects(self::exactly(3))
-            ->method('get')
+        $this->httpClient
+            ->expects(self::exactly(3))
+            ->method('request')
             ->withConsecutive(
-                ['https://www.test.com/catalog/categories/myType/programs?per_page=100'],
-                ['https://www.test.com/catalog/categories/myType/programs?page=2&per_page=100'],
-                ['https://www.test.com/catalog/categories/myType/programs?page=3&per_page=100']
-            );
+                ['get', 'https://www.test.com/catalog/categories/myType/programs?per_page=100'],
+                ['get', 'https://www.test.com/catalog/categories/myType/programs?page=2&per_page=100'],
+                ['get', 'https://www.test.com/catalog/categories/myType/programs?page=3&per_page=100']
+            )
+            ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getPrograms('myType');
         iterator_to_array($test);
@@ -74,7 +84,7 @@ class ProgramClientTest extends AbstractClientTest
      */
     public function testGetPrograms(): void
     {
-        $this->curler->response = <<<JSON
+        $response = <<<JSON
 {
   "status": 200,
   "data": [
@@ -112,9 +122,11 @@ class ProgramClientTest extends AbstractClientTest
 }
 JSON;
 
-        $this->curler->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/categories/SAAS/programs?per_page=100');
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs?per_page=100')
+            ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getPrograms('SAAS');
         $list = iterator_to_array($test);
@@ -145,11 +157,11 @@ JSON;
      */
     public function testGetProgramRaw(): void
     {
-        $this->curler->response = 'OK USA';
-
-        $this->curler->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/categories/SAAS/programs/microsoft');
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft')
+            ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getProgramRaw('SAAS', 'microsoft');
     }
@@ -161,7 +173,11 @@ JSON;
      */
     public function testGetProgramWithInvalidResponse(): void
     {
-        $this->curler->response = '{';
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft')
+            ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
         $this->client->getProgram('SAAS', 'microsoft');
@@ -173,7 +189,7 @@ JSON;
      */
     public function testGetProgram(): void
     {
-        $this->curler->response = <<<JSON
+        $response = <<<JSON
 {
   "status": 200,
   "data": {
@@ -190,9 +206,11 @@ JSON;
 }
 JSON;
 
-        $this->curler->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/catalog/categories/SAAS/programs/microsoft');
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft')
+            ->willReturn(new Response(200, [], $response));
 
         $program = $this->client->getProgram('SAAS', 'microsoft');
 

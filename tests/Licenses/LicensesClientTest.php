@@ -3,11 +3,14 @@
 namespace ArrowSphere\PublicApiClient\Tests\Licenses;
 
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License;
 use ArrowSphere\PublicApiClient\Licenses\Entities\LicenseFindResult;
 use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Psr7\Response;
 
 /**
  * Class OfferClientTest
@@ -18,6 +21,11 @@ class LicensesClientTest extends AbstractClientTest
 {
     protected const MOCKED_CLIENT_CLASS = LicensesClient::class;
 
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
     public function testFindRaw(): void
     {
         $this->client->setPage(2);
@@ -26,10 +34,12 @@ class LicensesClientTest extends AbstractClientTest
         $postData = [
             LicensesClient::DATA_KEYWORD   => 'office 365',
             LicensesClient::DATA_KEYWORDS  => [
-                License::COLUMN_CUSTOMER_NAME     => [
-                    'My customer',
+                License::COLUMN_CUSTOMER_NAME => [
+                    LicensesClient::KEYWORDS_VALUES   => [
+                        'My customer',
+                    ],
+                    LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
                 ],
-                LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
             ],
             LicensesClient::DATA_FILTERS   => [
                 License::COLUMN_VENDOR_CODE => [
@@ -43,16 +53,104 @@ class LicensesClientTest extends AbstractClientTest
             LicensesClient::DATA_HIGHLIGHT => true,
         ];
 
-        $this->curler->response = 'OK USA';
-
-        $this->curler->expects(self::once())
-            ->method('post')
-            ->with('https://www.test.com/licenses/find?abc=def&ghi=0&page=2&per_page=15', json_encode($postData));
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'post',
+                'https://www.test.com/licenses/find?abc=def&ghi=0&page=2&per_page=15',
+                [
+                    'headers' => [
+                        'apiKey'       => '123456',
+                        'Content-Type' => 'application/json',
+                    ],
+                    'body'    => json_encode($postData),
+                ]
+            )
+            ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->findRaw($postData, [
             'abc' => 'def',
             'ghi' => false,
         ]);
+    }
+
+    /**
+     * @depends testFindRaw
+     * @throws PublicApiClientException
+     * @throws NotFoundException
+     * @throws GuzzleException
+     */
+    public function testAssociativeArray(): void
+    {
+        $postData = [
+            LicensesClient::DATA_KEYWORD   => 'office 365',
+            LicensesClient::DATA_KEYWORDS  => [
+                License::COLUMN_CUSTOMER_NAME => [
+                    LicensesClient::KEYWORDS_VALUES   => [
+                        'first'  => 'My customer',
+                        'second' => 'Other',
+                    ],
+                    LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
+                ],
+            ],
+            LicensesClient::DATA_FILTERS   => [
+                License::COLUMN_VENDOR_CODE => [
+                    'first'  => 'Microsoft',
+                    'second' => 'IBM',
+                ],
+            ],
+            LicensesClient::DATA_SORT      => [
+                License::COLUMN_STATUS_CODE => LicensesClient::SORT_DESCENDING,
+            ],
+            LicensesClient::DATA_HIGHLIGHT => true,
+        ];
+
+        $expected = <<<JSON
+{
+    "keyword": "office 365",
+    "keywords": {
+        "customer_name": {
+            "values": [
+                "My customer",
+                "Other"
+            ],
+            "operator": "OR"
+        }
+    },
+    "filters": {
+        "vendor_code": [
+            "Microsoft",
+            "IBM"
+        ]
+    },
+    "sort": {
+        "status_code": "desc"
+    },
+    "highlight": true
+}
+JSON;
+
+        // This line is to have minified JSON because it's what will be generated in the payload
+        $expected = json_encode(json_decode($expected, true));
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'post',
+                'https://www.test.com/licenses/find',
+                [
+                    'headers' => [
+                        'apiKey'       => '123456',
+                        'Content-Type' => 'application/json',
+                    ],
+                    'body'    => $expected,
+                ]
+            )
+            ->willReturn(new Response(200, [], 'OK USA'));
+
+        $this->client->findRaw($postData);
     }
 
     /**
@@ -65,10 +163,12 @@ class LicensesClientTest extends AbstractClientTest
         $postData = [
             LicensesClient::DATA_KEYWORD   => 'office 365',
             LicensesClient::DATA_KEYWORDS  => [
-                License::COLUMN_CUSTOMER_NAME     => [
-                    'My customer',
+                License::COLUMN_CUSTOMER_NAME => [
+                    LicensesClient::KEYWORDS_VALUES   => [
+                        'My customer',
+                    ],
+                    LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
                 ],
-                LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
             ],
             LicensesClient::DATA_FILTERS   => [
                 License::COLUMN_VENDOR_CODE => [
@@ -82,9 +182,21 @@ class LicensesClientTest extends AbstractClientTest
             LicensesClient::DATA_HIGHLIGHT => true,
         ];
 
-        $this->curler->response = <<<JSON
-{
-JSON;
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'post',
+                'https://www.test.com/licenses/find?abc=def&ghi=0&page=2&per_page=15',
+                [
+                    'headers' => [
+                        'apiKey'       => '123456',
+                        'Content-Type' => 'application/json',
+                    ],
+                    'body'    => json_encode($postData),
+                ]
+            )
+            ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
         $this->client->find($postData, 15, 2, [
@@ -104,9 +216,11 @@ JSON;
             LicensesClient::DATA_KEYWORD   => 'office 365',
             LicensesClient::DATA_KEYWORDS  => [
                 License::COLUMN_CUSTOMER_NAME     => [
-                    'My customer',
+                    LicensesClient::KEYWORDS_VALUES   => [
+                        'My customer',
+                    ],
+                    LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
                 ],
-                LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
             ],
             LicensesClient::DATA_FILTERS   => [
                 License::COLUMN_VENDOR_CODE => [
@@ -119,7 +233,8 @@ JSON;
             ],
             LicensesClient::DATA_HIGHLIGHT => true,
         ];
-        $this->curler->response = <<<JSON
+
+        $response = <<<JSON
 {
     "licenses": [
         {
@@ -321,9 +436,21 @@ JSON;
 }
 JSON;
 
-        $this->curler->expects(self::once())
-            ->method('post')
-            ->with('https://www.test.com/licenses/find?abc=def&ghi=0&per_page=15', json_encode($postData));
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'post',
+                'https://www.test.com/licenses/find?abc=def&ghi=0&per_page=15',
+                [
+                    'headers' => [
+                        'apiKey'       => '123456',
+                        'Content-Type' => 'application/json',
+                    ],
+                    'body'    => json_encode($postData),
+                ]
+            )
+            ->willReturn(new Response(200, [], $response));
 
         $findResult = $this->client->find($postData, 15, 1, [
             'abc' => 'def',
@@ -346,7 +473,7 @@ JSON;
                 [
                     'value' => 'IBM',
                     'count' => 21,
-                ]
+                ],
             ],
             $filter->getValues()
         );
@@ -362,7 +489,7 @@ JSON;
                 [
                     'value' => 'IaaS',
                     'count' => 1316,
-                ]
+                ],
             ],
             $filter->getValues()
         );

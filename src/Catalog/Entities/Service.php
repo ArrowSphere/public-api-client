@@ -7,6 +7,8 @@ use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class Service
+ *
+ * @deprecated use the Family entity instead
  */
 class Service extends AbstractEntity
 {

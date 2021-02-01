@@ -3,8 +3,10 @@
 namespace ArrowSphere\PublicApiClient\Licenses;
 
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Licenses\Entities\FindResult;
+use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Class LicensesClient
@@ -53,14 +55,29 @@ class LicensesClient extends AbstractLicensesClient
     /**
      * @param array $postData
      * @param array $parameters
+     *
      * @return string
+     * @throws PublicApiClientException
+     * @throws NotFoundException
+     * @throws GuzzleException
      */
     public function findRaw(array $postData, array $parameters = []): string
     {
         $this->path = self::FIND_PATH;
-        $this->curler->setHeader('Content-Type', 'application/json');
 
-        return $this->post($postData, $parameters);
+        if (isset($postData[self::DATA_KEYWORDS])) {
+            foreach ($postData[self::DATA_KEYWORDS] as &$row) {
+                $row[self::KEYWORDS_VALUES] = is_array($row[self::KEYWORDS_VALUES]) ? array_values($row[self::KEYWORDS_VALUES]) : $row[self::KEYWORDS_VALUES];
+            }
+        }
+
+        if (isset($postData[self::DATA_FILTERS])) {
+            $postData[self::DATA_FILTERS] = array_map(static function ($row) {
+                return is_array($row) ? array_values($row) : $row;
+            }, $postData[self::DATA_FILTERS]);
+        }
+
+        return $this->post($postData, $parameters, ['Content-Type' => 'application/json']);
     }
 
     /**

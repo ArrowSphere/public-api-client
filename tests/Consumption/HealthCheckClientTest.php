@@ -7,6 +7,7 @@ use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
+use GuzzleHttp\Psr7\Response;
 use ReflectionException;
 
 /**
@@ -24,11 +25,11 @@ class HealthCheckClientTest extends AbstractClientTest
      */
     public function testGetItemRaw() : void
     {
-        $this->curler->response = 'OK USA';
-
-        $this->curler->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/consumption/healthcheck?');
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/consumption/healthcheck?')
+            ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getItemRaw();
     }
@@ -38,10 +39,11 @@ class HealthCheckClientTest extends AbstractClientTest
      * @throws EntityValidationException
      * @throws NotFoundException
      * @throws PublicApiClientException
+     * @throws ReflectionException
      */
     public function testGetItem(): void
     {
-        $this->curler->response = <<<JSON
+        $response = <<<JSON
 {
     "status": 200,
     "data": {
@@ -57,9 +59,11 @@ class HealthCheckClientTest extends AbstractClientTest
     }
 }
 JSON;
-        $this->curler->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/consumption/healthcheck?classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR');
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/consumption/healthcheck?classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR')
+            ->willReturn(new Response(200, [], $response));
 
         $items = $this->client->getItem(
             ['SAAS'],
@@ -82,7 +86,7 @@ JSON;
     public function testGetItemWithBadColor(): void
     {
         $this->expectException(EntityValidationException::class);
-        $this->curler->response = <<<JSON
+        $response = <<<JSON
 {
     "status": 200,
     "data": {
@@ -98,9 +102,12 @@ JSON;
     }
 }
 JSON;
-        $this->curler->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/consumption/healthcheck?classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR');
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/consumption/healthcheck?classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR')
+            ->willReturn(new Response(200, [], $response));
 
         $this->client->getItem(
             ['SAAS'],
@@ -118,7 +125,7 @@ JSON;
     {
         $this->expectException(EntityValidationException::class);
         $this->expectExceptionMessage('classification is required');
-        $this->curler->response = <<<JSON
+        $response = <<<JSON
 {
     "status": 200,
     "data": {
@@ -133,9 +140,12 @@ JSON;
     }
 }
 JSON;
-        $this->curler->expects(self::once())
-            ->method('get')
-            ->with('https://www.test.com/consumption/healthcheck?classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR');
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/consumption/healthcheck?classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR')
+            ->willReturn(new Response(200, [], $response));
 
         $this->client->getItem(
             ['SAAS'],

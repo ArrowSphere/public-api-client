@@ -1,5 +1,8 @@
 # Catalog Service Client 
 
+## Deprecated
+This client is deprecated, and the associated endpoints are deprecated. You should use the [families](catalog-family.md) instead.
+
 ## General information
 A service is group of offers, used by ArrowSphere to avoid having too many 
 offers all at once if a vendor has too many of them.
@@ -45,7 +48,7 @@ You can list all the services of a [program](catalog-program.md) by calling the 
 - ```string $classification```: the [classification](catalog-classification.md) (ex. ```'SAAS'```)
 - ```string $program```: the [program](catalog-program.md) (ex. ```'microsoft'```)
 
-These parameters are case-insensitive. The other parameters are case-insensitive.
+These parameters are case-insensitive.
 
 This method returns a ```Generator``` and yields instances of the ```Service``` entity.
 
