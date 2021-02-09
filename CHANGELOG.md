@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Added
+- Customers client (list and create)
+
 ## [0.2.2] - 2021-02-01
 ### Added
 - Added support for fields ```add_ons``` and ```prerequisites``` in the ```OfferClient::find``` method
@@ -41,6 +45,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Catalog clients (Classification, Program, Service, Offer, Addon)
 - Consumption client (Health Check, Monthly Analytics)
 - Licenses Client (Licenses, to perform the "find" operation like the Offer client)
+- Customers Client (Customers, to get the list of the end customers)
 
 ### Deprecated
 - CatalogClient: this is an old client that contained way too many endpoints

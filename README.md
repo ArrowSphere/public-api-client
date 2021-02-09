@@ -39,6 +39,7 @@ echo "Hello " . $whoami->getCompanyName();
 
 ### General clients
 - [Who Am I](doc/general-whoami.md)
+- [Check Domain](doc/general-checkDomain.md)
 
 ### Catalog clients
 - [Classification](doc/catalog-classification.md)
@@ -47,6 +48,9 @@ echo "Hello " . $whoami->getCompanyName();
 - [Offer](doc/catalog-offer.md)
 - [Add-on](doc/catalog-addon.md)
 - [Family](doc/catalog-family.md)
+
+### Customers clients
+- [Customers](doc/customers.md)
 
 ### Consumption clients
 - [HealthCheck](doc/consumption-healthCheck.md)

@@ -8,6 +8,7 @@ use ArrowSphere\PublicApiClient\Catalog\FamilyClient;
 use ArrowSphere\PublicApiClient\Catalog\OfferClient;
 use ArrowSphere\PublicApiClient\Catalog\ProgramClient;
 use ArrowSphere\PublicApiClient\Catalog\ServiceClient;
+use ArrowSphere\PublicApiClient\Customers\CustomersClient;
 use ArrowSphere\PublicApiClient\General\CheckDomainClient;
 use ArrowSphere\PublicApiClient\General\WhoamiClient;
 use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
@@ -104,6 +105,16 @@ class PublicApiClient extends AbstractClient
     public function getLicensesClient(): LicensesClient
     {
         return (new LicensesClient($this->client))
+            ->setUrl($this->url)
+            ->setApiKey($this->apiKey);
+    }
+
+    /**
+     * @return CustomersClient
+     */
+    public function getCustomersClient(): CustomersClient
+    {
+        return (new CustomersClient($this->client))
             ->setUrl($this->url)
             ->setApiKey($this->apiKey);
     }
