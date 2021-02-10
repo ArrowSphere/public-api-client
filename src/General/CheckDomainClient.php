@@ -5,6 +5,7 @@ namespace ArrowSphere\PublicApiClient\General;
 use ArrowSphere\PublicApiClient\AbstractClient;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
+use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Class CheckDomainClient
@@ -12,13 +13,15 @@ use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 class CheckDomainClient extends AbstractClient
 {
     /**
-     * @param string $vendorName
-     * @param string $domainName
+     * @param string $vendorName The vendor's name
+     * @param string $domainName The domain to check
+     * @param array $parameters Optional parameters to add to the URL
      * @return string
-     * @throws PublicApiClientException
+     * @throws GuzzleException
      * @throws NotFoundException
+     * @throws PublicApiClientException
      */
-    public function checkDomainRaw(string $vendorName, string $domainName): string
+    public function checkDomainRaw(string $vendorName, string $domainName, array $parameters = []): string
     {
         $this->path = sprintf(
             '/vendors/%s/checkDomain/%s',
@@ -26,18 +29,21 @@ class CheckDomainClient extends AbstractClient
             urlencode($domainName)
         );
 
-        return $this->get();
+        return $this->get($parameters);
     }
 
     /**
-     * @param string $vendorName
-     * @param string $domainName
+     * @param string $vendorName The vendor's name
+     * @param string $domainName The domain to check
+     * @param array $parameters Optional parameters to add to the URL
      * @return bool
+     * @throws GuzzleException
+     * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function checkDomain(string $vendorName, string $domainName): bool
+    public function checkDomain(string $vendorName, string $domainName, array $parameters = []): bool
     {
-        $rawResponse = $this->checkDomainRaw($vendorName, $domainName);
+        $rawResponse = $this->checkDomainRaw($vendorName, $domainName, $parameters);
         $response = $this->decodeResponse($rawResponse);
 
         return $response['data']['isDomainAvailable'];

@@ -30,10 +30,13 @@ class CustomersClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/customers')
+            ->with('get', 'https://www.test.com/customers?abc=def&ghi=0')
             ->willReturn(new Response(200, [], 'OK USA'));
 
-        $this->client->getCustomersRaw();
+        $this->client->getCustomersRaw([
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
     }
 
     /**
@@ -46,11 +49,14 @@ class CustomersClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/customers?per_page=100')
+            ->with('get', 'https://www.test.com/customers?abc=def&ghi=0&per_page=100')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
-        $customers = $this->client->getCustomers();
+        $customers = $this->client->getCustomers([
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
         iterator_to_array($customers);
     }
 
@@ -74,22 +80,16 @@ class CustomersClientTest extends AbstractClientTest
             ->expects(self::exactly(3))
             ->method('request')
             ->withConsecutive(
-                [
-                    'get',
-                    'https://www.test.com/customers?per_page=100',
-                ],
-                [
-                    'get',
-                    'https://www.test.com/customers?page=2&per_page=100',
-                ],
-                [
-                    'get',
-                    'https://www.test.com/customers?page=3&per_page=100',
-                ]
+                ['get', 'https://www.test.com/customers?abc=def&ghi=0&per_page=100'],
+                ['get', 'https://www.test.com/customers?abc=def&ghi=0&page=2&per_page=100'],
+                ['get', 'https://www.test.com/customers?abc=def&ghi=0&page=3&per_page=100']
             )
             ->willReturn(new Response(200, [], $response));
 
-        $test = $this->client->getCustomers();
+        $test = $this->client->getCustomers([
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
         iterator_to_array($test);
     }
 
@@ -171,10 +171,13 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/customers?per_page=100')
+            ->with('get', 'https://www.test.com/customers?abc=def&ghi=0&per_page=100')
             ->willReturn(new Response(200, [], $response));
 
-        $test = $this->client->getCustomers();
+        $test = $this->client->getCustomers([
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
         $list = iterator_to_array($test);
         self::assertCount(2, $list);
 
@@ -277,7 +280,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('post', 'https://www.test.com/customers', [
+            ->with('post', 'https://www.test.com/customers?abc=def&ghi=0', [
                 'headers' => [
                     'apiKey' => '123456',
                 ],
@@ -285,7 +288,10 @@ JSON;
             ])
             ->willReturn(new Response(200, [], $response));
 
-        $reference = $this->client->createCustomer($customer);
+        $reference = $this->client->createCustomer($customer, [
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
 
         self::assertSame('XSP123456', $reference);
     }

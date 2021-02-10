@@ -8,6 +8,7 @@ use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use Generator;
+use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Class OfferClient
@@ -50,10 +51,9 @@ class OfferClient extends AbstractCatalogClient
      * @param string $vendorCode The vendor code of the offer (microsoft, bittitan...)
      * @param string $sku The sku of the offer
      * @param array $parameters The parameters to add to the URL
-     *
      * @return string The response
-     *
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function getOfferDetailsRaw(string $classification, string $vendorCode, string $sku, array $parameters = []): string
     {
@@ -73,10 +73,9 @@ class OfferClient extends AbstractCatalogClient
      * @param string $vendorCode
      * @param string $sku
      * @param array $parameters
-     *
      * @return Offer
-     *
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function getOfferDetails(string $classification, string $vendorCode, string $sku, array $parameters = []): Offer
     {
@@ -105,6 +104,7 @@ class OfferClient extends AbstractCatalogClient
      * @return string The response
      * @throws NotFoundException
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function findRaw(array $postData, array $parameters = []): string
     {
@@ -137,6 +137,7 @@ class OfferClient extends AbstractCatalogClient
      * @return FindResult
      * @throws EntityValidationException
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function find(array $postData, int $perPage = 100, int $page = 1, array $parameters = []): FindResult
     {
@@ -156,15 +157,15 @@ class OfferClient extends AbstractCatalogClient
      * @param string $classification
      * @param string $program
      * @param string $serviceRef
-     *
+     * @param array $parameters Optional parameters to add to the URL
      * @return string
-     *
      * @throws NotFoundException
      * @throws PublicApiClientException
+     * @throws GuzzleException
      *
      * @deprecated this method should be replaced by postFind()
      */
-    public function getOffersRaw(string $classification, string $program, string $serviceRef): string
+    public function getOffersRaw(string $classification, string $program, string $serviceRef, array $parameters = []): string
     {
         $classification = urlencode($classification);
         $program = urlencode($program);
@@ -172,7 +173,7 @@ class OfferClient extends AbstractCatalogClient
 
         $this->path = "/categories/$classification/programs/$program/products/$serviceRef/offers";
 
-        return $this->get();
+        return $this->get($parameters);
     }
 
     /**
@@ -182,15 +183,15 @@ class OfferClient extends AbstractCatalogClient
      * @param string $classification
      * @param string $program
      * @param string $serviceRef
-     *
+     * @param array $parameters Optional parameters to add to the URL
      * @return Generator|Offer[]
-     *
      * @throws NotFoundException
      * @throws PublicApiClientException
+     * @throws GuzzleException
      *
      * @deprecated this method should be replaced by postFind()
      */
-    public function getOffers(string $classification, string $program, string $serviceRef): Generator
+    public function getOffers(string $classification, string $program, string $serviceRef, array $parameters = []): Generator
     {
         $this->setPerPage(100);
         $currentPage = 1;
@@ -199,7 +200,7 @@ class OfferClient extends AbstractCatalogClient
         while (! $lastPage) {
             $this->setPage($currentPage);
 
-            $rawResponse = $this->getOffersRaw($classification, $program, $serviceRef);
+            $rawResponse = $this->getOffersRaw($classification, $program, $serviceRef, $parameters);
             $response = $this->decodeResponse($rawResponse);
 
             if ($response['pagination']['total_page'] <= $currentPage) {
@@ -223,15 +224,15 @@ class OfferClient extends AbstractCatalogClient
      * @param string $program
      * @param string $serviceRef
      * @param string $sku
-     *
+     * @param array $parameters Optional parameters to add to the URL
      * @return string
-     *
      * @throws NotFoundException
      * @throws PublicApiClientException
+     * @throws GuzzleException
      *
      * @deprecated This method should be replaced by getOfferDetailsRaw()
      */
-    public function getOfferRaw(string $classification, string $program, string $serviceRef, string $sku): string
+    public function getOfferRaw(string $classification, string $program, string $serviceRef, string $sku, array $parameters = []): string
     {
         $classification = urlencode($classification);
         $program = urlencode($program);
@@ -240,7 +241,7 @@ class OfferClient extends AbstractCatalogClient
 
         $this->path = "/categories/$classification/programs/$program/products/$serviceRef/offers/$sku";
 
-        return $this->get();
+        return $this->get($parameters);
     }
 
     /**
@@ -250,17 +251,16 @@ class OfferClient extends AbstractCatalogClient
      * @param string $program
      * @param string $serviceRef
      * @param string $sku
-     *
+     * @param array $parameters Optional parameters to add to the URL
      * @return Offer
-     *
      * @throws NotFoundException
      * @throws PublicApiClientException
-     *
+     * @throws GuzzleException
      * @deprecated This method should be replaced by getOfferDetails()
      */
-    public function getOffer(string $classification, string $program, string $serviceRef, string $sku): Offer
+    public function getOffer(string $classification, string $program, string $serviceRef, string $sku, array $parameters = []): Offer
     {
-        $rawResponse = $this->getOfferRaw($classification, $program, $serviceRef, $sku);
+        $rawResponse = $this->getOfferRaw($classification, $program, $serviceRef, $sku, $parameters);
         $response = $this->decodeResponse($rawResponse);
 
         return new Offer($this->convertLegacyOfferPayload($response['data']));
