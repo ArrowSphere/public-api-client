@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 - Customers client (list and create)
 
+### Fixed
+- The ```PublicApiClient::getFamilyClient()``` method has been fixed
+- Removed old import in ```CatalogClientTest```, and added phpdoc at class-level for the client used in this test class
+
 ## [0.2.2] - 2021-02-01
 ### Added
 - Added support for fields ```add_ons``` and ```prerequisites``` in the ```OfferClient::find``` method

@@ -3,9 +3,13 @@
 namespace ArrowSphere\PublicApiClient\Tests;
 
 use ArrowSphere\PublicApiClient\Catalog\CatalogClient;
-use Curl\Curl;
 use GuzzleHttp\Psr7\Response;
 
+/**
+ * Class CatalogClientTest
+ *
+ * @property CatalogClient $client
+ */
 class CatalogClientTest extends AbstractClientTest
 {
     protected const MOCKED_CLIENT_CLASS = CatalogClient::class;
