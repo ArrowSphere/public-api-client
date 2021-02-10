@@ -7,6 +7,7 @@ use ArrowSphere\PublicApiClient\Catalog\FamilyClient;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Response;
 
 /**
@@ -21,33 +22,41 @@ class FamilyClientTest extends AbstractClientTest
     /**
      * @throws NotFoundException
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function testGetFamiliesRaw(): void
     {
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/families/microsoft')
+            ->with('get', 'https://www.test.com/catalog/families/microsoft?abc=def&ghi=0')
             ->willReturn(new Response(200, [], 'OK USA'));
 
-        $this->client->getFamiliesRaw('microsoft');
+        $this->client->getFamiliesRaw('microsoft', [
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
     }
 
     /**
      * @depends testGetFamiliesRaw
      * @throws NotFoundException
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function testGetFamiliesWithInvalidResponse(): void
     {
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/families/microsoft?per_page=100')
+            ->with('get', 'https://www.test.com/catalog/families/microsoft?abc=def&ghi=0&per_page=100')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
-        $families = $this->client->getFamilies('microsoft');
+        $families = $this->client->getFamilies('microsoft', [
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
         iterator_to_array($families);
     }
 
@@ -55,6 +64,7 @@ class FamilyClientTest extends AbstractClientTest
      * @depends testGetFamiliesRaw
      * @throws NotFoundException
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function testGetFamiliesWithPagination(): void
     {
@@ -69,13 +79,16 @@ class FamilyClientTest extends AbstractClientTest
             ->expects(self::exactly(3))
             ->method('request')
             ->withConsecutive(
-                ['get', 'https://www.test.com/catalog/families/microsoft?per_page=100'],
-                ['get', 'https://www.test.com/catalog/families/microsoft?page=2&per_page=100'],
-                ['get', 'https://www.test.com/catalog/families/microsoft?page=3&per_page=100']
+                ['get', 'https://www.test.com/catalog/families/microsoft?abc=def&ghi=0&per_page=100'],
+                ['get', 'https://www.test.com/catalog/families/microsoft?abc=def&ghi=0&page=2&per_page=100'],
+                ['get', 'https://www.test.com/catalog/families/microsoft?abc=def&ghi=0&page=3&per_page=100']
             )
             ->willReturn(new Response(200, [], $response));
 
-        $test = $this->client->getFamilies('microsoft');
+        $test = $this->client->getFamilies('microsoft', [
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
         iterator_to_array($test);
     }
 
@@ -83,6 +96,7 @@ class FamilyClientTest extends AbstractClientTest
      * @depends testGetFamiliesRaw
      * @throws NotFoundException
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function testGetFamilies(): void
     {
@@ -121,10 +135,13 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/families/microsoft?per_page=100')
+            ->with('get', 'https://www.test.com/catalog/families/microsoft?abc=def&ghi=0&per_page=100')
             ->willReturn(new Response(200, [], $response));
 
-        $test = $this->client->getFamilies('microsoft');
+        $test = $this->client->getFamilies('microsoft', [
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
         $list = iterator_to_array($test);
         self::assertCount(2, $list);
 
@@ -152,38 +169,47 @@ JSON;
     /**
      * @throws NotFoundException
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function testGetFamilyRaw(): void
     {
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/families/microsoft/MS-0B-O365-ENTERPRIS')
+            ->with('get', 'https://www.test.com/catalog/families/microsoft/MS-0B-O365-ENTERPRIS?abc=def&ghi=0')
             ->willReturn(new Response(200, [], 'OK USA'));
 
-        $this->client->getFamilyRaw('microsoft', 'MS-0B-O365-ENTERPRIS');
+        $this->client->getFamilyRaw('microsoft', 'MS-0B-O365-ENTERPRIS', [
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
     }
 
     /**
      * @depends testGetFamilyRaw
      * @throws NotFoundException
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function testGetFamilyWithInvalidResponse(): void
     {
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/families/microsoft/MS-0B-O365-ENTERPRIS')
+            ->with('get', 'https://www.test.com/catalog/families/microsoft/MS-0B-O365-ENTERPRIS?abc=def&ghi=0')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
-        $this->client->getFamily('microsoft', 'MS-0B-O365-ENTERPRIS');
+        $this->client->getFamily('microsoft', 'MS-0B-O365-ENTERPRIS', [
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
     }
 
     /**
      * @depends testGetFamilyRaw
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function testGetFamily(): void
     {
@@ -204,10 +230,13 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/families/microsoft/MS-0B-O365-ENTERPRIS')
+            ->with('get', 'https://www.test.com/catalog/families/microsoft/MS-0B-O365-ENTERPRIS?abc=def&ghi=0')
             ->willReturn(new Response(200, [], $response));
 
-        $family = $this->client->getFamily('microsoft', 'MS-0B-O365-ENTERPRIS');
+        $family = $this->client->getFamily('microsoft', 'MS-0B-O365-ENTERPRIS', [
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
 
         self::assertEquals('SAAS', $family->getClassification());
         self::assertEquals('US', $family->getMarketplace());

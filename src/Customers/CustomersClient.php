@@ -16,28 +16,31 @@ use GuzzleHttp\Exception\GuzzleException;
 class CustomersClient extends AbstractClient
 {
     /**
+     * @param array $parameters Optional parameters to add to the URL
      * @return string
      * @throws PublicApiClientException
      * @throws NotFoundException
      * @throws GuzzleException
      */
-    public function getCustomersRaw(): string
+    public function getCustomersRaw(array $parameters = []): string
     {
         $this->path = '/customers';
 
-        return $this->get();
+        return $this->get($parameters);
     }
 
     /**
      * Lists the customers.
      * Returns an array (generator) of Customer.
      *
+     * @param array $parameters Optional parameters to add to the URL
      * @return Generator|Customer[]
      * @throws EntityValidationException
-     * @throws PublicApiClientException
      * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
      */
-    public function getCustomers(): Generator
+    public function getCustomers(array $parameters = []): Generator
     {
         $this->setPerPage(100);
         $currentPage = 1;
@@ -45,7 +48,7 @@ class CustomersClient extends AbstractClient
 
         while (! $lastPage) {
             $this->setPage($currentPage);
-            $rawResponse = $this->getCustomersRaw();
+            $rawResponse = $this->getCustomersRaw($parameters);
             $response = $this->decodeResponse($rawResponse);
 
             if ($response['pagination']['total_page'] <= $currentPage) {
@@ -63,13 +66,14 @@ class CustomersClient extends AbstractClient
     /**
      * Creates a customer and returns its newly created reference.
      *
+     * @param array $parameters Optional parameters to add to the URL
      * @param Customer $customer
      * @return string
      * @throws NotFoundException
      * @throws PublicApiClientException
      * @throws GuzzleException
      */
-    public function createCustomer(Customer $customer): string
+    public function createCustomer(Customer $customer, array $parameters = []): string
     {
         $payload = $customer->jsonSerialize();
         unset(
@@ -79,7 +83,7 @@ class CustomersClient extends AbstractClient
 
         $this->path = '/customers';
 
-        $rawResponse = $this->post($payload);
+        $rawResponse = $this->post($payload, $parameters);
 
         $response = $this->decodeResponse($rawResponse);
 

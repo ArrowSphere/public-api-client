@@ -6,6 +6,7 @@ use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\General\CheckDomainClient;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Response;
 
 /**
@@ -20,37 +21,46 @@ class CheckDomainClientTest extends AbstractClientTest
     /**
      * @throws NotFoundException
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function testCheckDomainRaw(): void
     {
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/vendors/foo/checkDomain/bar')
+            ->with('get', 'https://www.test.com/vendors/foo/checkDomain/bar?abc=def&ghi=0')
             ->willReturn(new Response(200, [], 'OK USA'));
 
-        $this->client->checkDomainRaw('foo', 'bar');
+        $this->client->checkDomainRaw('foo', 'bar', [
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
     }
 
     /**
      * @depends testCheckDomainRaw
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function testCheckDomainWithInvalidResponse(): void
     {
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/vendors/foo/checkDomain/bar')
+            ->with('get', 'https://www.test.com/vendors/foo/checkDomain/bar?abc=def&ghi=0')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
-        $this->client->checkDomain('foo', 'bar');
+        $this->client->checkDomain('foo', 'bar', [
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
     }
 
     /**
      * @depends testCheckDomainRaw
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function testCheckDomain(): void
     {
@@ -66,15 +76,19 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/vendors/foo/checkDomain/bar')
+            ->with('get', 'https://www.test.com/vendors/foo/checkDomain/bar?abc=def&ghi=0')
             ->willReturn(new Response(200, [], $response));
 
-        self::assertTrue($this->client->checkDomain('foo', 'bar'));
+        self::assertTrue($this->client->checkDomain('foo', 'bar', [
+            'abc' => 'def',
+            'ghi' => false,
+        ]));
     }
 
     /**
      * @depends testCheckDomainRaw
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function testCheckDomainFalse(): void
     {
@@ -90,9 +104,12 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/vendors/foo/checkDomain/bar')
+            ->with('get', 'https://www.test.com/vendors/foo/checkDomain/bar?abc=def&ghi=0')
             ->willReturn(new Response(200, [], $response));
 
-        self::assertFalse($this->client->checkDomain('foo', 'bar'));
+        self::assertFalse($this->client->checkDomain('foo', 'bar', [
+            'abc' => 'def',
+            'ghi' => false,
+        ]));
     }
 }
