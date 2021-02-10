@@ -94,7 +94,7 @@ class PublicApiClient extends AbstractClient
      */
     public function getFamilyClient(): FamilyClient
     {
-        return (new FamilyClient($this->curler))
+        return (new FamilyClient($this->client))
             ->setUrl($this->url)
             ->setApiKey($this->apiKey);
     }
