@@ -526,4 +526,139 @@ JSON;
         self::assertEquals('SaaS', $license->getClassification());
         self::assertEquals([], $license->getHighlight());
     }
+
+    /**
+     * @depends testFind
+     * @throws EntityValidationException
+     * @throws PublicApiClientException
+     */
+    public function testFindWithNullCurrency(): void
+    {
+        $postData = [
+            LicensesClient::DATA_KEYWORD   => 'office 365',
+            LicensesClient::DATA_KEYWORDS  => [
+                License::COLUMN_CUSTOMER_NAME     => [
+                    LicensesClient::KEYWORDS_VALUES   => [
+                        'My customer',
+                    ],
+                    LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
+                ],
+            ],
+            LicensesClient::DATA_FILTERS   => [
+                License::COLUMN_VENDOR_CODE => [
+                    'Microsoft',
+                    'IBM',
+                ],
+            ],
+            LicensesClient::DATA_SORT      => [
+                License::COLUMN_STATUS_CODE => LicensesClient::SORT_DESCENDING,
+            ],
+            LicensesClient::DATA_HIGHLIGHT => true,
+        ];
+
+        $response = <<<JSON
+{
+    "licenses": [
+        {
+            "id": 123456,
+            "subscription_id": "12345678-AAAA-CCCC-FFFF-987654321012",
+            "parent_line_id": null,
+            "parent_order_ref": null,
+            "vendor_name": "Amazon",
+            "vendor_code": "aws",
+            "subsidiary_name": "Arrow ECS Denmark",
+            "partner_ref": "XSP987654321",
+            "status_code": 86,
+            "status_label": "activation_ok",
+            "service_ref": "AWS_AMAZON_SUBSCRIPTION",
+            "sku": "ABCDABCD-1234-5678-9876-ABCDEFABCDEF",
+            "uom": "ACCOUNT",
+            "price": {
+                "buy_price": 0,
+                "list_price": 0,
+                "currency": null
+            },
+            "cloud_type": "IaaS",
+            "base_seat": 6,
+            "seat": 6,
+            "trial": false,
+            "auto_renew": true,
+            "offer": "AWS Distribution Account Model (DAM)",
+            "category": "BaseProduct",
+            "type": "recurring",
+            "start_date": "2020-11-18T17:48:43.000Z",
+            "end_date": "2021-11-18T17:48:43.000Z",
+            "accept_eula": false,
+            "customer_ref": "XSP123456789",
+            "customer_name": "My customer",
+            "reseller_ref": "XSP12345",
+            "reseller_name": "My reseller",
+            "marketplace": "US",
+            "active_seats": {
+                "number": null,
+                "lastUpdate": null
+            },
+            "friendly_name": null,
+            "vendor_subscription_id": null,
+            "message": "",
+            "periodicity": 720,
+            "term": 0,
+            "isEnabled": true,
+            "lastUpdate": "2020-12-08T15:42:30.069Z"
+        }
+    ],
+    "filters": [],
+    "pagination": {
+        "perPage": 15,
+        "currentPage": 1,
+        "totalPage": 1,
+        "total": 1,
+        "next": null,
+        "previous": null
+    }
+}
+JSON;
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'post',
+                'https://www.test.com/licenses/find?abc=def&ghi=0&per_page=15',
+                [
+                    'headers' => [
+                        'apiKey'       => '123456',
+                        'Content-Type' => 'application/json',
+                    ],
+                    'body'    => json_encode($postData),
+                ]
+            )
+            ->willReturn(new Response(200, [], $response));
+
+        $findResult = $this->client->find($postData, 15, 1, [
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
+
+        self::assertEquals(1, $findResult->getNbResults());
+
+        /** @var LicenseFindResult[] $licenses */
+        $licenses = iterator_to_array($findResult->getLicenses());
+
+        self::assertCount(1, $licenses);
+
+        $license = array_shift($licenses);
+        self::assertInstanceOf(LicenseFindResult::class, $license);
+        self::assertEquals('US', $license->getMarketplace());
+        self::assertEquals('BaseProduct', $license->getCategory());
+        self::assertEquals('AWS_AMAZON_SUBSCRIPTION', $license->getServiceRef());
+        self::assertEquals('ABCDABCD-1234-5678-9876-ABCDEFABCDEF', $license->getSku());
+        self::assertEquals('aws', $license->getVendorCode());
+        self::assertEquals(123456, $license->getId());
+        self::assertEquals('IaaS', $license->getClassification());
+        self::assertEquals([], $license->getHighlight());
+        self::assertNull($license->getCurrency());
+        self::assertNull($license->getFriendlyName());
+        self::assertNull($license->getVendorSubscriptionId());
+    }
 }

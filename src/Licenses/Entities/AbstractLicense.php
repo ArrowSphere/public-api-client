@@ -95,7 +95,7 @@ abstract class AbstractLicense extends AbstractEntity
         'price'                      => 'required|array',
         'price.buy_price'            => 'present|numeric',
         'price.list_price'           => 'present|numeric',
-        'price.currency'             => 'required',
+        'price.currency'             => 'present',
         self::COLUMN_CLOUD_TYPE      => 'required',
         self::COLUMN_BASE_SEAT       => 'present|numeric',
         self::COLUMN_SEAT            => 'present|numeric',
@@ -130,7 +130,7 @@ abstract class AbstractLicense extends AbstractEntity
     /** @var string */
     private $classification;
 
-    /** @var string */
+    /** @var string|null */
     private $currency;
 
     /** @var string */
@@ -142,7 +142,7 @@ abstract class AbstractLicense extends AbstractEntity
     /** @var string */
     private $endDate;
 
-    /** @var string */
+    /** @var string|null */
     private $friendlyName;
 
     /** @var int */
@@ -226,7 +226,7 @@ abstract class AbstractLicense extends AbstractEntity
     /** @var string */
     private $vendorName;
 
-    /** @var string */
+    /** @var string|null */
     private $vendorSubscriptionId;
 
     /**
@@ -355,9 +355,9 @@ abstract class AbstractLicense extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCurrency(): string
+    public function getCurrency(): ?string
     {
         return $this->currency;
     }
@@ -387,9 +387,9 @@ abstract class AbstractLicense extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getFriendlyName(): string
+    public function getFriendlyName(): ?string
     {
         return $this->friendlyName;
     }
@@ -603,9 +603,9 @@ abstract class AbstractLicense extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getVendorSubscriptionId(): string
+    public function getVendorSubscriptionId(): ?string
     {
         return $this->vendorSubscriptionId;
     }
