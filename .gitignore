@@ -5,3 +5,4 @@ composer.phar
 /test.php
 /test.json
 .phpunit.result.cache
+.php_cs.cache
