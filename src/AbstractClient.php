@@ -61,7 +61,7 @@ abstract class AbstractClient
      *
      * @param string $apiKey The Api key
      *
-     * @return AbstractClient
+     * @return static
      */
     public function setApiKey(string $apiKey): self
     {
@@ -75,7 +75,7 @@ abstract class AbstractClient
      *
      * @param string $url The Api url
      *
-     * @return AbstractClient
+     * @return static
      */
     public function setUrl(string $url): self
     {

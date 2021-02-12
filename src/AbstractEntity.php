@@ -69,7 +69,7 @@ abstract class AbstractEntity implements \JsonSerializable
         $validator = $factory->make($data, static::VALIDATION_RULES, $messages);
 
         if (! $validator->passes()) {
-            throw new EntityValidationException($validator->getMessageBag()->all());
+            throw new EntityValidationException(implode('; ', $validator->getMessageBag()->all()));
         }
     }
 }

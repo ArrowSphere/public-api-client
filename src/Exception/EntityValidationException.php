@@ -7,8 +7,4 @@ namespace ArrowSphere\PublicApiClient\Exception;
  */
 class EntityValidationException extends PublicApiClientException
 {
-    public function __construct($message)
-    {
-        parent::__construct(is_array($message) ? implode('; ', $message) : $message);
-    }
 }

@@ -88,6 +88,7 @@ class Service
         foreach ($data as $field => $value) {
             if (property_exists(self::class, $field)) {
                 if ($field === 'price') {
+                    $prices = [];
                     foreach ($value as $price) {
                         $prices[] = new Price($price);
                     }
