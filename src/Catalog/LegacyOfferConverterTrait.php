@@ -7,6 +7,9 @@ use ArrowSphere\PublicApiClient\Catalog\Entities\PriceBand;
 
 trait LegacyOfferConverterTrait
 {
+    /**
+     * @var array
+     */
     private $conversionPeriodicityToPeriodAsHours = [
         'One-Time'                       => 0,
         'per Hour'                       => 1,
@@ -24,6 +27,9 @@ trait LegacyOfferConverterTrait
         'per Six Years'                  => 51840,
     ];
 
+    /**
+     * @var array
+     */
     private $conversionTermToTermAsHours = [
         'No Term'        => 0,
         'Month-to-Month' => 720,

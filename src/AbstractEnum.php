@@ -3,6 +3,7 @@
 namespace ArrowSphere\PublicApiClient;
 
 use ReflectionClass;
+use ReflectionException;
 
 abstract class AbstractEnum {
     /** @var array */
@@ -10,7 +11,7 @@ abstract class AbstractEnum {
 
     /**
      * @return mixed
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     private static function getConstants()
     {
@@ -27,7 +28,7 @@ abstract class AbstractEnum {
      * @param string $name
      * @param bool $strict
      * @return bool
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public static function isValidName(string $name, bool $strict = false) : bool
     {
@@ -41,10 +42,10 @@ abstract class AbstractEnum {
     }
 
     /**
-     * @param $value
+     * @param mixed $value
      * @param bool $strict
      * @return bool
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public static function isValidValue($value, bool $strict = true) : bool
     {
