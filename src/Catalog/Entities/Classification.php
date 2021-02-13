@@ -16,13 +16,16 @@ class Classification extends AbstractEntity
         self::COLUMN_NAME => 'required',
     ];
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $name;
 
     /**
      * Classification constructor.
      *
      * @param array $data
+     *
      * @throws EntityValidationException
      */
     public function __construct(array $data)

@@ -35,6 +35,7 @@ class ProgramClientTest extends AbstractClientTest
 
     /**
      * @depends testGetProgramsRaw
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -168,6 +169,7 @@ JSON;
 
     /**
      * @depends testGetProgramRaw
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */

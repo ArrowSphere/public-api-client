@@ -12,6 +12,7 @@ class WhoamiClient extends AbstractClient
 {
     /**
      * @return string
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -24,6 +25,7 @@ class WhoamiClient extends AbstractClient
 
     /**
      * @return Whoami
+     *
      * @throws EntityValidationException
      * @throws NotFoundException
      * @throws PublicApiClientException

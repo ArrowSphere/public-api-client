@@ -77,6 +77,7 @@ class LicensesClientTest extends AbstractClientTest
 
     /**
      * @depends testFindRaw
+     *
      * @throws PublicApiClientException
      * @throws NotFoundException
      * @throws GuzzleException
@@ -155,6 +156,7 @@ JSON;
 
     /**
      * @depends testFindRaw
+     *
      * @throws PublicApiClientException
      * @throws EntityValidationException
      */
@@ -207,6 +209,7 @@ JSON;
 
     /**
      * @depends testFindRaw
+     *
      * @throws EntityValidationException
      * @throws PublicApiClientException
      */
@@ -529,6 +532,7 @@ JSON;
 
     /**
      * @depends testFind
+     *
      * @throws EntityValidationException
      * @throws PublicApiClientException
      */

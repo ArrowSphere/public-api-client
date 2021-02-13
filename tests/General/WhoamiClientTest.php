@@ -2,10 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Tests\General;
 
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
-use ArrowSphere\PublicApiClient\General\Entities\Whoami;
 use ArrowSphere\PublicApiClient\General\WhoamiClient;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
 use GuzzleHttp\Psr7\Response;
@@ -36,6 +34,7 @@ class WhoamiClientTest extends AbstractClientTest
 
     /**
      * @depends testGetWhoamiRaw
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -52,6 +51,7 @@ class WhoamiClientTest extends AbstractClientTest
 
     /**
      * @depends testGetWhoamiRaw
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -98,7 +98,7 @@ JSON;
         self::assertEquals('1-800-555-1111', $test->getReceptionPhone());
         self::assertEquals('https://www.dccomics.com', $test->getWebsiteUrl());
         self::assertEquals('nobody@example.com', $test->getEmailContact());
-        self::assertEquals(null, $test->getHeadcount());
+        self::assertNull($test->getHeadcount());
         self::assertEquals('', $test->getTaxNumber());
         self::assertEquals('XSP12345', $test->getReference());
         self::assertEquals('COMPANY12345', $test->getRef());

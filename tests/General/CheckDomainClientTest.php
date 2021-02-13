@@ -39,6 +39,7 @@ class CheckDomainClientTest extends AbstractClientTest
 
     /**
      * @depends testCheckDomainRaw
+     *
      * @throws PublicApiClientException
      * @throws GuzzleException
      */
@@ -59,6 +60,7 @@ class CheckDomainClientTest extends AbstractClientTest
 
     /**
      * @depends testCheckDomainRaw
+     *
      * @throws PublicApiClientException
      * @throws GuzzleException
      */
@@ -87,6 +89,7 @@ JSON;
 
     /**
      * @depends testCheckDomainRaw
+     *
      * @throws PublicApiClientException
      * @throws GuzzleException
      */

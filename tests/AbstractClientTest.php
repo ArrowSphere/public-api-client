@@ -13,10 +13,14 @@ use PHPUnit\Framework\TestCase;
  */
 abstract class AbstractClientTest extends TestCase
 {
-    /** @var MockObject|Client */
+    /**
+     * @var MockObject|Client
+     */
     protected $httpClient;
 
-    /** @var AbstractClient */
+    /**
+     * @var AbstractClient
+     */
     protected $client;
 
     protected const MOCKED_CLIENT_CLASS = null;

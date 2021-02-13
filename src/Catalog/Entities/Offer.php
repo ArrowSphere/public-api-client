@@ -43,49 +43,76 @@ class Offer extends AbstractOffer
         self::COLUMN_RELATED_OFFERS  => 'array',
     ];
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $buyingProgram;
 
-    /** @var string[]|null */
+    /**
+     * @var string[]|null
+     */
     private $conversionSkus;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $description;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $endCustomerFeatures;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $eula;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $featuresPicture;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $fullFeatures;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $isEnabled;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $orderableSku;
 
-    /** @var string[] */
+    /**
+     * @var string[]
+     */
     private $relatedOffers;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $requirements;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $serviceDescription;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $shortFeatures;
 
     /**
      * Offer constructor.
      *
      * @param array $data
+     *
      * @throws EntityValidationException
      */
     public function __construct(array $data)

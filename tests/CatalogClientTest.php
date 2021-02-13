@@ -29,11 +29,13 @@ class CatalogClientTest extends AbstractClientTest
             ->method('request')
             ->with(
                 'post',
-                'https://www.test.com/catalog/find?page=2&per_page=15', [
+                'https://www.test.com/catalog/find?page=2&per_page=15',
+                [
                     'headers' => [
                         'apiKey' => '123456',
                     ],
-                    'body'    => json_encode([
+                    'body'    => json_encode(
+                        [
                             'keywords'  => 'office 365',
                             'filters'   => ['vendor' => 'Microsoft'],
                             'sort'      => ['name' => 'desc'],

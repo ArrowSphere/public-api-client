@@ -68,73 +68,116 @@ abstract class AbstractOffer extends AbstractEntity
         self::COLUMN_WEIGHT_TOP_SALES  => 'required|numeric',
     ];
 
-    /** @var string[]|null */
+    /**
+     * @var string[]|null
+     */
     private $addons;
 
-    /** @var string[] */
+    /**
+     * @var string[]
+     */
     private $category;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $classification;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $customerCategory;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $hasAddons;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $isAddon;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $isTrial;
 
-    /** @var string[] */
+    /**
+     * @var string[]
+     */
     private $keywords;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $marketplace;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $name;
 
-    /** @var string[]|null */
+    /**
+     * @var string[]|null
+     */
     private $prerequisites;
 
-    /** @var PriceBand[] */
+    /**
+     * @var PriceBand[]
+     */
     private $priceBands;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $programIsEnabled;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $serviceName;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $serviceRef;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $sku;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $thumbnail;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $vendor;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $vendorCode;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     private $weightForced;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     private $weightTopSales;
 
     /**
      * AbstractOffer constructor.
      *
      * @param array $data
+     *
      * @throws EntityValidationException
      */
     public function __construct(array $data)

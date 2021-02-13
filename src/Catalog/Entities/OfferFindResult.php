@@ -18,16 +18,21 @@ class OfferFindResult extends AbstractOffer
         self::COLUMN_ID        => 'required',
     ];
 
-    /** @var array */
+    /**
+     * @var array
+     */
     private $highlight;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $id;
 
     /**
      * OfferFindResult constructor.
      *
      * @param array $data
+     *
      * @throws EntityValidationException
      */
     public function __construct(array $data)

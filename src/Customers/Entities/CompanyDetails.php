@@ -26,28 +26,41 @@ class CompanyDetails extends AbstractEntity
         self::COLUMN_MIGRATION => 'boolean',
     ];
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $domainName;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $ibmCeId;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $ibmMaas360ResellerId;
 
-    /** @var bool|null */
+    /**
+     * @var bool|null
+     */
     private $migration;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $oracleOnlineKey;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $tenantId;
 
     /**
      * CompanyDetails constructor.
      *
      * @param array $data
+     *
      * @throws EntityValidationException
      */
     public function __construct(array $data)

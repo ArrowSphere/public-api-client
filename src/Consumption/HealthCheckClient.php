@@ -17,7 +17,9 @@ class HealthCheckClient extends AbstractConsumptionClient
      * @param array $classification The list of classification (SAAS, IAAS...)
      * @param array $vendorCode The list of vendor code (microsoft, bittitan...)
      * @param array $marketPlace The list of marketPlace (FR, UK, US...)
+     *
      * @return HealthCheckItem[]
+     *
      * @throws EntityValidationException
      * @throws NotFoundException
      * @throws PublicApiClientException|\ReflectionException
@@ -40,7 +42,9 @@ class HealthCheckClient extends AbstractConsumptionClient
      * @param array $classification The list of classification (SAAS, IAAS...)
      * @param array $vendorCode The list of vendor code (microsoft, bittitan...)
      * @param array $marketPlace The list of marketPlace (FR, UK, US...)
+     *
      * @return string
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */

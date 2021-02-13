@@ -17,7 +17,9 @@ class ProgramClient extends AbstractCatalogClient
      * Returns the raw data from the API.
      *
      * @param string $classification
+     *
      * @return string
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -37,6 +39,7 @@ class ProgramClient extends AbstractCatalogClient
      * @param string $classification
      *
      * @return Generator|Program[]
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */

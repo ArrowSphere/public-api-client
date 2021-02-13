@@ -35,6 +35,7 @@ class ServiceClientTest extends AbstractClientTest
 
     /**
      * @depends testGetServicesRaw
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -53,6 +54,7 @@ class ServiceClientTest extends AbstractClientTest
 
     /**
      * @depends testGetServicesRaw
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -81,6 +83,7 @@ class ServiceClientTest extends AbstractClientTest
 
     /**
      * @depends testGetServicesRaw
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -275,6 +278,7 @@ JSON;
 
     /**
      * @depends testGetServiceRaw
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -292,6 +296,7 @@ JSON;
 
     /**
      * @depends testGetServiceRaw
+     *
      * @throws
      */
     public function testGetService(): void

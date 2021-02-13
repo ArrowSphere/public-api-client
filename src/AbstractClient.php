@@ -11,39 +11,57 @@ use Psr\Http\Message\StreamInterface;
 
 /**
  * Class AbstractClient for interacting with the Public API endpoints
- *
- * @package ArrowSphere\PublicApiClient
  */
 abstract class AbstractClient
 {
-    /** @var string The xSP api key for authentication on the Public API endpoints */
+    /**
+     * @var string The xSP api key for authentication on the Public API endpoints
+     */
     private const API_KEY = 'apiKey';
 
-    /** @var string The page keyword for pagination */
+    /**
+     * @var string The page keyword for pagination
+     */
     private const PAGE = 'page';
 
-    /** @var string The keyword for number of results per page for pagination */
+    /**
+     * @var string The keyword for number of results per page for pagination
+     */
     private const PER_PAGE = 'per_page';
 
-    /** @var string The base path of the API */
+    /**
+     * @var string The base path of the API
+     */
     protected $basePath = '';
 
-    /** @var string The path of the endpoint */
+    /**
+     * @var string The path of the endpoint
+     */
     protected $path = '';
 
-    /** @var Client */
+    /**
+     * @var Client
+     */
     protected $client;
 
-    /** @var string The url of the request */
+    /**
+     * @var string The url of the request
+     */
     protected $url;
 
-    /** @var string The API key */
+    /**
+     * @var string The API key
+     */
     protected $apiKey;
 
-    /** @var int The page number */
+    /**
+     * @var int The page number
+     */
     protected $page = 1;
 
-    /** @var int The number of results per page */
+    /**
+     * @var int The number of results per page
+     */
     protected $perPage;
 
     /**
@@ -126,10 +144,10 @@ abstract class AbstractClient
      * Sends a GET request and returns the response
      *
      * @param array $parameters
-     *
      * @param array $headers
      *
      * @return string
+     *
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -151,6 +169,7 @@ abstract class AbstractClient
      * @param ResponseInterface $response
      *
      * @return StreamInterface
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -176,7 +195,9 @@ abstract class AbstractClient
      * Decodes the JSON response to an array or throws an exception if it's not possible.
      *
      * @param string $rawResponse
+     *
      * @return array
+     *
      * @throws PublicApiClientException
      */
     public function decodeResponse(string $rawResponse): array
@@ -208,12 +229,11 @@ abstract class AbstractClient
      * Sends a POST request and returns the response
      *
      * @param array $payload
-     *
      * @param array $parameters
-     *
      * @param array $headers
      *
      * @return StreamInterface
+     *
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -236,6 +256,7 @@ abstract class AbstractClient
      * Generates the full url for request
      *
      * @param array $parameters
+     *
      * @return string
      */
     protected function generateUrl(array $parameters = []): string
@@ -246,7 +267,7 @@ abstract class AbstractClient
         if (count($params) !== 0) {
             $query = http_build_query($params);
             $query = preg_replace('/%5B[0-9]+%5D/simU', '%5B%5D', $query);
-            $paramsStr =  '?' . $query;
+            $paramsStr = '?' . $query;
         }
 
         return $this->url . $this->basePath . $this->path . $paramsStr;

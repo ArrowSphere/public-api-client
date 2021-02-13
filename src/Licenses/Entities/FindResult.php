@@ -13,28 +13,44 @@ use Generator;
  */
 class FindResult extends AbstractEntity
 {
-    /** @var LicenseFindResult[] */
+    /**
+     * @var LicenseFindResult[]
+     */
     private $licenses;
 
-    /** @var FilterFindResult[] */
+    /**
+     * @var FilterFindResult[]
+     */
     private $filters;
 
-    /** @var LicensesClient */
+    /**
+     * @var LicensesClient
+     */
     private $client;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     private $postData;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     private $parameters;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $currentPage;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $totalPage;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $nbResults;
 
     /**
@@ -44,6 +60,7 @@ class FindResult extends AbstractEntity
      * @param LicensesClient $client
      * @param array $postData
      * @param array $parameters
+     *
      * @throws EntityValidationException
      */
     public function __construct(array $data, LicensesClient $client, array $postData, array $parameters)
@@ -77,6 +94,7 @@ class FindResult extends AbstractEntity
 
     /**
      * @return Generator|LicenseFindResult[]
+     *
      * @throws EntityValidationException
      * @throws PublicApiClientException
      */
@@ -133,6 +151,7 @@ class FindResult extends AbstractEntity
 
     /**
      * @return array
+     *
      * @throws EntityValidationException
      * @throws PublicApiClientException
      */

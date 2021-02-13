@@ -31,28 +31,41 @@ class Family extends AbstractEntity
         self::COLUMN_VENDOR_CODE    => 'required',
     ];
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $classification;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $marketplace;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $name;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $reference;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $vendor;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $vendorCode;
 
     /**
      * Family constructor.
      *
      * @param array $data
+     *
      * @throws EntityValidationException
      */
     public function __construct(array $data)

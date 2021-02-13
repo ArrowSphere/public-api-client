@@ -61,58 +61,91 @@ class Whoami extends AbstractEntity
         self::COLUMN_INTERNAL_REFERENCE => 'present',
     ];
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $companyName;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $addressLine1;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $addressLine2;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $zip;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $city;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $countryCode;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $state;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $receptionPhone;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $websiteUrl;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $emailContact;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $headcount;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $taxNumber;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $reference;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $ref;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $billingId;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $internalReference;
 
     /**
      * Whoami constructor.
      *
      * @param array $data
+     *
      * @throws EntityValidationException
      */
     public function __construct(array $data)

@@ -14,6 +14,7 @@ class ClassificationClient extends AbstractCatalogClient
 {
     /**
      * @return string
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -29,6 +30,7 @@ class ClassificationClient extends AbstractCatalogClient
      * Returns an array (generator) of Classification.
      *
      * @return Generator|Classification[]
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */

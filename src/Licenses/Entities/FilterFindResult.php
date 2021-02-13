@@ -14,10 +14,14 @@ class FilterFindResult extends AbstractEntity
 
     public const COLUMN_VALUES = 'values';
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $name;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     private $values;
 
     protected const VALIDATION_RULES = [
@@ -31,6 +35,7 @@ class FilterFindResult extends AbstractEntity
      * FilterFindResult constructor.
      *
      * @param array $data
+     *
      * @throws EntityValidationException
      */
     public function __construct(array $data)

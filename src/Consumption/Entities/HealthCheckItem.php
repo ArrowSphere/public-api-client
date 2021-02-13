@@ -23,24 +23,36 @@ class HealthCheckItem extends AbstractEntity
         self::COLUMN_MESSAGE        => 'string|required',
     ];
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $vendor;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $marketPlace;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $classification;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $color;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $message;
 
     /**
      * HealthCheckItem constructor.
+     *
      * @param array $data
+     *
      * @throws EntityValidationException
      * @throws \ReflectionException
      */
