@@ -67,67 +67,106 @@ class Customer extends AbstractEntity
         self::COLUMN_ZIP                => 'present',
     ];
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $addressLine1;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $addressLine2;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $billingId;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $city;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $companyName;
 
-    /** @var Contact */
+    /**
+     * @var Contact
+     */
     private $contact;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $countryCode;
 
-    /** @var CompanyDetails */
+    /**
+     * @var CompanyDetails
+     */
     private $details;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $deletedAt;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $emailContact;
 
-    /** @var int|null */
+    /**
+     * @var int|null
+     */
     private $headcount;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $internalReference;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $receptionPhone;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $ref;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $reference;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $state;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $taxNumber;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $websiteUrl;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $zip;
 
     /**
      * Customer constructor.
      *
      * @param array $data
+     *
      * @throws EntityValidationException
      */
     public function __construct(array $data)

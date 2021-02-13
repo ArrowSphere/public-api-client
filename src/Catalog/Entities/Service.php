@@ -35,31 +35,46 @@ class Service extends AbstractEntity
         self::COLUMN_SERVICE_TAGS                    => 'present|array',
     ];
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $associatedSubscriptionProgram;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $classification;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $description;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $name;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $program;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $reference;
 
-    /** @var string[] */
+    /**
+     * @var string[]
+     */
     private $serviceTags;
 
     /**
      * Service constructor.
      *
      * @param array $data
+     *
      * @throws EntityValidationException
      */
     public function __construct(array $data)

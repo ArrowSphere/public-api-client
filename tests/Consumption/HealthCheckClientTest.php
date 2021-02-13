@@ -36,6 +36,7 @@ class HealthCheckClientTest extends AbstractClientTest
 
     /**
      * @depends testGetItemRaw
+     *
      * @throws EntityValidationException
      * @throws NotFoundException
      * @throws PublicApiClientException

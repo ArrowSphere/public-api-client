@@ -121,6 +121,7 @@ JSON;
 
     /**
      * @depends testFindRaw
+     *
      * @throws PublicApiClientException
      * @throws EntityValidationException
      */
@@ -162,6 +163,7 @@ JSON;
 
     /**
      * @depends testFindRaw
+     *
      * @throws EntityValidationException
      * @throws PublicApiClientException
      */
@@ -359,7 +361,7 @@ JSON;
         $offer = array_shift($offers);
         self::assertInstanceOf(OfferFindResult::class, $offer);
         self::assertEquals('Microsoft 365 Business Standard', $offer->getName());
-        self::assertEquals(true, $offer->getHasAddons());
+        self::assertTrue($offer->getHasAddons());
         self::assertEquals('US', $offer->getMarketplace());
         self::assertEquals('Office 365 Business – (Corporate)', $offer->getServiceName());
         self::assertEquals('Corporate', $offer->getCustomerCategory());
@@ -370,11 +372,11 @@ JSON;
         self::assertEquals('031C9E47-4802-4248-838E-778FB1D2CC05', $offer->getSku());
         self::assertEquals('Microsoft', $offer->getVendor());
         self::assertEquals('microsoft', $offer->getVendorCode());
-        self::assertEquals(false, $offer->getIsAddon());
-        self::assertEquals(false, $offer->getIsTrial());
+        self::assertFalse($offer->getIsAddon());
+        self::assertFalse($offer->getIsTrial());
         self::assertEquals('45178cd297cf6e36488a13d211243227', $offer->getId());
         self::assertEquals('SAAS', $offer->getClassification());
-        self::assertEquals(true, $offer->getProgramIsEnabled());
+        self::assertTrue($offer->getProgramIsEnabled());
         self::assertEquals(['Corporate'], $offer->getKeywords());
         self::assertEquals(
             [
@@ -394,7 +396,7 @@ JSON;
         self::assertEquals(300, $priceBand->getMaxQuantity());
         self::assertEquals(6, $priceBand->getRecurringBuyPrice());
         self::assertEquals(8, $priceBand->getRecurringSellPrice());
-        self::assertEquals(null, $priceBand->getArrowPrice());
+        self::assertNull($priceBand->getArrowPrice());
         self::assertEquals('1 Year', $priceBand->getTerm());
         self::assertEquals('LICENSE', $priceBand->getUnitType());
         self::assertEquals('per Month', $priceBand->getRecurringTimeUnit());
@@ -408,7 +410,7 @@ JSON;
         self::assertEquals(300, $priceBand->getMaxQuantity());
         self::assertEquals(70, $priceBand->getRecurringBuyPrice());
         self::assertEquals(90, $priceBand->getRecurringSellPrice());
-        self::assertEquals(null, $priceBand->getArrowPrice());
+        self::assertNull($priceBand->getArrowPrice());
         self::assertEquals('1 Year', $priceBand->getTerm());
         self::assertEquals('LICENSE', $priceBand->getUnitType());
         self::assertEquals('per Year', $priceBand->getRecurringTimeUnit());
@@ -450,6 +452,7 @@ JSON;
 
     /**
      * @depends testGetDetailsRaw
+     *
      * @throws PublicApiClientException
      */
     public function testGetDetails(): void
@@ -565,7 +568,7 @@ JSON;
 
         $offer = $this->client->getOfferDetails('SAAS', 'microsoft', '031C9E47-4802-4248-838E-778FB1D2CC05');
         self::assertEquals('Microsoft 365 Business Standard', $offer->getName());
-        self::assertEquals(true, $offer->getHasAddons());
+        self::assertTrue($offer->getHasAddons());
         self::assertEquals('US', $offer->getMarketplace());
         self::assertEquals('Office 365 Business – (Corporate)', $offer->getServiceName());
         self::assertEquals('Corporate', $offer->getCustomerCategory());
@@ -576,10 +579,10 @@ JSON;
         self::assertEquals('031C9E47-4802-4248-838E-778FB1D2CC05', $offer->getSku());
         self::assertEquals('Microsoft', $offer->getVendor());
         self::assertEquals('microsoft', $offer->getVendorCode());
-        self::assertEquals(false, $offer->getIsAddon());
-        self::assertEquals(false, $offer->getIsTrial());
+        self::assertFalse($offer->getIsAddon());
+        self::assertFalse($offer->getIsTrial());
         self::assertEquals('SAAS', $offer->getClassification());
-        self::assertEquals(true, $offer->getProgramIsEnabled());
+        self::assertTrue($offer->getProgramIsEnabled());
         self::assertEquals(['Corporate'], $offer->getKeywords());
 
         $priceBands = $offer->getPriceBands();
@@ -591,7 +594,7 @@ JSON;
         self::assertEquals(300, $priceBand->getMaxQuantity());
         self::assertEquals(6, $priceBand->getRecurringBuyPrice());
         self::assertEquals(8, $priceBand->getRecurringSellPrice());
-        self::assertEquals(null, $priceBand->getArrowPrice());
+        self::assertNull($priceBand->getArrowPrice());
         self::assertEquals('1 Year', $priceBand->getTerm());
         self::assertEquals('LICENSE', $priceBand->getUnitType());
         self::assertEquals('per Month', $priceBand->getRecurringTimeUnit());
@@ -605,7 +608,7 @@ JSON;
         self::assertEquals(300, $priceBand->getMaxQuantity());
         self::assertEquals(70, $priceBand->getRecurringBuyPrice());
         self::assertEquals(90, $priceBand->getRecurringSellPrice());
-        self::assertEquals(null, $priceBand->getArrowPrice());
+        self::assertNull($priceBand->getArrowPrice());
         self::assertEquals('1 Year', $priceBand->getTerm());
         self::assertEquals('LICENSE', $priceBand->getUnitType());
         self::assertEquals('per Year', $priceBand->getRecurringTimeUnit());
@@ -631,6 +634,7 @@ JSON;
 
     /**
      * @depends testGetOffersRaw
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -649,6 +653,7 @@ JSON;
 
     /**
      * @depends testGetOffersRaw
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -677,6 +682,7 @@ JSON;
 
     /**
      * @depends testGetOffersRaw
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -841,15 +847,15 @@ JSON;
         self::assertEquals('Corporate', $offer->getBuyingProgram());
         self::assertEquals([], $offer->getPrerequisites());
         self::assertEquals('', $offer->getConversionSkus());
-        self::assertEquals(false, $offer->getIsTrial());
-        self::assertEquals(false, $offer->getIsAddon());
-        self::assertEquals(false, $offer->getHasAddons());
+        self::assertFalse($offer->getIsTrial());
+        self::assertFalse($offer->getIsAddon());
+        self::assertFalse($offer->getHasAddons());
         self::assertEquals('microsoft', $offer->getVendorCode());
         self::assertEquals('Microsoft', $offer->getVendor());
         self::assertEquals('CAFF2897-D629-404A-A241-6B360E979609', $offer->getSku());
         self::assertEquals('MS-0B-O365-ENTERPRIS', $offer->getServiceRef());
         self::assertEquals([], $offer->getCategory());
-        self::assertEquals(true, $offer->getIsEnabled());
+        self::assertTrue($offer->getIsEnabled());
         self::assertEquals('', $offer->getRequirements());
         self::assertEquals(0, $offer->getWeightForced());
         self::assertEquals(0, $offer->getWeightTopSales());
@@ -860,7 +866,7 @@ JSON;
         self::assertEquals('', $offer->getServiceName());
         self::assertEquals('N/A', $offer->getMarketplace());
         self::assertEquals('U0FBU3x8bWljcm9zb2Z0fHxNUy0wQi1PMzY1LUVOVEVSUFJJU3x8Q0FGRjI4OTctRDYyOS00MDRBLUEyNDEtNkIzNjBFOTc5NjA5', $offer->getOrderableSku());
-        self::assertEquals(true, $offer->getProgramIsEnabled());
+        self::assertTrue($offer->getProgramIsEnabled());
 
         $priceBands = $offer->getPriceBands();
         self::assertCount(2, $priceBands);
@@ -871,7 +877,7 @@ JSON;
         self::assertEquals(10000000, $priceBand->getMaxQuantity());
         self::assertEquals(50, $priceBand->getRecurringBuyPrice());
         self::assertEquals(70, $priceBand->getRecurringSellPrice());
-        self::assertEquals(null, $priceBand->getArrowPrice());
+        self::assertNull($priceBand->getArrowPrice());
         self::assertEquals('1 Year', $priceBand->getTerm());
         self::assertEquals('LICENSE', $priceBand->getUnitType());
         self::assertEquals('per Month', $priceBand->getRecurringTimeUnit());
@@ -885,7 +891,7 @@ JSON;
         self::assertEquals(10000000, $priceBand->getMaxQuantity());
         self::assertEquals(600, $priceBand->getRecurringBuyPrice());
         self::assertEquals(800, $priceBand->getRecurringSellPrice());
-        self::assertEquals(null, $priceBand->getArrowPrice());
+        self::assertNull($priceBand->getArrowPrice());
         self::assertEquals('1 Year', $priceBand->getTerm());
         self::assertEquals('LICENSE', $priceBand->getUnitType());
         self::assertEquals('per Year', $priceBand->getRecurringTimeUnit());
@@ -907,15 +913,15 @@ JSON;
         self::assertEquals('Corporate', $offer->getBuyingProgram());
         self::assertEquals([], $offer->getPrerequisites());
         self::assertEquals('', $offer->getConversionSkus());
-        self::assertEquals(false, $offer->getIsTrial());
-        self::assertEquals(false, $offer->getIsAddon());
-        self::assertEquals(true, $offer->getHasAddons());
+        self::assertFalse($offer->getIsTrial());
+        self::assertFalse($offer->getIsAddon());
+        self::assertTrue($offer->getHasAddons());
         self::assertEquals('microsoft', $offer->getVendorCode());
         self::assertEquals('Microsoft', $offer->getVendor());
         self::assertEquals('796B6B5F-613C-4E24-A17C-EBA730D49C02', $offer->getSku());
         self::assertEquals('MS-0B-O365-ENTERPRIS', $offer->getServiceRef());
         self::assertEquals([], $offer->getCategory());
-        self::assertEquals(true, $offer->getIsEnabled());
+        self::assertTrue($offer->getIsEnabled());
         self::assertEquals('', $offer->getRequirements());
         self::assertEquals(0, $offer->getWeightForced());
         self::assertEquals(0, $offer->getWeightTopSales());
@@ -926,7 +932,7 @@ JSON;
         self::assertEquals('', $offer->getServiceName());
         self::assertEquals('N/A', $offer->getMarketplace());
         self::assertEquals('U0FBU3x8bWljcm9zb2Z0fHxNUy0wQi1PMzY1LUVOVEVSUFJJU3x8Nzk2QjZCNUYtNjEzQy00RTI0LUExN0MtRUJBNzMwRDQ5QzAy', $offer->getOrderableSku());
-        self::assertEquals(true, $offer->getProgramIsEnabled());
+        self::assertTrue($offer->getProgramIsEnabled());
 
         $priceBands = $offer->getPriceBands();
         self::assertCount(2, $priceBands);
@@ -937,7 +943,7 @@ JSON;
         self::assertEquals(10000000, $priceBand->getMaxQuantity());
         self::assertEquals(10, $priceBand->getRecurringBuyPrice());
         self::assertEquals(14, $priceBand->getRecurringSellPrice());
-        self::assertEquals(null, $priceBand->getArrowPrice());
+        self::assertNull($priceBand->getArrowPrice());
         self::assertEquals('1 Year', $priceBand->getTerm());
         self::assertEquals('LICENSE', $priceBand->getUnitType());
         self::assertEquals('per Month', $priceBand->getRecurringTimeUnit());
@@ -951,7 +957,7 @@ JSON;
         self::assertEquals(10000000, $priceBand->getMaxQuantity());
         self::assertEquals(100, $priceBand->getRecurringBuyPrice());
         self::assertEquals(140, $priceBand->getRecurringSellPrice());
-        self::assertEquals(null, $priceBand->getArrowPrice());
+        self::assertNull($priceBand->getArrowPrice());
         self::assertEquals('1 Year', $priceBand->getTerm());
         self::assertEquals('LICENSE', $priceBand->getUnitType());
         self::assertEquals('per Year', $priceBand->getRecurringTimeUnit());
@@ -977,6 +983,7 @@ JSON;
 
     /**
      * @depends testGetOfferRaw
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -994,6 +1001,7 @@ JSON;
 
     /**
      * @depends testGetOfferRaw
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -1081,15 +1089,15 @@ JSON;
         self::assertEquals('Corporate', $offer->getBuyingProgram());
         self::assertEquals([], $offer->getPrerequisites());
         self::assertEquals('', $offer->getConversionSkus());
-        self::assertEquals(false, $offer->getIsTrial());
-        self::assertEquals(false, $offer->getIsAddon());
-        self::assertEquals(false, $offer->getHasAddons());
+        self::assertFalse($offer->getIsTrial());
+        self::assertFalse($offer->getIsAddon());
+        self::assertFalse($offer->getHasAddons());
         self::assertEquals('microsoft', $offer->getVendorCode());
         self::assertEquals('Microsoft', $offer->getVendor());
         self::assertEquals('CAFF2897-D629-404A-A241-6B360E979609', $offer->getSku());
         self::assertEquals('MS-0B-O365-ENTERPRIS', $offer->getServiceRef());
         self::assertEquals([], $offer->getCategory());
-        self::assertEquals(true, $offer->getIsEnabled());
+        self::assertTrue($offer->getIsEnabled());
         self::assertEquals('', $offer->getRequirements());
         self::assertEquals(0, $offer->getWeightForced());
         self::assertEquals(0, $offer->getWeightTopSales());
@@ -1100,7 +1108,7 @@ JSON;
         self::assertEquals('', $offer->getServiceName());
         self::assertEquals('N/A', $offer->getMarketplace());
         self::assertEquals('U0FBU3x8bWljcm9zb2Z0fHxNUy0wQi1PMzY1LUVOVEVSUFJJU3x8Q0FGRjI4OTctRDYyOS00MDRBLUEyNDEtNkIzNjBFOTc5NjA5', $offer->getOrderableSku());
-        self::assertEquals(true, $offer->getProgramIsEnabled());
+        self::assertTrue($offer->getProgramIsEnabled());
 
         $priceBands = $offer->getPriceBands();
         self::assertCount(2, $priceBands);
@@ -1111,7 +1119,7 @@ JSON;
         self::assertEquals(10000000, $priceBand->getMaxQuantity());
         self::assertEquals(50, $priceBand->getRecurringBuyPrice());
         self::assertEquals(70, $priceBand->getRecurringSellPrice());
-        self::assertEquals(null, $priceBand->getArrowPrice());
+        self::assertNull($priceBand->getArrowPrice());
         self::assertEquals('1 Year', $priceBand->getTerm());
         self::assertEquals('LICENSE', $priceBand->getUnitType());
         self::assertEquals('per Month', $priceBand->getRecurringTimeUnit());
@@ -1125,7 +1133,7 @@ JSON;
         self::assertEquals(10000000, $priceBand->getMaxQuantity());
         self::assertEquals(600, $priceBand->getRecurringBuyPrice());
         self::assertEquals(800, $priceBand->getRecurringSellPrice());
-        self::assertEquals(null, $priceBand->getArrowPrice());
+        self::assertNull($priceBand->getArrowPrice());
         self::assertEquals('1 Year', $priceBand->getTerm());
         self::assertEquals('LICENSE', $priceBand->getUnitType());
         self::assertEquals('per Year', $priceBand->getRecurringTimeUnit());

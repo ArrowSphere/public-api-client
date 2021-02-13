@@ -22,6 +22,7 @@ class ServiceClient extends AbstractCatalogClient
      * @param string $program The program of the services (Microsoft, Bittitan...)
      *
      * @return string The response from the API.
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -43,6 +44,7 @@ class ServiceClient extends AbstractCatalogClient
      * @param string $program
      *
      * @return Generator|Service[]
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */

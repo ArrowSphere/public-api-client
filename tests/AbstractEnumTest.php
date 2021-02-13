@@ -13,7 +13,8 @@ class AbstractEnumTest extends TestCase
     /**
      * @throws \ReflectionException
      */
-    public function testGetFilters() {
+    public function testGetFilters()
+    {
         self::assertFalse(DaysOfWeek::isValidName('Humpday'));
         self::assertTrue(DaysOfWeek::isValidName('Monday'));
         self::assertFalse(DaysOfWeek::isValidName('monday', true));
@@ -24,7 +25,8 @@ class AbstractEnumTest extends TestCase
     }
 }
 
-abstract class DaysOfWeek extends AbstractEnum {
+abstract class DaysOfWeek extends AbstractEnum
+{
     public const SUNDAY = 0;
     public const MONDAY = 1;
     public const TUESDAY = 2;

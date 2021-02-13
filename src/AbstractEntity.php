@@ -25,6 +25,7 @@ abstract class AbstractEntity implements \JsonSerializable
      * AbstractEntity constructor.
      *
      * @param array $data
+     *
      * @throws EntityValidationException
      */
     public function __construct(array $data)
@@ -34,6 +35,7 @@ abstract class AbstractEntity implements \JsonSerializable
 
     /**
      * @param array $data
+     *
      * @throws EntityValidationException
      */
     public function validate(array $data): void

@@ -17,31 +17,49 @@ class OfferClient extends AbstractCatalogClient
 {
     use LegacyOfferConverterTrait;
 
-    /** @var string The path of the Details endpoint */
+    /**
+     * @var string The path of the Details endpoint
+     */
     private const DETAILS_PATH = '/details';
 
-    /** @var string The path of the Find endpoint */
+    /**
+     * @var string The path of the Find endpoint
+     */
     private const FIND_PATH = '/find';
 
-    /** @var string The key for keywords search query parameter */
+    /**
+     * @var string The key for keywords search query parameter
+     */
     public const DATA_KEYWORDS = 'keywords';
 
-    /** @var string The key for filers search query parameter */
+    /**
+     * @var string The key for filers search query parameter
+     */
     public const DATA_FILTERS = 'filters';
 
-    /** @var string The key for sort search query parameter */
+    /**
+     * @var string The key for sort search query parameter
+     */
     public const DATA_SORT = 'sort';
 
-    /** @var string The key for highlight search query parameter */
+    /**
+     * @var string The key for highlight search query parameter
+     */
     public const DATA_HIGHLIGHT = 'highlight';
 
-    /** @var string The key for topOffers search query parameter */
+    /**
+     * @var string The key for topOffers search query parameter
+     */
     public const DATA_TOP_OFFERS = 'topOffers';
 
-    /** @var string Use this constant to sort in ascending direction */
+    /**
+     * @var string Use this constant to sort in ascending direction
+     */
     public const SORT_ASCENDING = 'asc';
 
-    /** @var string Use this constant to sort in descending direction */
+    /**
+     * @var string Use this constant to sort in descending direction
+     */
     public const SORT_DESCENDING = 'desc';
 
     /**
@@ -51,7 +69,9 @@ class OfferClient extends AbstractCatalogClient
      * @param string $vendorCode The vendor code of the offer (microsoft, bittitan...)
      * @param string $sku The sku of the offer
      * @param array $parameters The parameters to add to the URL
+     *
      * @return string The response
+     *
      * @throws PublicApiClientException
      * @throws GuzzleException
      */
@@ -73,7 +93,9 @@ class OfferClient extends AbstractCatalogClient
      * @param string $vendorCode
      * @param string $sku
      * @param array $parameters
+     *
      * @return Offer
+     *
      * @throws PublicApiClientException
      * @throws GuzzleException
      */
@@ -102,6 +124,7 @@ class OfferClient extends AbstractCatalogClient
      * @param array $parameters Parameters to append to the query string
      *
      * @return string The response
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      * @throws GuzzleException
@@ -134,7 +157,9 @@ class OfferClient extends AbstractCatalogClient
      * @param int $perPage
      * @param int $page
      * @param array $parameters
+     *
      * @return FindResult
+     *
      * @throws EntityValidationException
      * @throws PublicApiClientException
      * @throws GuzzleException
@@ -158,7 +183,9 @@ class OfferClient extends AbstractCatalogClient
      * @param string $program
      * @param string $serviceRef
      * @param array $parameters Optional parameters to add to the URL
+     *
      * @return string
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      * @throws GuzzleException
@@ -184,7 +211,9 @@ class OfferClient extends AbstractCatalogClient
      * @param string $program
      * @param string $serviceRef
      * @param array $parameters Optional parameters to add to the URL
+     *
      * @return Generator|Offer[]
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      * @throws GuzzleException
@@ -225,7 +254,9 @@ class OfferClient extends AbstractCatalogClient
      * @param string $serviceRef
      * @param string $sku
      * @param array $parameters Optional parameters to add to the URL
+     *
      * @return string
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      * @throws GuzzleException
@@ -252,10 +283,13 @@ class OfferClient extends AbstractCatalogClient
      * @param string $serviceRef
      * @param string $sku
      * @param array $parameters Optional parameters to add to the URL
+     *
      * @return Offer
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      * @throws GuzzleException
+     *
      * @deprecated This method should be replaced by getOfferDetails()
      */
     public function getOffer(string $classification, string $program, string $serviceRef, string $sku, array $parameters = []): Offer

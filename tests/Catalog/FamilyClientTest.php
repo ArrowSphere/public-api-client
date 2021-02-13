@@ -40,6 +40,7 @@ class FamilyClientTest extends AbstractClientTest
 
     /**
      * @depends testGetFamiliesRaw
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      * @throws GuzzleException
@@ -62,6 +63,7 @@ class FamilyClientTest extends AbstractClientTest
 
     /**
      * @depends testGetFamiliesRaw
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      * @throws GuzzleException
@@ -94,6 +96,7 @@ class FamilyClientTest extends AbstractClientTest
 
     /**
      * @depends testGetFamiliesRaw
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      * @throws GuzzleException
@@ -187,6 +190,7 @@ JSON;
 
     /**
      * @depends testGetFamilyRaw
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      * @throws GuzzleException
@@ -208,6 +212,7 @@ JSON;
 
     /**
      * @depends testGetFamilyRaw
+     *
      * @throws PublicApiClientException
      * @throws GuzzleException
      */

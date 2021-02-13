@@ -41,6 +41,7 @@ class CustomersClientTest extends AbstractClientTest
 
     /**
      * @depends testGetCustomersRaw
+     *
      * @throws PublicApiClientException
      * @throws GuzzleException
      */

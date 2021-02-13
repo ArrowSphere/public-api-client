@@ -13,46 +13,74 @@ use Generator;
  */
 class CatalogClient extends AbstractClient
 {
-    /** @var string The base path of the Catalog API */
+    /**
+     * @var string The base path of the Catalog API
+     */
     private const ROOT_PATH = '/catalog';
 
-    /** @var string The path of the Details endpoint */
+    /**
+     * @var string The path of the Details endpoint
+     */
     private const DETAILS_PATH = '/details';
 
-    /** @var string The path of the Find endpoint */
+    /**
+     * @var string The path of the Find endpoint
+     */
     private const FIND_PATH = '/find';
 
-    /** @var string The key for keywords search query parameter */
+    /**
+     * @var string The key for keywords search query parameter
+     */
     private const KEYWORDS = 'keywords';
 
-    /** @var string The key for filers search query parameter */
+    /**
+     * @var string The key for filers search query parameter
+     */
     private const FILTERS = 'filters';
 
-    /** @var string The key for sort search query parameter */
+    /**
+     * @var string The key for sort search query parameter
+     */
     private const SORT = 'sort';
 
-    /** @var string The key for highlight search query parameter */
+    /**
+     * @var string The key for highlight search query parameter
+     */
     private const HIGHLIGHT = 'highlight';
 
-    /** @var string The key for topOffers search query parameter */
+    /**
+     * @var string The key for topOffers search query parameter
+     */
     private const TOP_OFFERS = 'topOffers';
 
-    /** @var string The base path of the API */
+    /**
+     * @var string The base path of the API
+     */
     protected $basePath = self::ROOT_PATH;
 
-    /** @var string The search keywords */
+    /**
+     * @var string The search keywords
+     */
     private $keywords = '';
 
-    /** @var array the parameters that define how the results will be filtered */
+    /**
+     * @var array the parameters that define how the results will be filtered
+     */
     private $filters = [];
 
-    /** @var array The parameters that define the sorting of the search results */
+    /**
+     * @var array The parameters that define the sorting of the search results
+     */
     private $sort = [];
 
-    /** @var boolean Search results will contain a field giving highlights if set to true */
+    /**
+     * @var bool Search results will contain a field giving highlights if set to true
+     */
     private $highlight = false;
 
-    /** @var boolean Search result will provide top offers if set to true */
+    /**
+     * @var bool Search result will provide top offers if set to true
+     */
     private $topOffers = false;
 
     /**

@@ -106,133 +106,216 @@ abstract class AbstractLicense extends AbstractEntity
 
     ];
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $acceptEula;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $activeSeatsLastUpdate;
 
-    /** @var float|null */
+    /**
+     * @var float|null
+     */
     private $activeSeatsNumber;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $autoRenew;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $baseSeat;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     private $buyPrice;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $category;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $classification;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $currency;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $customerName;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $customerRef;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $endDate;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $friendlyName;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $id;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $isEnabled;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $lastUpdate;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     private $listPrice;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $marketplace;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $message;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $offer;
 
-    /** @var int|null */
+    /**
+     * @var int|null
+     */
     private $parentLineId;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $parentOrderRef;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $partnerRef;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $periodicity;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $resellerName;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $resellerRef;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $seat;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $serviceRef;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $sku;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $startDate;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $statusCode;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $statusLabel;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $subscriptionId;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $subsidiaryName;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $term;
 
-    /** @var bool */
+    /**
+     * @var bool
+     */
     private $trial;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $type;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $uom;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $vendorCode;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $vendorName;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $vendorSubscriptionId;
 
     /**
      * AbstractLicense constructor.
      *
      * @param array $data
+     *
      * @throws EntityValidationException
      */
     public function __construct(array $data)

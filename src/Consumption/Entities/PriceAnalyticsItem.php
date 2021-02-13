@@ -21,24 +21,36 @@ class PriceAnalyticsItem extends AbstractEntity
         self::COLUMN_CURRENCY         => 'string|required',
     ];
 
-    /** @var float */
+    /**
+     * @var float
+     */
     private $resellerBuyPrice;
 
-    /** @var float|null */
+    /**
+     * @var float|null
+     */
     private $arrowBuyPrice;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     private $listBuyPrice;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     private $endCustomerBuyPrice;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $currency;
 
     /**
      * PriceAnalyticsItem constructor.
+     *
      * @param array $data
+     *
      * @throws EntityValidationException
      */
     public function __construct(array $data)
@@ -100,7 +112,8 @@ class PriceAnalyticsItem extends AbstractEntity
     /**
      * @param PriceAnalyticsItem $item
      */
-    public function add(PriceAnalyticsItem $item) : void {
+    public function add(PriceAnalyticsItem $item) : void
+    {
         $this->resellerBuyPrice += $item->getResellerBuyPrice();
         $this->arrowBuyPrice += $item->getArrowBuyPrice() ?? 0;
         $this->listBuyPrice += $item->getListBuyPrice();

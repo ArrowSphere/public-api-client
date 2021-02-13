@@ -16,7 +16,9 @@ class CheckDomainClient extends AbstractClient
      * @param string $vendorName The vendor's name
      * @param string $domainName The domain to check
      * @param array $parameters Optional parameters to add to the URL
+     *
      * @return string
+     *
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -36,7 +38,9 @@ class CheckDomainClient extends AbstractClient
      * @param string $vendorName The vendor's name
      * @param string $domainName The domain to check
      * @param array $parameters Optional parameters to add to the URL
+     *
      * @return bool
+     *
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException

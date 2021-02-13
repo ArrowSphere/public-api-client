@@ -28,25 +28,36 @@ class Program extends AbstractEntity
         self::COLUMN_REFERENCE                       => 'required',
     ];
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $associatedSubscriptionProgram;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $classification;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $logo;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $name;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $reference;
 
     /**
      * Program constructor.
      *
      * @param array $data
+     *
      * @throws EntityValidationException
      */
     public function __construct(array $data)

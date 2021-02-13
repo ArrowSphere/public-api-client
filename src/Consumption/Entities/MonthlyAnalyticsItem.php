@@ -39,30 +39,46 @@ class MonthlyAnalyticsItem extends AbstractEntity
         self::COLUMN_LOCALPRICE . '.' . self::COLUMN_CURRENCY         => 'string|required',
     ];
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $vendor;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $marketPlace;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $classification;
 
-    /** @var string|null */
+    /**
+     * @var string|null
+     */
     private $tag;
 
-    /** @var PriceAnalyticsItem */
+    /**
+     * @var PriceAnalyticsItem
+     */
     private $localPrice;
 
-    /** @var PriceAnalyticsItem */
+    /**
+     * @var PriceAnalyticsItem
+     */
     private $usdPrice;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $month;
 
     /**
      * MonthlyAnalyticsItem constructor.
+     *
      * @param array $data
+     *
      * @throws EntityValidationException|ReflectionException
      */
     public function __construct(array $data)

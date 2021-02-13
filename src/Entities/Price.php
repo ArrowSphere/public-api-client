@@ -1,6 +1,5 @@
 <?php
 
-
 namespace ArrowSphere\PublicApiClient\Entities;
 
 /**
@@ -25,46 +24,74 @@ namespace ArrowSphere\PublicApiClient\Entities;
  */
 class Price
 {
-    /** @var int */
+    /**
+     * @var int
+     */
     public $min_quantity;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $max_quantity;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     public $recurring_buy_price;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     public $recurring_sell_price;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $term;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $unit_type;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $periodicity;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $recurring_time_unit;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     public $setup_buy_price;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     public $setup_sell_price;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     public $setup_time_unit;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $currency;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $availability_date;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $expiry_date;
 
     public function __construct(array $data)

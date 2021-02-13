@@ -4,7 +4,6 @@ namespace ArrowSphere\PublicApiClient\Tests\Catalog;
 
 use ArrowSphere\PublicApiClient\Catalog\ClassificationClient;
 use ArrowSphere\PublicApiClient\Catalog\Entities\Classification;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
@@ -36,6 +35,7 @@ class ClassificationClientTest extends AbstractClientTest
 
     /**
      * @depends testGetClassificationsRaw
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -54,6 +54,7 @@ class ClassificationClientTest extends AbstractClientTest
 
     /**
      * @depends testGetClassificationsRaw
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */

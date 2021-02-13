@@ -13,43 +13,69 @@ use GuzzleHttp\Exception\GuzzleException;
  */
 class LicensesClient extends AbstractLicensesClient
 {
-    /** @var string The path of the Find endpoint */
+    /**
+     * @var string The path of the Find endpoint
+     */
     private const FIND_PATH = '/find';
 
-    /** @var string The key for keyword search query parameter (to search one string in all available search fields) */
+    /**
+     * @var string The key for keyword search query parameter (to search one string in all available search fields)
+     */
     public const DATA_KEYWORD = 'keyword';
 
-    /** @var string The key for keywords search query parameter (to search with a complex object) */
+    /**
+     * @var string The key for keywords search query parameter (to search with a complex object)
+     */
     public const DATA_KEYWORDS = 'keywords';
 
-    /** @var string The key for filers search query parameter */
+    /**
+     * @var string The key for filers search query parameter
+     */
     public const DATA_FILTERS = 'filters';
 
-    /** @var string The key for sort search query parameter */
+    /**
+     * @var string The key for sort search query parameter
+     */
     public const DATA_SORT = 'sort';
 
-    /** @var string The key for highlight search query parameter */
+    /**
+     * @var string The key for highlight search query parameter
+     */
     public const DATA_HIGHLIGHT = 'highlight';
 
-    /** @var string Use this constant to sort in ascending direction */
+    /**
+     * @var string Use this constant to sort in ascending direction
+     */
     public const SORT_ASCENDING = 'asc';
 
-    /** @var string Use this constant to sort in descending direction */
+    /**
+     * @var string Use this constant to sort in descending direction
+     */
     public const SORT_DESCENDING = 'desc';
 
-    /** @var string The key to search for keywords values */
+    /**
+     * @var string The key to search for keywords values
+     */
     public const KEYWORDS_VALUES = 'values';
 
-    /** @var string The key to specify the operator to use with the keywords values */
+    /**
+     * @var string The key to specify the operator to use with the keywords values
+     */
     public const KEYWORDS_OPERATOR = 'operator';
 
-    /** @var string Use this operator to search for all keywords values specified */
+    /**
+     * @var string Use this operator to search for all keywords values specified
+     */
     public const OPERATOR_AND = 'AND';
 
-    /** @var string Use this operator to search for any keywords values specified */
+    /**
+     * @var string Use this operator to search for any keywords values specified
+     */
     public const OPERATOR_OR = 'OR';
 
-    /** @var string Use this operator to search for all keywords with values in the range specified (for date ranges) */
+    /**
+     * @var string Use this operator to search for all keywords with values in the range specified (for date ranges)
+     */
     public const OPERATOR_BETWEEN = 'BETWEEN';
 
     /**
@@ -57,6 +83,7 @@ class LicensesClient extends AbstractLicensesClient
      * @param array $parameters
      *
      * @return string
+     *
      * @throws PublicApiClientException
      * @throws NotFoundException
      * @throws GuzzleException

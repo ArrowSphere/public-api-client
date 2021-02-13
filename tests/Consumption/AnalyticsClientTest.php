@@ -35,6 +35,7 @@ class AnalyticsClientTest extends AbstractClientTest
 
     /**
      * @depends testGetMonthlyRaw
+     *
      * @throws PublicApiClientException
      * @throws ReflectionException
      */
@@ -96,6 +97,7 @@ JSON;
 
     /**
      * @depends testGetMonthlyRaw
+     *
      * @throws PublicApiClientException
      * @throws ReflectionException
      */

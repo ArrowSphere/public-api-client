@@ -22,6 +22,7 @@ class AnalyticsClient extends AbstractConsumptionClient
      * @param string $tag The target tag filter (Pax8, TELENOR ...)
      *
      * @return MonthlyAnalyticsItem[]
+     *
      * @throws PublicApiClientException|ReflectionException
      */
     public function getMonthly(string $month, array $classification = [], array $vendorCode = [], array $marketPlace = [], array $license = [], string $tag = null) : array
@@ -52,7 +53,7 @@ class AnalyticsClient extends AbstractConsumptionClient
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function getMonthlyRaw(string $month, array $classification = [], array $vendorCode = [], array $marketPlace = [], array $license = [],  $tag = null): string
+    public function getMonthlyRaw(string $month, array $classification = [], array $vendorCode = [], array $marketPlace = [], array $license = [], $tag = null): string
     {
         $this->path = '/analytics/monthly';
 

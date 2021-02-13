@@ -4,7 +4,8 @@ namespace ArrowSphere\PublicApiClient\Consumption\Enum;
 
 use ArrowSphere\PublicApiClient\AbstractEnum;
 
-abstract class ColorEnum extends AbstractEnum {
+abstract class ColorEnum extends AbstractEnum
+{
     public const RED = 'red';
     public const GREEN = 'green';
     public const YELLOW = 'yellow';

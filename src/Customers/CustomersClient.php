@@ -17,7 +17,9 @@ class CustomersClient extends AbstractClient
 {
     /**
      * @param array $parameters Optional parameters to add to the URL
+     *
      * @return string
+     *
      * @throws PublicApiClientException
      * @throws NotFoundException
      * @throws GuzzleException
@@ -34,7 +36,9 @@ class CustomersClient extends AbstractClient
      * Returns an array (generator) of Customer.
      *
      * @param array $parameters Optional parameters to add to the URL
+     *
      * @return Generator|Customer[]
+     *
      * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
@@ -68,7 +72,9 @@ class CustomersClient extends AbstractClient
      *
      * @param array $parameters Optional parameters to add to the URL
      * @param Customer $customer
+     *
      * @return string
+     *
      * @throws NotFoundException
      * @throws PublicApiClientException
      * @throws GuzzleException

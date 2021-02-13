@@ -13,31 +13,49 @@ use Generator;
  */
 class FindResult extends AbstractEntity
 {
-    /** @var OfferFindResult[] */
+    /**
+     * @var OfferFindResult[]
+     */
     private $offers;
 
-    /** @var FilterFindResult[] */
+    /**
+     * @var FilterFindResult[]
+     */
     private $filters;
 
-    /** @var OfferClient */
+    /**
+     * @var OfferClient
+     */
     private $client;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     private $postData;
 
-    /** @var array */
+    /**
+     * @var array
+     */
     private $parameters;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $currentPage;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $totalPage;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $nbResults;
 
-    /** @var OfferFindResult[] */
+    /**
+     * @var OfferFindResult[]
+     */
     private $topOffers;
 
     /**
@@ -47,6 +65,7 @@ class FindResult extends AbstractEntity
      * @param OfferClient $client
      * @param array $postData
      * @param array $parameters
+     *
      * @throws EntityValidationException
      */
     public function __construct(array $data, OfferClient $client, array $postData, array $parameters)
@@ -84,6 +103,7 @@ class FindResult extends AbstractEntity
 
     /**
      * @return Generator|OfferFindResult[]
+     *
      * @throws EntityValidationException
      * @throws PublicApiClientException
      */

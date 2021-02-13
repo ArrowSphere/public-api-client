@@ -4,19 +4,30 @@ namespace ArrowSphere\PublicApiClient\Consumption\Enum;
 
 use ArrowSphere\PublicApiClient\AbstractEnum;
 
-abstract class ConstantEnum extends AbstractEnum {
-    /** @var string classification index */
+abstract class ConstantEnum extends AbstractEnum
+{
+    /**
+     * @var string classification index
+     */
     public const CLASSIFICATION = 'classification';
 
-    /** @var string vendor index */
+    /**
+     * @var string vendor index
+     */
     public const VENDOR = 'vendor';
 
-    /** @var string marketPlace index */
+    /**
+     * @var string marketPlace index
+     */
     public const MARKETPLACE = 'marketplace';
 
-    /** @var string subscription index */
+    /**
+     * @var string subscription index
+     */
     public const LICENSE = 'license';
 
-    /** @var string tax index */
+    /**
+     * @var string tax index
+     */
     public const TAG = 'tag';
 }

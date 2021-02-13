@@ -25,22 +25,31 @@ class Contact extends AbstractEntity
         self::COLUMN_PHONE      => 'present',
     ];
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $email;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $firstName;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $lastName;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $phone;
 
     /**
      * Contact constructor.
      *
      * @param array $data
+     *
      * @throws EntityValidationException
      */
     public function __construct(array $data)

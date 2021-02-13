@@ -15,13 +15,16 @@ class LicenseFindResult extends AbstractLicense
         self::COLUMN_HIGHLIGHT => 'array',
     ];
 
-    /** @var array */
+    /**
+     * @var array
+     */
     private $highlight;
 
     /**
      * OfferFindResult constructor.
      *
      * @param array $data
+     *
      * @throws EntityValidationException
      */
     public function __construct(array $data)

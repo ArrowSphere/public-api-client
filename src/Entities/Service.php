@@ -1,6 +1,5 @@
 <?php
 
-
 namespace ArrowSphere\PublicApiClient\Entities;
 
 /**
@@ -29,58 +28,94 @@ namespace ArrowSphere\PublicApiClient\Entities;
  */
 class Service
 {
-    /** @var string */
+    /**
+     * @var string
+     */
     public $reference;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $name;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $associatedSubscriptionProgram;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $description;
 
-    /** @var string[] */
+    /**
+     * @var string[]
+     */
     public $serviceTags = [];
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $logo;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $icon;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $program;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $category;
 
-    /** @var Price[] */
+    /**
+     * @var Price[]
+     */
     public $prices = [];
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $orderableSku;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $features;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $endUserEula;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $endUserFeatures;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $endUserRequirements;
 
-    /** @var string[] */
+    /**
+     * @var string[]
+     */
     public $keywords = [];
 
-    /** @var object */
+    /**
+     * @var object
+     */
     public $links;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     public $vendor;
 
     public function __construct(array $data)

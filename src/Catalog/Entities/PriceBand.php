@@ -45,43 +45,66 @@ class PriceBand extends AbstractEntity
         self::COLUMN_TERM_AS_HOURS        => 'required|numeric',
     ];
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $minQuantity;
 
-    /** @var int|null */
+    /**
+     * @var int|null
+     */
     private $maxQuantity;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     private $recurringBuyPrice;
 
-    /** @var float */
+    /**
+     * @var float
+     */
     private $recurringSellPrice;
 
-    /** @var float|null */
+    /**
+     * @var float|null
+     */
     private $arrowPrice;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $term;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $unitType;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $recurringTimeUnit;
 
-    /** @var string */
+    /**
+     * @var string
+     */
     private $currency;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $periodAsHours;
 
-    /** @var int */
+    /**
+     * @var int
+     */
     private $termAsHours;
 
     /**
      * PriceBand constructor.
      *
      * @param array $data
+     *
      * @throws EntityValidationException
      */
     public function __construct(array $data)

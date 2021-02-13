@@ -80,6 +80,7 @@ class PublicApiClient extends AbstractClient
 
     /**
      * @return ServiceClient
+     *
      * @deprecated use getFamilyClient() instead
      */
     public function getServiceClient(): ServiceClient
