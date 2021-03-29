@@ -10,6 +10,7 @@ use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
+use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Psr7\Response;
 
 /**
@@ -117,6 +118,75 @@ JSON;
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->findRaw($postData);
+    }
+
+    /**
+     * @return array
+     */
+    public function providerPagination(): array
+    {
+        return [
+            'One page'    => [
+                'totalPage' => 1,
+                'perPage'   => 5,
+                'total'     => 3,
+            ],
+            'Two pages'   => [
+                'totalPage' => 2,
+                'perPage'   => 5,
+                'total'     => 8,
+            ],
+            'Three pages' => [
+                'totalPage' => 3,
+                'perPage'   => 5,
+                'total'     => 12,
+            ],
+        ];
+    }
+
+    /**
+     * @depends testFindRaw
+     *
+     * @dataProvider providerPagination
+     *
+     * @param int $totalPage
+     * @param int $perPage
+     * @param int $total
+     *
+     * @throws EntityValidationException
+     * @throws PublicApiClientException
+     * @throws GuzzleException
+     */
+    public function testFindWithPagination(int $totalPage, int $perPage, int $total): void
+    {
+        $responses = [];
+        $urls = [];
+
+        for ($i = 1; $i <= $totalPage; $i++) {
+            $responses[] = new Response(200, [], json_encode([
+                'products'   => [],
+                'filters'    => [],
+                'pagination' => [
+                    'current_page' => $i,
+                    'total_page'   => $totalPage,
+                    'total'        => $total,
+                ],
+            ]));
+            if ($i === 1) {
+                $urls[] = ['post', 'https://www.test.com/catalog/find?per_page=' . $perPage];
+            } else {
+                $urls[] = ['post', 'https://www.test.com/catalog/find?page=' . $i . '&per_page=' . $perPage];
+            }
+        }
+
+        $this->httpClient
+            ->expects(self::exactly($totalPage))
+            ->method('request')
+            ->withConsecutive(...$urls)
+            ->willReturn(...$responses);
+
+        $test = $this->client->find([], $perPage);
+        iterator_to_array($test->getOffers(), false);
     }
 
     /**
@@ -354,7 +424,7 @@ JSON;
         );
 
         /** @var OfferFindResult[] $offers */
-        $offers = iterator_to_array($findResult->getOffers());
+        $offers = iterator_to_array($findResult->getOffers(), false);
 
         self::assertCount(1, $offers);
 
@@ -648,7 +718,7 @@ JSON;
 
         $this->expectException(PublicApiClientException::class);
         $offers = $this->client->getOffers('SAAS', 'microsoft', 'MS-1A-M365-ENT');
-        iterator_to_array($offers);
+        iterator_to_array($offers, false);
     }
 
     /**
@@ -677,7 +747,7 @@ JSON;
             ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getOffers('SAAS', 'microsoft', 'MS-0B-O365-ENTERPRIS');
-        iterator_to_array($test);
+        iterator_to_array($test, false);
     }
 
     /**
@@ -830,7 +900,7 @@ JSON;
             ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getOffers('SAAS', 'microsoft', 'MS-0B-O365-ENTERPRIS');
-        $list = iterator_to_array($test);
+        $list = iterator_to_array($test, false);
         self::assertCount(2, $list);
 
         /** @var Offer $offer */

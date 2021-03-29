@@ -23,7 +23,7 @@ coverage-show:
 static: static-phpstan static-psalm static-codestyle-check
 
 static-psalm:
-	docker run --rm -it -v ${PWD}:/app -w /app vimeo/psalm-github-actions $(PSALM_PARAMS)
+	docker run --rm -it -e REQUIRE_DEV=true -e CHECK_PLATFORM_REQUIREMENTS=false -v ${PWD}:/app -w /app vimeo/psalm-github-actions $(PSALM_PARAMS)
 
 static-psalm-generate-baseline:
 	$(MAKE) static-psalm PSALM_PARAMS="--set-baseline=psalm.baseline.xml"

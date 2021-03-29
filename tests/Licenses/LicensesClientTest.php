@@ -5,6 +5,7 @@ namespace ArrowSphere\PublicApiClient\Tests\Licenses;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
+use ArrowSphere\PublicApiClient\Licenses\Entities\AbstractLicense;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License;
 use ArrowSphere\PublicApiClient\Licenses\Entities\LicenseFindResult;
 use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
@@ -155,6 +156,161 @@ JSON;
     }
 
     /**
+     * @return array
+     */
+    public function providerPagination(): array
+    {
+        $genDummyLicenses = static function (int $nb, int $offset = 0) {
+            $results = [];
+
+            for ($i = 1; $i <= $nb; $i++) {
+                $results[] = [
+                    'id'                     => 123456,
+                    'subscription_id'        => '12345678-AAAA-CCCC-FFFF-987654321012',
+                    'parent_line_id'         => null,
+                    'parent_order_ref'       => null,
+                    'vendor_name'            => 'Microsoft',
+                    'vendor_code'            => 'Microsoft',
+                    'subsidiary_name'        => 'Arrow ECS Denmark',
+                    'partner_ref'            => 'XSP' . str_pad($i + $offset, 8, '0', STR_PAD_LEFT),
+                    'status_code'            => 86,
+                    'status_label'           => 'activation_ok',
+                    'service_ref'            => 'MS-0B-O365-ENTERPRIS',
+                    'sku'                    => 'ABCDABCD-1234-5678-9876-ABCDEFABCDEF',
+                    'uom'                    => 'LICENSE',
+                    'price'                  => [
+                        'buy_price'  => 10,
+                        'list_price' => 15,
+                        'currency'   => 'USD',
+                    ],
+                    'cloud_type'             => 'SaaS',
+                    'base_seat'              => 6,
+                    'seat'                   => 6,
+                    'trial'                  => false,
+                    'auto_renew'             => true,
+                    'offer'                  => 'Office 365 E3',
+                    'category'               => 'BaseProduct',
+                    'type'                   => 'recurring',
+                    'start_date'             => '2020-11-18T17:48:43.000Z',
+                    'end_date'               => '2021-11-18T17:48:43.000Z',
+                    'accept_eula'            => false,
+                    'customer_ref'           => 'XSP123456789',
+                    'customer_name'          => 'My customer',
+                    'reseller_ref'           => 'XSP12345',
+                    'reseller_name'          => 'My reseller',
+                    'marketplace'            => 'US',
+                    'active_seats'           => [
+                        'number'     => null,
+                        'lastUpdate' => null,
+                    ],
+                    'friendly_name'          => 'XSP12345|MS-0B-O365-ENTERPRIS|XSP555555|XSP987654321',
+                    'vendor_subscription_id' => 'AABBCCDD-1111-2222-3333-ABCDEFABCDEF',
+                    'message'                => '',
+                    'periodicity'            => 720,
+                    'term'                   => 8640,
+                    'isEnabled'              => true,
+                    'lastUpdate'             => '2020-12-08T15:42:30.069Z',
+                ];
+            }
+
+            return $results;
+        };
+
+        return [
+            'One page'    => [
+                'totalPage' => 1,
+                'perPage'   => 5,
+                'total'     => 3,
+                'pages'     => [
+                    $genDummyLicenses(3),
+                ],
+            ],
+            'Two pages'   => [
+                'totalPage' => 2,
+                'perPage'   => 5,
+                'total'     => 8,
+                'pages'     => [
+                    $genDummyLicenses(5),
+                    $genDummyLicenses(3, 5),
+                ],
+            ],
+            'Three pages' => [
+                'totalPage' => 3,
+                'perPage'   => 5,
+                'total'     => 12,
+                'pages'     => [
+                    $genDummyLicenses(5),
+                    $genDummyLicenses(5, 5),
+                    $genDummyLicenses(2, 10),
+                ],
+            ],
+        ];
+    }
+
+    /**
+     * @depends      testFindRaw
+     *
+     * @dataProvider providerPagination
+     *
+     * @param int $totalPage
+     * @param int $perPage
+     * @param int $total
+     * @param array $pages
+     *
+     * @throws EntityValidationException
+     * @throws PublicApiClientException
+     */
+    public function testFindWithPagination(int $totalPage, int $perPage, int $total, array $pages): void
+    {
+        $responses = [];
+        $urls = [];
+
+        for ($i = 1; $i <= $totalPage; $i++) {
+            $responses[] = new Response(200, [], json_encode([
+                'licenses'   => $pages[$i - 1],
+                'filters'    => [],
+                'pagination' => [
+                    'currentPage' => $i,
+                    'totalPage'   => $totalPage,
+                    'total'       => $total,
+                ],
+            ]));
+            if ($i === 1) {
+                $urls[] = [
+                    'post',
+                    'https://www.test.com/licenses/find?per_page=' . $perPage,
+                ];
+            } else {
+                $urls[] = [
+                    'post',
+                    'https://www.test.com/licenses/find?page=' . $i . '&per_page=' . $perPage,
+                ];
+            }
+        }
+
+        $this->httpClient
+            ->expects(self::exactly($totalPage))
+            ->method('request')
+            ->withConsecutive(...$urls)
+            ->willReturn(...$responses);
+
+        $test = $this->client->find([], $perPage);
+
+        /** @var AbstractLicense[] $results */
+        $results = iterator_to_array($test->getLicenses(), false);
+        reset($results);
+
+        $partnerRefs = array_map(static function (AbstractLicense $license) {
+            return $license->getPartnerRef();
+        }, $results);
+
+        $flatPages = array_merge(...$pages);
+        $expectedPartnerRefs = array_column($flatPages, 'partner_ref');
+
+        self::assertSame($expectedPartnerRefs, $partnerRefs);
+    }
+
+    /**
      * @depends testFindRaw
      *
      * @throws PublicApiClientException
@@ -218,7 +374,7 @@ JSON;
         $postData = [
             LicensesClient::DATA_KEYWORD   => 'office 365',
             LicensesClient::DATA_KEYWORDS  => [
-                License::COLUMN_CUSTOMER_NAME     => [
+                License::COLUMN_CUSTOMER_NAME => [
                     LicensesClient::KEYWORDS_VALUES   => [
                         'My customer',
                     ],
@@ -514,7 +670,7 @@ JSON;
         );
 
         /** @var LicenseFindResult[] $licenses */
-        $licenses = iterator_to_array($findResult->getLicenses());
+        $licenses = iterator_to_array($findResult->getLicenses(), false);
 
         self::assertCount(2, $licenses);
 
@@ -541,7 +697,7 @@ JSON;
         $postData = [
             LicensesClient::DATA_KEYWORD   => 'office 365',
             LicensesClient::DATA_KEYWORDS  => [
-                License::COLUMN_CUSTOMER_NAME     => [
+                License::COLUMN_CUSTOMER_NAME => [
                     LicensesClient::KEYWORDS_VALUES   => [
                         'My customer',
                     ],
@@ -647,7 +803,7 @@ JSON;
         self::assertEquals(1, $findResult->getNbResults());
 
         /** @var LicenseFindResult[] $licenses */
-        $licenses = iterator_to_array($findResult->getLicenses());
+        $licenses = iterator_to_array($findResult->getLicenses(), false);
 
         self::assertCount(1, $licenses);
 
