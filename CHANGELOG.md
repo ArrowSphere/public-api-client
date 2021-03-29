@@ -3,11 +3,18 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.2.5] - 2021-03-29
 ### Added
 - Added "build lowest version" to the CI workflow, so now the tests are run against both the lowest and the highest dependencies of composer packages
 - Added a new "static" workflow to add phpstan and psalm to perform some static-analysis on the codebase
 - Added a "checks" workflow to perform some additional checks on the codebase
+
+### Fixed
+- The ```LicensesClient``` had a bug: if there were exactly 2 pages of results, the second page was not loaded
+- The ```OfferClient``` had the same bug
+
+### Changed
+- Changed the Makefile so Psalm runs with the dev dependencies (so it doesn't uninstall them each time we run it)
 
 ## [0.2.4] - 2021-02-11
 ### Added

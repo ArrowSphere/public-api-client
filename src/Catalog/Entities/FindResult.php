@@ -113,10 +113,11 @@ class FindResult extends AbstractEntity
         yield from $this->getOffersForCurrentPage();
 
         // Then parse the other pages... if there are more
-        $currentPage = $this->currentPage + 1;
+        $currentPage = $this->currentPage;
         $lastPage = $this->totalPage <= $currentPage;
 
         while (! $lastPage) {
+            $currentPage++;
             $this->client->setPage($currentPage);
 
             $rawResponse = $this->client->findRaw($this->postData, $this->parameters);
@@ -125,8 +126,6 @@ class FindResult extends AbstractEntity
             if ($response['pagination']['total_page'] <= $currentPage) {
                 $lastPage = true;
             }
-
-            $currentPage++;
 
             foreach ($response['products'] as $data) {
                 yield new OfferFindResult($data);

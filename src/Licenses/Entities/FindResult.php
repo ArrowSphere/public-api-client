@@ -104,10 +104,11 @@ class FindResult extends AbstractEntity
         yield from $this->getLicensesForCurrentPage();
 
         // Then parse the other pages... if there are more
-        $currentPage = $this->currentPage + 1;
-        $lastPage = $this->totalPage <= $currentPage;
+        $currentPage = $this->currentPage;
+        $lastPage = $this->totalPage <= $this->currentPage;
 
         while (! $lastPage) {
+            $currentPage++;
             $this->client->setPage($currentPage);
 
             $rawResponse = $this->client->findRaw($this->postData, $this->parameters);
@@ -116,8 +117,6 @@ class FindResult extends AbstractEntity
             if ($response['pagination']['totalPage'] <= $currentPage) {
                 $lastPage = true;
             }
-
-            $currentPage++;
 
             foreach ($response['licenses'] as $data) {
                 yield new LicenseFindResult($data);
