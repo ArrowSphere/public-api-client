@@ -160,7 +160,7 @@ JSON;
      */
     public function providerPagination(): array
     {
-        $genDummyLicenses = static function (int $nb, int $offset = 0) {
+        $genDummyLicenses = static function (int $nb, int $offset = 0): array {
             $results = [];
 
             for ($i = 1; $i <= $nb; $i++) {
@@ -297,8 +297,7 @@ JSON;
         $test = $this->client->find([], $perPage);
 
         /** @var AbstractLicense[] $results */
-        $results = iterator_to_array($test->getLicenses(), false);
-        reset($results);
+        $results = iterator_to_array($test->getLicenses());
 
         $partnerRefs = array_map(static function (AbstractLicense $license) {
             return $license->getPartnerRef();
@@ -670,7 +669,7 @@ JSON;
         );
 
         /** @var LicenseFindResult[] $licenses */
-        $licenses = iterator_to_array($findResult->getLicenses(), false);
+        $licenses = iterator_to_array($findResult->getLicenses());
 
         self::assertCount(2, $licenses);
 
@@ -803,7 +802,7 @@ JSON;
         self::assertEquals(1, $findResult->getNbResults());
 
         /** @var LicenseFindResult[] $licenses */
-        $licenses = iterator_to_array($findResult->getLicenses(), false);
+        $licenses = iterator_to_array($findResult->getLicenses());
 
         self::assertCount(1, $licenses);
 

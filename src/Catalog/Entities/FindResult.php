@@ -115,6 +115,7 @@ class FindResult extends AbstractEntity
         // Then parse the other pages... if there are more
         $currentPage = $this->currentPage;
         $lastPage = $this->totalPage <= $currentPage;
+        $i = count($this->offers);
 
         while (! $lastPage) {
             $currentPage++;
@@ -128,7 +129,8 @@ class FindResult extends AbstractEntity
             }
 
             foreach ($response['products'] as $data) {
-                yield new OfferFindResult($data);
+                yield $i => new OfferFindResult($data);
+                ++$i;
             }
         }
     }

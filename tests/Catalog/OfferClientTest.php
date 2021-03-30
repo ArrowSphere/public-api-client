@@ -2,6 +2,7 @@
 
 namespace ArrowSphere\PublicApiClient\Tests\Catalog;
 
+use ArrowSphere\PublicApiClient\Catalog\Entities\AbstractOffer;
 use ArrowSphere\PublicApiClient\Catalog\Entities\Offer;
 use ArrowSphere\PublicApiClient\Catalog\Entities\OfferFindResult;
 use ArrowSphere\PublicApiClient\Catalog\Entities\PriceBand;
@@ -69,7 +70,7 @@ class OfferClientTest extends AbstractClientTest
             OfferClient::DATA_KEYWORDS   => 'office 365',
             OfferClient::DATA_FILTERS    => [
                 Offer::COLUMN_VENDOR => 'Microsoft',
-                Offer::COLUMN_SKU => [
+                Offer::COLUMN_SKU    => [
                     'first'  => 'ABC',
                     'second' => 'DEF',
                 ],
@@ -125,46 +126,148 @@ JSON;
      */
     public function providerPagination(): array
     {
+        $genDummyOffers = static function (int $nb, int $offset = 0): array {
+            $results = [];
+
+            for ($i = 1; $i <= $nb; $i++) {
+                $results[] = [
+                    "id"                            => "1",
+                    "marketplace"                   => "US",
+                    "sku"                           => "AAAAAAAA-BBBB-CCCC-DDDD-0000" . str_pad($i + $offset, 8, '0', STR_PAD_LEFT),
+                    "name"                          => "Dynamics 365 Customer Voice Addl Responses",
+                    "associatedSubscriptionProgram" => "MSCSP",
+                    "vendor"                        => "Microsoft",
+                    "vendor_code"                   => "microsoft",
+                    "description"                   => "description",
+                    "thumbnail"                     => "https://websource.myportal.cloud/images/Office365.jpg",
+                    "customer_category"             => '',
+                    "category"                      => ["Productivity"],
+                    "add_ons"                       => [
+                        "abc",
+                        "def",
+                    ],
+                    "prerequisites"                 => [],
+                    "has_addons"                    => false,
+                    "is_addon"                      => false,
+                    "is_trial"                      => false,
+                    "product"                       => "MS-0B-O365-ENTERPRIS",
+                    "program"                       => "microsoft",
+                    "type"                          => "SAAS",
+                    "keywords"                      => ["Corporate"],
+                    "weight_top_sales"              => 11.173757047667863,
+                    "weight_forced"                 => 0,
+                    "isEnabled"                     => true,
+                    "service_ref"                   => "MS-0A-O365-BUSINESS",
+                    "service_name"                  => "Office 365 Business – (Corporate)",
+                    "orderableSku"                  => "U0FBU3x8bWljcm9zb2Z0fHxNUy0wQi1PMzY1LUVOVEVSUFJJU3x8Q0FGRjI4OTctRDYyOS00MDRBLUEyNDEtNkIzNjBFOTc5NjA5",
+                    "prices"                        => [
+                        [
+                            "min_quantity"         => 1,
+                            "max_quantity"         => 10000000,
+                            "recurring_buy_price"  => 50,
+                            "recurring_sell_price" => 70,
+                            "term"                 => "1 Year",
+                            "unit_type"            => "LICENSE",
+                            "periodicity"          => "per Month",
+                            "recurring_time_unit"  => "per Month",
+                            "setup_buy_price"      => 0,
+                            "setup_sell_price"     => 0,
+                            "setup_time_unit"      => "One-Time",
+                            "currency"             => "USD",
+                            "period_as_hours"      => "720",
+                            "term_as_hours"        => 8640,
+                            "availability_date"    => "2020-11-01T00:00:00+00:00",
+                            "expiry_date"          => "9999-12-31T00:00:00+00:00",
+                        ],
+                        [
+                            "min_quantity"         => 1,
+                            "max_quantity"         => 10000000,
+                            "recurring_buy_price"  => 600,
+                            "recurring_sell_price" => 800,
+                            "term"                 => "1 Year",
+                            "unit_type"            => "LICENSE",
+                            "periodicity"          => "per Year",
+                            "recurring_time_unit"  => "per Year",
+                            "setup_buy_price"      => 0,
+                            "setup_sell_price"     => 0,
+                            "period_as_hours"      => "8640",
+                            "term_as_hours"        => 8640,
+                            "setup_time_unit"      => "One-Time",
+                            "currency"             => "USD",
+                            "availability_date"    => "2020-11-01T00:00:00+00:00",
+                            "expiry_date"          => "9999-12-31T00:00:00+00:00",
+                        ],
+                    ],
+                    "buyingProgram"                 => "Corporate",
+                    "buyingType"                    => "PAYGO",
+                    "endUserEula"                   => "end user eula",
+                    "endUserFeatures"               => "end user features",
+                    "endUserRequirements"           => "end user requirements",
+                    "links"                         => [
+                        "program" => "/api/catalog/categories/SAAS/programs/microsoft",
+                        "product" => "/api/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS",
+                        "offer"   => "/api/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS/offers/CAFF2897-D629-404A-A241-6B360E979609",
+                    ],
+                    "eula"                          => "eula",
+                ];
+            }
+
+            return $results;
+        };
+
         return [
             'One page'    => [
                 'totalPage' => 1,
                 'perPage'   => 5,
                 'total'     => 3,
+                'pages'     => [
+                    $genDummyOffers(3),
+                ],
             ],
             'Two pages'   => [
                 'totalPage' => 2,
                 'perPage'   => 5,
                 'total'     => 8,
+                'pages'     => [
+                    $genDummyOffers(5),
+                    $genDummyOffers(3, 5),
+                ],
             ],
             'Three pages' => [
                 'totalPage' => 3,
                 'perPage'   => 5,
                 'total'     => 12,
+                'pages'     => [
+                    $genDummyOffers(5),
+                    $genDummyOffers(5, 5),
+                    $genDummyOffers(2, 10),
+                ],
             ],
         ];
     }
 
     /**
-     * @depends testFindRaw
+     * @depends      testFindRaw
      *
      * @dataProvider providerPagination
      *
      * @param int $totalPage
      * @param int $perPage
      * @param int $total
+     * @param array $pages
      *
      * @throws EntityValidationException
      * @throws PublicApiClientException
      * @throws GuzzleException
      */
-    public function testFindWithPagination(int $totalPage, int $perPage, int $total): void
+    public function testFindWithPagination(int $totalPage, int $perPage, int $total, array $pages): void
     {
         $responses = [];
         $urls = [];
 
         for ($i = 1; $i <= $totalPage; $i++) {
             $responses[] = new Response(200, [], json_encode([
-                'products'   => [],
+                'products'   => $pages[$i - 1],
                 'filters'    => [],
                 'pagination' => [
                     'current_page' => $i,
@@ -173,9 +276,15 @@ JSON;
                 ],
             ]));
             if ($i === 1) {
-                $urls[] = ['post', 'https://www.test.com/catalog/find?per_page=' . $perPage];
+                $urls[] = [
+                    'post',
+                    'https://www.test.com/catalog/find?per_page=' . $perPage,
+                ];
             } else {
-                $urls[] = ['post', 'https://www.test.com/catalog/find?page=' . $i . '&per_page=' . $perPage];
+                $urls[] = [
+                    'post',
+                    'https://www.test.com/catalog/find?page=' . $i . '&per_page=' . $perPage,
+                ];
             }
         }
 
@@ -186,7 +295,18 @@ JSON;
             ->willReturn(...$responses);
 
         $test = $this->client->find([], $perPage);
-        iterator_to_array($test->getOffers(), false);
+
+        /** @var AbstractOffer[] $results */
+        $results = iterator_to_array($test->getOffers());
+
+        $skus = array_map(static function (AbstractOffer $offer) {
+            return $offer->getSku();
+        }, $results);
+
+        $flatPages = array_merge(...$pages);
+        $expectedSkus = array_column($flatPages, 'sku');
+
+        self::assertSame($expectedSkus, $skus);
     }
 
     /**
@@ -424,7 +544,7 @@ JSON;
         );
 
         /** @var OfferFindResult[] $offers */
-        $offers = iterator_to_array($findResult->getOffers(), false);
+        $offers = iterator_to_array($findResult->getOffers());
 
         self::assertCount(1, $offers);
 
@@ -718,7 +838,7 @@ JSON;
 
         $this->expectException(PublicApiClientException::class);
         $offers = $this->client->getOffers('SAAS', 'microsoft', 'MS-1A-M365-ENT');
-        iterator_to_array($offers, false);
+        iterator_to_array($offers);
     }
 
     /**
@@ -740,14 +860,23 @@ JSON;
             ->expects(self::exactly(3))
             ->method('request')
             ->withConsecutive(
-                ['get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS/offers?per_page=100'],
-                ['get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS/offers?page=2&per_page=100'],
-                ['get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS/offers?page=3&per_page=100']
+                [
+                    'get',
+                    'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS/offers?per_page=100',
+                ],
+                [
+                    'get',
+                    'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS/offers?page=2&per_page=100',
+                ],
+                [
+                    'get',
+                    'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS/offers?page=3&per_page=100',
+                ]
             )
             ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getOffers('SAAS', 'microsoft', 'MS-0B-O365-ENTERPRIS');
-        iterator_to_array($test, false);
+        iterator_to_array($test);
     }
 
     /**
@@ -900,7 +1029,7 @@ JSON;
             ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getOffers('SAAS', 'microsoft', 'MS-0B-O365-ENTERPRIS');
-        $list = iterator_to_array($test, false);
+        $list = iterator_to_array($test);
         self::assertCount(2, $list);
 
         /** @var Offer $offer */

@@ -106,6 +106,7 @@ class FindResult extends AbstractEntity
         // Then parse the other pages... if there are more
         $currentPage = $this->currentPage;
         $lastPage = $this->totalPage <= $this->currentPage;
+        $i = count($this->licenses);
 
         while (! $lastPage) {
             $currentPage++;
@@ -119,7 +120,8 @@ class FindResult extends AbstractEntity
             }
 
             foreach ($response['licenses'] as $data) {
-                yield new LicenseFindResult($data);
+                yield $i => new LicenseFindResult($data);
+                ++$i;
             }
         }
     }
