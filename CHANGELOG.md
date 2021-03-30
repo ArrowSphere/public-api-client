@@ -3,6 +3,10 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Fixed
+- Added indices to the offers and licenses yields because the way they were built generated index reutilization with the default behavior of ```iterator_to_array```
+
 ## [0.2.5] - 2021-03-29
 ### Added
 - Added "build lowest version" to the CI workflow, so now the tests are run against both the lowest and the highest dependencies of composer packages
