@@ -5,9 +5,8 @@ namespace ArrowSphere\PublicApiClient\Tests\Licenses;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
-use ArrowSphere\PublicApiClient\Licenses\Entities\AbstractLicense;
-use ArrowSphere\PublicApiClient\Licenses\Entities\License;
-use ArrowSphere\PublicApiClient\Licenses\Entities\LicenseFindResult;
+use ArrowSphere\PublicApiClient\Licenses\Entities\License\License;
+use ArrowSphere\PublicApiClient\Licenses\Entities\LicenseOfferFindResult;
 use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
 use GuzzleHttp\Exception\GuzzleException;
@@ -59,7 +58,7 @@ class LicensesClientTest extends AbstractClientTest
             ->method('request')
             ->with(
                 'post',
-                'https://www.test.com/licenses/find?abc=def&ghi=0&page=2&per_page=15',
+                'https://www.test.com/licenses/v2/find?abc=def&ghi=0&page=2&per_page=15',
                 [
                     'headers' => [
                         'apiKey'       => '123456',
@@ -141,7 +140,7 @@ JSON;
             ->method('request')
             ->with(
                 'post',
-                'https://www.test.com/licenses/find',
+                'https://www.test.com/licenses/v2/find',
                 [
                     'headers' => [
                         'apiKey'       => '123456',
@@ -165,51 +164,53 @@ JSON;
 
             for ($i = 1; $i <= $nb; $i++) {
                 $results[] = [
-                    'id'                     => 123456,
-                    'subscription_id'        => '12345678-AAAA-CCCC-FFFF-987654321012',
-                    'parent_line_id'         => null,
-                    'parent_order_ref'       => null,
-                    'vendor_name'            => 'Microsoft',
-                    'vendor_code'            => 'Microsoft',
-                    'subsidiary_name'        => 'Arrow ECS Denmark',
-                    'partner_ref'            => 'XSP' . str_pad($i + $offset, 8, '0', STR_PAD_LEFT),
-                    'status_code'            => 86,
-                    'status_label'           => 'activation_ok',
-                    'service_ref'            => 'MS-0B-O365-ENTERPRIS',
-                    'sku'                    => 'ABCDABCD-1234-5678-9876-ABCDEFABCDEF',
-                    'uom'                    => 'LICENSE',
-                    'price'                  => [
-                        'buy_price'  => 10,
-                        'list_price' => 15,
-                        'currency'   => 'USD',
+                    'license' => [
+                        'id'                     => 123456,
+                        'subscription_id'        => '12345678-AAAA-CCCC-FFFF-987654321012',
+                        'parent_line_id'         => null,
+                        'parent_order_ref'       => null,
+                        'vendor_name'            => 'Microsoft',
+                        'vendor_code'            => 'Microsoft',
+                        'subsidiary_name'        => 'Arrow ECS Denmark',
+                        'partner_ref'            => 'XSP' . str_pad($i + $offset, 8, '0', STR_PAD_LEFT),
+                        'status_code'            => 86,
+                        'status_label'           => 'activation_ok',
+                        'service_ref'            => 'MS-0B-O365-ENTERPRIS',
+                        'sku'                    => 'ABCDABCD-1234-5678-9876-ABCDEFABCDEF',
+                        'uom'                    => 'LICENSE',
+                        'price'                  => [
+                            'buy_price'  => 10,
+                            'list_price' => 15,
+                            'currency'   => 'USD',
+                        ],
+                        'cloud_type'             => 'SaaS',
+                        'base_seat'              => 6,
+                        'seat'                   => 6,
+                        'trial'                  => false,
+                        'auto_renew'             => true,
+                        'offer'                  => 'Office 365 E3',
+                        'category'               => 'BaseProduct',
+                        'type'                   => 'recurring',
+                        'start_date'             => '2020-11-18T17:48:43.000Z',
+                        'end_date'               => '2021-11-18T17:48:43.000Z',
+                        'accept_eula'            => false,
+                        'customer_ref'           => 'XSP123456789',
+                        'customer_name'          => 'My customer',
+                        'reseller_ref'           => 'XSP12345',
+                        'reseller_name'          => 'My reseller',
+                        'marketplace'            => 'US',
+                        'active_seats'           => [
+                            'number'     => null,
+                            'lastUpdate' => null,
+                        ],
+                        'friendly_name'          => 'XSP12345|MS-0B-O365-ENTERPRIS|XSP555555|XSP987654321',
+                        'vendor_subscription_id' => 'AABBCCDD-1111-2222-3333-ABCDEFABCDEF',
+                        'message'                => '',
+                        'periodicity'            => 720,
+                        'term'                   => 8640,
+                        'isEnabled'              => true,
+                        'lastUpdate'             => '2020-12-08T15:42:30.069Z',
                     ],
-                    'cloud_type'             => 'SaaS',
-                    'base_seat'              => 6,
-                    'seat'                   => 6,
-                    'trial'                  => false,
-                    'auto_renew'             => true,
-                    'offer'                  => 'Office 365 E3',
-                    'category'               => 'BaseProduct',
-                    'type'                   => 'recurring',
-                    'start_date'             => '2020-11-18T17:48:43.000Z',
-                    'end_date'               => '2021-11-18T17:48:43.000Z',
-                    'accept_eula'            => false,
-                    'customer_ref'           => 'XSP123456789',
-                    'customer_name'          => 'My customer',
-                    'reseller_ref'           => 'XSP12345',
-                    'reseller_name'          => 'My reseller',
-                    'marketplace'            => 'US',
-                    'active_seats'           => [
-                        'number'     => null,
-                        'lastUpdate' => null,
-                    ],
-                    'friendly_name'          => 'XSP12345|MS-0B-O365-ENTERPRIS|XSP555555|XSP987654321',
-                    'vendor_subscription_id' => 'AABBCCDD-1111-2222-3333-ABCDEFABCDEF',
-                    'message'                => '',
-                    'periodicity'            => 720,
-                    'term'                   => 8640,
-                    'isEnabled'              => true,
-                    'lastUpdate'             => '2020-12-08T15:42:30.069Z',
                 ];
             }
 
@@ -258,6 +259,8 @@ JSON;
      * @param array $pages
      *
      * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
      * @throws PublicApiClientException
      */
     public function testFindWithPagination(int $totalPage, int $perPage, int $total, array $pages): void
@@ -267,7 +270,7 @@ JSON;
 
         for ($i = 1; $i <= $totalPage; $i++) {
             $responses[] = new Response(200, [], json_encode([
-                'licenses'   => $pages[$i - 1],
+                'results'    => $pages[$i - 1],
                 'filters'    => [],
                 'pagination' => [
                     'currentPage' => $i,
@@ -278,12 +281,12 @@ JSON;
             if ($i === 1) {
                 $urls[] = [
                     'post',
-                    'https://www.test.com/licenses/find?per_page=' . $perPage,
+                    'https://www.test.com/licenses/v2/find?per_page=' . $perPage,
                 ];
             } else {
                 $urls[] = [
                     'post',
-                    'https://www.test.com/licenses/find?page=' . $i . '&per_page=' . $perPage,
+                    'https://www.test.com/licenses/v2/find?page=' . $i . '&per_page=' . $perPage,
                 ];
             }
         }
@@ -296,15 +299,16 @@ JSON;
 
         $test = $this->client->find([], $perPage);
 
-        /** @var AbstractLicense[] $results */
+        /** @var LicenseOfferFindResult[] $results */
         $results = iterator_to_array($test->getLicenses());
 
-        $partnerRefs = array_map(static function (AbstractLicense $license) {
-            return $license->getPartnerRef();
+        $partnerRefs = array_map(static function (LicenseOfferFindResult $licenseOffer) {
+            return $licenseOffer->getLicense()->getPartnerRef();
         }, $results);
 
         $flatPages = array_merge(...$pages);
-        $expectedPartnerRefs = array_column($flatPages, 'partner_ref');
+        $licenses = array_column($flatPages, 'license');
+        $expectedPartnerRefs = array_column($licenses, 'partner_ref');
 
         self::assertSame($expectedPartnerRefs, $partnerRefs);
     }
@@ -344,7 +348,7 @@ JSON;
             ->method('request')
             ->with(
                 'post',
-                'https://www.test.com/licenses/find?abc=def&ghi=0&page=2&per_page=15',
+                'https://www.test.com/licenses/v2/find?abc=def&ghi=0&page=2&per_page=15',
                 [
                     'headers' => [
                         'apiKey'       => '123456',
@@ -394,100 +398,104 @@ JSON;
 
         $response = <<<JSON
 {
-    "licenses": [
+    "results": [
         {
-            "id": 123456,
-            "subscription_id": "12345678-AAAA-CCCC-FFFF-987654321012",
-            "parent_line_id": null,
-            "parent_order_ref": null,
-            "vendor_name": "Microsoft",
-            "vendor_code": "Microsoft",
-            "subsidiary_name": "Arrow ECS Denmark",
-            "partner_ref": "XSP987654321",
-            "status_code": 86,
-            "status_label": "activation_ok",
-            "service_ref": "MS-0B-O365-ENTERPRIS",
-            "sku": "ABCDABCD-1234-5678-9876-ABCDEFABCDEF",
-            "uom": "LICENSE",
-            "price": {
-                "buy_price": 10,
-                "list_price": 15,
-                "currency": "USD"
-            },
-            "cloud_type": "SaaS",
-            "base_seat": 6,
-            "seat": 6,
-            "trial": false,
-            "auto_renew": true,
-            "offer": "Office 365 E3",
-            "category": "BaseProduct",
-            "type": "recurring",
-            "start_date": "2020-11-18T17:48:43.000Z",
-            "end_date": "2021-11-18T17:48:43.000Z",
-            "accept_eula": false,
-            "customer_ref": "XSP123456789",
-            "customer_name": "My customer",
-            "reseller_ref": "XSP12345",
-            "reseller_name": "My reseller",
-            "marketplace": "US",
-            "active_seats": {
-                "number": null,
-                "lastUpdate": null
-            },
-            "friendly_name": "XSP12345|MS-0B-O365-ENTERPRIS|XSP555555|XSP987654321",
-            "vendor_subscription_id": "AABBCCDD-1111-2222-3333-ABCDEFABCDEF",
-            "message": "",
-            "periodicity": 720,
-            "term": 8640,
-            "isEnabled": true,
-            "lastUpdate": "2020-12-08T15:42:30.069Z"
+            "license": {
+                "id": 123456,
+                "subscription_id": "12345678-AAAA-CCCC-FFFF-987654321012",
+                "parent_line_id": null,
+                "parent_order_ref": null,
+                "vendor_name": "Microsoft",
+                "vendor_code": "Microsoft",
+                "subsidiary_name": "Arrow ECS Denmark",
+                "partner_ref": "XSP987654321",
+                "status_code": 86,
+                "status_label": "activation_ok",
+                "service_ref": "MS-0B-O365-ENTERPRIS",
+                "sku": "ABCDABCD-1234-5678-9876-ABCDEFABCDEF",
+                "uom": "LICENSE",
+                "price": {
+                    "buy_price": 10,
+                    "list_price": 15,
+                    "currency": "USD"
+                },
+                "cloud_type": "SaaS",
+                "base_seat": 6,
+                "seat": 6,
+                "trial": false,
+                "auto_renew": true,
+                "offer": "Office 365 E3",
+                "category": "BaseProduct",
+                "type": "recurring",
+                "start_date": "2020-11-18T17:48:43.000Z",
+                "end_date": "2021-11-18T17:48:43.000Z",
+                "accept_eula": false,
+                "customer_ref": "XSP123456789",
+                "customer_name": "My customer",
+                "reseller_ref": "XSP12345",
+                "reseller_name": "My reseller",
+                "marketplace": "US",
+                "active_seats": {
+                    "number": null,
+                    "lastUpdate": null
+                },
+                "friendly_name": "XSP12345|MS-0B-O365-ENTERPRIS|XSP555555|XSP987654321",
+                "vendor_subscription_id": "AABBCCDD-1111-2222-3333-ABCDEFABCDEF",
+                "message": "",
+                "periodicity": 720,
+                "term": 8640,
+                "isEnabled": true,
+                "lastUpdate": "2020-12-08T15:42:30.069Z"
+            }
         },
         {
-            "id": 123457,
-            "subscription_id": "12345678-AAAA-CCCC-FFFF-987654321013",
-            "parent_line_id": null,
-            "parent_order_ref": null,
-            "vendor_name": "Microsoft",
-            "vendor_code": "Microsoft",
-            "subsidiary_name": "Arrow ECS Denmark",
-            "partner_ref": "XSP987654322",
-            "status_code": 86,
-            "status_label": "activation_ok",
-            "service_ref": "MS-0B-O365-ENTERPRIS",
-            "sku": "ABCDABCD-1234-5678-9876-ABCDEFABCCCC",
-            "uom": "LICENSE",
-            "price": {
-                "buy_price": 12,
-                "list_price": 17,
-                "currency": "USD"
-            },
-            "cloud_type": "SaaS",
-            "base_seat": 10,
-            "seat": 8,
-            "trial": false,
-            "auto_renew": true,
-            "offer": "Office 365 E5",
-            "category": "BaseProduct",
-            "type": "recurring",
-            "start_date": "2020-11-18T17:48:43.000Z",
-            "end_date": "2021-11-18T17:48:43.000Z",
-            "accept_eula": false,
-            "customer_ref": "XSP123456786",
-            "customer_name": "My customer 2",
-            "reseller_ref": "XSP12345",
-            "reseller_name": "My reseller",
-            "marketplace": "US",
-            "active_seats": {
-                "number": null,
-                "lastUpdate": null
-            },
-            "friendly_name": "XSP12346|MS-0B-O365-ENTERPRIS|XSP555555|XSP987654322",
-            "vendor_subscription_id": "AABBCCDD-1111-2222-3333-ABCDEFABCCCC",
-            "message": "",
-            "periodicity": 720,
-            "term": 8640,
-            "isEnabled": true,
-            "lastUpdate": "2020-12-08T15:42:30.069Z"
+            "license": {
+                "id": 123457,
+                "subscription_id": "12345678-AAAA-CCCC-FFFF-987654321013",
+                "parent_line_id": null,
+                "parent_order_ref": null,
+                "vendor_name": "Microsoft",
+                "vendor_code": "Microsoft",
+                "subsidiary_name": "Arrow ECS Denmark",
+                "partner_ref": "XSP987654322",
+                "status_code": 86,
+                "status_label": "activation_ok",
+                "service_ref": "MS-0B-O365-ENTERPRIS",
+                "sku": "ABCDABCD-1234-5678-9876-ABCDEFABCCCC",
+                "uom": "LICENSE",
+                "price": {
+                    "buy_price": 12,
+                    "list_price": 17,
+                    "currency": "USD"
+                },
+                "cloud_type": "SaaS",
+                "base_seat": 10,
+                "seat": 8,
+                "trial": false,
+                "auto_renew": true,
+                "offer": "Office 365 E5",
+                "category": "BaseProduct",
+                "type": "recurring",
+                "start_date": "2020-11-18T17:48:43.000Z",
+                "end_date": "2021-11-18T17:48:43.000Z",
+                "accept_eula": false,
+                "customer_ref": "XSP123456786",
+                "customer_name": "My customer 2",
+                "reseller_ref": "XSP12345",
+                "reseller_name": "My reseller",
+                "marketplace": "US",
+                "active_seats": {
+                    "number": null,
+                    "lastUpdate": null
+                },
+                "friendly_name": "XSP12346|MS-0B-O365-ENTERPRIS|XSP555555|XSP987654322",
+                "vendor_subscription_id": "AABBCCDD-1111-2222-3333-ABCDEFABCCCC",
+                "message": "",
+                "periodicity": 720,
+                "term": 8640,
+                "isEnabled": true,
+                "lastUpdate": "2020-12-08T15:42:30.069Z"
+            }
         }
     ],
     "filters": [
@@ -599,7 +607,7 @@ JSON;
             ->method('request')
             ->with(
                 'post',
-                'https://www.test.com/licenses/find?abc=def&ghi=0&per_page=15',
+                'https://www.test.com/licenses/v2/find?abc=def&ghi=0&per_page=15',
                 [
                     'headers' => [
                         'apiKey'       => '123456',
@@ -668,13 +676,16 @@ JSON;
             $filter->getValues()
         );
 
-        /** @var LicenseFindResult[] $licenses */
+        /** @var LicenseOfferFindResult[] $licenses */
         $licenses = iterator_to_array($findResult->getLicenses());
 
         self::assertCount(2, $licenses);
 
-        $license = array_shift($licenses);
-        self::assertInstanceOf(LicenseFindResult::class, $license);
+        $licenseOffer = array_shift($licenses);
+        self::assertInstanceOf(LicenseOfferFindResult::class, $licenseOffer);
+        self::assertEquals([], $licenseOffer->getHighlight());
+
+        $license = $licenseOffer->getLicense();
         self::assertEquals('US', $license->getMarketplace());
         self::assertEquals('BaseProduct', $license->getCategory());
         self::assertEquals('MS-0B-O365-ENTERPRIS', $license->getServiceRef());
@@ -682,7 +693,6 @@ JSON;
         self::assertEquals('Microsoft', $license->getVendorCode());
         self::assertEquals(123456, $license->getId());
         self::assertEquals('SaaS', $license->getClassification());
-        self::assertEquals([], $license->getHighlight());
     }
 
     /**
@@ -717,53 +727,55 @@ JSON;
 
         $response = <<<JSON
 {
-    "licenses": [
+    "results": [
         {
-            "id": 123456,
-            "subscription_id": "12345678-AAAA-CCCC-FFFF-987654321012",
-            "parent_line_id": null,
-            "parent_order_ref": null,
-            "vendor_name": "Amazon",
-            "vendor_code": "aws",
-            "subsidiary_name": "Arrow ECS Denmark",
-            "partner_ref": "XSP987654321",
-            "status_code": 86,
-            "status_label": "activation_ok",
-            "service_ref": "AWS_AMAZON_SUBSCRIPTION",
-            "sku": "ABCDABCD-1234-5678-9876-ABCDEFABCDEF",
-            "uom": "ACCOUNT",
-            "price": {
-                "buy_price": 0,
-                "list_price": 0,
-                "currency": null
-            },
-            "cloud_type": "IaaS",
-            "base_seat": 6,
-            "seat": 6,
-            "trial": false,
-            "auto_renew": true,
-            "offer": "AWS Distribution Account Model (DAM)",
-            "category": "BaseProduct",
-            "type": "recurring",
-            "start_date": "2020-11-18T17:48:43.000Z",
-            "end_date": "2021-11-18T17:48:43.000Z",
-            "accept_eula": false,
-            "customer_ref": "XSP123456789",
-            "customer_name": "My customer",
-            "reseller_ref": "XSP12345",
-            "reseller_name": "My reseller",
-            "marketplace": "US",
-            "active_seats": {
-                "number": null,
-                "lastUpdate": null
-            },
-            "friendly_name": null,
-            "vendor_subscription_id": null,
-            "message": "",
-            "periodicity": 720,
-            "term": 0,
-            "isEnabled": true,
-            "lastUpdate": "2020-12-08T15:42:30.069Z"
+            "license": {
+                "id": 123456,
+                "subscription_id": "12345678-AAAA-CCCC-FFFF-987654321012",
+                "parent_line_id": null,
+                "parent_order_ref": null,
+                "vendor_name": "Amazon",
+                "vendor_code": "aws",
+                "subsidiary_name": "Arrow ECS Denmark",
+                "partner_ref": "XSP987654321",
+                "status_code": 86,
+                "status_label": "activation_ok",
+                "service_ref": "AWS_AMAZON_SUBSCRIPTION",
+                "sku": "ABCDABCD-1234-5678-9876-ABCDEFABCDEF",
+                "uom": "ACCOUNT",
+                "price": {
+                    "buy_price": 0,
+                    "list_price": 0,
+                    "currency": null
+                },
+                "cloud_type": "IaaS",
+                "base_seat": 6,
+                "seat": 6,
+                "trial": false,
+                "auto_renew": true,
+                "offer": "AWS Distribution Account Model (DAM)",
+                "category": "BaseProduct",
+                "type": "recurring",
+                "start_date": "2020-11-18T17:48:43.000Z",
+                "end_date": "2021-11-18T17:48:43.000Z",
+                "accept_eula": false,
+                "customer_ref": "XSP123456789",
+                "customer_name": "My customer",
+                "reseller_ref": "XSP12345",
+                "reseller_name": "My reseller",
+                "marketplace": "US",
+                "active_seats": {
+                    "number": null,
+                    "lastUpdate": null
+                },
+                "friendly_name": null,
+                "vendor_subscription_id": null,
+                "message": "",
+                "periodicity": 720,
+                "term": 0,
+                "isEnabled": true,
+                "lastUpdate": "2020-12-08T15:42:30.069Z"
+            }
         }
     ],
     "filters": [],
@@ -783,7 +795,7 @@ JSON;
             ->method('request')
             ->with(
                 'post',
-                'https://www.test.com/licenses/find?abc=def&ghi=0&per_page=15',
+                'https://www.test.com/licenses/v2/find?abc=def&ghi=0&per_page=15',
                 [
                     'headers' => [
                         'apiKey'       => '123456',
@@ -799,25 +811,31 @@ JSON;
             'ghi' => false,
         ]);
 
-        self::assertEquals(1, $findResult->getNbResults());
+        self::assertSame(1, $findResult->getNbResults());
 
-        /** @var LicenseFindResult[] $licenses */
-        $licenses = iterator_to_array($findResult->getLicenses());
+        /** @var LicenseOfferFindResult[] $licenseOfferFindResults */
+        $licenseOfferFindResults = iterator_to_array($findResult->getLicenses());
 
-        self::assertCount(1, $licenses);
+        self::assertCount(1, $licenseOfferFindResults);
 
-        $license = array_shift($licenses);
-        self::assertInstanceOf(LicenseFindResult::class, $license);
-        self::assertEquals('US', $license->getMarketplace());
-        self::assertEquals('BaseProduct', $license->getCategory());
-        self::assertEquals('AWS_AMAZON_SUBSCRIPTION', $license->getServiceRef());
-        self::assertEquals('ABCDABCD-1234-5678-9876-ABCDEFABCDEF', $license->getSku());
-        self::assertEquals('aws', $license->getVendorCode());
-        self::assertEquals(123456, $license->getId());
-        self::assertEquals('IaaS', $license->getClassification());
-        self::assertEquals([], $license->getHighlight());
-        self::assertNull($license->getCurrency());
+        $licenseOfferFindResult = array_shift($licenseOfferFindResults);
+        self::assertInstanceOf(LicenseOfferFindResult::class, $licenseOfferFindResult);
+        self::assertSame([], $licenseOfferFindResult->getHighlight());
+
+        $license = $licenseOfferFindResult->getLicense();
+        self::assertSame('US', $license->getMarketplace());
+        self::assertSame('BaseProduct', $license->getCategory());
+        self::assertSame('AWS_AMAZON_SUBSCRIPTION', $license->getServiceRef());
+        self::assertSame('ABCDABCD-1234-5678-9876-ABCDEFABCDEF', $license->getSku());
+        self::assertSame('aws', $license->getVendorCode());
+        self::assertSame(123456, $license->getId());
+        self::assertSame('IaaS', $license->getClassification());
         self::assertNull($license->getFriendlyName());
         self::assertNull($license->getVendorSubscriptionId());
+
+        $price = $license->getPrice();
+        self::assertNull($price->getCurrency());
+        self::assertSame(0.0, $price->getBuyPrice());
+        self::assertSame(0.0, $price->getListPrice());
     }
 }

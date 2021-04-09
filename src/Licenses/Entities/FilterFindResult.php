@@ -42,8 +42,8 @@ class FilterFindResult extends AbstractEntity
     {
         parent::__construct($data);
 
-        $this->name = $data['name'];
-        $this->values = $data['values'];
+        $this->name = $data[self::COLUMN_NAME];
+        $this->values = $data[self::COLUMN_VALUES];
     }
 
     /**

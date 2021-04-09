@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="dev-master@c9ff1eee634ff82484ecd76941d420a0c5546b72">
+<files psalm-version="dev-master@40bc7cf2941c41d4371b80c396bb0d005031c781">
   <file src="src/AbstractClient.php">
     <ImplicitToStringCast occurrences="1">
       <code>string</code>
     </ImplicitToStringCast>
-  </file>
-  <file src="src/AbstractEntity.php">
-    <UndefinedClass occurrences="2">
-      <code>ArrayLoader</code>
-      <code>Translator</code>
-    </UndefinedClass>
   </file>
   <file src="src/Catalog/AddonClient.php">
     <MismatchingDocblockReturnType occurrences="1">
@@ -68,9 +62,14 @@
   </file>
   <file src="src/Licenses/Entities/FindResult.php">
     <MismatchingDocblockReturnType occurrences="2">
-      <code>Generator|LicenseFindResult[]</code>
-      <code>Generator|LicenseFindResult[]</code>
+      <code>Generator|LicenseOfferFindResult[]</code>
+      <code>Generator|LicenseOfferFindResult[]</code>
     </MismatchingDocblockReturnType>
+  </file>
+  <file src="src/Licenses/Entities/LicenseOfferFindResult.php">
+    <PossiblyNullReference occurrences="1">
+      <code>jsonSerialize</code>
+    </PossiblyNullReference>
   </file>
   <file src="src/Licenses/LicensesClient.php">
     <ImplicitToStringCast occurrences="1">

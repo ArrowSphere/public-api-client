@@ -16,7 +16,7 @@ class LicensesClient extends AbstractLicensesClient
     /**
      * @var string The path of the Find endpoint
      */
-    private const FIND_PATH = '/find';
+    private const FIND_PATH = '/v2/find';
 
     /**
      * @var string The key for keyword search query parameter (to search one string in all available search fields)

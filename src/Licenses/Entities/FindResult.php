@@ -4,9 +4,11 @@ namespace ArrowSphere\PublicApiClient\Licenses\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
 use Generator;
+use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Class FindResult
@@ -14,7 +16,7 @@ use Generator;
 class FindResult extends AbstractEntity
 {
     /**
-     * @var LicenseFindResult[]
+     * @var LicenseOfferFindResult[]
      */
     private $licenses;
 
@@ -75,9 +77,9 @@ class FindResult extends AbstractEntity
         $this->totalPage = $data['pagination']['totalPage'];
         $this->nbResults = $data['pagination']['total'];
 
-        $this->licenses = array_map(static function (array $offer) {
-            return new LicenseFindResult($offer);
-        }, $data['licenses']);
+        $this->licenses = array_map(static function (array $license) {
+            return new LicenseOfferFindResult($license);
+        }, $data['results']);
 
         $this->filters = array_map(static function (array $filter) {
             return new FilterFindResult($filter);
@@ -85,7 +87,7 @@ class FindResult extends AbstractEntity
     }
 
     /**
-     * @return Generator|LicenseFindResult[]
+     * @return Generator|LicenseOfferFindResult[]
      */
     public function getLicensesForCurrentPage(): Generator
     {
@@ -93,10 +95,12 @@ class FindResult extends AbstractEntity
     }
 
     /**
-     * @return Generator|LicenseFindResult[]
+     * @return Generator|LicenseOfferFindResult[]
      *
      * @throws EntityValidationException
      * @throws PublicApiClientException
+     * @throws NotFoundException
+     * @throws GuzzleException
      */
     public function getLicenses(): Generator
     {
@@ -119,8 +123,8 @@ class FindResult extends AbstractEntity
                 $lastPage = true;
             }
 
-            foreach ($response['licenses'] as $data) {
-                yield $i => new LicenseFindResult($data);
+            foreach ($response['results'] as $data) {
+                yield $i => new LicenseOfferFindResult($data);
                 ++$i;
             }
         }
@@ -155,11 +159,12 @@ class FindResult extends AbstractEntity
      *
      * @throws EntityValidationException
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
-            'licenses'  => $this->getLicenses(),
+            'results'   => $this->getLicenses(),
             'filters'   => $this->getFilters(),
             'totalPage' => $this->getTotalPages(),
             'nbResults' => $this->getNbResults(),
