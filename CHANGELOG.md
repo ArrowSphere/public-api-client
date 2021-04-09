@@ -3,7 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [Unreleased]
+## [0.3.0] - 2021-05-11
+### Changed
+- Adapted the code to handle the new /licenses/find v2 endpoint, which implicate several breaking changes (see below)
+- The ```License``` entity has been moved to a sub namespace ```License``` of the ```Entities``` namespace to better sort the entities that have dependencies between them
+- The ```License``` entity has been changed to reflect the arborescence of objects returned by the API, so 2 new classes have been created to handle this: ```ActiveSeats``` and ```Price```. See [Upgrade guide](UPGRADING.md#Changes to the license entity)
+- The fields that need to be used with the licenses find endpoint must be prefixed. To handle this, use the ```LicenseFindFieldEnum``` consts. See [Upgrade guide](UPGRADING.md#Changes due to the integration of the v2 license endpoint)
+
 ### Fixed
 - Added indices to the offers and licenses yields because the way they were built generated index reutilization with the default behavior of ```iterator_to_array```
 
