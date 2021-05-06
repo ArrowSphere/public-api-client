@@ -75,5 +75,8 @@
     <ImplicitToStringCast occurrences="1">
       <code>string</code>
     </ImplicitToStringCast>
+    <MismatchingDocblockReturnType occurrences="1" type="ignore">
+      <code>Generator|Config[]</code>
+    </MismatchingDocblockReturnType>
   </file>
 </files>

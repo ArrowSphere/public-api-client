@@ -292,3 +292,70 @@ The ```LicensesClient::find()``` method returns a ```FindResult``` object that a
 - ```getLicenses()```: returns a ```Generator``` and yields instances of the ```LicenseOfferFindResult``` entity
 
 The difference between ```getLicensesForCurrentPage()``` and ```getLicenses()``` is that ```getLicensesForCurrentPage()``` only shows the results for the current page, you have to perform a new ```find()``` passing another ```$page``` to get more licenses. ```getLicenses()``` automatically calls the API as many times as needed and yields all the licenses for the search results.
+
+### GetConfigs endpoint
+
+The "GetConfigs" endpoint retrieve every configurations for a specific customer's license.
+This endpoint is used by xSP to get some up-to-date information pertaining to a customer's license configuration.
+
+When calling it, it is necessary to specify desired license reference and partner reference (as previously described).
+
+```php
+<?php
+
+use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
+
+const URL = 'https://your-url-to-arrowsphere.example.com';
+const API_KEY = 'your API key in ArrowSphere';
+
+$client = (new LicensesClient())
+    ->setUrl(URL)
+    ->setApiKey(API_KEY);
+
+$configs = $client->getConfigs('XSP1234');
+foreach ($configs as $config) {
+    echo $config->getScope() . PHP_EOL
+        . $config->getName() . PHP_EOL
+        . $config->getState() . PHP_EOL . PHP_EOL;
+}
+```
+
+The ```LicensesClient::getConfigs()``` method returns a ```Generator``` and yields instances of the ```Config``` entity.
+- ```getScope()```: returns the scope of this configuration
+- ```getName()```: returns the name of the configuration
+- ```getState()```: returns one of the 3 possible states which are ```disabled```, ```enabled``` and ```pending```
+
+### UpdateConfig endpoint
+
+The "UpdateConfig" endpoint allows creating or updating a license configuration.
+
+It is necessary to specify desired license reference and desired configuration data.
+It should be noted that endpoint will return an error (ie a not-200 result code) if it is called to update a configuration which state is 'pending'. The same will happen if an update is requested for a configuration which state is identical to the given one.
+
+```php
+<?php
+
+use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
+use ArrowSphere\PublicApiClient\Licenses\Entities\License\Config;
+
+const URL = 'https://your-url-to-arrowsphere.example.com';
+const API_KEY = 'your API key in ArrowSphere';
+
+$client = (new LicensesClient())
+    ->setUrl(URL)
+    ->setApiKey(API_KEY);
+
+$configToUpdate = new Config([
+    'name' => 'purchaseReservations',
+    'scope' => 'role',
+    'state' => 'enabled'
+]);
+
+$config = $client->updateConfig('XSP1234', $configToUpdate);
+
+echo $config->getName() . ' is now ' . $config->getState() . PHP_EOL . PHP_EOL;
+```
+
+The ```LicensesClient::updateConfig()``` method returns a ```Config``` with actualized values.
+- ```getName()```: returns the name of the configuration
+- ```getState()```: returns one of the 3 possible states which are ```disabled```, ```enabled``` and ```pending```

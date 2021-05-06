@@ -10,6 +10,7 @@ help:
 	@echo "  static-phpstan-update-baseline to regenerate the phpstan baseline file"
 	@echo "  static-codestyle-fix           to run php-cs-fixer on the codebase, writing the changes"
 	@echo "  static-codestyle-check         to run php-cs-fixer on the codebase"
+	@echo "  static-psalm-generate-baseline to generate the psalm baseline"
 
 test:
 	vendor/bin/phpunit
