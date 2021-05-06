@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.1] - 2021-05-18
+### Added
+- Added method in Licenses Client to retrieve existing licenses configurations for specific customer
+- Added method in Licenses Client to create/update specific configuration
+
 ## [0.3.0] - 2021-05-11
 ### Changed
 - Adapted the code to handle the new /licenses/find v2 endpoint, which implicate several breaking changes (see below)

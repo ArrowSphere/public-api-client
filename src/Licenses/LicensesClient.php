@@ -6,6 +6,8 @@ use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Licenses\Entities\FindResult;
+use ArrowSphere\PublicApiClient\Licenses\Entities\License\Config;
+use Generator;
 use GuzzleHttp\Exception\GuzzleException;
 
 /**
@@ -17,6 +19,11 @@ class LicensesClient extends AbstractLicensesClient
      * @var string The path of the Find endpoint
      */
     private const FIND_PATH = '/v2/find';
+
+    /**
+     * @var string The path of the Configs endpoint
+     */
+    private const CONFIGS_PATH = '/configs';
 
     /**
      * @var string The key for keyword search query parameter (to search one string in all available search fields)
@@ -127,5 +134,82 @@ class LicensesClient extends AbstractLicensesClient
         $response = $this->decodeResponse($rawResponse);
 
         return new FindResult($response, $this, $postData, $parameters);
+    }
+
+    /**
+     * @param string $reference
+     *
+     * @return string
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getConfigsRaw(string $reference): string
+    {
+        $this->path = '/' . $reference . self::CONFIGS_PATH;
+
+        return $this->get();
+    }
+
+    /**
+     * @param string $reference
+     *
+     * @return Generator|Config[]
+     *
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getConfigs(string $reference): Generator
+    {
+        $rawResponse = $this->getConfigsRaw($reference);
+        $response = $this->decodeResponse($rawResponse);
+
+        foreach ($response['data'] as $data) {
+            yield new Config($data);
+        }
+    }
+
+    /**
+     * @param string $reference
+     * @param Config $config
+     *
+     * @return string
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function updateConfigRaw(string $reference, Config $config): string
+    {
+        $this->path = '/' . $reference . self::CONFIGS_PATH;
+        $postData = [
+            Config::COLUMN_SCOPE => $config->getScope(),
+            Config::COLUMN_NAME => $config->getName(),
+            Config::COLUMN_STATE => $config->getState(),
+        ];
+
+        return $this->post($postData, [], ['Content-Type' => 'application/json'])->getContents();
+    }
+
+    /**
+     * @param string $reference
+     * @param Config $config
+     *
+     * @return Config
+     *
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function updateConfig(string $reference, Config $config): Config
+    {
+        $rawResponse = $this->updateConfigRaw($reference, $config);
+        $response = $this->decodeResponse($rawResponse);
+
+        return new Config($response['data']);
     }
 }

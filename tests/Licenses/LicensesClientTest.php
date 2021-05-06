@@ -5,6 +5,7 @@ namespace ArrowSphere\PublicApiClient\Tests\Licenses;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
+use ArrowSphere\PublicApiClient\Licenses\Entities\License\Config;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\License;
 use ArrowSphere\PublicApiClient\Licenses\Entities\LicenseOfferFindResult;
 use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
@@ -837,5 +838,185 @@ JSON;
         self::assertNull($price->getCurrency());
         self::assertSame(0.0, $price->getBuyPrice());
         self::assertSame(0.0, $price->getListPrice());
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetConfigsRaw(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'get',
+                'https://www.test.com/licenses/XSP1234/configs',
+                [
+                    'headers' => [
+                        'apiKey' => '123456',
+                    ],
+                ]
+            )
+            ->willReturn(new Response(200, [], 'OK USA'));
+
+        $this->client->getConfigsRaw('XSP1234');
+    }
+
+    /**
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetConfigs(): void
+    {
+        $response = <<<JSON
+{
+  "status": 200,
+  "data": [
+    {
+      "scope": "role",
+      "name": "purchase something",
+      "state": "enabled"
+    },
+    {
+      "scope": "role",
+      "name": "verify something",
+      "state": "disabled"
+    },
+    {
+      "scope": "authorization",
+      "name": "allow something",
+      "state": "pending"
+    }
+  ]
+}
+JSON;
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'get',
+                'https://www.test.com/licenses/XSP1234/configs',
+                [
+                    'headers' => [
+                        'apiKey' => '123456',
+                    ],
+                ]
+            )
+            ->willReturn(new Response(200, [], $response));
+
+        $test = $this->client->getConfigs('XSP1234');
+        $list = iterator_to_array($test);
+        self::assertCount(3, $list);
+
+        /** @var Config $config */
+        $config = array_shift($list);
+        self::assertInstanceOf(Config::class, $config);
+        self::assertSame('role', $config->getScope());
+        self::assertSame('purchase something', $config->getName());
+        self::assertSame('enabled', $config->getState());
+
+        /** @var Config $config */
+        $config = array_shift($list);
+        self::assertInstanceOf(Config::class, $config);
+        self::assertSame('role', $config->getScope());
+        self::assertSame('verify something', $config->getName());
+        self::assertSame('disabled', $config->getState());
+
+        /** @var Config $config */
+        $config = array_shift($list);
+        self::assertInstanceOf(Config::class, $config);
+        self::assertSame('authorization', $config->getScope());
+        self::assertSame('allow something', $config->getName());
+        self::assertSame('pending', $config->getState());
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testUpdateConfigRaw(): void
+    {
+        $postData = [
+            Config::COLUMN_SCOPE => 'role',
+            Config::COLUMN_NAME => 'purchaseReservations',
+            Config::COLUMN_STATE => 'enabled',
+        ];
+
+        $config = new Config($postData);
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'post',
+                'https://www.test.com/licenses/XSP1234/configs',
+                [
+                    'headers' => [
+                        'apiKey'       => '123456',
+                        'Content-Type' => 'application/json',
+                    ],
+                    'body'    => json_encode($postData),
+                ]
+            )
+            ->willReturn(new Response(200, [], 'OK USA'));
+
+        $this->client->updateConfigRaw('XSP1234', $config);
+    }
+
+    /**
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testUpdateConfig(): void
+    {
+        $postData = [
+            Config::COLUMN_SCOPE => 'role',
+            Config::COLUMN_NAME => 'purchaseReservations',
+            Config::COLUMN_STATE => 'enabled',
+        ];
+
+        $response = <<<JSON
+{
+  "status": 200,
+  "data": {
+    "scope": "role",
+    "name": "purchase something",
+    "state": "enabled"
+  }
+}
+JSON;
+
+        $config = new Config($postData);
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'post',
+                'https://www.test.com/licenses/XSP1234/configs',
+                [
+                    'headers' => [
+                        'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
+                    ],
+                    'body'    => json_encode($postData),
+                ]
+            )
+            ->willReturn(new Response(200, [], $response));
+
+        $config = $this->client->updateConfig('XSP1234', $config);
+
+        self::assertInstanceOf(Config::class, $config);
+        self::assertSame('role', $config->getScope());
+        self::assertSame('purchase something', $config->getName());
+        self::assertSame('enabled', $config->getState());
     }
 }
