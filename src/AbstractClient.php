@@ -22,12 +22,12 @@ abstract class AbstractClient
     /**
      * @var string The page keyword for pagination
      */
-    private const PAGE = 'page';
+    protected const PAGE = 'page';
 
     /**
      * @var string The keyword for number of results per page for pagination
      */
-    private const PER_PAGE = 'per_page';
+    protected const PER_PAGE = 'per_page';
 
     /**
      * @var string The base path of the API
@@ -287,11 +287,11 @@ abstract class AbstractClient
         $params = [];
 
         if ($this->page > 1) {
-            $params[self::PAGE] = $this->page;
+            $params[static::PAGE] = $this->page;
         }
 
         if ($this->perPage > 0) {
-            $params[self::PER_PAGE] = $this->perPage;
+            $params[static::PER_PAGE] = $this->perPage;
         }
 
         return $params;

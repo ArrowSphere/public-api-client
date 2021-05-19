@@ -2,6 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient;
 
+use ArrowSphere\PublicApiClient\Billing\PreferencesClient;
+use ArrowSphere\PublicApiClient\Billing\StatementsClient;
 use ArrowSphere\PublicApiClient\Catalog\AddonClient;
 use ArrowSphere\PublicApiClient\Catalog\ClassificationClient;
 use ArrowSphere\PublicApiClient\Catalog\FamilyClient;
@@ -116,6 +118,26 @@ class PublicApiClient extends AbstractClient
     public function getCustomersClient(): CustomersClient
     {
         return (new CustomersClient($this->client))
+            ->setUrl($this->url)
+            ->setApiKey($this->apiKey);
+    }
+
+    /**
+     * @return StatementsClient
+     */
+    public function getBillingStatementsClient(): StatementsClient
+    {
+        return (new StatementsClient($this->client))
+            ->setUrl($this->url)
+            ->setApiKey($this->apiKey);
+    }
+
+    /**
+     * @return PreferencesClient
+     */
+    public function getBillingPreferencesClient(): PreferencesClient
+    {
+        return (new PreferencesClient($this->client))
             ->setUrl($this->url)
             ->setApiKey($this->apiKey);
     }

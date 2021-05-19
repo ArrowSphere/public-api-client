@@ -59,6 +59,7 @@ abstract class AbstractEntity implements \JsonSerializable
 
         $messages = array_merge(
             [
+                'required_if' => ':attribute is required if :other is equal to :value',
                 'required' => ':attribute is required',
                 'present'  => ':attribute is required',
                 'array'    => ':attribute must be an array',
