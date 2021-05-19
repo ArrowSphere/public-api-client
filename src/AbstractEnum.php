@@ -61,4 +61,18 @@ abstract class AbstractEnum
 
         return in_array($value, $values, $strict);
     }
+
+    /**
+     * @param array $values
+     *
+     * @return array
+     *
+     * @throws ReflectionException
+     */
+    public static function invalidValues(array $values): array
+    {
+        $enumValues = array_values(self::getConstants());
+
+        return array_diff($values, $enumValues);
+    }
 }
