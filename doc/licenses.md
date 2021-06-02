@@ -222,7 +222,8 @@ This is the endpoint called by xSP on its search bar and on the listing pages
 
 The postData is supposed to contain the following keys:
 - ```LicensesClient::DATA_KEYWORD```: a string to be searched in all the fields. Supports inexact matches (i.e. Ofice for Office)
-- ```LicensesClient::DATA_KEYWORDS```: an array containing the fields to search on, and their possible values, as well as an operator to specify how to use them. This array is indexed by column name, then contains 2 keys with ```LicensesClient::KEYWORDS_VALUES``` containing the values and ```LicensesClient::KEYWORDS_OPERATOR``` containing an operator (use ```LicensesClient::OPERATOR_*``` for the operator)
+- ```LicensesClient::DATA_KEYWORDS```: an array containing the fields to search on, and their possible values, as well as an operator to specify how to use them. This array is indexed by column name, then contains 2 keys with ```LicensesClient::KEYWORDS_VALUES``` containing the values and ```LicensesClient::KEYWORDS_OPERATOR``` containing an operator (use ```LicensesClient::OPERATOR_AND```, ```LicensesClient::OPERATOR_OR``` or ```LicensesClient::OPERATOR_BETWEEN``` for the operator)
+- ```LicensesClient::DATA_COMPARE```: an array containing the fields to compare on, and their field to compare, as well as an operator to specify how to make compare. This array is indexed by column name, then contains 2 keys with ```LicensesClient::COMPARE_FIELD``` containing the column you want to compare with and ```LicensesClient::COMPARE_OPERATOR``` containing an operator (use ```LicensesClient::OPERATOR_EQ```, ```LicensesClient::OPERATOR_NEQ```, ```LicensesClient::OPERATOR_GT```, ```LicensesClient::OPERATOR_LT``` or ```LicensesClient::OPERATOR_LTE``` for the operator)
 - ```LicensesClient::DATA_FILTERS```: an array of strings containing exact matches for individual fields (field name as key and field value as value)
 - ```LicensesClient::DATA_SORT```: an array of strings containing the order in which sort the data (field name as key and a ```LicensesClient::SORT_*``` const for the sort direction)
 - ```LicensesClient::DATA_HIGHLIGHT```: a boolean value, search results will contain a field giving highlights if set to ```true``` (defaults to ```false```)
@@ -251,6 +252,12 @@ $searchResult = $client->find([
                 '2021-03-31T23:59:59.000Z',
             ],
             LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_BETWEEN,
+        ]
+    ],
+    LicensesClient::DATA_COMPARE => [
+        LicenseFindFieldEnum::LICENSE_PRICE_BUY_PRICE => [
+            LicensesClient::COMPARE_FIELD => LicenseFindFieldEnum::OFFER_PRICE_BAND_PRICES_BUY,
+            LicensesClient::COMPARE_OPERATOR => LicensesClient::OPERATOR_GT,  
         ]
     ],
     LicensesClient::DATA_FILTERS    => [
