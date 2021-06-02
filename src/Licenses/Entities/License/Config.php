@@ -80,7 +80,7 @@ class Config extends AbstractEntity
     /**
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             self::COLUMN_NAME  => $this->name,

@@ -6,8 +6,8 @@ use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\Config;
-use ArrowSphere\PublicApiClient\Licenses\Entities\License\License;
 use ArrowSphere\PublicApiClient\Licenses\Entities\LicenseOfferFindResult;
+use ArrowSphere\PublicApiClient\Licenses\Enum\LicenseFindFieldEnum;
 use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
 use GuzzleHttp\Exception\GuzzleException;
@@ -22,6 +22,34 @@ class LicensesClientTest extends AbstractClientTest
 {
     protected const MOCKED_CLIENT_CLASS = LicensesClient::class;
 
+    private $postData = [
+        LicensesClient::DATA_KEYWORD   => 'office 365',
+        LicensesClient::DATA_KEYWORDS  => [
+            LicenseFindFieldEnum::LICENSE_CUSTOMER_NAME => [
+                LicensesClient::KEYWORDS_VALUES   => [
+                    'My customer',
+                ],
+                LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
+            ],
+        ],
+        LicensesClient::DATA_COMPARE   => [
+            LicenseFindFieldEnum::LICENSE_PRICE_BUY_PRICE => [
+                LicensesClient::COMPARE_FIELD => LicenseFindFieldEnum::OFFER_PRICE_BAND_PRICES_BUY,
+                LicensesClient::COMPARE_OPERATOR => LicensesClient::OPERATOR_GT,
+            ]
+        ],
+        LicensesClient::DATA_FILTERS   => [
+            LicenseFindFieldEnum::LICENSE_VENDOR_CODE => [
+                'Microsoft',
+                'IBM',
+            ],
+        ],
+        LicensesClient::DATA_SORT      => [
+            LicenseFindFieldEnum::LICENSE_STATUS_CODE => LicensesClient::SORT_DESCENDING,
+        ],
+        LicensesClient::DATA_HIGHLIGHT => true,
+    ];
+
     /**
      * @throws GuzzleException
      * @throws NotFoundException
@@ -32,27 +60,37 @@ class LicensesClientTest extends AbstractClientTest
         $this->client->setPage(2);
         $this->client->setPerPage(15);
 
-        $postData = [
-            LicensesClient::DATA_KEYWORD   => 'office 365',
-            LicensesClient::DATA_KEYWORDS  => [
-                License::COLUMN_CUSTOMER_NAME => [
-                    LicensesClient::KEYWORDS_VALUES   => [
-                        'My customer',
-                    ],
-                    LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
-                ],
+        $expected = <<<JSON
+{
+    "keyword": "office 365",
+    "keywords": {
+        "license.customer_name": {
+            "values": [
+                "My customer"
             ],
-            LicensesClient::DATA_FILTERS   => [
-                License::COLUMN_VENDOR_CODE => [
-                    'Microsoft',
-                    'IBM',
-                ],
-            ],
-            LicensesClient::DATA_SORT      => [
-                License::COLUMN_STATUS_CODE => LicensesClient::SORT_DESCENDING,
-            ],
-            LicensesClient::DATA_HIGHLIGHT => true,
-        ];
+            "operator": "OR"
+        }
+    },
+    "compare": {
+        "license.price.buy_price": {
+            "field": "offer.priceBand.prices.buy",
+            "operator": "GT"
+        }
+    },
+    "filters": {
+        "license.vendor_code": [
+            "Microsoft"
+        ]
+    },
+    "sort": {
+        "license.status_code": "desc"
+    },
+    "highlight": true
+}
+JSON;
+
+        // This line is to have minified JSON because it's what will be generated in the payload
+        $expected = json_encode(json_decode($expected, true));
 
         $this->httpClient
             ->expects(self::once())
@@ -65,12 +103,12 @@ class LicensesClientTest extends AbstractClientTest
                         'apiKey'       => '123456',
                         'Content-Type' => 'application/json',
                     ],
-                    'body'    => json_encode($postData),
+                    'body'    => json_encode($this->postData),
                 ]
             )
             ->willReturn(new Response(200, [], 'OK USA'));
 
-        $this->client->findRaw($postData, [
+        $this->client->findRaw($this->postData, [
             'abc' => 'def',
             'ghi' => false,
         ]);
@@ -83,36 +121,34 @@ class LicensesClientTest extends AbstractClientTest
      * @throws NotFoundException
      * @throws GuzzleException
      */
-    public function testAssociativeArray(): void
+    public function testFindRawWithAssociativeArray(): void
     {
-        $postData = [
-            LicensesClient::DATA_KEYWORD   => 'office 365',
-            LicensesClient::DATA_KEYWORDS  => [
-                License::COLUMN_CUSTOMER_NAME => [
-                    LicensesClient::KEYWORDS_VALUES   => [
-                        'first'  => 'My customer',
-                        'second' => 'Other',
+        $postData = array_merge(
+            $this->postData,
+            [
+                LicensesClient::DATA_KEYWORDS  => [
+                    LicenseFindFieldEnum::LICENSE_CUSTOMER_NAME => [
+                        LicensesClient::KEYWORDS_VALUES   => [
+                            'first'  => 'My customer',
+                            'second' => 'Other',
+                        ],
+                        LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
                     ],
-                    LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
                 ],
-            ],
-            LicensesClient::DATA_FILTERS   => [
-                License::COLUMN_VENDOR_CODE => [
-                    'first'  => 'Microsoft',
-                    'second' => 'IBM',
+                LicensesClient::DATA_FILTERS   => [
+                    LicenseFindFieldEnum::LICENSE_VENDOR_CODE => [
+                        'first'  => 'Microsoft',
+                        'second' => 'IBM',
+                    ],
                 ],
-            ],
-            LicensesClient::DATA_SORT      => [
-                License::COLUMN_STATUS_CODE => LicensesClient::SORT_DESCENDING,
-            ],
-            LicensesClient::DATA_HIGHLIGHT => true,
-        ];
+            ]
+        );
 
         $expected = <<<JSON
 {
     "keyword": "office 365",
     "keywords": {
-        "customer_name": {
+        "license.customer_name": {
             "values": [
                 "My customer",
                 "Other"
@@ -120,14 +156,20 @@ class LicensesClientTest extends AbstractClientTest
             "operator": "OR"
         }
     },
+    "compare": {
+        "license.price.buy_price": {
+            "field": "offer.priceBand.prices.buy",
+            "operator": "GT"
+        }
+    },
     "filters": {
-        "vendor_code": [
+        "license.vendor_code": [
             "Microsoft",
             "IBM"
         ]
     },
     "sort": {
-        "status_code": "desc"
+        "license.status_code": "desc"
     },
     "highlight": true
 }
@@ -319,31 +361,10 @@ JSON;
      *
      * @throws PublicApiClientException
      * @throws EntityValidationException
+     * @throws GuzzleException
      */
     public function testFindWithInvalidResponse(): void
     {
-        $postData = [
-            LicensesClient::DATA_KEYWORD   => 'office 365',
-            LicensesClient::DATA_KEYWORDS  => [
-                License::COLUMN_CUSTOMER_NAME => [
-                    LicensesClient::KEYWORDS_VALUES   => [
-                        'My customer',
-                    ],
-                    LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
-                ],
-            ],
-            LicensesClient::DATA_FILTERS   => [
-                License::COLUMN_VENDOR_CODE => [
-                    'Microsoft',
-                    'IBM',
-                ],
-            ],
-            LicensesClient::DATA_SORT      => [
-                License::COLUMN_STATUS_CODE => LicensesClient::SORT_DESCENDING,
-            ],
-            LicensesClient::DATA_HIGHLIGHT => true,
-        ];
-
         $this->httpClient
             ->expects(self::once())
             ->method('request')
@@ -355,13 +376,13 @@ JSON;
                         'apiKey'       => '123456',
                         'Content-Type' => 'application/json',
                     ],
-                    'body'    => json_encode($postData),
+                    'body'    => json_encode($this->postData),
                 ]
             )
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
-        $this->client->find($postData, 15, 2, [
+        $this->client->find($this->postData, 15, 2, [
             'abc' => 'def',
             'ghi' => false,
         ]);
@@ -372,31 +393,10 @@ JSON;
      *
      * @throws EntityValidationException
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function testFind(): void
     {
-        $postData = [
-            LicensesClient::DATA_KEYWORD   => 'office 365',
-            LicensesClient::DATA_KEYWORDS  => [
-                License::COLUMN_CUSTOMER_NAME => [
-                    LicensesClient::KEYWORDS_VALUES   => [
-                        'My customer',
-                    ],
-                    LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
-                ],
-            ],
-            LicensesClient::DATA_FILTERS   => [
-                License::COLUMN_VENDOR_CODE => [
-                    'Microsoft',
-                    'IBM',
-                ],
-            ],
-            LicensesClient::DATA_SORT      => [
-                License::COLUMN_STATUS_CODE => LicensesClient::SORT_DESCENDING,
-            ],
-            LicensesClient::DATA_HIGHLIGHT => true,
-        ];
-
         $response = <<<JSON
 {
     "results": [
@@ -614,12 +614,12 @@ JSON;
                         'apiKey'       => '123456',
                         'Content-Type' => 'application/json',
                     ],
-                    'body'    => json_encode($postData),
+                    'body'    => json_encode($this->postData),
                 ]
             )
             ->willReturn(new Response(200, [], $response));
 
-        $findResult = $this->client->find($postData, 15, 1, [
+        $findResult = $this->client->find($this->postData, 15, 1, [
             'abc' => 'def',
             'ghi' => false,
         ]);
@@ -701,31 +701,10 @@ JSON;
      *
      * @throws EntityValidationException
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function testFindWithNullCurrency(): void
     {
-        $postData = [
-            LicensesClient::DATA_KEYWORD   => 'office 365',
-            LicensesClient::DATA_KEYWORDS  => [
-                License::COLUMN_CUSTOMER_NAME => [
-                    LicensesClient::KEYWORDS_VALUES   => [
-                        'My customer',
-                    ],
-                    LicensesClient::KEYWORDS_OPERATOR => LicensesClient::OPERATOR_OR,
-                ],
-            ],
-            LicensesClient::DATA_FILTERS   => [
-                License::COLUMN_VENDOR_CODE => [
-                    'Microsoft',
-                    'IBM',
-                ],
-            ],
-            LicensesClient::DATA_SORT      => [
-                License::COLUMN_STATUS_CODE => LicensesClient::SORT_DESCENDING,
-            ],
-            LicensesClient::DATA_HIGHLIGHT => true,
-        ];
-
         $response = <<<JSON
 {
     "results": [
@@ -802,12 +781,12 @@ JSON;
                         'apiKey'       => '123456',
                         'Content-Type' => 'application/json',
                     ],
-                    'body'    => json_encode($postData),
+                    'body'    => json_encode($this->postData),
                 ]
             )
             ->willReturn(new Response(200, [], $response));
 
-        $findResult = $this->client->find($postData, 15, 1, [
+        $findResult = $this->client->find($this->postData, 15, 1, [
             'abc' => 'def',
             'ghi' => false,
         ]);
@@ -944,7 +923,7 @@ JSON;
     {
         $postData = [
             Config::COLUMN_SCOPE => 'role',
-            Config::COLUMN_NAME => 'purchaseReservations',
+            Config::COLUMN_NAME  => 'purchaseReservations',
             Config::COLUMN_STATE => 'enabled',
         ];
 
@@ -979,7 +958,7 @@ JSON;
     {
         $postData = [
             Config::COLUMN_SCOPE => 'role',
-            Config::COLUMN_NAME => 'purchaseReservations',
+            Config::COLUMN_NAME  => 'purchaseReservations',
             Config::COLUMN_STATE => 'enabled',
         ];
 

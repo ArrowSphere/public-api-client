@@ -55,7 +55,10 @@ class ActiveSeats extends AbstractEntity
         return $this->number;
     }
 
-    public function jsonSerialize()
+    /**
+     * @return array
+     */
+    public function jsonSerialize(): array
     {
         return [
             self::COLUMN_LAST_UPDATE => $this->lastUpdate,

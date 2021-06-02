@@ -36,6 +36,11 @@ class LicensesClient extends AbstractLicensesClient
     public const DATA_KEYWORDS = 'keywords';
 
     /**
+     * @var string The key for compare search query parameter (to search with a complex object)
+     */
+    public const DATA_COMPARE = 'compare';
+
+    /**
      * @var string The key for filers search query parameter
      */
     public const DATA_FILTERS = 'filters';
@@ -71,6 +76,16 @@ class LicensesClient extends AbstractLicensesClient
     public const KEYWORDS_OPERATOR = 'operator';
 
     /**
+     * @var string The key to specify the operator to use with the compare field
+     */
+    public const COMPARE_OPERATOR = self::KEYWORDS_OPERATOR;
+
+    /**
+     * @var string The key to specify the operator to use with the keywords or compares values
+     */
+    public const COMPARE_FIELD = 'field';
+
+    /**
      * @var string Use this operator to search for all keywords values specified
      */
     public const OPERATOR_AND = 'AND';
@@ -84,6 +99,36 @@ class LicensesClient extends AbstractLicensesClient
      * @var string Use this operator to search for all keywords with values in the range specified (for date ranges)
      */
     public const OPERATOR_BETWEEN = 'BETWEEN';
+
+    /**
+     * @var string Use this operator to search with a compare field Equal
+     */
+    public const OPERATOR_EQ = 'EQ';
+
+    /**
+     * @var string Use this operator to search with a compare field Not Equal
+     */
+    public const OPERATOR_NEQ = 'NEQ';
+
+    /**
+     * @var string Use this operator to search with a compare field Greater Than
+     */
+    public const OPERATOR_GT = 'GT';
+
+    /**
+     * @var string Use this operator to search with a compare field Greater Than or Equal
+     */
+    public const OPERATOR_GTE = 'GTE';
+
+    /**
+     * @var string Use this operator to search with a compare field Lower Than
+     */
+    public const OPERATOR_LT = 'LT';
+
+    /**
+     * @var string Use this operator to search with a compare field Lower Than or Equal
+     */
+    public const OPERATOR_LTE = 'LTE';
 
     /**
      * @param array $postData
@@ -124,6 +169,7 @@ class LicensesClient extends AbstractLicensesClient
      *
      * @throws EntityValidationException
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function find(array $postData, int $perPage = 100, int $page = 1, array $parameters = []): FindResult
     {
