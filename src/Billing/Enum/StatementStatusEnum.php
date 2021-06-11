@@ -12,9 +12,9 @@ class StatementStatusEnum extends AbstractEnum
     public const FULFILLED = 'Fulfilled';
 
     /**
-     * @var string In Progress index
+     * @var string Needs Validation index
      */
-    public const IN_PROGRESS = 'In Progress';
+    public const NEEDS_VALIDATION = 'Needs Validation';
 
     /**
      * @var string Open index

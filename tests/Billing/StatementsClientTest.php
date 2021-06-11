@@ -205,7 +205,7 @@ class StatementsClientTest extends AbstractClientTest
                         'reference' => 'H1-BBB-deadbeefdeadbeefdeadbeefdeadbeef',
                         'strategy' => 'mscsp-iaas-monthly',
                         'group' => 'ArrowBilling',
-                        'status' => 'In Progress',
+                        'status' => 'Needs Validation',
                         'from' => [
                             'reference' => 'XSP1337',
                             'name' => 'Reseller',
@@ -406,12 +406,7 @@ class StatementsClientTest extends AbstractClientTest
                         'subscriptionFriendlyName' => null,
                         'arsSubscriptionId' => 'XSP123',
                         'offerName' => 'Offer Name',
-                        'arrowEntityCurrency' => 'EUR',
                         'exchangeRate' => 1,
-                        'arrowSpecialRate' => null,
-                        'arrowSpecialRateType' => null,
-                        'resellerRate' => -0.1,
-                        'resellerRateType' => 'discount',
                         'endCustomerRate' => 1.0874,
                         'endCustomerRateType' => 'uplift',
                         'vendorCurrency' => 'USD',
@@ -453,12 +448,7 @@ class StatementsClientTest extends AbstractClientTest
                         'subscriptionFriendlyName' => null,
                         'arsSubscriptionId' => 'XSP123',
                         'offerName' => 'Offer Name',
-                        'arrowEntityCurrency' => 'EUR',
                         'exchangeRate' => 1,
-                        'arrowSpecialRate' => null,
-                        'arrowSpecialRateType' => null,
-                        'resellerRate' => -0.1,
-                        'resellerRateType' => 'discount',
                         'endCustomerRate' => 1.0874,
                         'endCustomerRateType' => 'uplift',
                         'vendorCurrency' => 'USD',
@@ -500,12 +490,7 @@ class StatementsClientTest extends AbstractClientTest
                         'subscriptionFriendlyName' => null,
                         'arsSubscriptionId' => 'XSP123',
                         'offerName' => 'Offer Name',
-                        'arrowEntityCurrency' => 'EUR',
                         'exchangeRate' => 1,
-                        'arrowSpecialRate' => null,
-                        'arrowSpecialRateType' => null,
-                        'resellerRate' => -0.1,
-                        'resellerRateType' => 'discount',
                         'endCustomerRate' => 1.0874,
                         'endCustomerRateType' => 'uplift',
                         'vendorCurrency' => 'USD',
@@ -571,12 +556,7 @@ class StatementsClientTest extends AbstractClientTest
         self::assertNull($line->getSubscriptionFriendlyName());
         self::assertSame('XSP123', $line->getArsSubscriptionId());
         self::assertSame('Offer Name', $line->getOfferName());
-        self::assertSame('EUR', $line->getArrowEntityCurrency());
         self::assertSame(1.0, $line->getExchangeRate());
-        self::assertNull($line->getArrowSpecialRate());
-        self::assertNull($line->getArrowSpecialRateType());
-        self::assertSame(-0.1, $line->getResellerRate());
-        self::assertSame('discount', $line->getResellerRateType());
         self::assertSame(1.0874, $line->getEndCustomerRate());
         self::assertSame('uplift', $line->getEndCustomerRateType());
         self::assertSame('USD', $line->getVendorCurrency());
