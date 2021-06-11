@@ -32,12 +32,7 @@ class StatementLine extends AbstractEntity
     public const COLUMN_SUBSCRIPTION_FRIENDLY_NAME = 'subscriptionFriendlyName';
     public const COLUMN_ARS_SUBSCRIPTION_ID = 'arsSubscriptionId';
     public const COLUMN_OFFER_NAME = 'offerName';
-    public const COLUMN_ARROW_ENTITY_CURRENCY = 'arrowEntityCurrency';
     public const COLUMN_EXCHANGE_RATE = 'exchangeRate';
-    public const COLUMN_ARROW_SPECIAL_RATE = 'arrowSpecialRate';
-    public const COLUMN_ARROW_SPECIAL_RATE_TYPE = 'arrowSpecialRateType';
-    public const COLUMN_RESELLER_RATE = 'resellerRate';
-    public const COLUMN_RESELLER_RATE_TYPE = 'resellerRateType';
     public const COLUMN_END_CUSTOMER_RATE = 'endCustomerRate';
     public const COLUMN_END_CUSTOMER_RATE_TYPE = 'endCustomerRateType';
     public const COLUMN_VENDOR_CURRENCY = 'vendorCurrency';
@@ -57,37 +52,32 @@ class StatementLine extends AbstractEntity
 
     protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
         self::COLUMN_REFERENCE => 'string|required',
-        self::COLUMN_VENDOR_END_CUSTOMER_SUBSCRIPTION_ID => 'string|required',
+        self::COLUMN_VENDOR_END_CUSTOMER_SUBSCRIPTION_ID => 'string|present|nullable',
         self::COLUMN_RESELLER_BILLING_TAG => 'string|present|nullable',
         self::COLUMN_VENDOR_NAME => 'string|present|nullable',
         self::COLUMN_VENDOR_PROGRAM => 'string|present|nullable',
-        self::COLUMN_VENDOR_PROGRAM_CLASSIFICATION => 'string|required',
-        self::COLUMN_VENDOR_PRODUCT_NAME => 'string|required',
-        self::COLUMN_SERVICE_CODE => 'string|required',
-        self::COLUMN_VENDOR_SKU => 'string|required',
+        self::COLUMN_VENDOR_PROGRAM_CLASSIFICATION => 'string|present|nullable',
+        self::COLUMN_VENDOR_PRODUCT_NAME => 'string|present|nullable',
+        self::COLUMN_SERVICE_CODE => 'string|present|nullable',
+        self::COLUMN_VENDOR_SKU => 'string|present|nullable',
         self::COLUMN_ARROW_SKU => 'string|required',
-        self::COLUMN_ORDER_ID => 'string|required',
-        self::COLUMN_RESELLER_ORDER_ID => 'string|required',
-        self::COLUMN_BILLING_PERIOD_START => 'string|required',
-        self::COLUMN_BILLING_PERIOD_END => 'string|required',
+        self::COLUMN_ORDER_ID => 'string|present|nullable',
+        self::COLUMN_RESELLER_ORDER_ID => 'string|present|nullable',
+        self::COLUMN_BILLING_PERIOD_START => 'string|present|nullable',
+        self::COLUMN_BILLING_PERIOD_END => 'string|present|nullable',
         self::COLUMN_USAGE_START_DATE => 'string|required',
         self::COLUMN_USAGE_END_DATE => 'string|required',
         self::COLUMN_SUBSCRIPTION_START_DATE => 'string|present|nullable',
         self::COLUMN_SUBSCRIPTION_END_DATE => 'string|present|nullable',
-        self::COLUMN_BILLING_PERIODICITY => 'string|required',
+        self::COLUMN_BILLING_PERIODICITY => 'string|present|nullable',
         self::COLUMN_QUANTITY => 'numeric|present|nullable',
         self::COLUMN_SUBSCRIPTION_FRIENDLY_NAME => 'string|present|nullable',
-        self::COLUMN_ARS_SUBSCRIPTION_ID => 'string|required',
-        self::COLUMN_OFFER_NAME => 'string|required',
-        self::COLUMN_ARROW_ENTITY_CURRENCY => 'string|required',
+        self::COLUMN_ARS_SUBSCRIPTION_ID => 'string|present|nullable',
+        self::COLUMN_OFFER_NAME => 'string|present|nullable',
         self::COLUMN_EXCHANGE_RATE => 'numeric|present|nullable',
-        self::COLUMN_ARROW_SPECIAL_RATE => 'numeric|present|nullable',
-        self::COLUMN_ARROW_SPECIAL_RATE_TYPE => 'string|present|nullable',
-        self::COLUMN_RESELLER_RATE => 'numeric|present|nullable',
-        self::COLUMN_RESELLER_RATE_TYPE => 'string|present|nullable',
         self::COLUMN_END_CUSTOMER_RATE => 'numeric|present|nullable',
         self::COLUMN_END_CUSTOMER_RATE_TYPE => 'string|present|nullable',
-        self::COLUMN_VENDOR_CURRENCY => 'string|required',
+        self::COLUMN_VENDOR_CURRENCY => 'string|present|nullable',
         self::COLUMN_VENDOR_RETAIL_UNIT_BUY_PRICE => 'numeric|present|nullable',
         self::COLUMN_VENDOR_RETAIL_TOTAL_BUY_PRICE => 'numeric|required',
         self::COLUMN_VENDOR_RESELLER_UNIT_BUY_PRICE => 'numeric|present|nullable',
@@ -109,7 +99,7 @@ class StatementLine extends AbstractEntity
     private $reference;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $vendorEndCustomerSubscriptionId;
 
@@ -129,22 +119,22 @@ class StatementLine extends AbstractEntity
     private $vendorProgram;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $vendorProgramClassification;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $vendorProductName;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $serviceCode;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $vendorSku;
 
@@ -154,22 +144,22 @@ class StatementLine extends AbstractEntity
     private $arrowSku;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $orderId;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $resellerOrderId;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $billingPeriodStart;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $billingPeriodEnd;
 
@@ -194,7 +184,7 @@ class StatementLine extends AbstractEntity
     private $subscriptionEndDate;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $billingPeriodicity;
 
@@ -209,44 +199,19 @@ class StatementLine extends AbstractEntity
     private $subscriptionFriendlyName;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $arsSubscriptionId;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $offerName;
-
-    /**
-     * @var string
-     */
-    private $arrowEntityCurrency;
 
     /**
      * @var float|null
      */
     private $exchangeRate;
-
-    /**
-     * @var float|null
-     */
-    private $arrowSpecialRate;
-
-    /**
-     * @var string|null
-     */
-    private $arrowSpecialRateType;
-
-    /**
-     * @var float|null
-     */
-    private $resellerRate;
-
-    /**
-     * @var string|null
-     */
-    private $resellerRateType;
 
     /**
      * @var float|null
@@ -259,7 +224,7 @@ class StatementLine extends AbstractEntity
     private $endCustomerRateType;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $vendorCurrency;
 
@@ -340,16 +305,8 @@ class StatementLine extends AbstractEntity
     {
         parent::__construct($data);
 
-        $rateTypeColumns = [
-            self::COLUMN_ARROW_SPECIAL_RATE_TYPE,
-            self::COLUMN_RESELLER_RATE_TYPE,
-            self::COLUMN_END_CUSTOMER_RATE_TYPE,
-        ];
-
-        foreach ($rateTypeColumns as $rateTypeColumn) {
-            if (! RateTypeEnum::isValidValue($data[$rateTypeColumn])) {
-                throw new EntityValidationException('Rate type: ' . $data[$rateTypeColumn] . ' not supported for ' . $rateTypeColumn);
-            }
+        if (! RateTypeEnum::isValidValue($data[self::COLUMN_END_CUSTOMER_RATE_TYPE])) {
+            throw new EntityValidationException('End Customer Rate type: ' . $data[self::COLUMN_END_CUSTOMER_RATE_TYPE] . ' not supported');
         }
 
         if (! BillingPeriodicityEnum::isValidValue($data[self::COLUMN_BILLING_PERIODICITY])) {
@@ -379,12 +336,7 @@ class StatementLine extends AbstractEntity
         $this->subscriptionFriendlyName = $data[self::COLUMN_SUBSCRIPTION_FRIENDLY_NAME];
         $this->arsSubscriptionId = $data[self::COLUMN_ARS_SUBSCRIPTION_ID];
         $this->offerName = $data[self::COLUMN_OFFER_NAME];
-        $this->arrowEntityCurrency = $data[self::COLUMN_ARROW_ENTITY_CURRENCY];
         $this->exchangeRate = $data[self::COLUMN_EXCHANGE_RATE];
-        $this->arrowSpecialRate = $data[self::COLUMN_ARROW_SPECIAL_RATE];
-        $this->arrowSpecialRateType = $data[self::COLUMN_ARROW_SPECIAL_RATE_TYPE];
-        $this->resellerRate = $data[self::COLUMN_RESELLER_RATE];
-        $this->resellerRateType = $data[self::COLUMN_RESELLER_RATE_TYPE];
         $this->endCustomerRate = $data[self::COLUMN_END_CUSTOMER_RATE];
         $this->endCustomerRateType = $data[self::COLUMN_END_CUSTOMER_RATE_TYPE];
         $this->vendorCurrency = $data[self::COLUMN_VENDOR_CURRENCY];
@@ -412,9 +364,9 @@ class StatementLine extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getVendorEndCustomerSubscriptionId(): string
+    public function getVendorEndCustomerSubscriptionId(): ?string
     {
         return $this->vendorEndCustomerSubscriptionId;
     }
@@ -444,33 +396,33 @@ class StatementLine extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getVendorProgramClassification(): string
+    public function getVendorProgramClassification(): ?string
     {
         return $this->vendorProgramClassification;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getVendorProductName(): string
+    public function getVendorProductName(): ?string
     {
         return $this->vendorProductName;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getServiceCode(): string
+    public function getServiceCode(): ?string
     {
         return $this->serviceCode;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getVendorSku(): string
+    public function getVendorSku(): ?string
     {
         return $this->vendorSku;
     }
@@ -484,33 +436,33 @@ class StatementLine extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getOrderId(): string
+    public function getOrderId(): ?string
     {
         return $this->orderId;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getResellerOrderId(): string
+    public function getResellerOrderId(): ?string
     {
         return $this->resellerOrderId;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getBillingPeriodStart(): string
+    public function getBillingPeriodStart(): ?string
     {
         return $this->billingPeriodStart;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getBillingPeriodEnd(): string
+    public function getBillingPeriodEnd(): ?string
     {
         return $this->billingPeriodEnd;
     }
@@ -548,9 +500,9 @@ class StatementLine extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getBillingPeriodicity(): string
+    public function getBillingPeriodicity(): ?string
     {
         return $this->billingPeriodicity;
     }
@@ -572,27 +524,19 @@ class StatementLine extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getArsSubscriptionId(): string
+    public function getArsSubscriptionId(): ?string
     {
         return $this->arsSubscriptionId;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getOfferName(): string
+    public function getOfferName(): ?string
     {
         return $this->offerName;
-    }
-
-    /**
-     * @return string
-     */
-    public function getArrowEntityCurrency(): string
-    {
-        return $this->arrowEntityCurrency;
     }
 
     /**
@@ -601,38 +545,6 @@ class StatementLine extends AbstractEntity
     public function getExchangeRate(): ?float
     {
         return $this->exchangeRate;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getArrowSpecialRate(): ?float
-    {
-        return $this->arrowSpecialRate;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getArrowSpecialRateType(): ?string
-    {
-        return $this->arrowSpecialRateType;
-    }
-
-    /**
-     * @return float|null
-     */
-    public function getResellerRate(): ?float
-    {
-        return $this->resellerRate;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getResellerRateType(): ?string
-    {
-        return $this->resellerRateType;
     }
 
     /**
@@ -652,9 +564,9 @@ class StatementLine extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getVendorCurrency(): string
+    public function getVendorCurrency(): ?string
     {
         return $this->vendorCurrency;
     }
@@ -792,12 +704,7 @@ class StatementLine extends AbstractEntity
             self::COLUMN_SUBSCRIPTION_FRIENDLY_NAME => $this->getSubscriptionFriendlyName(),
             self::COLUMN_ARS_SUBSCRIPTION_ID => $this->getArsSubscriptionId(),
             self::COLUMN_OFFER_NAME => $this->getOfferName(),
-            self::COLUMN_ARROW_ENTITY_CURRENCY => $this->getArrowEntityCurrency(),
             self::COLUMN_EXCHANGE_RATE => $this->getExchangeRate(),
-            self::COLUMN_ARROW_SPECIAL_RATE => $this->getArrowSpecialRate(),
-            self::COLUMN_ARROW_SPECIAL_RATE_TYPE => $this->getArrowSpecialRateType(),
-            self::COLUMN_RESELLER_RATE => $this->getResellerRate(),
-            self::COLUMN_RESELLER_RATE_TYPE => $this->getResellerRateType(),
             self::COLUMN_END_CUSTOMER_RATE => $this->getEndCustomerRate(),
             self::COLUMN_END_CUSTOMER_RATE_TYPE => $this->getEndCustomerRateType(),
             self::COLUMN_VENDOR_CURRENCY => $this->getVendorCurrency(),

@@ -41,14 +41,11 @@ The StatementLine entity allow to get information about a billing statement line
 
 | Field                           | Type              | Example                                 | Description                                      |
 |---------------------------------|-------------------|-----------------------------------------|--------------------------------------------------|
-| arrowEntityCurrency             | ```string```      | EUR                                     |                                                  |
 | arrowSku                        | ```string```      |                                         |                                                  |
-| arrowSpecialRate                | ```string/null``` | 0.2                                     |                                                  |
-| arrowSpecialRateType            | ```string/null``` | uplift                                  | uplift or discount                               |
-| arsSubscriptionId               | ```string```      | XSP123                                  |                                                  |
-| billingPeriodEnd                | ```string```      | 2021-02-01                              |                                                  |
-| billingPeriodStart              | ```string```      | 2021-01-01                              |                                                  |
-| billingPeriodicity              | ```string```      | Monthly                                 | Monthly or Yearly                                |
+| arsSubscriptionId               | ```string/null``` | XSP123                                  |                                                  |
+| billingPeriodEnd                | ```string/null``` | 2021-02-01                              |                                                  |
+| billingPeriodStart              | ```string/null``` | 2021-01-01                              |                                                  |
+| billingPeriodicity              | ```string/null``` | Monthly                                 | Monthly or Yearly                                |
 | countryCurrency                 | ```string```      | EUR                                     |                                                  |
 | countryEndCustomerTotalBuyPrice | ```string```      | 42.0                                    |                                                  |
 | countryEndCustomerUnitBuyPrice  | ```string/null``` | 21.0                                    |                                                  |
@@ -59,33 +56,31 @@ The StatementLine entity allow to get information about a billing statement line
 | endCustomerRate                 | ```string/null``` | 0.2                                     |                                                  |
 | endCustomerRateType             | ```string/null``` | uplift                                  | uplift or discount                               |
 | exchangeRate                    | ```string/null``` | 1.1                                     |                                                  |
-| offerName                       | ```string```      | Offer Name                              |                                                  |
-| orderId                         | ```string```      |                                         |                                                  |
+| offerName                       | ```string/null``` | Offer Name                              |                                                  |
+| orderId                         | ```string/null``` |                                         |                                                  |
 | quantity                        | ```string/null``` | 2.0                                     |                                                  |
 | reference                       | ```string```      | L1-AAA-0123456789ABCDEF0123456789ABCDEF |                                                  |
 | resellerBillingTag              | ```string/null``` |                                         |                                                  |
-| resellerOrderId                 | ```string```      |                                         |                                                  |
-| resellerRate                    | ```string/null``` | 0.2                                     |                                                  |
-| resellerRateType                | ```string/null``` | uplift                                  | uplift or discount                               |
-| serviceCode                     | ```string```      |                                         |                                                  |
+| resellerOrderId                 | ```string/null``` |                                         |                                                  |
+| serviceCode                     | ```string/null``` |                                         |                                                  |
 | subscriptionEndDate             | ```string/null``` | 2021-12-01                              |                                                  |
 | subscriptionFriendlyName        | ```string/null``` |                                         |                                                  |
 | subscriptionStartDate           | ```string/null``` | 2020-12-01                              |                                                  |
 | usageEndDate                    | ```string```      | 2021-04-17                              |                                                  |
 | usageStartDate                  | ```string```      | 2021-04-02                              |                                                  |
-| vendorCurrency                  | ```string```      | EUR                                     |                                                  |
-| vendorEndCustomerSubscriptionId | ```string```      |                                         |                                                  |
+| vendorCurrency                  | ```string/null``` | EUR                                     |                                                  |
+| vendorEndCustomerSubscriptionId | ```string/null``` |                                         |                                                  |
 | vendorEndCustomerTotalBuyPrice  | ```string```      | 42.0                                    |                                                  |
 | vendorEndCustomerUnitBuyPrice   | ```string/null``` | 21.0                                    |                                                  |
 | vendorName                      | ```string/null``` | Microsoft                               |                                                  |
-| vendorProductName               | ```string```      | Microsoft Product                       |                                                  |
+| vendorProductName               | ```string/null``` | Microsoft Product                       |                                                  |
 | vendorProgram                   | ```string/null``` | Vendor Program                          |                                                  |
-| vendorProgramClassification     | ```string```      |                                         |                                                  |
+| vendorProgramClassification     | ```string/null``` |                                         |                                                  |
 | vendorResellerTotalBuyPrice     | ```string```      | 42.0                                    |                                                  |
 | vendorResellerUnitBuyPrice      | ```string/null``` | 21.0                                    |                                                  |
 | vendorRetailTotalBuyPrice       | ```string```      | 42.0                                    |                                                  |
 | vendorRetailUnitBuyPrice        | ```string/null``` | 21.0                                    |                                                  |
-| vendorSku                       | ```string```      |                                         |                                                  |
+| vendorSku                       | ```string/null``` |                                         |                                                  |
 
 ## Usage
 
