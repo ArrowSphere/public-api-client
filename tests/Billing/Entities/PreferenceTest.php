@@ -17,20 +17,32 @@ class PreferenceTest extends AbstractEntityTest
         return [
             'standard' => [
                 'fields' => [
+                    'name' => 'rule42',
+                    'priority' => 1,
                     'identifier' => 'GroupBy',
                     'parameters' => [
                         'columns' => [
-                            'ResourceGroup'
+                            'ResourceGroup',
                         ],
+                    ],
+                    'filters' => [],
+                    'overrides' => [
+                        'ArsSku' => 'foobar',
                     ],
                 ],
                 'expected' => <<<JSON
 {
+    "name": "rule42",
+    "priority": 1,
     "identifier": "GroupBy",
     "parameters": {
         "columns": [
             "ResourceGroup"
         ]
+    },
+    "filters": {},
+    "overrides": {
+        "ArsSku": "foobar"
     }
 }
 JSON
