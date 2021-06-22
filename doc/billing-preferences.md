@@ -9,10 +9,14 @@ This API will allow you to access and edit your preferences and retrieve your cu
 ### Preference
 The ```Preference``` entity allows to manage the company's main contact:
 
-| Field          | Type         | Example            | Description                                            |
-|----------------|--------------|--------------------|--------------------------------------------------------|
-| identifier     | ```string``` | GroupBy            | Preference type (see below for the full list of types) |
-| parameters     | ```array```  | [ columns => ... ] | Associative list of parameters (depends on the type)   |
+| Field          | Type          | Example                          | Description                                                                                       |
+|----------------|---------------|----------------------------------|---------------------------------------------------------------------------------------------------|
+| name           | ```string```  | Rule1                            |                                                                                                   |
+| priority       | ```numeric``` | 2                                | 0 is the highest priority                                                                         |
+| identifier     | ```string```  | GroupBy                          | Preference type (see below for the full list of types)                                            |
+| parameters     | ```array```   | [ columns => ... ]               | Associative list of parameters (depends on the type)                                              |
+| filters        | ```array```   | [ CustomerXspRef => [ XSP123 ] ] | Associative list of column filters. Available columns: CustomerXspRef, VendorName and BillingType |
+| overrides      | ```array```   | [ ArsSku => SKU ]                | Associative list of column overrides, ArsSku is mandatory                                         |
 
 ## Preference Types
 The ```identifier``` field can be one of thoses preference types:
@@ -59,14 +63,15 @@ $client = (new PreferencesClient())
 ### List all the preferences
 You can list all the preferences by calling the ```getPreferences()``` method.
 
-This method returns a ```Generator``` and yields instances of the ```Preference``` entity.
+This method returns an instance of ```Preferences``` entity.
+Use the ```getList``` method from the ```Preferences``` entity to list all the preferences.
 
 Example:
 ```php
 <?php
 
 $period = '2021-04';
-$preferences = $client->getPreferences($period);
+$preferences = $client->getPreferences($period)->getList();
 foreach ($preferences as $preference) {
     echo $preference->getIdentifier() . PHP_EOL;
 }
@@ -74,6 +79,7 @@ foreach ($preferences as $preference) {
 
 ### Create preferences
 You can create a new list of preferences by calling the ```createPreferences()``` method.
+
 
 Note: You can't create preferences in the past.
 

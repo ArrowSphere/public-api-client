@@ -3,10 +3,10 @@
 namespace ArrowSphere\PublicApiClient\Billing;
 
 use ArrowSphere\PublicApiClient\Billing\Entities\Preference;
+use ArrowSphere\PublicApiClient\Billing\Entities\Preferences;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
-use Generator;
 use GuzzleHttp\Exception\GuzzleException;
 
 /**
@@ -41,29 +41,27 @@ class PreferencesClient extends AbstractBillingClient
 
     /**
      * Lists the preferences.
-     * Returns an array (generator) of Preference.
+     * Returns a Preferences object
      *
      * @param string $period YYYY-MM
      *
-     * @return Generator|Preference[]
+     * @return Preferences
      *
      * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function getPreferences(string $period): Generator
+    public function getPreferences(string $period): Preferences
     {
         $rawResponse = $this->getPreferencesRaw($period);
         $response = $this->decodeResponse($rawResponse);
 
-        if (! isset($response['data']['preferences'])) {
+        if (! isset($response['data'])) {
             throw new PublicApiClientException(sprintf('Error: Data not found in response. Raw response was: "%s"', $rawResponse));
         }
 
-        foreach ($response['data']['preferences'] as $data) {
-            yield new Preference($data);
-        }
+        return new Preferences($response['data']);
     }
 
     /**

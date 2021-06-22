@@ -65,6 +65,7 @@ abstract class AbstractEntity implements \JsonSerializable
                 'array'    => ':attribute must be an array',
                 'numeric'  => ':attribute must be a number',
                 'string'   => ':attribute must be a string',
+                'boolean'  => ':attribute must be a boolean',
             ],
             static::VALIDATION_MESSAGES
         );

@@ -3,6 +3,7 @@
 namespace ArrowSphere\PublicApiClient\Tests\Billing;
 
 use ArrowSphere\PublicApiClient\Billing\Entities\Preference;
+use ArrowSphere\PublicApiClient\Billing\Entities\Preferences;
 use ArrowSphere\PublicApiClient\Billing\PreferencesClient;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
@@ -35,13 +36,23 @@ class PreferencesClientTest extends AbstractClientTest
             'data' => [
                 'preferences' => [
                     [
+                        'name' => 'rule42',
+                        'priority' => 1,
                         'identifier' => 'GroupBy',
                         'parameters' => [
                             'columns' => [
                                 'ResourceGroup',
                             ],
                         ],
+                        'filters' => [],
+                        'overrides' => [
+                            'ArsSku' => 'foobar',
+                        ],
                     ]
+                ],
+                'validity' => [
+                    'usable' => true,
+                    'status' => 'OK',
                 ],
             ],
         ]);
@@ -56,8 +67,9 @@ class PreferencesClientTest extends AbstractClientTest
             ])
             ->willReturn(new Response(200, [], $response));
 
+        /** @var Preferences $preferences */
         $preferences = $this->client->getPreferences($period);
-        $list = iterator_to_array($preferences);
+        $list = $preferences->getList();
         self::assertCount(1, $list);
 
         $preference = array_shift($list);
@@ -68,6 +80,9 @@ class PreferencesClientTest extends AbstractClientTest
                 'ResourceGroup',
             ],
         ], $preference->getParameters());
+
+        self::assertTrue($preferences->getUsable());
+        self::assertSame('OK', $preferences->getStatus());
     }
 
     /**
@@ -79,11 +94,17 @@ class PreferencesClientTest extends AbstractClientTest
     public function testCreatePreferences(): void
     {
         $payload = [
+            'name' => 'rule42',
+            'priority' => 1,
             'identifier' => 'GroupBy',
             'parameters' => [
                 'columns' => [
                     'ResourceGroup',
                 ],
+            ],
+            'filters' => [],
+            'overrides' => [
+                'ArsSku' => 'foobar',
             ],
         ];
 
@@ -94,6 +115,8 @@ class PreferencesClientTest extends AbstractClientTest
             'status' => 0,
             'data' => []
         ]);
+
+        $payload['filters'] = (object)[];
 
         $this->httpClient
             ->expects(self::once())
