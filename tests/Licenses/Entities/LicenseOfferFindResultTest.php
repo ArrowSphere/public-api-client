@@ -121,7 +121,8 @@ class LicenseOfferFindResultTest extends AbstractEntityTest
         "periodicity": 720,
         "term": 8640,
         "isEnabled": true,
-        "lastUpdate": "2020-12-08T15:42:30.069Z"
+        "lastUpdate": "2020-12-08T15:42:30.069Z",
+        "warnings": null
     }
 }
 JSON

@@ -62,6 +62,19 @@ class LicenseTest extends AbstractEntityTest
                     'term'                   => 8640,
                     'isEnabled'              => true,
                     'lastUpdate'             => '2020-12-08T15:42:30.069Z',
+                    'configs'                => [
+                        [
+                            'name'  => 'name config',
+                            'scope' => 'scope config',
+                            'state' => 'state config',
+                        ],
+                    ],
+                    'warnings'               => [
+                        [
+                            'key'     => 'PEC ratio issue',
+                            'message' => 'current value is 0 instead of 0.15',
+                        ],
+                    ],
                 ],
                 'expected' => <<<JSON
 {
@@ -85,7 +98,13 @@ class LicenseTest extends AbstractEntityTest
     },
     "cloud_type": "SaaS",
     "base_seat": 6,
-    "configs": null,
+    "configs": [
+        {
+            "name": "name config",
+            "scope": "scope config",
+            "state": "state config"
+        }
+    ],
     "seat": 6,
     "trial": false,
     "auto_renew": true,
@@ -110,9 +129,16 @@ class LicenseTest extends AbstractEntityTest
     "periodicity": 720,
     "term": 8640,
     "isEnabled": true,
-    "lastUpdate": "2020-12-08T15:42:30.069Z"
+    "lastUpdate": "2020-12-08T15:42:30.069Z",
+    "warnings": [
+        {
+            "key": "PEC ratio issue",
+            "message": "current value is 0 instead of 0.15"
+        }
+    ]
 }
 JSON
+                ,
             ],
         ];
     }
