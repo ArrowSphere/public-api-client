@@ -88,6 +88,8 @@ class License extends AbstractEntity
 
     public const COLUMN_VENDOR_SUBSCRIPTION_ID = 'vendor_subscription_id';
 
+    public const COLUMN_WARNINGS = 'warnings';
+
     protected const VALIDATION_RULES = [
         self::COLUMN_ACCEPT_EULA     => 'present|boolean',
         self::COLUMN_AUTO_RENEW      => 'present|boolean',
@@ -304,6 +306,11 @@ class License extends AbstractEntity
     private $vendorSubscriptionId;
 
     /**
+     * @var Warning[]|null
+     */
+    private $warnings;
+
+    /**
      * License constructor.
      *
      * @param array $data
@@ -325,6 +332,12 @@ class License extends AbstractEntity
             $this->configs = array_map(static function (array $config) {
                 return new Config($config);
             }, $data[self::COLUMN_CONFIGS]);
+        }
+
+        if (isset($data[self::COLUMN_WARNINGS])) {
+            $this->warnings = array_map(static function (array $warning) {
+                return new Warning($warning);
+            }, $data[self::COLUMN_WARNINGS]);
         }
 
         $this->customerName = $data[self::COLUMN_CUSTOMER_NAME];
@@ -695,7 +708,7 @@ class License extends AbstractEntity
             self::COLUMN_PRICE                  => $this->price->jsonSerialize(),
             self::COLUMN_CLOUD_TYPE             => $this->classification,
             self::COLUMN_BASE_SEAT              => $this->baseSeat,
-            self::COLUMN_CONFIGS                => $this->configs,
+            self::COLUMN_CONFIGS                => $this->jsonSerializeConfigs(),
             self::COLUMN_SEAT                   => $this->seat,
             self::COLUMN_TRIAL                  => $this->trial,
             self::COLUMN_AUTO_RENEW             => $this->autoRenew,
@@ -718,6 +731,33 @@ class License extends AbstractEntity
             self::COLUMN_TERM                   => $this->term,
             self::COLUMN_IS_ENABLED             => $this->isEnabled,
             self::COLUMN_LAST_UPDATE            => $this->lastUpdate,
+            self::COLUMN_WARNINGS               => $this->jsonSerializeWarnings(),
         ];
+    }
+
+    private function jsonSerializeConfigs(): ?array
+    {
+        $configs = null;
+
+        if (is_array($this->configs)) {
+            $configs = array_map(static function (Config $config) {
+                return $config->jsonSerialize();
+            }, $this->configs);
+        }
+
+        return $configs;
+    }
+
+    private function jsonSerializeWarnings(): ?array
+    {
+        $warnings = null;
+
+        if (is_array($this->warnings)) {
+            $warnings = array_map(static function (Warning $warning) {
+                return $warning->jsonSerialize();
+            }, $this->warnings);
+        }
+
+        return $warnings;
     }
 }

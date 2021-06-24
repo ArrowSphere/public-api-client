@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.3] - 2021-06-25
+### Added
+- New warnings attribute. Collections of Warning[]
+- Enrichment License.jsonSerialize() output
+
+### Changed
+- Update licenses.md - Enrichment License object
+
 ## [0.4.2] - 2021-06-17
 ### Removed
 - Removed unused attributes from StatementLine entity
@@ -72,7 +80,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 - Added support to Guzzle 6.0 (in addition to Guzzle 7.2)
 
-## [0.2] - 2021-01-28
+## [0.2.0] - 2021-01-28
 ### Added
 - Family client
 
@@ -109,3 +117,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - AddonClient: the addons should not be differencied with the offers
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
+
+[0.4.3]: https://github.com/ArrowSphere/public-api-client/compare/0.4.2...0.4.3
+[0.4.2]: https://github.com/ArrowSphere/public-api-client/compare/0.4.1...0.4.2
+[0.4.1]: https://github.com/ArrowSphere/public-api-client/compare/0.4.0...0.4.1
+[0.4.0]: https://github.com/ArrowSphere/public-api-client/compare/0.3.1...0.4.0
+[0.3.1]: https://github.com/ArrowSphere/public-api-client/compare/0.3.0...0.3.1
+[0.3.0]: https://github.com/ArrowSphere/public-api-client/compare/0.2.5...0.3.0
+[0.2.5]: https://github.com/ArrowSphere/public-api-client/compare/0.2.4...0.2.5
+[0.2.4]: https://github.com/ArrowSphere/public-api-client/compare/0.2.3...0.2.4
+[0.2.3]: https://github.com/ArrowSphere/public-api-client/compare/0.2.2...0.2.3
+[0.2.2]: https://github.com/ArrowSphere/public-api-client/compare/0.2.1...0.2.2
+[0.2.1]: https://github.com/ArrowSphere/public-api-client/compare/0.2.0...0.2.1
+[0.2.0]: https://github.com/ArrowSphere/public-api-client/compare/0.1.2...0.2.0
+[0.1.2]: https://github.com/ArrowSphere/public-api-client/compare/0.1.1...0.1.2
+[0.1.1]: https://github.com/ArrowSphere/public-api-client/compare/0.1.0...0.1.1

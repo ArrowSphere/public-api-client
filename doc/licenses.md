@@ -52,6 +52,7 @@ A license is managed by the ```License``` entity.
 | vendorCode            | ```string```      | Microsoft                                            | The vendor code of the offer                                                                          |
 | vendorName            | ```string```      | Microsoft                                            | The vendor of the offer                                                                               |
 | vendorSubscriptionId  | ```string```      | AABBCCDD-1111-2222-3333-ABCDEFABCDEF                 | An external identifier for the license                                                                |
+| warnings              | ```Warning[]```   | an array of [Warnings](#Warning)                     | The list of [warnings](#Warning) for this license                                            |
 
 #### ActiveSeats
 
@@ -71,6 +72,15 @@ The config is a set of parameters that can be defined for a license.
 | name  | ```string``` | purchaseReservations | The name of the config          |
 | scope | ```string``` | role                 | The scope of the config         |
 | state | ```string``` | enabled              | The current state of the config |
+
+#### Warning
+
+The warning is an alert for a license.
+
+| Field | Type         | Example                              | Description                     |
+|-------|--------------|--------------------------------------|---------------------------------|
+| key     | ```string``` | PEC ratio issue                    | The key of the warning          |
+| message | ```string``` | current value is 0 instead of 0.15 | The message of the warning      |
 
 #### Price
 
