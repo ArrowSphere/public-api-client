@@ -9,7 +9,7 @@ class PreferenceFiltersEnum extends AbstractEnum
     /**
      * @var string BillingType index
      */
-    public const BILLING_TYPE = 'BillingType';
+    public const CLASSIFICATION = 'Classification';
 
     /**
      * @var string VendorName index
