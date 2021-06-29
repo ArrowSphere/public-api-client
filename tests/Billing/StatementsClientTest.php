@@ -54,29 +54,25 @@ class StatementsClientTest extends AbstractClientTest
             'data' => [
                 'billingStatement' => [
                     'reference' => 'H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef',
-                    'strategy' => 'mscsp-saas-monthly',
-                    'group' => 'ArrowBilling',
-                    'status' => 'Open',
+                    'billingGroup' => 'ArrowBilling',
+                    'vendorName' => 'microsoft',
+                    'classification' => 'saas',
+                    'reportPeriod' => '2021-04',
+                    'marketplace' => 'US',
+                    'issueDate' => '2021-04-29 13:37:00',
                     'from' => [
                         'reference' => 'XSP1337',
                         'name' => 'Reseller',
                     ],
                     'to' => [
-                        [
-                            'reference' => 'XSP123',
-                            'name' => 'Customer',
-                        ]
+                        'reference' => 'XSP123',
+                        'name' => 'Customer',
                     ],
-                    'creationDate' => '2021-05-21 13:37:00',
-                    'submissionDate' => '2021-05-22 13:37:00',
-                    'issueDate' => '2021-04-29 13:37:00',
-                    'marketplace' => 'US',
-                    'vendorCurrency' => 'EUR',
-                    'vendorResellerTotalBuyPrice' => 43.0,
-                    'vendorEndCustomerTotalBuyPrice' => 22.1,
-                    'countryCurrency' => 'USD',
-                    'countryResellerTotalBuyPrice' => 42.0,
-                    'countryEndCustomerTotalBuyPrice' => 23.1,
+                    'currency' => 'USD',
+                    'prices' => [
+                        'buyTotal' => 42.0,
+                        'sellTotal' => 23.1,
+                    ],
                 ],
             ],
         ]);
@@ -90,13 +86,17 @@ class StatementsClientTest extends AbstractClientTest
         $statement = $this->client->getStatement('42');
         self::assertInstanceOf(Statement::class, $statement);
         self::assertSame('H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef', $statement->getReference());
-        self::assertSame('mscsp-saas-monthly', $statement->getStrategy());
-        self::assertSame('ArrowBilling', $statement->getGroup());
-        self::assertSame('Open', $statement->getStatus());
-        self::assertSame('2021-05-21 13:37:00', $statement->getCreationDate());
-        self::assertSame('2021-05-22 13:37:00', $statement->getSubmissionDate());
+        self::assertSame('ArrowBilling', $statement->getBillingGroup());
+        self::assertSame('microsoft', $statement->getVendorName());
+        self::assertSame('saas', $statement->getClassification());
         self::assertSame('2021-04-29 13:37:00', $statement->getIssueDate());
         self::assertSame('US', $statement->getMarketplace());
+        self::assertSame(42.0, $statement->getPrices()->getBuyTotal());
+        self::assertSame(23.1, $statement->getPrices()->getSellTotal());
+        self::assertSame('XSP1337', $statement->getFrom()->getReference());
+        self::assertSame('XSP123', $statement->getTo()->getReference());
+        self::assertSame('Reseller', $statement->getFrom()->getName());
+        self::assertSame('Customer', $statement->getTo()->getName());
     }
 
     /**
@@ -177,81 +177,69 @@ class StatementsClientTest extends AbstractClientTest
                 'billingStatements' => [
                     [
                         'reference' => 'H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef',
-                        'strategy' => 'mscsp-saas-monthly',
-                        'group' => 'ArrowBilling',
-                        'status' => 'Open',
+                        'billingGroup' => 'ArrowBilling',
+                        'vendorName' => 'microsoft',
+                        'classification' => 'saas',
+                        'reportPeriod' => '2021-04',
+                        'marketplace' => 'US',
+                        'issueDate' => '2021-04-29 13:37:00',
                         'from' => [
                             'reference' => 'XSP1337',
                             'name' => 'Reseller',
                         ],
                         'to' => [
-                            [
-                                'reference' => 'XSP123',
-                                'name' => 'Customer',
-                            ]
+                            'reference' => 'XSP123',
+                            'name' => 'Customer',
                         ],
-                        'creationDate' => '2021-05-21 13:37:00',
-                        'submissionDate' => '2021-05-22 13:37:00',
-                        'issueDate' => '2021-04-29 13:37:00',
-                        'marketplace' => 'US',
-                        'vendorCurrency' => 'EUR',
-                        'vendorResellerTotalBuyPrice' => 43.0,
-                        'vendorEndCustomerTotalBuyPrice' => 22.1,
-                        'countryCurrency' => 'USD',
-                        'countryResellerTotalBuyPrice' => 42.0,
-                        'countryEndCustomerTotalBuyPrice' => 23.1,
+                        'currency' => 'USD',
+                        'prices' => [
+                            'buyTotal' => 42.0,
+                            'sellTotal' => 23.1,
+                        ],
                     ],
                     [
                         'reference' => 'H1-BBB-deadbeefdeadbeefdeadbeefdeadbeef',
-                        'strategy' => 'mscsp-iaas-monthly',
-                        'group' => 'ArrowBilling',
-                        'status' => 'Needs Validation',
+                        'billingGroup' => 'ArrowBilling',
+                        'vendorName' => 'microsoft',
+                        'classification' => 'saas',
+                        'reportPeriod' => '2021-04',
+                        'marketplace' => 'US',
+                        'issueDate' => '2021-04-29 13:37:00',
                         'from' => [
                             'reference' => 'XSP1337',
                             'name' => 'Reseller',
                         ],
                         'to' => [
-                            [
-                                'reference' => 'XSP123',
-                                'name' => 'Customer',
-                            ]
+                            'reference' => 'XSP123',
+                            'name' => 'Customer',
                         ],
-                        'creationDate' => '2021-05-21 13:37:00',
-                        'submissionDate' => '2021-05-22 13:37:00',
-                        'issueDate' => '2021-04-29 13:37:00',
-                        'marketplace' => 'US',
-                        'vendorCurrency' => 'EUR',
-                        'vendorResellerTotalBuyPrice' => 43.0,
-                        'vendorEndCustomerTotalBuyPrice' => 22.1,
-                        'countryCurrency' => 'USD',
-                        'countryResellerTotalBuyPrice' => 42.0,
-                        'countryEndCustomerTotalBuyPrice' => 23.1,
+                        'currency' => 'USD',
+                        'prices' => [
+                            'buyTotal' => 42.0,
+                            'sellTotal' => 23.1,
+                        ],
                     ],
                     [
                         'reference' => 'H1-CCC-deadbeefdeadbeefdeadbeefdeadbeef',
-                        'strategy' => 'mscsp-saas-monthly',
-                        'group' => 'ArrowBilling',
-                        'status' => 'Fulfilled',
+                        'billingGroup' => 'ArrowBilling',
+                        'vendorName' => 'microsoft',
+                        'classification' => 'saas',
+                        'reportPeriod' => '2021-04',
+                        'marketplace' => 'US',
+                        'issueDate' => '2021-04-29 13:37:00',
                         'from' => [
                             'reference' => 'XSP1337',
                             'name' => 'Reseller',
                         ],
                         'to' => [
-                            [
-                                'reference' => 'XSP123',
-                                'name' => 'Customer',
-                            ]
+                            'reference' => 'XSP123',
+                            'name' => 'Customer',
                         ],
-                        'creationDate' => '2021-05-21 13:37:00',
-                        'submissionDate' => '2021-05-22 13:37:00',
-                        'issueDate' => '2021-04-29 13:37:00',
-                        'marketplace' => 'US',
-                        'vendorCurrency' => 'EUR',
-                        'vendorResellerTotalBuyPrice' => 43.0,
-                        'vendorEndCustomerTotalBuyPrice' => 22.1,
-                        'countryCurrency' => 'USD',
-                        'countryResellerTotalBuyPrice' => 42.0,
-                        'countryEndCustomerTotalBuyPrice' => 23.1,
+                        'currency' => 'USD',
+                        'prices' => [
+                            'buyTotal' => 42.0,
+                            'sellTotal' => 23.1,
+                        ],
                     ],
                 ],
             ],
@@ -279,28 +267,22 @@ class StatementsClientTest extends AbstractClientTest
         $statement = array_shift($list);
         self::assertInstanceOf(Statement::class, $statement);
         self::assertSame('H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef', $statement->getReference());
-        self::assertSame('mscsp-saas-monthly', $statement->getStrategy());
-        self::assertSame('ArrowBilling', $statement->getGroup());
-        self::assertSame('Open', $statement->getStatus());
-        self::assertSame('2021-05-21 13:37:00', $statement->getCreationDate());
-        self::assertSame('2021-05-22 13:37:00', $statement->getSubmissionDate());
+        self::assertSame('microsoft', $statement->getVendorName());
+        self::assertSame('ArrowBilling', $statement->getBillingGroup());
+        self::assertSame('saas', $statement->getClassification());
+        self::assertSame('2021-04', $statement->getReportPeriod());
         self::assertSame('2021-04-29 13:37:00', $statement->getIssueDate());
         self::assertSame('US', $statement->getMarketplace());
-        self::assertSame('EUR', $statement->getVendorCurrency());
-        self::assertSame(43.0, $statement->getVendorResellerTotalBuyPrice());
-        self::assertSame(22.1, $statement->getVendorEndCustomerTotalBuyPrice());
-        self::assertSame('USD', $statement->getCountryCurrency());
-        self::assertSame(42.0, $statement->getCountryResellerTotalBuyPrice());
-        self::assertSame(23.1, $statement->getCountryEndCustomerTotalBuyPrice());
+        self::assertSame('USD', $statement->getCurrency());
+        self::assertSame(42.0, $statement->getPrices()->getBuyTotal());
+        self::assertSame(23.1, $statement->getPrices()->getSellTotal());
 
         $from = $statement->getFrom();
         self::assertInstanceOf(Identity::class, $from);
         self::assertSame('XSP1337', $from->getReference());
         self::assertSame('Reseller', $from->getName());
 
-        /** @var Identity $to */
-        $list = $statement->getTo();
-        $to = array_shift($list);
+        $to = $statement->getTo();
         self::assertInstanceOf(Identity::class, $to);
         self::assertSame('XSP123', $to->getReference());
         self::assertSame('Customer', $to->getName());
@@ -385,128 +367,110 @@ class StatementsClientTest extends AbstractClientTest
                     [
                         'reference' => 'H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef',
                         'vendorEndCustomerSubscriptionId' => '12345678-1234-1234-1234-123456789012',
-                        'resellerBillingTag' => 'TAG',
                         'vendorName' => 'Vendor',
                         'vendorProgram' => 'Program',
                         'vendorProgramClassification' => 'SAAS',
                         'vendorProductName' => 'Product Name',
-                        'serviceCode' => 'SERVICE-CODE',
                         'vendorSku' => '12345678-1234-1234-1234-123456789012',
                         'arrowSku' => '12345678-1234-1234-1234-123456789012',
+                        'offerName' => 'Offer Name',
+                        'subscriptionFriendlyName' => null,
+                        'arsSubscriptionId' => 'XSP123',
                         'orderId' => 'Order Id',
                         'resellerOrderId' => 'Reseller Order Id',
+                        'subscriptionStartDate' => '2021-03-17 00:00:00',
+                        'subscriptionEndDate' => '2022-03-17 00:00:00',
+                        'billingPeriodicity' => 'Monthly',
                         'billingPeriodStart' => '2021-04-01 00:00:00',
                         'billingPeriodEnd' => '2021-04-30 00:00:00',
                         'usageStartDate' => '2021-04-01 00:00:00',
                         'usageEndDate' => '2021-04-30 00:00:00',
-                        'subscriptionStartDate' => '2021-03-17 00:00:00',
-                        'subscriptionEndDate' => '2022-03-17 00:00:00',
-                        'billingPeriodicity' => 'Monthly',
+                        'rates' => [
+                            'sellRate' => 1.0874,
+                            'sellRateType' => 'uplift',
+                        ],
                         'quantity' => 4,
-                        'subscriptionFriendlyName' => null,
-                        'arsSubscriptionId' => 'XSP123',
-                        'offerName' => 'Offer Name',
-                        'exchangeRate' => 1,
-                        'endCustomerRate' => 1.0874,
-                        'endCustomerRateType' => 'uplift',
-                        'vendorCurrency' => 'USD',
-                        'vendorRetailUnitBuyPrice' => 6.87,
-                        'vendorRetailTotalBuyPrice' => 27.48,
-                        'vendorResellerUnitBuyPrice' => 6.183,
-                        'vendorResellerTotalBuyPrice' => 24.732,
-                        'vendorEndCustomerUnitBuyPrice' => 12.9064,
-                        'vendorEndCustomerTotalBuyPrice' => 51.6256,
-                        'countryCurrency' => 'EUR',
-                        'countryRetailUnitBuyPrice' => 4.1689,
-                        'countryRetailTotalBuyPrice' => 16.6755,
-                        'countryResellerUnitBuyPrice' => 4.6951,
-                        'countryResellerTotalBuyPrice' => 18.7805,
-                        'countryEndCustomerUnitBuyPrice' => 9.8006,
-                        'countryEndCustomerTotalBuyPrice' => 39.2024,
+                        'currency' => 'EUR',
+                        'prices' => [
+                            'listUnit' => 4.1689,
+                            'listTotal' => 16.6755,
+                            'buyUnit' => 4.6951,
+                            'buyTotal' => 18.7805,
+                            'sellUnit' => 9.8006,
+                            'sellTotal' => 39.2024,
+                        ],
                     ],
                     [
                         'reference' => 'H1-BBB-deadbeefdeadbeefdeadbeefdeadbeef',
                         'vendorEndCustomerSubscriptionId' => '12345678-1234-1234-1234-123456789012',
-                        'resellerBillingTag' => 'TAG',
                         'vendorName' => 'Vendor',
                         'vendorProgram' => 'Program',
                         'vendorProgramClassification' => 'SAAS',
                         'vendorProductName' => 'Product Name',
-                        'serviceCode' => 'SERVICE-CODE',
                         'vendorSku' => '12345678-1234-1234-1234-123456789012',
                         'arrowSku' => '12345678-1234-1234-1234-123456789012',
+                        'offerName' => 'Offer Name',
+                        'subscriptionFriendlyName' => null,
+                        'arsSubscriptionId' => 'XSP123',
                         'orderId' => 'Order Id',
                         'resellerOrderId' => 'Reseller Order Id',
+                        'subscriptionStartDate' => '2021-03-17 00:00:00',
+                        'subscriptionEndDate' => '2022-03-17 00:00:00',
+                        'billingPeriodicity' => 'Monthly',
                         'billingPeriodStart' => '2021-04-01 00:00:00',
                         'billingPeriodEnd' => '2021-04-30 00:00:00',
                         'usageStartDate' => '2021-04-01 00:00:00',
                         'usageEndDate' => '2021-04-30 00:00:00',
-                        'subscriptionStartDate' => '2021-03-17 00:00:00',
-                        'subscriptionEndDate' => '2022-03-17 00:00:00',
-                        'billingPeriodicity' => 'Monthly',
+                        'rates' => [
+                            'sellRate' => 1.0874,
+                            'sellRateType' => 'uplift',
+                        ],
                         'quantity' => 4,
-                        'subscriptionFriendlyName' => null,
-                        'arsSubscriptionId' => 'XSP123',
-                        'offerName' => 'Offer Name',
-                        'exchangeRate' => 1,
-                        'endCustomerRate' => 1.0874,
-                        'endCustomerRateType' => 'uplift',
-                        'vendorCurrency' => 'USD',
-                        'vendorRetailUnitBuyPrice' => 6.87,
-                        'vendorRetailTotalBuyPrice' => 27.48,
-                        'vendorResellerUnitBuyPrice' => 6.183,
-                        'vendorResellerTotalBuyPrice' => 24.732,
-                        'vendorEndCustomerUnitBuyPrice' => 12.9064,
-                        'vendorEndCustomerTotalBuyPrice' => 51.6256,
-                        'countryCurrency' => 'EUR',
-                        'countryRetailUnitBuyPrice' => 4.1689,
-                        'countryRetailTotalBuyPrice' => 16.6755,
-                        'countryResellerUnitBuyPrice' => 4.6951,
-                        'countryResellerTotalBuyPrice' => 18.7805,
-                        'countryEndCustomerUnitBuyPrice' => 9.8006,
-                        'countryEndCustomerTotalBuyPrice' => 39.2024,
+                        'currency' => 'EUR',
+                        'prices' => [
+                            'listUnit' => 4.1689,
+                            'listTotal' => 16.6755,
+                            'buyUnit' => 4.6951,
+                            'buyTotal' => 18.7805,
+                            'sellUnit' => 9.8006,
+                            'sellTotal' => 39.2024,
+                        ],
                     ],
                     [
                         'reference' => 'H1-CCC-deadbeefdeadbeefdeadbeefdeadbeef',
                         'vendorEndCustomerSubscriptionId' => '12345678-1234-1234-1234-123456789012',
-                        'resellerBillingTag' => 'TAG',
                         'vendorName' => 'Vendor',
                         'vendorProgram' => 'Program',
                         'vendorProgramClassification' => 'SAAS',
                         'vendorProductName' => 'Product Name',
-                        'serviceCode' => 'SERVICE-CODE',
                         'vendorSku' => '12345678-1234-1234-1234-123456789012',
                         'arrowSku' => '12345678-1234-1234-1234-123456789012',
+                        'offerName' => 'Offer Name',
+                        'subscriptionFriendlyName' => null,
+                        'arsSubscriptionId' => 'XSP123',
                         'orderId' => 'Order Id',
                         'resellerOrderId' => 'Reseller Order Id',
+                        'subscriptionStartDate' => '2021-03-17 00:00:00',
+                        'subscriptionEndDate' => '2022-03-17 00:00:00',
+                        'billingPeriodicity' => 'Monthly',
                         'billingPeriodStart' => '2021-04-01 00:00:00',
                         'billingPeriodEnd' => '2021-04-30 00:00:00',
                         'usageStartDate' => '2021-04-01 00:00:00',
                         'usageEndDate' => '2021-04-30 00:00:00',
-                        'subscriptionStartDate' => '2021-03-17 00:00:00',
-                        'subscriptionEndDate' => '2022-03-17 00:00:00',
-                        'billingPeriodicity' => 'Monthly',
+                        'rates' => [
+                            'sellRate' => 1.0874,
+                            'sellRateType' => 'uplift',
+                        ],
                         'quantity' => 4,
-                        'subscriptionFriendlyName' => null,
-                        'arsSubscriptionId' => 'XSP123',
-                        'offerName' => 'Offer Name',
-                        'exchangeRate' => 1,
-                        'endCustomerRate' => 1.0874,
-                        'endCustomerRateType' => 'uplift',
-                        'vendorCurrency' => 'USD',
-                        'vendorRetailUnitBuyPrice' => 6.87,
-                        'vendorRetailTotalBuyPrice' => 27.48,
-                        'vendorResellerUnitBuyPrice' => 6.183,
-                        'vendorResellerTotalBuyPrice' => 24.732,
-                        'vendorEndCustomerUnitBuyPrice' => 12.9064,
-                        'vendorEndCustomerTotalBuyPrice' => 51.6256,
-                        'countryCurrency' => 'EUR',
-                        'countryRetailUnitBuyPrice' => 4.1689,
-                        'countryRetailTotalBuyPrice' => 16.6755,
-                        'countryResellerUnitBuyPrice' => 4.6951,
-                        'countryResellerTotalBuyPrice' => 18.7805,
-                        'countryEndCustomerUnitBuyPrice' => 9.8006,
-                        'countryEndCustomerTotalBuyPrice' => 39.2024,
+                        'currency' => 'EUR',
+                        'prices' => [
+                            'listUnit' => 4.1689,
+                            'listTotal' => 16.6755,
+                            'buyUnit' => 4.6951,
+                            'buyTotal' => 18.7805,
+                            'sellUnit' => 9.8006,
+                            'sellTotal' => 39.2024,
+                        ],
                     ],
                 ],
             ],
@@ -535,12 +499,10 @@ class StatementsClientTest extends AbstractClientTest
         self::assertInstanceOf(StatementLine::class, $line);
         self::assertSame('H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef', $line->getReference());
         self::assertSame('12345678-1234-1234-1234-123456789012', $line->getVendorEndCustomerSubscriptionId());
-        self::assertSame('TAG', $line->getResellerBillingTag());
         self::assertSame('Vendor', $line->getVendorName());
         self::assertSame('Program', $line->getVendorProgram());
         self::assertSame('SAAS', $line->getVendorProgramClassification());
         self::assertSame('Product Name', $line->getVendorProductName());
-        self::assertSame('SERVICE-CODE', $line->getServiceCode());
         self::assertSame('12345678-1234-1234-1234-123456789012', $line->getVendorSku());
         self::assertSame('12345678-1234-1234-1234-123456789012', $line->getArrowSku());
         self::assertSame('Order Id', $line->getOrderId());
@@ -552,26 +514,18 @@ class StatementsClientTest extends AbstractClientTest
         self::assertSame('2021-03-17 00:00:00', $line->getSubscriptionStartDate());
         self::assertSame('2022-03-17 00:00:00', $line->getSubscriptionEndDate());
         self::assertSame('Monthly', $line->getBillingPeriodicity());
-        self::assertSame(4.0, $line->getQuantity());
         self::assertNull($line->getSubscriptionFriendlyName());
         self::assertSame('XSP123', $line->getArsSubscriptionId());
         self::assertSame('Offer Name', $line->getOfferName());
-        self::assertSame(1.0, $line->getExchangeRate());
-        self::assertSame(1.0874, $line->getEndCustomerRate());
-        self::assertSame('uplift', $line->getEndCustomerRateType());
-        self::assertSame('USD', $line->getVendorCurrency());
-        self::assertSame(6.87, $line->getVendorRetailUnitBuyPrice());
-        self::assertSame(27.48, $line->getVendorRetailTotalBuyPrice());
-        self::assertSame(6.183, $line->getVendorResellerUnitBuyPrice());
-        self::assertSame(24.732, $line->getVendorResellerTotalBuyPrice());
-        self::assertSame(12.9064, $line->getVendorEndCustomerUnitBuyPrice());
-        self::assertSame(51.6256, $line->getVendorEndCustomerTotalBuyPrice());
-        self::assertSame('EUR', $line->getCountryCurrency());
-        self::assertSame(4.1689, $line->getCountryRetailUnitBuyPrice());
-        self::assertSame(16.6755, $line->getCountryRetailTotalBuyPrice());
-        self::assertSame(4.6951, $line->getCountryResellerUnitBuyPrice());
-        self::assertSame(18.7805, $line->getCountryResellerTotalBuyPrice());
-        self::assertSame(9.8006, $line->getCountryEndCustomerUnitBuyPrice());
-        self::assertSame(39.2024, $line->getCountryEndCustomerTotalBuyPrice());
+        self::assertSame(1.0874, $line->getRates()->getSellRate());
+        self::assertSame('uplift', $line->getRates()->getSellRateType());
+        self::assertSame(4.0, $line->getQuantity());
+        self::assertSame('EUR', $line->getCurrency());
+        self::assertSame(4.1689, $line->getPrices()->getListUnit());
+        self::assertSame(16.6755, $line->getPrices()->getListTotal());
+        self::assertSame(4.6951, $line->getPrices()->getBuyUnit());
+        self::assertSame(18.7805, $line->getPrices()->getBuyTotal());
+        self::assertSame(9.8006, $line->getPrices()->getSellUnit());
+        self::assertSame(39.2024, $line->getPrices()->getSellTotal());
     }
 }

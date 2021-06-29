@@ -11,22 +11,17 @@ The Statement entity allow to get information about the billing statement header
 
 | Field                           | Type              | Example                                 | Description                                      |
 |---------------------------------|-------------------|-----------------------------------------|--------------------------------------------------|
-| countryCurrency                 | ```string```      | USD                                     | Country Currency                                 |
-| countryEndCustomerTotalBuyPrice | ```numeric```     | 42.0                                    | End Customer Total Buy Price in country currency |
-| countryResellerTotalBuyPrice    | ```numeric```     | 23.1                                    | Reseller Total Buy Price in country currency     |
-| creationDate                    | ```string```      | 2021-04-13                              | Date of creation                                 |
-| from                            | ```Identity```    |                                         | Identity of the reseller                         |
-| group                           | ```string```      | ResellerBilling                         | Billing group name                               |
-| issueDate                       | ```string/null``` | 2021-04-01                              | Date of the issue                                |
-| marketplace                     | ```string```      | US                                      | Country code                                     |
 | reference                       | ```string```      | H1-AAA-0123456789ABCDEF0123456789ABCDEF | Identifier of the statement                      |
-| status                          | ```string```      | Open                                    | ```Open```, ```In Progress``` or ```Fulfilled``` |
-| strategy                        | ```string```      |                                         | Billing strategy name                            |
-| submissionDate                  | ```string/null``` | 2021-04-01                              | Date of the submission                           |
-| to                              | ```Identity[]```  |                                         | Identities of customers                          |
-| vendorCurrency                  | ```string```      | EUR                                     | Vendor Currency                                  |
-| vendorEndCustomerTotalBuyPrice  | ```numeric```     | 42.0                                    | End Customer Total Buy Price in vendor currency  |
-| vendorResellerTotalBuyPrice     | ```numeric```     | 23.1                                    | Reseller Total Buy Price in vendor currency      |
+| billingGroup                    | ```string```      | ResellerBilling                         | Billing group name                               |
+| vendorName                      | ```string```      | Microsoft                               | Vendor name                                      |
+| classification                  | ```string```      | saas                                    | End Customer Total Buy Price in vendor currency  |
+| reportPeriod                    | ```string```      | 2021-04                                 | Report Period                                    |
+| marketplace                     | ```string```      | US                                      | Country code                                     |
+| issueDate                       | ```string/null``` | 2021-04-01                              | Date of the issue                                |
+| from                            | ```Identity```    |                                         | Identity of the reseller                         |
+| to                              | ```Identity```    |                                         | Identities of customers                          |
+| currency                        | ```string```      | USD                                     | Country Currency                                 |
+| prices                          | ```Prices```      |                                         | Prices for reseller/customer                     |
 
 ### Identity
 The Identity entity allow to store reference and name about a reseller or a customer.
@@ -36,51 +31,55 @@ The Identity entity allow to store reference and name about a reseller or a cust
 | name           | ```string``` | Reseller 123 |             |
 | reference      | ```string``` | XSP123       |             |
 
+### Rates
+The Rates entity allow to store reference and name about a reseller or a customer.
+
+| Field          | Type         | Example      | Description |
+|----------------|--------------|--------------|-------------|
+| sellRate       | ```numeric```| 42.3         |             |
+| sellRateType   | ```string``` | uplift       |             |
+
+### Prices
+The Prices entity allow to store reference and name about a reseller or a customer.
+
+| Field          | Type                    | Example      | Description               |
+|----------------|-------------------------|--------------|---------------------------|
+| listUnit       | ```numeric/undefined``` | 12.3         | Retail Unit Price         |
+| listTotal      | ```numeric/undefined``` | 12.3         | Retail Total Price        |
+| buyUnit        | ```numeric/undefined``` | 12.3         | Reseller Buy Unit Price   |
+| buyTotal       | ```numeric```           | 12.3         | Reseller Buy Total Price  |
+| sellUnit       | ```numeric/undefined``` | 12.3         | Reseller Sell Unit Price  |
+| sellTotal      | ```numeric```           | 12.3         | Reseller Sell Total Price |
+
 ### StatementLine
 The StatementLine entity allow to get information about a billing statement line.
 
 | Field                           | Type              | Example                                 | Description                                      |
 |---------------------------------|-------------------|-----------------------------------------|--------------------------------------------------|
-| arrowSku                        | ```string```      |                                         |                                                  |
-| arsSubscriptionId               | ```string/null``` | XSP123                                  |                                                  |
-| billingPeriodEnd                | ```string/null``` | 2021-02-01                              |                                                  |
-| billingPeriodStart              | ```string/null``` | 2021-01-01                              |                                                  |
-| billingPeriodicity              | ```string/null``` | Monthly                                 | Monthly or Yearly                                |
-| countryCurrency                 | ```string```      | EUR                                     |                                                  |
-| countryEndCustomerTotalBuyPrice | ```string```      | 42.0                                    |                                                  |
-| countryEndCustomerUnitBuyPrice  | ```string/null``` | 21.0                                    |                                                  |
-| countryResellerTotalBuyPrice    | ```string```      | 42.0                                    |                                                  |
-| countryResellerUnitBuyPrice     | ```string/null``` | 21.0                                    |                                                  |
-| countryRetailTotalBuyPrice      | ```string```      | 42.0                                    |                                                  |
-| countryRetailUnitBuyPrice       | ```string/null``` | 21.0                                    |                                                  |
-| endCustomerRate                 | ```string/null``` | 0.2                                     |                                                  |
-| endCustomerRateType             | ```string/null``` | uplift                                  | uplift or discount                               |
-| exchangeRate                    | ```string/null``` | 1.1                                     |                                                  |
-| offerName                       | ```string/null``` | Offer Name                              |                                                  |
-| orderId                         | ```string/null``` |                                         |                                                  |
-| quantity                        | ```string/null``` | 2.0                                     |                                                  |
 | reference                       | ```string```      | L1-AAA-0123456789ABCDEF0123456789ABCDEF |                                                  |
-| resellerBillingTag              | ```string/null``` |                                         |                                                  |
-| resellerOrderId                 | ```string/null``` |                                         |                                                  |
-| serviceCode                     | ```string/null``` |                                         |                                                  |
-| subscriptionEndDate             | ```string/null``` | 2021-12-01                              |                                                  |
-| subscriptionFriendlyName        | ```string/null``` |                                         |                                                  |
-| subscriptionStartDate           | ```string/null``` | 2020-12-01                              |                                                  |
-| usageEndDate                    | ```string```      | 2021-04-17                              |                                                  |
-| usageStartDate                  | ```string```      | 2021-04-02                              |                                                  |
-| vendorCurrency                  | ```string/null``` | EUR                                     |                                                  |
 | vendorEndCustomerSubscriptionId | ```string/null``` |                                         |                                                  |
-| vendorEndCustomerTotalBuyPrice  | ```string```      | 42.0                                    |                                                  |
-| vendorEndCustomerUnitBuyPrice   | ```string/null``` | 21.0                                    |                                                  |
 | vendorName                      | ```string/null``` | Microsoft                               |                                                  |
-| vendorProductName               | ```string/null``` | Microsoft Product                       |                                                  |
 | vendorProgram                   | ```string/null``` | Vendor Program                          |                                                  |
 | vendorProgramClassification     | ```string/null``` |                                         |                                                  |
-| vendorResellerTotalBuyPrice     | ```string```      | 42.0                                    |                                                  |
-| vendorResellerUnitBuyPrice      | ```string/null``` | 21.0                                    |                                                  |
-| vendorRetailTotalBuyPrice       | ```string```      | 42.0                                    |                                                  |
-| vendorRetailUnitBuyPrice        | ```string/null``` | 21.0                                    |                                                  |
+| vendorProductName               | ```string/null``` | Microsoft Product                       |                                                  |
 | vendorSku                       | ```string/null``` |                                         |                                                  |
+| arrowSku                        | ```string```      |                                         |                                                  |
+| offerName                       | ```string/null``` | Offer Name                              |                                                  |
+| subscriptionFriendlyName        | ```string/null``` |                                         |                                                  |
+| arsSubscriptionId               | ```string/null``` | XSP123                                  |                                                  |
+| orderId                         | ```string/null``` |                                         |                                                  |
+| resellerOrderId                 | ```string/null``` |                                         |                                                  |
+| subscriptionStartDate           | ```string/null``` | 2020-12-01                              |                                                  |
+| subscriptionEndDate             | ```string/null``` | 2021-12-01                              |                                                  |
+| billingPeriodicity              | ```string/null``` | Monthly                                 | Monthly or Yearly                                |
+| billingPeriodStart              | ```string/null``` | 2021-01-01                              |                                                  |
+| billingPeriodEnd                | ```string/null``` | 2021-02-01                              |                                                  |
+| usageStartDate                  | ```string```      | 2021-04-02                              |                                                  |
+| usageEndDate                    | ```string```      | 2021-04-17                              |                                                  |
+| rates                           | ```Rates```       |                                         |                                                  |
+| quantity                        | ```string/null``` | 2.0                                     |                                                  |
+| currency                        | ```string```      | EUR                                     |                                                  |
+| prices                          | ```Prices```      |                                         |                                                  |
 
 ## Usage
 
