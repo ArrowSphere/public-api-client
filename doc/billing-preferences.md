@@ -9,14 +9,14 @@ This API will allow you to access and edit your preferences and retrieve your cu
 ### Preference
 The ```Preference``` entity allows to manage the company's main contact:
 
-| Field          | Type          | Example                          | Description                                                                                       |
-|----------------|---------------|----------------------------------|---------------------------------------------------------------------------------------------------|
-| name           | ```string```  | Rule1                            |                                                                                                   |
-| priority       | ```numeric``` | 2                                | 0 is the highest priority                                                                         |
-| identifier     | ```string```  | GroupBy                          | Preference type (see below for the full list of types)                                            |
-| parameters     | ```array```   | [ columns => ... ]               | Associative list of parameters (depends on the type)                                              |
-| filters        | ```array```   | [ CustomerXspRef => [ XSP123 ] ] | Associative list of column filters. Available columns: CustomerXspRef, VendorName and BillingType |
-| overrides      | ```array```   | [ ArsSku => SKU ]                | Associative list of column overrides, ArsSku is mandatory                                         |
+| Field          | Type          | Example                          | Description                                                                                          |
+|----------------|---------------|----------------------------------|------------------------------------------------------------------------------------------------------|
+| name           | ```string```  | Rule1                            |                                                                                                      |
+| priority       | ```numeric``` | 2                                | 0 is the highest priority                                                                            |
+| identifier     | ```string```  | GroupBy                          | Preference type (see below for the full list of types)                                               |
+| parameters     | ```array```   | [ columns => ... ]               | Associative list of parameters (depends on the type)                                                 |
+| filters        | ```array```   | [ CustomerXspRef => [ XSP123 ] ] | Associative list of column filters. Available columns: CustomerXspRef, VendorName and Classification |
+| overrides      | ```array```   | [ ArsSku => SKU ]                | Associative list of column overrides, ArsSku is mandatory                                            |
 
 ## Preference Types
 The ```identifier``` field can be one of thoses preference types:
@@ -24,9 +24,9 @@ The ```identifier``` field can be one of thoses preference types:
 ### GroupBy
 For the GroupBy type, you must set a list of columns in the ```parameters``` field.
 
-| Parameter | Type        | Example         | Description               |
-|-----------|-------------|-----------------|---------------------------|
-| columns   | ```array``` | [ BillingType ] | List of groupable columns |
+| Parameter | Type        | Example            | Description               |
+|-----------|-------------|--------------------|---------------------------|
+| columns   | ```array``` | [ ResourceGroup ] | List of groupable columns |
 
 Available columns:
 
