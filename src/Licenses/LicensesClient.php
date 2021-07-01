@@ -46,6 +46,11 @@ class LicensesClient extends AbstractLicensesClient
     public const DATA_FILTERS = 'filters';
 
     /**
+     * @var string The key for excluding filters search query parameter
+     */
+    public const DATA_EXCLUDING_FILTERS = 'excludingFilters';
+
+    /**
      * @var string The key for sort search query parameter
      */
     public const DATA_SORT = 'sort';

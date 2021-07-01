@@ -110,6 +110,8 @@ class LicenseFindFieldEnum extends AbstractEnum
 
     public const LICENSE_LAST_UPDATE = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_LAST_UPDATE;
 
+    public const LICENSE_WARNINGS = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_WARNINGS;
+
     public const OFFER_NAME = LicenseOfferFindResult::COLUMN_OFFER . '.' . Offer::COLUMN_NAME;
 
     public const OFFER_CLASSIFICATION = LicenseOfferFindResult::COLUMN_OFFER . '.' . Offer::COLUMN_CLASSIFICATION;

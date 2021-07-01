@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.5] - 2021-07-01
+### Added
+- New getWarnings() method on license entity
+- New enum LICENSE_WARNINGS
+- New excludingFilters search query
+
 ## [0.4.4] - 2021-06-29
 ### Added
 - Added name, priority, overrides and filters in Preference entity
@@ -122,6 +128,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
+[0.4.5]: https://github.com/ArrowSphere/public-api-client/compare/0.4.4...0.4.5
+[0.4.4]: https://github.com/ArrowSphere/public-api-client/compare/0.4.3...0.4.4
 [0.4.3]: https://github.com/ArrowSphere/public-api-client/compare/0.4.2...0.4.3
 [0.4.2]: https://github.com/ArrowSphere/public-api-client/compare/0.4.1...0.4.2
 [0.4.1]: https://github.com/ArrowSphere/public-api-client/compare/0.4.0...0.4.1
