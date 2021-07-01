@@ -423,6 +423,7 @@ class StatementsClientTest extends AbstractClientTest
                         'countryResellerTotalBuyPrice' => 18.7805,
                         'countryEndCustomerUnitBuyPrice' => 9.8006,
                         'countryEndCustomerTotalBuyPrice' => 39.2024,
+                        'description' => 'Description',
                     ],
                     [
                         'reference' => 'H1-BBB-deadbeefdeadbeefdeadbeefdeadbeef',
@@ -465,6 +466,7 @@ class StatementsClientTest extends AbstractClientTest
                         'countryResellerTotalBuyPrice' => 18.7805,
                         'countryEndCustomerUnitBuyPrice' => 9.8006,
                         'countryEndCustomerTotalBuyPrice' => 39.2024,
+                        'description' => 'Description',
                     ],
                     [
                         'reference' => 'H1-CCC-deadbeefdeadbeefdeadbeefdeadbeef',
@@ -507,6 +509,7 @@ class StatementsClientTest extends AbstractClientTest
                         'countryResellerTotalBuyPrice' => 18.7805,
                         'countryEndCustomerUnitBuyPrice' => 9.8006,
                         'countryEndCustomerTotalBuyPrice' => 39.2024,
+                        'description' => 'Description',
                     ],
                 ],
             ],
@@ -573,5 +576,6 @@ class StatementsClientTest extends AbstractClientTest
         self::assertSame(18.7805, $line->getCountryResellerTotalBuyPrice());
         self::assertSame(9.8006, $line->getCountryEndCustomerUnitBuyPrice());
         self::assertSame(39.2024, $line->getCountryEndCustomerTotalBuyPrice());
+        self::assertSame('Description', $line->getDescription());
     }
 }
