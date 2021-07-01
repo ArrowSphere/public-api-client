@@ -49,6 +49,7 @@ class StatementLine extends AbstractEntity
     public const COLUMN_COUNTRY_RESELLER_TOTAL_BUY_PRICE = 'countryResellerTotalBuyPrice';
     public const COLUMN_COUNTRY_END_CUSTOMER_UNIT_BUY_PRICE = 'countryEndCustomerUnitBuyPrice';
     public const COLUMN_COUNTRY_END_CUSTOMER_TOTAL_BUY_PRICE = 'countryEndCustomerTotalBuyPrice';
+    public const COLUMN_DESCRIPTION = 'description';
 
     protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
         self::COLUMN_REFERENCE => 'string|required',
@@ -91,6 +92,7 @@ class StatementLine extends AbstractEntity
         self::COLUMN_COUNTRY_RESELLER_TOTAL_BUY_PRICE => 'numeric|required',
         self::COLUMN_COUNTRY_END_CUSTOMER_UNIT_BUY_PRICE => 'numeric|present|nullable',
         self::COLUMN_COUNTRY_END_CUSTOMER_TOTAL_BUY_PRICE => 'numeric|required',
+        self::COLUMN_DESCRIPTION => 'string|present|nullable',
     ];
 
     /**
@@ -294,6 +296,11 @@ class StatementLine extends AbstractEntity
     private $countryEndCustomerTotalBuyPrice;
 
     /**
+     * @var string|null
+     */
+    private $description;
+
+    /**
      * Statement constructor.
      *
      * @param array $data
@@ -353,6 +360,7 @@ class StatementLine extends AbstractEntity
         $this->countryResellerTotalBuyPrice = $data[self::COLUMN_COUNTRY_RESELLER_TOTAL_BUY_PRICE];
         $this->countryEndCustomerUnitBuyPrice = $data[self::COLUMN_COUNTRY_END_CUSTOMER_UNIT_BUY_PRICE];
         $this->countryEndCustomerTotalBuyPrice = $data[self::COLUMN_COUNTRY_END_CUSTOMER_TOTAL_BUY_PRICE];
+        $this->description = $data[self::COLUMN_DESCRIPTION];
     }
 
     /**
@@ -676,6 +684,14 @@ class StatementLine extends AbstractEntity
     }
 
     /**
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
@@ -721,6 +737,7 @@ class StatementLine extends AbstractEntity
             self::COLUMN_COUNTRY_RESELLER_TOTAL_BUY_PRICE => $this->getCountryResellerTotalBuyPrice(),
             self::COLUMN_COUNTRY_END_CUSTOMER_UNIT_BUY_PRICE => $this->getCountryEndCustomerUnitBuyPrice(),
             self::COLUMN_COUNTRY_END_CUSTOMER_TOTAL_BUY_PRICE => $this->getCountryEndCustomerTotalBuyPrice(),
+            self::COLUMN_DESCRIPTION => $this->getDescription(),
         ];
     }
 }

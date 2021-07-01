@@ -57,6 +57,7 @@ class StatementLineTest extends AbstractEntityTest
                     'countryResellerTotalBuyPrice' => 18.7805,
                     'countryEndCustomerUnitBuyPrice' => 9.8006,
                     'countryEndCustomerTotalBuyPrice' => 39.2024,
+                    'description' => 'Description',
                 ],
                 'expected' => <<<JSON
 {
@@ -99,7 +100,8 @@ class StatementLineTest extends AbstractEntityTest
     "countryResellerUnitBuyPrice": 4.6951,
     "countryResellerTotalBuyPrice": 18.7805,
     "countryEndCustomerUnitBuyPrice": 9.8006,
-    "countryEndCustomerTotalBuyPrice": 39.2024
+    "countryEndCustomerTotalBuyPrice": 39.2024,
+    "description": "Description"
 }
 JSON
             ],

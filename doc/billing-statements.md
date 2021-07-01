@@ -81,6 +81,7 @@ The StatementLine entity allow to get information about a billing statement line
 | vendorRetailTotalBuyPrice       | ```string```      | 42.0                                    |                                                  |
 | vendorRetailUnitBuyPrice        | ```string/null``` | 21.0                                    |                                                  |
 | vendorSku                       | ```string/null``` |                                         |                                                  |
+| description                     | ```string/null``` | Description                             | Line-specific description                        |
 
 ## Usage
 
