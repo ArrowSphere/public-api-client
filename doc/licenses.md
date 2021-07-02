@@ -235,7 +235,7 @@ The postData is supposed to contain the following keys:
 - ```LicensesClient::DATA_KEYWORDS```: an array containing the fields to search on, and their possible values, as well as an operator to specify how to use them. This array is indexed by column name, then contains 2 keys with ```LicensesClient::KEYWORDS_VALUES``` containing the values and ```LicensesClient::KEYWORDS_OPERATOR``` containing an operator (use ```LicensesClient::OPERATOR_AND```, ```LicensesClient::OPERATOR_OR``` or ```LicensesClient::OPERATOR_BETWEEN``` for the operator)
 - ```LicensesClient::DATA_COMPARE```: an array containing the fields to compare on, and their field to compare, as well as an operator to specify how to make compare. This array is indexed by column name, then contains 2 keys with ```LicensesClient::COMPARE_FIELD``` containing the column you want to compare with and ```LicensesClient::COMPARE_OPERATOR``` containing an operator (use ```LicensesClient::OPERATOR_EQ```, ```LicensesClient::OPERATOR_NEQ```, ```LicensesClient::OPERATOR_GT```, ```LicensesClient::OPERATOR_LT``` or ```LicensesClient::OPERATOR_LTE``` for the operator)
 - ```LicensesClient::DATA_FILTERS```: an array of strings containing exact matches for individual fields (field name as key and field value as value)
-- ```LicensesClient::DATA_EXCLUDING_FILTERS```: an array of strings containing must not matches for individual fields (field name as key and field value as value)
+- ```LicensesClient::DATA_EXCLUSION_FILTERS```: an array of strings containing must not matches for individual fields (field name as key and field value as value)
 - ```LicensesClient::DATA_SORT```: an array of strings containing the order in which sort the data (field name as key and a ```LicensesClient::SORT_*``` const for the sort direction)
 - ```LicensesClient::DATA_HIGHLIGHT```: a boolean value, search results will contain a field giving highlights if set to ```true``` (defaults to ```false```)
 
@@ -274,7 +274,7 @@ $searchResult = $client->find([
     LicensesClient::DATA_FILTERS    => [
         LicenseFindFieldEnum::LICENSE_IS_ENABLED => true,
     ],
-    LicensesClient::DATA_EXCLUDING_FILTERS    => [
+    LicensesClient::DATA_EXCLUSION_FILTERS    => [
         LicenseFindFieldEnum::LICENSE_WARNINGS => 'PEC ratio issue',
     ],
     LicensesClient::DATA_SORT       => [
