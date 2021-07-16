@@ -686,6 +686,9 @@ class License extends AbstractEntity
         return $this->vendorSubscriptionId;
     }
 
+    /**
+     * @return Warning[]|null
+     */
     public function getWarnings(): ?array
     {
         return $this->warnings;

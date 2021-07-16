@@ -4,7 +4,6 @@ namespace ArrowSphere\PublicApiClient\Licenses\Entities\Offer;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
-use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\PriceBand;
 
 /**
  * Class Offer

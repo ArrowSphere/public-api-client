@@ -88,11 +88,13 @@ The warning is an alert for a license.
 
 The prices applicable at the time of the license purchase.
 
-| Field     | Type     | Example | Description                                           |
-| --------- | -------- | ------- | ----------------------------------------------------- |
-| buyPrice  | `float`  | 10.4    | The buy price at the time of the license purchase     |
-| currency  | `string` | USD     | The currency used at the time of the license purchase |
-| listPrice | `float`  | 15.52   | The list price at the time of the license purchase    |
+| Field                   | Type     | Example                                                      | Description                                           |
+| ----------------------- | -------- | ------------------------------------------------------------ | ----------------------------------------------------- |
+| buyPrice                | `float`  | 10.4                                                         | The buy price at the time of the license purchase     |
+| currency                | `string` | USD                                                          | The currency used at the time of the license purchase |
+| listPrice               | `float`  | 15.52                                                        | The list price at the time of the license purchase    |
+| priceBandArrowsphereSku | `string` | MS_195416C1_3447_423A_B37B_EE59A99A19C4_EUR_1_RECURRING_SEAT | the price band's sku                                  |
+| sellPrice               | `float`  | 15.52                                                        | The sell price at the time of the license purchase    |
 
 ### Offer and its sub-entities
 
@@ -126,6 +128,7 @@ Its purpose is to present some fields of the offer linked to the license, update
 | actionFlags     | `ActionFlags`     | an instance of [ActionFlags](#ActionFlags for the PriceBand) | The possible actions for this price band          |
 | billing         | `Billing`         | an instance of [Billing](#Billing)                           | The billing rules of the license                  |
 | currency        | `string`          | USD                                                          | The currency of the price band                    |
+| identifiers     | `Identifiers`     | an instance of [Identifiers](#Identifiers)                   | An object with some identifiers (sku...)          |
 | isEnabled       | `bool`            | true                                                         | A flag that indicates if the price band is active |
 | marketplace     | `string`          | US                                                           | The marketplace of the price band                 |
 | prices          | `Prices`          | an instance of [Prices](#Prices)                             | The prices amounts of this price band             |
@@ -151,6 +154,11 @@ This entity describes how often the license is billed. See [Term and periodicity
 | term  | `string` | 8640      | The term          |
 | type  | `string` | RECURRING | The pricing type  |
 
+#### Identifiers
+| Field       | Type          | Example                                          | Description                                              |
+| ----------- | ------------- | ------------------------------------------------ | -------------------------------------------------------- |
+| arrowsphere | `Arrowsphere` | An instance of [Arrowsphere](#Arrowsphere)       | An object with some identifiers for arrowsphere (sku...) |
+
 #### Prices
 
 | Field  | Type    | Example | Description      |
@@ -165,6 +173,11 @@ This entity describes how often the license is billed. See [Term and periodicity
 | ----------- | ------- | ------- | ------------------------------------------------------------------ |
 | minQuantity | `float` | 1.0     | the minimum quantity required to purchase this offer at this price |
 | maxQuantity | `float` | 1.0     | the maximum quantity required to purchase this offer at this price |
+
+#### Arrowsphere
+| Field | Type     | Example                                                      | Description               |
+| ----- | -------- | ------------------------------------------------------------ | ------------------------- |
+| sku   | `string` | MS_195416C1_3447_423A_B37B_EE59A99A19C4_EUR_1_RECURRING_SEAT | the price band's sku      |
 
 ### Other entities
 

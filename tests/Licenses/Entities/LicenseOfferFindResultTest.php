@@ -1,6 +1,6 @@
 <?php
 
-namespace ArrowSphere\PublicApiClient\Tests\Licenses\Entities\License;
+namespace ArrowSphere\PublicApiClient\Tests\Licenses\Entities;
 
 use ArrowSphere\PublicApiClient\Licenses\Entities\LicenseOfferFindResult;
 use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
@@ -36,9 +36,11 @@ class LicenseOfferFindResultTest extends AbstractEntityTest
                         'sku'                    => 'ABCDABCD-1234-5678-9876-ABCDEFABCDEF',
                         'uom'                    => 'LICENSE',
                         'price'                  => [
-                            'buy_price'  => 10,
-                            'list_price' => 15,
-                            'currency'   => 'USD',
+                            'priceBandArrowsphereSku' => 'IBM_5737A82_DK_MS_EMM_PRE_PROD_1M_USD_1_999',
+                            'buy_price'               => 10,
+                            'sell_price'              => 15,
+                            'list_price'              => 15,
+                            'currency'                => 'USD',
                         ],
                         'cloud_type'             => 'SaaS',
                         'base_seat'              => 6,
@@ -90,9 +92,11 @@ class LicenseOfferFindResultTest extends AbstractEntityTest
         "sku": "ABCDABCD-1234-5678-9876-ABCDEFABCDEF",
         "uom": "LICENSE",
         "price": {
+            "priceBandArrowsphereSku": "IBM_5737A82_DK_MS_EMM_PRE_PROD_1M_USD_1_999",
             "buy_price": 10,
-            "currency": "USD",
-            "list_price": 15
+            "sell_price": 15,
+            "list_price": 15,
+            "currency": "USD"
         },
         "cloud_type": "SaaS",
         "base_seat": 6,

@@ -222,9 +222,11 @@ JSON;
                         'sku'                    => 'ABCDABCD-1234-5678-9876-ABCDEFABCDEF',
                         'uom'                    => 'LICENSE',
                         'price'                  => [
-                            'buy_price'  => 10,
-                            'list_price' => 15,
-                            'currency'   => 'USD',
+                            'priceBandArrowsphereSku' => 'IBM_5737A82_DK_MS_EMM_PRE_PROD_1M_USD_1_999',
+                            'buy_price'               => 10,
+                            'sell_price'              => 15,
+                            'list_price'              => 15,
+                            'currency'                => 'USD',
                         ],
                         'cloud_type'             => 'SaaS',
                         'base_seat'              => 6,
@@ -416,7 +418,9 @@ JSON;
                 "sku": "ABCDABCD-1234-5678-9876-ABCDEFABCDEF",
                 "uom": "LICENSE",
                 "price": {
+                    "priceBandArrowsphereSku": "IBM_5737A82_DK_MS_EMM_PRE_PROD_1M_USD_1_999",
                     "buy_price": 10,
+                    "sell_price": 15,
                     "list_price": 15,
                     "currency": "USD"
                 },
@@ -465,7 +469,9 @@ JSON;
                 "sku": "ABCDABCD-1234-5678-9876-ABCDEFABCCCC",
                 "uom": "LICENSE",
                 "price": {
+                    "priceBandArrowsphereSku": "IBM_5737A82_DK_MS_EMM_PRE_PROD_1M_USD_1_999",
                     "buy_price": 12,
+                    "sell_price": 17,
                     "list_price": 17,
                     "currency": "USD"
                 },
@@ -724,7 +730,9 @@ JSON;
                 "sku": "ABCDABCD-1234-5678-9876-ABCDEFABCDEF",
                 "uom": "ACCOUNT",
                 "price": {
+                    "priceBandArrowsphereSku": "IBM_5737A82_DK_MS_EMM_PRE_PROD_1M_USD_1_999",
                     "buy_price": 0,
+                    "sell_price": 0,
                     "list_price": 0,
                     "currency": null
                 },
@@ -816,6 +824,7 @@ JSON;
         $price = $license->getPrice();
         self::assertNull($price->getCurrency());
         self::assertSame(0.0, $price->getBuyPrice());
+        self::assertSame(0.0, $price->getSellPrice());
         self::assertSame(0.0, $price->getListPrice());
     }
 

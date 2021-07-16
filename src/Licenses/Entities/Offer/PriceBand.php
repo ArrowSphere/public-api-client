@@ -1,9 +1,14 @@
 <?php
 
-namespace ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand;
+namespace ArrowSphere\PublicApiClient\Licenses\Entities\Offer;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\ActionFlags;
+use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\Billing;
+use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\Identifiers;
+use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\Prices;
+use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\SaleConstraints;
 
 /**
  * Class PriceBand
@@ -24,6 +29,8 @@ class PriceBand extends AbstractEntity
 
     public const COLUMN_SALE_CONSTRAINTS = 'saleConstraints';
 
+    public const COLUMN_IDENTIFIERS = 'identifiers';
+
     protected const VALIDATION_RULES = [
         self::COLUMN_ACTION_FLAGS     => 'required|array',
         self::COLUMN_BILLING          => 'required|array',
@@ -32,6 +39,7 @@ class PriceBand extends AbstractEntity
         self::COLUMN_MARKETPLACE      => 'required',
         self::COLUMN_PRICES           => 'required|array',
         self::COLUMN_SALE_CONSTRAINTS => 'required|array',
+        self::COLUMN_IDENTIFIERS      => 'required|array',
     ];
 
     /**
@@ -70,6 +78,11 @@ class PriceBand extends AbstractEntity
     private $saleConstraints;
 
     /**
+     * @var Identifiers
+     */
+    private $identifiers;
+
+    /**
      * PriceBand constructor.
      *
      * @param array $data
@@ -87,6 +100,7 @@ class PriceBand extends AbstractEntity
         $this->marketplace = $data[self::COLUMN_MARKETPLACE];
         $this->prices = new Prices($data[self::COLUMN_PRICES]);
         $this->saleConstraints = new SaleConstraints($data[self::COLUMN_SALE_CONSTRAINTS]);
+        $this->identifiers = new Identifiers($data[self::COLUMN_IDENTIFIERS]);
     }
 
     /**
@@ -146,6 +160,14 @@ class PriceBand extends AbstractEntity
     }
 
     /**
+     * @return Identifiers
+     */
+    public function Identifiers(): Identifiers
+    {
+        return $this->identifiers;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
@@ -158,6 +180,7 @@ class PriceBand extends AbstractEntity
             self::COLUMN_MARKETPLACE      => $this->marketplace,
             self::COLUMN_PRICES           => $this->prices->jsonSerialize(),
             self::COLUMN_SALE_CONSTRAINTS => $this->saleConstraints->jsonSerialize(),
+            self::COLUMN_IDENTIFIERS      => $this->identifiers->jsonSerialize(),
         ];
     }
 }
