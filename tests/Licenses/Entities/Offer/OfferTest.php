@@ -51,6 +51,11 @@ class OfferTest extends AbstractEntityTest
                             'minQuantity' => 12,
                             'maxQuantity' => 56,
                         ],
+                        'identifiers'     => [
+                            'arrowsphere' => [
+                                'sku' => 'IBM_5737A82_DK_MS_EMM_PRE_PROD_1M_USD_1_999'
+                            ]
+                        ]
                     ],
                     'arrowSubCategories'  => [
                         'nce'
@@ -91,6 +96,11 @@ class OfferTest extends AbstractEntityTest
         "saleConstraints": {
             "minQuantity": 12,
             "maxQuantity": 56
+        },
+        "identifiers": {
+            "arrowsphere": {
+                "sku": "IBM_5737A82_DK_MS_EMM_PRE_PROD_1M_USD_1_999"
+            }
         }
     },
     "arrowSubCategories": [

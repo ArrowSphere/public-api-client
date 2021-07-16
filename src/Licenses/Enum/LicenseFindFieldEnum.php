@@ -9,9 +9,11 @@ use ArrowSphere\PublicApiClient\Licenses\Entities\License\Price;
 use ArrowSphere\PublicApiClient\Licenses\Entities\LicenseOfferFindResult;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\ActionFlags;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\Offer;
+use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\ActionFlags as PriceBandActionFlags;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\Billing;
-use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\PriceBand;
+use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\Identifiers;
+use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\Identifiers\Arrowsphere;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\Prices;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\SaleConstraints;
 
@@ -50,11 +52,15 @@ class LicenseFindFieldEnum extends AbstractEnum
 
     public const LICENSE_PRICE = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_PRICE;
 
-    public const LICENSE_PRICE_CURRENCY = self::LICENSE_PRICE . '.' . Price::COLUMN_CURRENCY;
+    public const LICENSE_PRICE_PRICE_BAND_ARROWSPHERE_SKU = self::LICENSE_PRICE . '.' . Price::COLUMN_PRICE_BAND_ARROWSPHERE_SKU;
 
     public const LICENSE_PRICE_BUY_PRICE = self::LICENSE_PRICE . '.' . Price::COLUMN_BUY_PRICE;
 
+    public const LICENSE_PRICE_SELL_PRICE = self::LICENSE_PRICE . '.' . Price::COLUMN_SELL_PRICE;
+
     public const LICENSE_PRICE_LIST_PRICE = self::LICENSE_PRICE . '.' . Price::COLUMN_LIST_PRICE;
+
+    public const LICENSE_PRICE_CURRENCY = self::LICENSE_PRICE . '.' . Price::COLUMN_CURRENCY;
 
     public const LICENSE_CLOUD_TYPE = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_CLOUD_TYPE;
 
@@ -167,6 +173,12 @@ class LicenseFindFieldEnum extends AbstractEnum
     public const OFFER_PRICE_BAND_SALE_CONSTRAINTS_MIN_QUANTITY = self::OFFER_PRICE_BAND_SALE_CONSTRAINTS . '.' . SaleConstraints::COLUMN_MIN_QUANTITY;
 
     public const OFFER_PRICE_BAND_SALE_CONSTRAINTS_MAX_QUANTITY = self::OFFER_PRICE_BAND_SALE_CONSTRAINTS . '.' . SaleConstraints::COLUMN_MAX_QUANTITY;
+
+    public const OFFER_PRICE_BAND_IDENTIFIERS = self::OFFER_PRICE_BAND . '.' . PriceBand::COLUMN_IDENTIFIERS;
+
+    public const OFFER_PRICE_BAND_IDENTIFIERS_ARROWSPHERE = self::OFFER_PRICE_BAND_IDENTIFIERS . '.' . Identifiers::COLUMN_ARROWSPHERE;
+
+    public const OFFER_PRICE_BAND_IDENTIFIERS_ARROWSPHERE_SKU = self::OFFER_PRICE_BAND_IDENTIFIERS_ARROWSPHERE . '.' . Arrowsphere::COLUMN_SKU;
 
     public const OFFER_LAST_UPDATE = LicenseOfferFindResult::COLUMN_OFFER . '.' . Offer::COLUMN_LAST_UPDATE;
 

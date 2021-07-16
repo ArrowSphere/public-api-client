@@ -17,15 +17,19 @@ class PriceTest extends AbstractEntityTest
         return [
             'standard' => [
                 'fields'   => [
-                    'buy_price'  => 12.34,
-                    'currency'   => 'USD',
-                    'list_price' => 45.67,
+                    'priceBandArrowsphereSku' => 'IBM_5737A82_DK_MS_EMM_PRE_PROD_1M_USD_1_999',
+                    'buy_price'               => 12.34,
+                    'sell_price'              => 45.67,
+                    'list_price'              => 45.67,
+                    'currency'                => 'USD',
                 ],
                 'expected' => <<<JSON
 {
+    "priceBandArrowsphereSku": "IBM_5737A82_DK_MS_EMM_PRE_PROD_1M_USD_1_999",
     "buy_price": 12.34,
-    "currency": "USD",
-    "list_price": 45.67
+    "sell_price": 45.67,
+    "list_price": 45.67,
+    "currency": "USD"
 }
 JSON
             ],
