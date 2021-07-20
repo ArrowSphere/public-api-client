@@ -58,6 +58,8 @@ class StatementsClientTest extends AbstractClientTest
                     'vendorName' => 'microsoft',
                     'classification' => 'saas',
                     'reportPeriod' => '2021-04',
+                    'billingStatementId' => 'id',
+                    'billingPreference' => 'preference',
                     'marketplace' => 'US',
                     'issueDate' => '2021-04-29 13:37:00',
                     'from' => [
@@ -70,6 +72,7 @@ class StatementsClientTest extends AbstractClientTest
                     ],
                     'currency' => 'USD',
                     'prices' => [
+                        'listTotal' => 45.1,
                         'buyTotal' => 42.0,
                         'sellTotal' => 23.1,
                     ],
@@ -90,7 +93,10 @@ class StatementsClientTest extends AbstractClientTest
         self::assertSame('microsoft', $statement->getVendorName());
         self::assertSame('saas', $statement->getClassification());
         self::assertSame('2021-04-29 13:37:00', $statement->getIssueDate());
+        self::assertSame('id', $statement->getBillingStatementId());
+        self::assertSame('preference', $statement->getBillingPreference());
         self::assertSame('US', $statement->getMarketplace());
+        self::assertSame(45.1, $statement->getPrices()->getListTotal());
         self::assertSame(42.0, $statement->getPrices()->getBuyTotal());
         self::assertSame(23.1, $statement->getPrices()->getSellTotal());
         self::assertSame('XSP1337', $statement->getFrom()->getReference());
@@ -181,6 +187,8 @@ class StatementsClientTest extends AbstractClientTest
                         'vendorName' => 'microsoft',
                         'classification' => 'saas',
                         'reportPeriod' => '2021-04',
+                        'billingStatementId' => 'id1',
+                        'billingPreference' => 'preference1',
                         'marketplace' => 'US',
                         'issueDate' => '2021-04-29 13:37:00',
                         'from' => [
@@ -193,6 +201,7 @@ class StatementsClientTest extends AbstractClientTest
                         ],
                         'currency' => 'USD',
                         'prices' => [
+                            'listTotal' => 45.1,
                             'buyTotal' => 42.0,
                             'sellTotal' => 23.1,
                         ],
@@ -203,6 +212,8 @@ class StatementsClientTest extends AbstractClientTest
                         'vendorName' => 'microsoft',
                         'classification' => 'saas',
                         'reportPeriod' => '2021-04',
+                        'billingStatementId' => 'id2',
+                        'billingPreference' => 'preference2',
                         'marketplace' => 'US',
                         'issueDate' => '2021-04-29 13:37:00',
                         'from' => [
@@ -215,6 +226,7 @@ class StatementsClientTest extends AbstractClientTest
                         ],
                         'currency' => 'USD',
                         'prices' => [
+                            'listTotal' => 45.1,
                             'buyTotal' => 42.0,
                             'sellTotal' => 23.1,
                         ],
@@ -225,6 +237,8 @@ class StatementsClientTest extends AbstractClientTest
                         'vendorName' => 'microsoft',
                         'classification' => 'saas',
                         'reportPeriod' => '2021-04',
+                        'billingStatementId' => 'id3',
+                        'billingPreference' => 'preference3',
                         'marketplace' => 'US',
                         'issueDate' => '2021-04-29 13:37:00',
                         'from' => [
@@ -237,6 +251,7 @@ class StatementsClientTest extends AbstractClientTest
                         ],
                         'currency' => 'USD',
                         'prices' => [
+                            'listTotal' => 45.1,
                             'buyTotal' => 42.0,
                             'sellTotal' => 23.1,
                         ],
@@ -272,8 +287,11 @@ class StatementsClientTest extends AbstractClientTest
         self::assertSame('saas', $statement->getClassification());
         self::assertSame('2021-04', $statement->getReportPeriod());
         self::assertSame('2021-04-29 13:37:00', $statement->getIssueDate());
+        self::assertSame('id1', $statement->getBillingStatementId());
+        self::assertSame('preference1', $statement->getBillingPreference());
         self::assertSame('US', $statement->getMarketplace());
         self::assertSame('USD', $statement->getCurrency());
+        self::assertSame(45.1, $statement->getPrices()->getListTotal());
         self::assertSame(42.0, $statement->getPrices()->getBuyTotal());
         self::assertSame(23.1, $statement->getPrices()->getSellTotal());
 

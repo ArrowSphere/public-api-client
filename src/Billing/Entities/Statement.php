@@ -12,6 +12,8 @@ class Statement extends AbstractEntity
     public const COLUMN_VENDOR_NAME = 'vendorName';
     public const COLUMN_CLASSIFICATION = 'classification';
     public const COLUMN_REPORT_PERIOD = 'reportPeriod';
+    public const COLUMN_BILLING_STATEMENT_ID = 'billingStatementId';
+    public const COLUMN_BILLING_PREFERENCE = 'billingPreference';
     public const COLUMN_MARKETPLACE = 'marketplace';
     public const COLUMN_ISSUE_DATE = 'issueDate';
     public const COLUMN_FROM = 'from';
@@ -53,6 +55,16 @@ class Statement extends AbstractEntity
      * @var string
      */
     private $reportPeriod;
+
+    /**
+     * @var string
+     */
+    private $billingStatementId;
+
+    /**
+     * @var string
+     */
+    private $billingPreference;
 
     /**
      * @var string
@@ -101,6 +113,8 @@ class Statement extends AbstractEntity
         $this->vendorName = $data[self::COLUMN_VENDOR_NAME];
         $this->classification = $data[self::COLUMN_CLASSIFICATION];
         $this->reportPeriod = $data[self::COLUMN_REPORT_PERIOD];
+        $this->billingStatementId = $data[self::COLUMN_BILLING_STATEMENT_ID];
+        $this->billingPreference = $data[self::COLUMN_BILLING_PREFERENCE];
         $this->marketplace = $data[self::COLUMN_MARKETPLACE];
         $this->issueDate = $data[self::COLUMN_ISSUE_DATE];
         $this->from = new Identity($data[self::COLUMN_FROM]);
@@ -147,6 +161,22 @@ class Statement extends AbstractEntity
     public function getReportPeriod(): string
     {
         return $this->reportPeriod;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBillingPreference(): string
+    {
+        return $this->billingPreference;
+    }
+
+    /**
+     * @return string
+     */
+    public function getBillingStatementId(): string
+    {
+        return $this->billingStatementId;
     }
 
     /**
@@ -208,6 +238,8 @@ class Statement extends AbstractEntity
             self::COLUMN_VENDOR_NAME => $this->getVendorName(),
             self::COLUMN_CLASSIFICATION => $this->getClassification(),
             self::COLUMN_REPORT_PERIOD => $this->getReportPeriod(),
+            self::COLUMN_BILLING_STATEMENT_ID => $this->getBillingStatementId(),
+            self::COLUMN_BILLING_PREFERENCE => $this->getBillingPreference(),
             self::COLUMN_MARKETPLACE => $this->getMarketplace(),
             self::COLUMN_ISSUE_DATE => $this->getIssueDate(),
             self::COLUMN_FROM => $this->getFrom()->jsonSerialize(),

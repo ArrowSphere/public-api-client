@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.9] - 2021-07-22
+### Added
+- add billingStatementId and billingPreference columns for Billing Statements
+### Changed
+- Update preference documentation
+
 ## [0.4.8] - 2021-07-06
 ### Changed
 - Rename columns and restructure payloads for Statement and StatementLines
