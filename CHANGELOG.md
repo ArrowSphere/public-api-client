@@ -3,6 +3,14 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.10] - 2021-07-28
+### Changed
+- Remove periodFrom/periodTo parameters for BillingStatements
+### Added
+- Added new filters parameters for BillingStatements endpoint
+- Enum for Tier and Format values
+- New endpoint '/export' support
+
 ## [0.4.9] - 2021-07-22
 ### Added
 - add billingStatementId and billingPreference columns for Billing Statements

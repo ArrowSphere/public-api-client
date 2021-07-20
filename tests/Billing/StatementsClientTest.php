@@ -115,10 +115,10 @@ class StatementsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/billing/statements?periodFrom=2021-04&periodTo=2021-05')
+            ->with('get', 'https://www.test.com/billing/statements?reportPeriod%5B%5D=2021-04')
             ->willReturn(new Response(200, [], 'OK USA'));
 
-        $this->client->getStatementsRaw('2021-04', '2021-05');
+        $this->client->getStatementsRaw(['2021-04']);
     }
 
     /**
@@ -132,11 +132,11 @@ class StatementsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/billing/statements?periodFrom=2021-04&periodTo=2021-05&perPage=100')
+            ->with('get', 'https://www.test.com/billing/statements?reportPeriod%5B%5D=2021-04&perPage=100')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
-        $statements = $this->client->getStatements('2021-04', '2021-05');
+        $statements = $this->client->getStatements(['2021-04']);
         iterator_to_array($statements);
     }
 
@@ -160,13 +160,13 @@ class StatementsClientTest extends AbstractClientTest
             ->expects(self::exactly(3))
             ->method('request')
             ->withConsecutive(
-                ['get', 'https://www.test.com/billing/statements?periodFrom=2021-04&periodTo=2021-05&perPage=100'],
-                ['get', 'https://www.test.com/billing/statements?periodFrom=2021-04&periodTo=2021-05&page=2&perPage=100'],
-                ['get', 'https://www.test.com/billing/statements?periodFrom=2021-04&periodTo=2021-05&page=3&perPage=100']
+                ['get', 'https://www.test.com/billing/statements?reportPeriod%5B%5D=2021-04&perPage=100'],
+                ['get', 'https://www.test.com/billing/statements?reportPeriod%5B%5D=2021-04&page=2&perPage=100'],
+                ['get', 'https://www.test.com/billing/statements?reportPeriod%5B%5D=2021-04&page=3&perPage=100']
             )
             ->willReturn(new Response(200, [], $response));
 
-        $statements = $this->client->getStatements('2021-04', '2021-05');
+        $statements = $this->client->getStatements(['2021-04']);
         iterator_to_array($statements);
     }
 
@@ -271,10 +271,10 @@ class StatementsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/billing/statements?periodFrom=2021-04&periodTo=2021-05&perPage=100')
+            ->with('get', 'https://www.test.com/billing/statements?reportPeriod%5B%5D=2021-04&perPage=100')
             ->willReturn(new Response(200, [], $response));
 
-        $statements = $this->client->getStatements('2021-04', '2021-05');
+        $statements = $this->client->getStatements(['2021-04']);
         $list = iterator_to_array($statements);
         self::assertCount(3, $list);
 
@@ -549,5 +549,27 @@ class StatementsClientTest extends AbstractClientTest
         self::assertSame(9.8006, $line->getPrices()->getSellUnit());
         self::assertSame(39.2024, $line->getPrices()->getSellTotal());
         self::assertSame('Description', $line->getDescription());
+    }
+
+    public function testPostExport(): void
+    {
+        $response = new Response(204, []);
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'post',
+                'https://www.test.com/billing/exports',
+                [
+                    'body'    => '{"reportPeriod":["2021-04"],"tier":[2,3],"format":"xlsx"}',
+                    'headers' => [
+                        'apiKey' => '123456',
+                    ],
+                ]
+            )
+            ->willReturn($response);
+
+        $this->client->createExport(['2021-04']);
+        self::assertSame(204, $response->getStatusCode());
     }
 }
