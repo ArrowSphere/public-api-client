@@ -94,12 +94,18 @@ use ArrowSphere\PublicApiClient\Billing\Enum\PreferenceTypeEnum;
 
 $period = '2021-04';
 $preferences = [new Preference([
+    Preference::KEY_NAME => 'rule1',
     Preference::KEY_IDENTIFIER => PreferenceTypeEnum::GROUP_BY,
+    Preference::KEY_PRIORITY => 1,
     Preference::KEY_PARAMETERS => [
         Preference::KEY_COLUMNS => [
             PreferenceGroupByColumnsEnum::CREATED_BY
         ],
     ],
+    Preference::KEY_FILTERS => [],
+    Preference::KEY_OVERRIDES => [
+        'ArsSku' => 'sku',
+    ]
 ])];
 
 $client->createPreferences($period, $preferences);

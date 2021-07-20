@@ -16,6 +16,8 @@ The Statement entity allow to get information about the billing statement header
 | vendorName                      | ```string```      | Microsoft                               | Vendor name                                      |
 | classification                  | ```string```      | saas                                    | End Customer Total Buy Price in vendor currency  |
 | reportPeriod                    | ```string```      | 2021-04                                 | Report Period                                    |
+| billingStatementId              | ```string```      |                                         | Billing Statement ID                             |
+| billingPreference               | ```string```      |                                         | Billing Preference                               |
 | marketplace                     | ```string```      | US                                      | Country code                                     |
 | issueDate                       | ```string/null``` | 2021-04-01                              | Date of the issue                                |
 | from                            | ```Identity```    |                                         | Identity of the reseller                         |

@@ -22,6 +22,8 @@ class StatementTest extends AbstractEntityTest
                     'vendorName' => 'microsoft',
                     'classification' => 'saas',
                     'reportPeriod' => '2021-04',
+                    'billingStatementId' => '',
+                    'billingPreference' => '',
                     'marketplace' => 'US',
                     'issueDate' => '2021-04-29 13:37:00',
                     'from' => [
@@ -34,6 +36,7 @@ class StatementTest extends AbstractEntityTest
                     ],
                     'currency' => 'USD',
                     'prices' => [
+                        'listTotal' => 45.1,
                         'buyTotal' => 42.05,
                         'sellTotal' => 23.1,
                     ],
@@ -45,6 +48,8 @@ class StatementTest extends AbstractEntityTest
     "vendorName": "microsoft",
     "classification": "saas",
     "reportPeriod": "2021-04",
+    "billingStatementId": "",
+    "billingPreference": "",
     "marketplace": "US",
     "issueDate": "2021-04-29 13:37:00",
     "from": {
@@ -57,6 +62,7 @@ class StatementTest extends AbstractEntityTest
     },
     "currency": "USD",
     "prices": {
+        "listTotal": 45.1,
         "buyTotal": 42.05,
         "sellTotal": 23.1
     }
