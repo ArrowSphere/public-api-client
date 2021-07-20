@@ -112,9 +112,8 @@ Example:
 ```php
 <?php
 
-$periodFrom = '2021-01';
-$periodTo = '2021-03';
-$statements = $client->getStatements($periodFrom, $periodTo);
+$reportPeriod = '2021-01';
+$statements = $client->getStatements($reportPeriod);
 foreach ($statements as $statement) {
     echo $statement->getReference() . PHP_EOL;
 }
@@ -150,4 +149,15 @@ $statementLines = $client->getStatementLines($statementReference);
 foreach ($statementLines as $statementLine) {
     echo $statementLine->getReference() . PHP_EOL;
 }
+```
+
+### Export lines from statements
+You can ask for an export (available through your xSP account) by calling the ```createExport()``` method.
+
+Example:
+```php
+<?php
+$reportPeriod = ['2021-04'];
+
+$client->createExport($reportPeriod);
 ```

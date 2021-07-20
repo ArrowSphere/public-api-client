@@ -4,11 +4,14 @@ namespace ArrowSphere\PublicApiClient\Billing;
 
 use ArrowSphere\PublicApiClient\Billing\Entities\Statement;
 use ArrowSphere\PublicApiClient\Billing\Entities\StatementLine;
+use ArrowSphere\PublicApiClient\Billing\Enum\FormatEnum;
+use ArrowSphere\PublicApiClient\Billing\Enum\TierEnum;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use Generator;
 use GuzzleHttp\Exception\GuzzleException;
+use ReflectionException;
 
 /**
  * Class StatementsClient
@@ -16,14 +19,54 @@ use GuzzleHttp\Exception\GuzzleException;
 class StatementsClient extends AbstractBillingClient
 {
     /**
-     * @var string periodFrom index
+     * @var string reportPeriod index
      */
-    public const PERIOD_FROM = 'periodFrom';
+    public const REPORT_PERIOD = 'reportPeriod';
 
     /**
-     * @var string periodTo index
+     * @var string customerName index
      */
-    public const PERIOD_TO = 'periodTo';
+    public const CUSTOMER_NAME = 'customerName';
+
+    /**
+     * @var string currency index
+     */
+    public const CURRENCY = 'currency';
+
+    /**
+     * @var string buyTotal index
+     */
+    public const BUY_TOTAL = 'buyTotal';
+
+    /**
+     * @var string sellTotal index
+     */
+    public const SELL_TOTAL = 'sellTotal';
+
+    /**
+     * @var string issueDate index
+     */
+    public const ISSUE_DATE = 'issueDate';
+
+    /**
+     * @var string issueDateFrom index
+     */
+    public const ISSUE_DATE_FROM = 'issueDateFrom';
+
+    /**
+     * @var string issueDateTo index
+     */
+    public const ISSUE_DATE_TO = 'issueDateTo';
+
+    /**
+     * @var string tier index
+     */
+    public const TIER = 'tier';
+
+    /**
+     * @var string format index
+     */
+    public const FORMAT = 'format';
 
     /**
      * @param string $reference
@@ -32,7 +75,7 @@ class StatementsClient extends AbstractBillingClient
      *
      * @throws EntityValidationException
      * @throws NotFoundException
-     * @throws PublicApiClientException|\ReflectionException
+     * @throws PublicApiClientException|ReflectionException
      */
     public function getStatement(string $reference): ?Statement
     {
@@ -66,17 +109,21 @@ class StatementsClient extends AbstractBillingClient
      * Lists the statements.
      * Returns an array (generator) of Statement.
      *
-     * @param string $periodFrom YYYY-MM
-     * @param string $periodTo YYYY-MM
+     * @param string[] $reportPeriod YYYY-MM
+     * @param string $customerName
+     * @param string $currency
+     * @param string $buyTotal
+     * @param string $sellTotal
+     * @param string $issueDate
      *
      * @return Generator|Statement[]
      *
      * @throws EntityValidationException
-     * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
+     * @throws ReflectionException
      */
-    public function getStatements(string $periodFrom, string $periodTo): Generator
+    public function getStatements(array $reportPeriod = [], string $customerName = '', string $currency = '', string $buyTotal = '', string $sellTotal = '', string $issueDate = ''): Generator
     {
         $this->setPerPage(100);
         $currentPage = 1;
@@ -85,7 +132,7 @@ class StatementsClient extends AbstractBillingClient
         while (! $lastPage) {
             $this->setPage($currentPage);
 
-            $rawResponse = $this->getStatementsRaw($periodFrom, $periodTo);
+            $rawResponse = $this->getStatementsRaw($reportPeriod, $customerName, $currency, $buyTotal, $sellTotal, $issueDate);
             $response = $this->decodeResponse($rawResponse);
 
             if (! isset($response['pagination']['totalPages'])) {
@@ -109,23 +156,33 @@ class StatementsClient extends AbstractBillingClient
     }
 
     /**
-     * @param string $periodFrom YYYY-MM
-     * @param string $periodTo YYYY-MM
+     * @param string[] $reportPeriod YYYY-MM
+     * @param string $customerName
+     * @param string $currency
+     * @param string $buyTotal
+     * @param string $sellTotal
+     * @param string $issueDate
      *
      * @return string
      *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function getStatementsRaw(string $periodFrom, string $periodTo): string
+    public function getStatementsRaw(array $reportPeriod = [], string $customerName = '', string $currency = '', string $buyTotal = '', string $sellTotal = '', string $issueDate = ''): string
     {
         $this->path = '/statements';
         $parameters = [
-            self::PERIOD_FROM => $periodFrom,
-            self::PERIOD_TO   => $periodTo,
+            self::REPORT_PERIOD => $reportPeriod,
+            self::CUSTOMER_NAME => $customerName,
+            self::CURRENCY      => $currency,
+            self::BUY_TOTAL     => $buyTotal,
+            self::SELL_TOTAL    => $sellTotal,
+            self::ISSUE_DATE    => $issueDate,
         ];
 
-        return $this->get($parameters);
+        return $this->get(array_filter($parameters, static function ($val) {
+            return $val !== '' && $val !== [];
+        }));
     }
 
     /**
@@ -137,9 +194,9 @@ class StatementsClient extends AbstractBillingClient
      * @return Generator|StatementLine[]
      *
      * @throws EntityValidationException
-     * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
+     * @throws ReflectionException
      */
     public function getStatementLines(string $statementReference): Generator
     {
@@ -188,5 +245,50 @@ class StatementsClient extends AbstractBillingClient
         $this->path = "/statements/$statementReference/lines";
 
         return $this->get();
+    }
+
+    /**
+     * @param string[] $reportPeriod YYYY-MM
+     * @param string $customerName
+     * @param string $currency
+     * @param string $buyTotal
+     * @param string $sellTotal
+     * @param string $issueDateFrom
+     * @param string $issueDateTo
+     * @param int[] $tier
+     * @param string $format
+     *
+     * @return void
+     *
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     * @throws ReflectionException
+     * @throws GuzzleException
+     */
+    public function createExport(array $reportPeriod = [], string $customerName = '', string $currency = '', string $buyTotal = '', string $sellTotal = '', string $issueDateFrom = '', string $issueDateTo = '', array $tier = [TierEnum::RESELLER, TierEnum::END_CUSTOMER], string $format = 'xlsx'): void
+    {
+        if (count($tier) === 0 && count($tier) !== count(array_filter($tier, [TierEnum::class, 'isValidValue']))) {
+            throw new PublicApiClientException('Error: Invalid tier value', 400);
+        }
+        if (! FormatEnum::isValidValue($format)) {
+            throw new PublicApiClientException('Error: Invalid format value', 400);
+        }
+
+        $this->path = '/exports';
+        $parameters = [
+            self::REPORT_PERIOD   => $reportPeriod,
+            self::CUSTOMER_NAME   => $customerName,
+            self::CURRENCY        => $currency,
+            self::BUY_TOTAL       => $buyTotal,
+            self::SELL_TOTAL      => $sellTotal,
+            self::ISSUE_DATE_FROM => $issueDateFrom,
+            self::ISSUE_DATE_TO   => $issueDateTo,
+            self::TIER            => $tier,
+            self::FORMAT          => $format,
+        ];
+
+        $this->post(array_filter($parameters, static function ($val) {
+            return $val !== '' && $val !== [];
+        }));
     }
 }
