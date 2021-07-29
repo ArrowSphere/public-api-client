@@ -29,6 +29,11 @@ class StatementsClient extends AbstractBillingClient
     public const CUSTOMER_NAME = 'customerName';
 
     /**
+     * @var string customerXspRef index
+     */
+    public const CUSTOMER_XSP_REF = 'customerXspRef';
+
+    /**
      * @var string currency index
      */
     public const CURRENCY = 'currency';
@@ -249,7 +254,8 @@ class StatementsClient extends AbstractBillingClient
 
     /**
      * @param string[] $reportPeriod YYYY-MM
-     * @param string $customerName
+     * @param string[] $customerName
+     * @param string[] $customerXspRef
      * @param string $currency
      * @param string $buyTotal
      * @param string $sellTotal
@@ -265,7 +271,7 @@ class StatementsClient extends AbstractBillingClient
      * @throws ReflectionException
      * @throws GuzzleException
      */
-    public function createExport(array $reportPeriod = [], string $customerName = '', string $currency = '', string $buyTotal = '', string $sellTotal = '', string $issueDateFrom = '', string $issueDateTo = '', array $tier = [TierEnum::RESELLER, TierEnum::END_CUSTOMER], string $format = 'xlsx'): void
+    public function createExport(array $reportPeriod = [], array $customerName = [], array $customerXspRef = [], string $currency = '', string $buyTotal = '', string $sellTotal = '', string $issueDateFrom = '', string $issueDateTo = '', array $tier = [TierEnum::RESELLER, TierEnum::END_CUSTOMER], string $format = 'xlsx'): void
     {
         if (count($tier) === 0 && count($tier) !== count(array_filter($tier, [TierEnum::class, 'isValidValue']))) {
             throw new PublicApiClientException('Error: Invalid tier value', 400);
@@ -276,15 +282,16 @@ class StatementsClient extends AbstractBillingClient
 
         $this->path = '/exports';
         $parameters = [
-            self::REPORT_PERIOD   => $reportPeriod,
-            self::CUSTOMER_NAME   => $customerName,
-            self::CURRENCY        => $currency,
-            self::BUY_TOTAL       => $buyTotal,
-            self::SELL_TOTAL      => $sellTotal,
-            self::ISSUE_DATE_FROM => $issueDateFrom,
-            self::ISSUE_DATE_TO   => $issueDateTo,
-            self::TIER            => $tier,
-            self::FORMAT          => $format,
+            self::REPORT_PERIOD    => $reportPeriod,
+            self::CUSTOMER_NAME    => $customerName,
+            self::CUSTOMER_XSP_REF => $customerXspRef,
+            self::CURRENCY         => $currency,
+            self::BUY_TOTAL        => $buyTotal,
+            self::SELL_TOTAL       => $sellTotal,
+            self::ISSUE_DATE_FROM  => $issueDateFrom,
+            self::ISSUE_DATE_TO    => $issueDateTo,
+            self::TIER             => $tier,
+            self::FORMAT           => $format,
         ];
 
         $this->post(array_filter($parameters, static function ($val) {
