@@ -3,6 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.11] - 2021-08-03
+### Changed
+- change CustomerName filter for billing/export (use array for multiple values)
+### Added
+- new filters for billing/export (support array of customer references)
+
 ## [0.4.10] - 2021-07-28
 ### Changed
 - Remove periodFrom/periodTo parameters for BillingStatements
