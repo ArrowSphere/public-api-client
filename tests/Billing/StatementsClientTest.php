@@ -561,7 +561,7 @@ class StatementsClientTest extends AbstractClientTest
                 'post',
                 'https://www.test.com/billing/exports',
                 [
-                    'body'    => '{"reportPeriod":["2021-04"],"customerXspRef":["XSP12345","XSP23456"],"tier":[2,3],"format":"xlsx"}',
+                    'body'    => '{"statementRef":["STATEMENT_REF_EXAMPLE"],"reportPeriod":["2021-04"],"customerXspRef":["XSP12345","XSP23456"],"tier":[2,3],"format":"xlsx"}',
                     'headers' => [
                         'apiKey' => '123456',
                     ],
@@ -569,7 +569,7 @@ class StatementsClientTest extends AbstractClientTest
             )
             ->willReturn($response);
 
-        $this->client->createExport(['2021-04'], [], ['XSP12345','XSP23456']);
+        $this->client->createExport(['STATEMENT_REF_EXAMPLE'], ['2021-04'], [], ['XSP12345','XSP23456']);
         self::assertSame(204, $response->getStatusCode());
     }
 }
