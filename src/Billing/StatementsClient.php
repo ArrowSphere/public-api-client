@@ -19,6 +19,11 @@ use ReflectionException;
 class StatementsClient extends AbstractBillingClient
 {
     /**
+     * @var string statementRef index
+     */
+    public const STATEMENT_REF = 'statementRef';
+
+    /**
      * @var string reportPeriod index
      */
     public const REPORT_PERIOD = 'reportPeriod';
@@ -253,6 +258,7 @@ class StatementsClient extends AbstractBillingClient
     }
 
     /**
+     * @param string[] $statementRef
      * @param string[] $reportPeriod YYYY-MM
      * @param string[] $customerName
      * @param string[] $customerXspRef
@@ -271,7 +277,7 @@ class StatementsClient extends AbstractBillingClient
      * @throws ReflectionException
      * @throws GuzzleException
      */
-    public function createExport(array $reportPeriod = [], array $customerName = [], array $customerXspRef = [], string $currency = '', string $buyTotal = '', string $sellTotal = '', string $issueDateFrom = '', string $issueDateTo = '', array $tier = [TierEnum::RESELLER, TierEnum::END_CUSTOMER], string $format = 'xlsx'): void
+    public function createExport(array $statementRef = [], array $reportPeriod = [], array $customerName = [], array $customerXspRef = [], string $currency = '', string $buyTotal = '', string $sellTotal = '', string $issueDateFrom = '', string $issueDateTo = '', array $tier = [TierEnum::RESELLER, TierEnum::END_CUSTOMER], string $format = 'xlsx'): void
     {
         if (count($tier) === 0 && count($tier) !== count(array_filter($tier, [TierEnum::class, 'isValidValue']))) {
             throw new PublicApiClientException('Error: Invalid tier value', 400);
@@ -282,6 +288,7 @@ class StatementsClient extends AbstractBillingClient
 
         $this->path = '/exports';
         $parameters = [
+            self::STATEMENT_REF    => $statementRef,
             self::REPORT_PERIOD    => $reportPeriod,
             self::CUSTOMER_NAME    => $customerName,
             self::CUSTOMER_XSP_REF => $customerXspRef,
