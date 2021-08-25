@@ -58,3 +58,6 @@ echo "Hello " . $whoami->getCompanyName();
 
 ### Licenses clients
 - [Licenses](doc/licenses.md)
+
+### Campaigns clients
+- [Campaigns](doc/campaigns.md)

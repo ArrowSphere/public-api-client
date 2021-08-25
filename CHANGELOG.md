@@ -3,6 +3,11 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.4.13] - 2021-09-06
+### Added
+- Add a new client for Campaigns and its Entities
+- Add the delete & put functions in AbstractClient
+
 ## [0.4.12] - 2021-08-12
 ### Added
 - Add a new filter for billing/export, using array of statements references
