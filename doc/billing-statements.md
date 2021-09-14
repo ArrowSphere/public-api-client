@@ -24,6 +24,7 @@ The Statement entity allow to get information about the billing statement header
 | to                              | ```Identity```    |                                         | Identities of customers                          |
 | currency                        | ```string```      | USD                                     | Country Currency                                 |
 | prices                          | ```Prices```      |                                         | Prices for reseller/customer                     |
+| description                     | ```string```      |                                         | Rule's name that led to this statement           |
 
 ### Identity
 The Identity entity allow to store reference and name about a reseller or a customer.

@@ -76,6 +76,7 @@ class StatementsClientTest extends AbstractClientTest
                         'buyTotal' => 42.0,
                         'sellTotal' => 23.1,
                     ],
+                    'description' => 'rule1',
                 ],
             ],
         ]);
@@ -103,6 +104,7 @@ class StatementsClientTest extends AbstractClientTest
         self::assertSame('XSP123', $statement->getTo()->getReference());
         self::assertSame('Reseller', $statement->getFrom()->getName());
         self::assertSame('Customer', $statement->getTo()->getName());
+        self::assertSame('rule1', $statement->getDescription());
     }
 
     /**
@@ -205,6 +207,7 @@ class StatementsClientTest extends AbstractClientTest
                             'buyTotal' => 42.0,
                             'sellTotal' => 23.1,
                         ],
+                        'description' => 'rule1',
                     ],
                     [
                         'reference' => 'H1-BBB-deadbeefdeadbeefdeadbeefdeadbeef',
@@ -230,6 +233,7 @@ class StatementsClientTest extends AbstractClientTest
                             'buyTotal' => 42.0,
                             'sellTotal' => 23.1,
                         ],
+                        'description' => 'rule1',
                     ],
                     [
                         'reference' => 'H1-CCC-deadbeefdeadbeefdeadbeefdeadbeef',
@@ -255,6 +259,7 @@ class StatementsClientTest extends AbstractClientTest
                             'buyTotal' => 42.0,
                             'sellTotal' => 23.1,
                         ],
+                        'description' => 'rule1',
                     ],
                 ],
             ],
@@ -294,6 +299,7 @@ class StatementsClientTest extends AbstractClientTest
         self::assertSame(45.1, $statement->getPrices()->getListTotal());
         self::assertSame(42.0, $statement->getPrices()->getBuyTotal());
         self::assertSame(23.1, $statement->getPrices()->getSellTotal());
+        self::assertSame('rule1', $statement->getDescription());
 
         $from = $statement->getFrom();
         self::assertInstanceOf(Identity::class, $from);
