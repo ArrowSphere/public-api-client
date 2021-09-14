@@ -65,6 +65,11 @@ abstract class AbstractClient
     protected $perPage;
 
     /**
+     * @var array Some headers to be added to each request
+     */
+    protected $defaultHeaders = [];
+
+    /**
      * AbstractClient constructor.
      *
      * @param Client|null $client
@@ -136,6 +141,18 @@ abstract class AbstractClient
     public function setPage(int $page): self
     {
         $this->page = $page;
+
+        return $this;
+    }
+
+    /**
+     * @param array $defaultHeaders
+     *
+     * @return $this
+     */
+    public function setDefaultHeaders(array $defaultHeaders): self
+    {
+        $this->defaultHeaders = $defaultHeaders;
 
         return $this;
     }
@@ -221,7 +238,8 @@ abstract class AbstractClient
             [
                 self::API_KEY => $this->apiKey,
             ],
-            $headers
+            $headers,
+            $this->defaultHeaders
         );
     }
 
