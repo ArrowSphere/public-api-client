@@ -20,6 +20,7 @@ class Statement extends AbstractEntity
     public const COLUMN_TO = 'to';
     public const COLUMN_CURRENCY = 'currency';
     public const COLUMN_PRICES = 'prices';
+    public const COLUMN_DESCRIPTION = 'description';
 
     protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
         self::COLUMN_REFERENCE => 'string|required',
@@ -97,6 +98,11 @@ class Statement extends AbstractEntity
     private $prices;
 
     /**
+     * @var string
+     */
+    private $description;
+
+    /**
      * Statement constructor.
      *
      * @param array $data
@@ -121,6 +127,7 @@ class Statement extends AbstractEntity
         $this->to = new Identity($data[self::COLUMN_TO]);
         $this->currency = $data[self::COLUMN_CURRENCY];
         $this->prices = new Prices($data[self::COLUMN_PRICES]);
+        $this->description = $data[self::COLUMN_DESCRIPTION];
     }
 
     /**
@@ -228,6 +235,14 @@ class Statement extends AbstractEntity
     }
 
     /**
+     * @return string|null
+     */
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
@@ -246,6 +261,7 @@ class Statement extends AbstractEntity
             self::COLUMN_TO => $this->getTo()->jsonSerialize(),
             self::COLUMN_CURRENCY => $this->getCurrency(),
             self::COLUMN_PRICES => $this->getPrices()->jsonSerialize(),
+            self::COLUMN_DESCRIPTION => $this->getDescription(),
         ];
     }
 }
