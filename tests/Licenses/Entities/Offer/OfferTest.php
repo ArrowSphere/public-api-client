@@ -52,6 +52,9 @@ class OfferTest extends AbstractEntityTest
                             'maxQuantity' => 56,
                         ],
                     ],
+                    'arrowSubCategories'  => [
+                        'nce'
+                    ]
                 ],
                 'expected' => <<<JSON
 {
@@ -89,7 +92,10 @@ class OfferTest extends AbstractEntityTest
             "minQuantity": 12,
             "maxQuantity": 56
         }
-    }
+    },
+    "arrowSubCategories": [
+        "nce"
+    ]
 }
 JSON
             ],

@@ -169,4 +169,6 @@ class LicenseFindFieldEnum extends AbstractEnum
     public const OFFER_PRICE_BAND_SALE_CONSTRAINTS_MAX_QUANTITY = self::OFFER_PRICE_BAND_SALE_CONSTRAINTS . '.' . SaleConstraints::COLUMN_MAX_QUANTITY;
 
     public const OFFER_LAST_UPDATE = LicenseOfferFindResult::COLUMN_OFFER . '.' . Offer::COLUMN_LAST_UPDATE;
+
+    public const OFFER_ARROW_SUB_CATEGORIES = LicenseOfferFindResult::COLUMN_OFFER . '.' . Offer::COLUMN_ARROW_SUB_CATEGORIES;
 }
