@@ -40,6 +40,7 @@ class StatementTest extends AbstractEntityTest
                         'buyTotal' => 42.05,
                         'sellTotal' => 23.1,
                     ],
+                    'description' => 'rule1',
                 ],
                 'expected' => <<<JSON
 {
@@ -65,7 +66,8 @@ class StatementTest extends AbstractEntityTest
         "listTotal": 45.1,
         "buyTotal": 42.05,
         "sellTotal": 23.1
-    }
+    },
+    "description": "rule1"
 }
 JSON
             ],

@@ -42,11 +42,24 @@ class WhoamiClientTest extends AbstractClientTest
     {
         $this->httpClient
             ->method('request')
-            ->with('get', 'https://www.test.com/whoami')
+            ->with(
+                'get',
+                'https://www.test.com/whoami',
+                [
+                    'headers' => [
+                        'apiKey'    => '123456',
+                        'myHeader1' => 'myVal1',
+                        'myHeader2' => 'myVal2',
+                    ],
+                ]
+            )
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
-        $this->client->getWhoami();
+        $this->client->setDefaultHeaders([
+            'myHeader1' => 'myVal1',
+            'myHeader2' => 'myVal2',
+        ])->getWhoami();
     }
 
     /**

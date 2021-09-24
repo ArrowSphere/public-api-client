@@ -28,7 +28,11 @@ const API_KEY = 'your API key in ArrowSphere';
 
 $client = (new PublicApiClient())
     ->setUrl(URL)
-    ->setApiKey(API_KEY);
+    ->setApiKey(API_KEY)
+    ->setDefaultHeaders([
+        'myHeader' => 'myValue',
+    ])
+;
 
 $whoami = $client->getWhoamiClient()->getWhoami();
 echo "Hello " . $whoami->getCompanyName();
@@ -58,3 +62,6 @@ echo "Hello " . $whoami->getCompanyName();
 
 ### Licenses clients
 - [Licenses](doc/licenses.md)
+
+### Campaigns clients
+- [Campaigns](doc/campaigns.md)

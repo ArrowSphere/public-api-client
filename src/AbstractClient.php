@@ -65,6 +65,11 @@ abstract class AbstractClient
     protected $perPage;
 
     /**
+     * @var array Some headers to be added to each request
+     */
+    protected $defaultHeaders = [];
+
+    /**
      * AbstractClient constructor.
      *
      * @param Client|null $client
@@ -136,6 +141,18 @@ abstract class AbstractClient
     public function setPage(int $page): self
     {
         $this->page = $page;
+
+        return $this;
+    }
+
+    /**
+     * @param array $defaultHeaders
+     *
+     * @return $this
+     */
+    public function setDefaultHeaders(array $defaultHeaders): self
+    {
+        $this->defaultHeaders = $defaultHeaders;
 
         return $this;
     }
@@ -221,7 +238,8 @@ abstract class AbstractClient
             [
                 self::API_KEY => $this->apiKey,
             ],
-            $headers
+            $headers,
+            $this->defaultHeaders
         );
     }
 
@@ -246,6 +264,33 @@ abstract class AbstractClient
             [
                 'headers' => $this->prepareHeaders($headers),
                 'body'    => json_encode($payload),
+            ]
+        );
+
+        return $this->getResponse($response);
+    }
+
+    /**
+     * Sends a PUT request and returns the response
+     *
+     * @param string $payload
+     * @param array $parameters
+     * @param array $headers
+     *
+     * @return StreamInterface
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    protected function put(string $payload = '', array $parameters = [], array $headers = []): StreamInterface
+    {
+        $response = $this->client->request(
+            'put',
+            $this->generateUrl($parameters),
+            [
+                'headers' => $this->prepareHeaders($headers),
+                'body'    => $payload,
             ]
         );
 
@@ -295,5 +340,30 @@ abstract class AbstractClient
         }
 
         return $params;
+    }
+
+    /**
+     * Sends a DELETE request and returns the response
+     *
+     * @param array $parameters
+     * @param array $headers
+     *
+     * @return string
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    protected function delete(array $parameters = [], array $headers = []): string
+    {
+        $response = $this->client->request(
+            'delete',
+            $this->generateUrl($parameters),
+            [
+                'headers' => $this->prepareHeaders($headers),
+            ]
+        );
+
+        return $this->getResponse($response);
     }
 }
