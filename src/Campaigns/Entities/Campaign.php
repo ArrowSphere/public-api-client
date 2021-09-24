@@ -48,7 +48,7 @@ class Campaign extends AbstractEntity
     private $createdAt;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $updatedAt;
 
@@ -98,7 +98,10 @@ class Campaign extends AbstractEntity
     {
         parent::__construct($data);
 
-        $this->banners = $data[self::COLUMN_BANNERS];
+        $this->banners = array_map(static function (array $banner) {
+            return new Banner($banner);
+        }, $data[self::COLUMN_BANNERS]);
+
         $this->category = $data[self::COLUMN_CATEGORY] ?? self::DEFAULT_VALUE_CATEGORY;
         $this->createdAt = $data[self::COLUMN_CREATEDAT];
         $this->deletedAt = $data[self::COLUMN_DELETEDAT] ?? self::DEFAULT_VALUE_DELETEDAT;
@@ -145,9 +148,9 @@ class Campaign extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getUpdatedAt(): string
+    public function getUpdatedAt(): ?string
     {
         return $this->updatedAt;
     }

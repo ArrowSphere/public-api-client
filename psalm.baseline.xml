@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="dev-master@4d6be66d98609a7d1ba961d5719da63bfed32163">
+<files psalm-version="dev-master@c9ff1eee634ff82484ecd76941d420a0c5546b72">
   <file src="src/AbstractClient.php">
-    <ImplicitToStringCast occurrences="1">
+    <ImplicitToStringCast occurrences="2">
+      <code>string</code>
       <code>string</code>
     </ImplicitToStringCast>
-  </file>
-  <file src="src/Billing/PreferencesClient.php">
-    <MismatchingDocblockReturnType occurrences="1">
-      <code>Generator|Preference[]</code>
-    </MismatchingDocblockReturnType>
   </file>
   <file src="src/Billing/StatementsClient.php">
     <MismatchingDocblockReturnType occurrences="2">
       <code>Generator|StatementLine[]</code>
       <code>Generator|Statement[]</code>
+    </MismatchingDocblockReturnType>
+  </file>
+  <file src="src/Campaigns/CampaignsClient.php">
+    <ImplicitToStringCast occurrences="3">
+      <code>string</code>
+      <code>string</code>
+      <code>string</code>
+    </ImplicitToStringCast>
+    <MismatchingDocblockReturnType occurrences="1">
+      <code>Generator|Campaign[]</code>
     </MismatchingDocblockReturnType>
   </file>
   <file src="src/Catalog/AddonClient.php">
