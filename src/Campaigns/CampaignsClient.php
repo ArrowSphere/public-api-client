@@ -7,7 +7,8 @@ use ArrowSphere\PublicApiClient\Campaigns\Entities\Campaign;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
-use ReflectionException;
+use Generator;
+use GuzzleHttp\Exception\GuzzleException;
 
 /**
  * Class CampaignsClient
@@ -20,13 +21,16 @@ class CampaignsClient extends AbstractClient
     private const FIND_PATH = '/campaigns';
 
     /**
-     * @param string $reference
+     * Get a single campaign.
+     *
+     * @param string $reference The reference of the campaign
      *
      * @return Campaign|null
      *
      * @throws EntityValidationException
+     * @throws GuzzleException
      * @throws NotFoundException
-     * @throws PublicApiClientException|ReflectionException
+     * @throws PublicApiClientException
      */
     public function getCampaign(string $reference): ?Campaign
     {
@@ -41,10 +45,13 @@ class CampaignsClient extends AbstractClient
     }
 
     /**
-     * @param string $reference
+     * Get a single campaign.
+     *
+     * @param string $reference The reference of the campaign
      *
      * @return string
      *
+     * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -57,16 +64,57 @@ class CampaignsClient extends AbstractClient
     }
 
     /**
+     * Lists all the campaigns.
+     *
+     * @param array $parameters
+     *
      * @return string
      *
+     * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function getCampaigns(): string
+    public function getCampaignsRaw(array $parameters = []): string
     {
         $this->path = self::FIND_PATH;
 
-        return $this->get();
+        return $this->get($parameters);
+    }
+
+    /**
+     * Lists all the campaigns.
+     * Returns an array (generator) of Campaign
+     *
+     * @param array $parameters Optional parameters to add to the URL
+     *
+     * @return Generator|Campaign[]
+     *
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getCampaigns(array $parameters = []): Generator
+    {
+        $this->setPerPage(100);
+        $currentPage = 1;
+        $lastPage = false;
+
+        while (! $lastPage) {
+            $this->setPage($currentPage);
+            $rawResponse = $this->getCampaignsRaw($parameters);
+            $response = $this->decodeResponse($rawResponse);
+
+            if ($response['pagination']['total_page'] <= $currentPage) {
+                $lastPage = true;
+            }
+
+            $currentPage++;
+
+            foreach ($response['data']['campaigns'] as $data) {
+                yield new Campaign($data);
+            }
+        }
     }
 
     /**
@@ -74,6 +122,7 @@ class CampaignsClient extends AbstractClient
      *
      * @return string
      *
+     * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -90,6 +139,7 @@ class CampaignsClient extends AbstractClient
      *
      * @return string
      *
+     * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -108,6 +158,7 @@ class CampaignsClient extends AbstractClient
      *
      * @throws NotFoundException
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function createCampaign(array $params): string
     {
@@ -125,6 +176,7 @@ class CampaignsClient extends AbstractClient
      *
      * @return string
      *
+     * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -140,6 +192,7 @@ class CampaignsClient extends AbstractClient
      *
      * @return string
      *
+     * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -156,6 +209,7 @@ class CampaignsClient extends AbstractClient
      *
      * @return string
      *
+     * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -173,6 +227,7 @@ class CampaignsClient extends AbstractClient
      *
      * @return string
      *
+     * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */

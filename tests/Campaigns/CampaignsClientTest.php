@@ -3,6 +3,9 @@
 namespace ArrowSphere\PublicApiClient\Tests\Campaigns;
 
 use ArrowSphere\PublicApiClient\Campaigns\CampaignsClient;
+use ArrowSphere\PublicApiClient\Campaigns\Entities\Banner;
+use ArrowSphere\PublicApiClient\Campaigns\Entities\Campaign;
+use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
@@ -22,27 +25,324 @@ class CampaignsClientTest extends AbstractClientTest
     protected const CAMPAIGN_REFERENCE = 'aaa-aaa-aaaa-aaa';
 
     /**
+     * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
-     * @throws GuzzleException
      */
-    public function testGetCampaigns(): void
+    public function testGetCampaignsRaw(): void
     {
         $this->client->setPage(1);
         $this->client->setPerPage(10);
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/campaigns?per_page=10')
+            ->with('get', 'https://www.test.com/campaigns?abc=def&ghi=0&per_page=10')
             ->willReturn(new Response(200, [], 'OK USA'));
 
-        $this->client->getCampaigns();
+        $this->client->getCampaignsRaw([
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
     }
 
     /**
+     * @depends testGetCampaignsRaw
+     *
+     * @throws EntityValidationException
+     * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
+     */
+    public function testGetCampaignsWithInvalidResponse(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/campaigns?abc=def&ghi=0&per_page=100')
+            ->willReturn(new Response(200, [], '{'));
+
+        $this->expectException(PublicApiClientException::class);
+        $campaigns = $this->client->getCampaigns([
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
+        iterator_to_array($campaigns);
+    }
+
+    /**
+     * @throws EntityValidationException
      * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetCampaignsWithPagination(): void
+    {
+        $response = json_encode([
+            'data'       => [
+                'campaigns' => [],
+            ],
+            'pagination' => [
+                'total_page' => 3,
+            ],
+        ]);
+
+        $this->httpClient
+            ->expects(self::exactly(3))
+            ->method('request')
+            ->withConsecutive(
+                ['get', 'https://www.test.com/campaigns?abc=def&ghi=0&per_page=100'],
+                ['get', 'https://www.test.com/campaigns?abc=def&ghi=0&page=2&per_page=100'],
+                ['get', 'https://www.test.com/campaigns?abc=def&ghi=0&page=3&per_page=100']
+            )
+            ->willReturn(new Response(200, [], $response));
+
+        $test = $this->client->getCampaigns([
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
+        iterator_to_array($test);
+    }
+
+    public function testGetCampaigns(): void
+    {
+        $response = <<<JSON
+{
+  "status": 200,
+  "data": {
+    "campaigns": [
+      {
+        "reference": "aaa-aaa-aaaa-aaa",
+        "name": "My campaign",
+        "category": "BANNER",
+        "createdAt": "2021-06-25T16:00:00Z",
+        "rules": {
+          "locations": [],
+          "roles": [],
+          "marketplaces": [],
+          "subscriptions": [],
+          "resellers": [],
+          "endCustomers": []
+        },
+        "weight": 1,
+        "banners": [
+          {
+            "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
+          },
+          {
+            "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
+          },
+          {
+            "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
+          }
+        ],
+        "landingPage": {
+          "header": {
+            "backgroundImageUuid": "eee-eee-eeee-eee-ee",
+            "vendorLogoUuid": "fff-fff-fffff-fff-ff"
+          },
+          "body": {
+            "backgroundImageUuid": "ggg-ggg-gggg-ggg-gg"
+          }
+        }
+      },
+      {
+        "reference": "bbb-bbb-bbbb-bbb",
+        "name": "My campaign 2",
+        "category": "BANNER 2",
+        "createdAt": "2021-12-25T16:00:00Z",
+        "rules": {
+          "locations": [],
+          "roles": [],
+          "marketplaces": [],
+          "subscriptions": [],
+          "resellers": [],
+          "endCustomers": []
+        },
+        "weight": 2,
+        "banners": [
+          {
+            "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-11"
+          },
+          {
+            "backgroundImageUuid": "ccc-ccc-cccc-ccc-22"
+          },
+          {
+            "backgroundImageUuid": "ddd-ddd-dddd-ddd-33"
+          }
+        ],
+        "landingPage": {
+          "header": {
+            "backgroundImageUuid": "eee-eee-eeee-eee-44",
+            "vendorLogoUuid": "fff-fff-fffff-fff-55"
+          },
+          "body": {
+            "backgroundImageUuid": "ggg-ggg-gggg-ggg-66"
+          }
+        }
+      }
+    ]
+  },
+  "pagination": {
+    "per_page": 100,
+    "current_page": 1,
+    "total_page": 1,
+    "total": 2,
+    "next": null,
+    "previous": null
+  }
+}
+JSON;
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/campaigns?abc=def&ghi=0&per_page=100')
+            ->willReturn(new Response(200, [], $response));
+
+        $test = $this->client->getCampaigns([
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
+        $list = iterator_to_array($test);
+        self::assertCount(2, $list);
+
+        /** @var Campaign $campaign */
+        $campaign = array_shift($list);
+        self::assertInstanceOf(Campaign::class, $campaign);
+
+        self::assertInstanceOf(Campaign::class, $campaign);
+        self::assertSame('aaa-aaa-aaaa-aaa', $campaign->getReference());
+        self::assertSame('My campaign', $campaign->getName());
+        self::assertSame('BANNER', $campaign->getCategory());
+        self::assertSame('2021-06-25T16:00:00Z', $campaign->getCreatedAt());
+        self::assertNull($campaign->getDeletedAt());
+
+        $rules = $campaign->getRules();
+        self::assertEmpty($rules->getLocations());
+        self::assertEmpty($rules->getRoles());
+        self::assertEmpty($rules->getMarketplaces());
+        self::assertEmpty($rules->getSubscriptions());
+        self::assertEmpty($rules->getResellers());
+        self::assertEmpty($rules->getEndCustomers());
+
+        self::assertSame(1, $campaign->getWeight());
+
+        $banners = $campaign->getBanners();
+        self::assertCount(3, $banners);
+
+        /** @var Banner $banner */
+        $banner = array_shift($banners);
+        self::assertInstanceOf(Banner::class, $banner);
+        self::assertSame('bbbb-bbb-bbbb-bbb-bb', $banner->getBackgroundImageUuid());
+
+        /** @var Banner $banner */
+        $banner = array_shift($banners);
+        self::assertInstanceOf(Banner::class, $banner);
+        self::assertSame('ccc-ccc-cccc-ccc-cc', $banner->getBackgroundImageUuid());
+
+        /** @var Banner $banner */
+        $banner = array_shift($banners);
+        self::assertInstanceOf(Banner::class, $banner);
+        self::assertSame('ddd-ddd-dddd-ddd-dd', $banner->getBackgroundImageUuid());
+
+        $landingPage = $campaign->getLandingPage();
+        self::assertNull($landingPage->getUrl());
+
+        $header = $landingPage->getHeader();
+        self::assertSame('eee-eee-eeee-eee-ee', $header->getBackgroundImageUuid());
+        self::assertNull($header->getBackgroundColor());
+        self::assertSame('', $header->getBaseline());
+        self::assertNull($header->getTextColor());
+        self::assertSame('', $header->getTitle());
+        self::assertSame('fff-fff-fffff-fff-ff', $header->getVendorLogoUuid());
+
+        $body = $landingPage->getBody();
+        self::assertSame('', $body->getTitle());
+        self::assertSame('ggg-ggg-gggg-ggg-gg', $body->getBackgroundImageUuid());
+        self::assertSame('', $body->getType());
+        self::assertSame('', $body->getDescription());
+        self::assertNull($body->getVideoUrl());
+
+        $footer = $landingPage->getFooter();
+        self::assertSame('', $footer->getTitle());
+        self::assertSame('#FFF', $footer->getTextColor());
+        self::assertSame('', $footer->getBackgroundColor());
+        self::assertSame('', $footer->getButtonText());
+        self::assertSame('', $footer->getButtonUrl());
+
+        self::assertEmpty($footer->getFeatures());
+
+        /** @var Campaign $campaign */
+        $campaign = array_shift($list);
+        self::assertInstanceOf(Campaign::class, $campaign);
+
+        self::assertInstanceOf(Campaign::class, $campaign);
+        self::assertSame('bbb-bbb-bbbb-bbb', $campaign->getReference());
+        self::assertSame('My campaign 2', $campaign->getName());
+        self::assertSame('BANNER 2', $campaign->getCategory());
+        self::assertSame('2021-12-25T16:00:00Z', $campaign->getCreatedAt());
+        self::assertNull($campaign->getDeletedAt());
+
+        $rules = $campaign->getRules();
+        self::assertEmpty($rules->getLocations());
+        self::assertEmpty($rules->getRoles());
+        self::assertEmpty($rules->getMarketplaces());
+        self::assertEmpty($rules->getSubscriptions());
+        self::assertEmpty($rules->getResellers());
+        self::assertEmpty($rules->getEndCustomers());
+
+        self::assertSame(2, $campaign->getWeight());
+
+        $banners = $campaign->getBanners();
+        self::assertCount(3, $banners);
+
+        /** @var Banner $banner */
+        $banner = array_shift($banners);
+        self::assertInstanceOf(Banner::class, $banner);
+        self::assertSame('bbbb-bbb-bbbb-bbb-11', $banner->getBackgroundImageUuid());
+
+        /** @var Banner $banner */
+        $banner = array_shift($banners);
+        self::assertInstanceOf(Banner::class, $banner);
+        self::assertSame('ccc-ccc-cccc-ccc-22', $banner->getBackgroundImageUuid());
+
+        /** @var Banner $banner */
+        $banner = array_shift($banners);
+        self::assertInstanceOf(Banner::class, $banner);
+        self::assertSame('ddd-ddd-dddd-ddd-33', $banner->getBackgroundImageUuid());
+
+        $landingPage = $campaign->getLandingPage();
+        self::assertNull($landingPage->getUrl());
+
+        $header = $landingPage->getHeader();
+        self::assertSame('eee-eee-eeee-eee-44', $header->getBackgroundImageUuid());
+        self::assertNull($header->getBackgroundColor());
+        self::assertSame('', $header->getBaseline());
+        self::assertNull($header->getTextColor());
+        self::assertSame('', $header->getTitle());
+        self::assertSame('fff-fff-fffff-fff-55', $header->getVendorLogoUuid());
+
+        $body = $landingPage->getBody();
+        self::assertSame('', $body->getTitle());
+        self::assertSame('ggg-ggg-gggg-ggg-66', $body->getBackgroundImageUuid());
+        self::assertSame('', $body->getType());
+        self::assertSame('', $body->getDescription());
+        self::assertNull($body->getVideoUrl());
+
+        $footer = $landingPage->getFooter();
+        self::assertSame('', $footer->getTitle());
+        self::assertSame('#FFF', $footer->getTextColor());
+        self::assertSame('', $footer->getBackgroundColor());
+        self::assertSame('', $footer->getButtonText());
+        self::assertSame('', $footer->getButtonUrl());
+
+        self::assertEmpty($footer->getFeatures());
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
      */
     public function testCreateCampaign(): void
     {
@@ -120,6 +420,18 @@ JSON;
      */
     public function testGetCampaignRaw(): void
     {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE)
+            ->willReturn(new Response(200, [], 'OK USA'))
+        ;
+
+        $this->client->getCampaignRaw(self::CAMPAIGN_REFERENCE);
+    }
+
+    public function testGetCampaign(): void
+    {
         $expected = <<<JSON
 {
     "data": {
@@ -160,9 +472,6 @@ JSON;
 }
 JSON;
 
-        // This line is to have minified JSON because it's what will be generated in the payload
-        $expected = json_encode(json_decode($expected, true));
-
         $this->httpClient
             ->expects(self::once())
             ->method('request')
@@ -170,7 +479,69 @@ JSON;
             ->willReturn(new Response(200, [], $expected))
         ;
 
-        $this->client->getCampaignRaw(self::CAMPAIGN_REFERENCE);
+        $campaign = $this->client->getCampaign(self::CAMPAIGN_REFERENCE);
+
+        self::assertInstanceOf(Campaign::class, $campaign);
+        self::assertSame('aaa-aaa-aaaa-aaa', $campaign->getReference());
+        self::assertSame('My campaign', $campaign->getName());
+        self::assertSame('BANNER', $campaign->getCategory());
+        self::assertSame('2021-06-25T16:00:00Z', $campaign->getCreatedAt());
+        self::assertNull($campaign->getDeletedAt());
+
+        $rules = $campaign->getRules();
+        self::assertEmpty($rules->getLocations());
+        self::assertEmpty($rules->getRoles());
+        self::assertEmpty($rules->getMarketplaces());
+        self::assertEmpty($rules->getSubscriptions());
+        self::assertEmpty($rules->getResellers());
+        self::assertEmpty($rules->getEndCustomers());
+
+        self::assertSame(1, $campaign->getWeight());
+
+        $banners = $campaign->getBanners();
+        self::assertCount(3, $banners);
+
+        /** @var Banner $banner */
+        $banner = array_shift($banners);
+        self::assertInstanceOf(Banner::class, $banner);
+        self::assertSame('bbbb-bbb-bbbb-bbb-bb', $banner->getBackgroundImageUuid());
+
+        /** @var Banner $banner */
+        $banner = array_shift($banners);
+        self::assertInstanceOf(Banner::class, $banner);
+        self::assertSame('ccc-ccc-cccc-ccc-cc', $banner->getBackgroundImageUuid());
+
+        /** @var Banner $banner */
+        $banner = array_shift($banners);
+        self::assertInstanceOf(Banner::class, $banner);
+        self::assertSame('ddd-ddd-dddd-ddd-dd', $banner->getBackgroundImageUuid());
+
+        $landingPage = $campaign->getLandingPage();
+        self::assertNull($landingPage->getUrl());
+
+        $header = $landingPage->getHeader();
+        self::assertSame('eee-eee-eeee-eee-ee', $header->getBackgroundImageUuid());
+        self::assertNull($header->getBackgroundColor());
+        self::assertSame('', $header->getBaseline());
+        self::assertNull($header->getTextColor());
+        self::assertSame('', $header->getTitle());
+        self::assertSame('fff-fff-fffff-fff-ff', $header->getVendorLogoUuid());
+
+        $body = $landingPage->getBody();
+        self::assertSame('', $body->getTitle());
+        self::assertSame('ggg-ggg-gggg-ggg-gg', $body->getBackgroundImageUuid());
+        self::assertSame('', $body->getType());
+        self::assertSame('', $body->getDescription());
+        self::assertNull($body->getVideoUrl());
+
+        $footer = $landingPage->getFooter();
+        self::assertSame('', $footer->getTitle());
+        self::assertSame('#FFF', $footer->getTextColor());
+        self::assertSame('', $footer->getBackgroundColor());
+        self::assertSame('', $footer->getButtonText());
+        self::assertSame('', $footer->getButtonUrl());
+
+        self::assertEmpty($footer->getFeatures());
     }
 
     /**
