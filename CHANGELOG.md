@@ -3,6 +3,13 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [Unreleased]
+### Added
+- Added tests for Campaigns entities and for some methods of the client
+
+### Changed
+- The method `CampaignClient::getCampaigns()` has been renamed to `CampaignClient::getCampaignsRaw()` to be more coherent with the other clients
+
 ## [0.4.15] - 2021-09-17
 ### Added
 - Added `description` property and `getDescription()` method to `Statement` class
