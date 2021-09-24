@@ -27,8 +27,8 @@ class CampaignsClient extends AbstractClient
      *
      * @return Campaign|null
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
+     * @throws EntityValidationException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -45,22 +45,25 @@ class CampaignsClient extends AbstractClient
     }
 
     /**
-     * Get a single campaign.
+     * Get a single active campaign
      *
-     * @param string $reference The reference of the campaign
-     *
-     * @return string
+     * @return Campaign|null
      *
      * @throws GuzzleException
+     * @throws EntityValidationException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function getCampaignRaw(string $reference): string
+    public function getActiveCampaign(): ?Campaign
     {
-        $reference = urlencode($reference);
-        $this->path = self::FIND_PATH . "/$reference";
+        $response = $this->getActiveCampaignRaw();
+        $data = $this->decodeResponse($response);
+        $result = null;
+        if ($data['data']) {
+            $result = new Campaign($data['data']);
+        }
 
-        return $this->get();
+        return $result;
     }
 
     /**
@@ -118,6 +121,39 @@ class CampaignsClient extends AbstractClient
     }
 
     /**
+     * Get a single campaign.
+     *
+     * @param string $reference The reference of the campaign
+     *
+     * @return string
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getCampaignRaw(string $reference): string
+    {
+        $reference = urlencode($reference);
+        $this->path = self::FIND_PATH . "/$reference";
+
+        return $this->get();
+    }
+
+    /**
+     * @return string
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getActiveCampaignRaw(): string
+    {
+        $this->path = self::FIND_PATH . "/active";
+
+        return $this->get();
+    }
+
+    /**
      * @param string $reference
      *
      * @return string
@@ -156,9 +192,9 @@ class CampaignsClient extends AbstractClient
      *
      * @return string
      *
+     * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
-     * @throws GuzzleException
      */
     public function createCampaign(array $params): string
     {

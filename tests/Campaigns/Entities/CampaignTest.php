@@ -20,6 +20,7 @@ class CampaignTest extends AbstractEntityTest
                     "reference"   => "aaa-aaa-aaaa-aaa",
                     "name"        => "My campaign",
                     "category"    => "BANNER",
+                    "isActivated" => false,
                     "createdAt"   => "2021-06-25T16:00:00Z",
                     "rules"       => [
                         "locations"     => [],
@@ -80,6 +81,7 @@ class CampaignTest extends AbstractEntityTest
         }
     ],
     "category": "BANNER",
+    "isActivated": false,
     "createdAt": "2021-06-25T16:00:00Z",
     "deletedAt": null,
     "endDate": null,
