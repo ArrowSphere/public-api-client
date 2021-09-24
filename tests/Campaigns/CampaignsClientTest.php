@@ -357,6 +357,7 @@ JSON;
         "reference": "aaa-aaa-aaaa-aaa",
         "name": "My campaign",
         "category": "BANNER",
+        "isActivated": true,
         "createdAt": "2021-06-25T16:00:00Z",
         "rules": {
             "locations": [],
@@ -438,6 +439,7 @@ JSON;
         "reference": "aaa-aaa-aaaa-aaa",
         "name": "My campaign",
         "category": "BANNER",
+        "isActivated": true,
         "createdAt": "2021-06-25T16:00:00Z",
         "rules": {
             "locations": [],
@@ -542,6 +544,67 @@ JSON;
         self::assertSame('', $footer->getButtonUrl());
 
         self::assertEmpty($footer->getFeatures());
+    }
+
+    /**
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     * @throws GuzzleException
+     */
+    public function testGetActiveCampaignRaw(): void
+    {
+        $expected = <<<JSON
+{
+    "data": {
+        "reference": "aaa-aaa-aaaa-aaa",
+        "name": "My campaign",
+        "category": "BANNER",
+        "isActivated": true,
+        "createdAt": "2021-06-25T16:00:00Z",
+        "rules": {
+            "locations": [],
+            "roles": [],
+            "marketplaces": [],
+            "subscriptions": [],
+            "resellers": [],
+            "endCustomers": []
+        },
+        "weight": 1,
+        "banners": [
+            {
+                "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
+            }, 
+            {
+                "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
+            }, 
+            {
+                "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
+            }
+        ],
+        "landingPage": {
+            "header": {
+                "backgroundImageUuid": "eee-eee-eeee-eee-ee",
+                "vendorLogoUuid": "fff-fff-fffff-fff-ff"
+            },
+            "body": {
+                "backgroundImageUuid": "ggg-ggg-gggg-ggg-gg"
+            }
+        }
+    }
+}
+JSON;
+
+        // This line is to have minified JSON because it's what will be generated in the payload
+        $expected = json_encode(json_decode($expected, true));
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/campaigns/active')
+            ->willReturn(new Response(200, [], $expected))
+        ;
+
+        $this->client->getActiveCampaignRaw();
     }
 
     /**

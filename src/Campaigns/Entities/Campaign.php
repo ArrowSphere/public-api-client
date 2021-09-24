@@ -12,6 +12,7 @@ class Campaign extends AbstractEntity
     public const COLUMN_CREATEDAT = 'createdAt';
     public const COLUMN_DELETEDAT = 'deletedAt';
     public const COLUMN_ENDDATE = 'endDate';
+    public const COLUMN_IS_ACTIVATED = 'isActivated';
     public const COLUMN_LANDINGPAGE = 'landingPage';
     public const COLUMN_NAME = 'name';
     public const COLUMN_REFERENCE = 'reference';
@@ -41,6 +42,11 @@ class Campaign extends AbstractEntity
      * @var string
      */
     private $category;
+
+    /**
+     * @var bool
+     */
+    private $isActivated;
 
     /**
      * @var string
@@ -103,6 +109,7 @@ class Campaign extends AbstractEntity
         }, $data[self::COLUMN_BANNERS]);
 
         $this->category = $data[self::COLUMN_CATEGORY] ?? self::DEFAULT_VALUE_CATEGORY;
+        $this->isActivated = $data[self::COLUMN_IS_ACTIVATED] ?? false;
         $this->createdAt = $data[self::COLUMN_CREATEDAT];
         $this->deletedAt = $data[self::COLUMN_DELETEDAT] ?? self::DEFAULT_VALUE_DELETEDAT;
         $this->endDate = $data[self::COLUMN_ENDDATE] ?? self::DEFAULT_VALUE_ENDDATE;
@@ -137,6 +144,14 @@ class Campaign extends AbstractEntity
     public function getCategory(): string
     {
         return $this->category;
+    }
+
+    /**
+     * @return bool
+     */
+    public function getIsActivated(): bool
+    {
+        return $this->isActivated;
     }
 
     /**
@@ -217,18 +232,19 @@ class Campaign extends AbstractEntity
     public function jsonSerialize(): array
     {
         return [
-            self::COLUMN_BANNERS     => $this->getBanners(),
-            self::COLUMN_CATEGORY    => $this->getCategory(),
-            self::COLUMN_CREATEDAT   => $this->getCreatedAt(),
-            self::COLUMN_DELETEDAT   => $this->getDeletedAt(),
-            self::COLUMN_ENDDATE     => $this->getEndDate(),
-            self::COLUMN_LANDINGPAGE => $this->getLandingPage(),
-            self::COLUMN_NAME        => $this->getName(),
-            self::COLUMN_REFERENCE   => $this->getReference(),
-            self::COLUMN_RULES       => $this->getRules(),
-            self::COLUMN_STARTDATE   => $this->getStartDate(),
-            self::COLUMN_UPDATEDAT   => $this->getUpdatedAt(),
-            self::COLUMN_WEIGHT      => $this->getWeight(),
+            self::COLUMN_BANNERS      => $this->getBanners(),
+            self::COLUMN_CATEGORY     => $this->getCategory(),
+            self::COLUMN_IS_ACTIVATED => $this->getIsActivated(),
+            self::COLUMN_CREATEDAT    => $this->getCreatedAt(),
+            self::COLUMN_DELETEDAT    => $this->getDeletedAt(),
+            self::COLUMN_ENDDATE      => $this->getEndDate(),
+            self::COLUMN_LANDINGPAGE  => $this->getLandingPage(),
+            self::COLUMN_NAME         => $this->getName(),
+            self::COLUMN_REFERENCE    => $this->getReference(),
+            self::COLUMN_RULES        => $this->getRules(),
+            self::COLUMN_STARTDATE    => $this->getStartDate(),
+            self::COLUMN_UPDATEDAT    => $this->getUpdatedAt(),
+            self::COLUMN_WEIGHT       => $this->getWeight(),
         ];
     }
 }

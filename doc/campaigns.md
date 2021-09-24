@@ -126,9 +126,9 @@ This is the endpoint called by xSP on the Cloud Portal Campaigns page.
 
 The ```CampaignsClient::getCampaigns()``` method returns a ```string``` that is the json containing the results.
 
-### GetCampaign, GetCampaignAssets & GetCampaignAssetsUploadUrl
+### GetCampaign, GetActiveCampaign, GetCampaignAssets & GetCampaignAssetsUploadUrl
 
-The "GetCampaign" endpoint is used to retrieve one specific campaign. "GetCampaignAssets" retrieves the assets of the campaigns, linked with the main object using UUID. The "GetCampaignAssetsUploadUrl" retrieves the url needed to upload any assets for the campaign. These too are linked with an UUID.
+The "GetCampaign" endpoint is used to retrieve one specific campaign, and GetActiveCampaign will return one random active campaign for the user. "GetCampaignAssets" retrieves the assets of the campaigns, linked with the main object using UUID. The "GetCampaignAssetsUploadUrl" retrieves the url needed to upload any assets for the campaign. These too are linked with an UUID.
 These endpoints are called by xSP on the Cloud Portal Campaign "View" or "Edit" pages.
 
 This three endpoints are using the campaign's ```reference``` as parameters. The ```CampaignsClient::getCampaign()``` method returns a ```Campaign``` object, while ```CampaignsClient::getCampaignsAssets()``` and ```CampaignsClient::getCampaignAssetsUploadUrl()``` return a json ```string```.
