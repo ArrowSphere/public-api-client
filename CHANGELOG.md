@@ -5,6 +5,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed the changelog's version links at the bottom
+
+### Changed
+
+- Changed the release GitHub action so it goes through branches and pull requests, to avoid pushing directly to master (which is often prohibited)
+
 ## [0.6.0] - 2021-09-27
 
 ### Added
@@ -283,6 +291,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.6.0...HEAD
+[0.6.0]: https://github.com/ArrowSphere/public-api-client/compare/0.5.0...0.6.0
+[0.5.0]: https://github.com/ArrowSphere/public-api-client/compare/0.4.15...0.5.0
+[0.4.15]: https://github.com/ArrowSphere/public-api-client/compare/0.4.14...0.4.15
+[0.4.14]: https://github.com/ArrowSphere/public-api-client/compare/0.4.13...0.4.14
+[0.4.13]: https://github.com/ArrowSphere/public-api-client/compare/0.4.12...0.4.13
+[0.4.12]: https://github.com/ArrowSphere/public-api-client/compare/0.4.11...0.4.12
+[0.4.11]: https://github.com/ArrowSphere/public-api-client/compare/0.4.10...0.4.11
+[0.4.10]: https://github.com/ArrowSphere/public-api-client/compare/0.4.9...0.4.10
+[0.4.9]: https://github.com/ArrowSphere/public-api-client/compare/0.4.8...0.4.9
+[0.4.8]: https://github.com/ArrowSphere/public-api-client/compare/0.4.7...0.4.8
 [0.4.7]: https://github.com/ArrowSphere/public-api-client/compare/0.4.6...0.4.7
 [0.4.6]: https://github.com/ArrowSphere/public-api-client/compare/0.4.5...0.4.6
 [0.4.5]: https://github.com/ArrowSphere/public-api-client/compare/0.4.4...0.4.5
@@ -301,5 +320,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.2.0]: https://github.com/ArrowSphere/public-api-client/compare/0.1.2...0.2.0
 [0.1.2]: https://github.com/ArrowSphere/public-api-client/compare/0.1.1...0.1.2
 [0.1.1]: https://github.com/ArrowSphere/public-api-client/compare/0.1.0...0.1.1
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.6.0...HEAD
-[0.6.0]: https://github.com/ArrowSphere/public-api-client/compare/0.5.0...0.6.0
+[0.1.0]: https://github.com/ArrowSphere/public-api-client/compare/377de97b5429567a9632338418caa341ab3094f7...0.1.0
