@@ -1,62 +1,68 @@
 # Customers client
 
 ## General information
+
 The information below aims to manage the end customers. As a reseller, you need to manage your end customers and their licenses. This is how you list and manage them.
 
 ## Entities
 
 ### Customer
-An end customer is managed by the ```Customer``` entity.
 
-| Field             | Type                 | Example                  | Description                                                                |
-|-------------------|----------------------|--------------------------|----------------------------------------------------------------------------|
-| addressLine1      | ```string```         | 1007 Mountain Drive      | First line of the address                                                  |
-| addressLine2      | ```string```         | Wayne Manor              | Second line of the address                                                 |
-| billingId         | ```string```         |                          | Billing identifier                                                         |
-| city              | ```string```         | Gotham City              | The city name                                                              |
-| companyName       | ```string```         | Wayne industries         | The company name                                                           |
-| contact           | ```Contact```        |                          | The main contact of the company (see [Contact entity](#Contact))           |
-| countryCode       | ```string```         | US                       | ISO-3166-1 alpha-2 country code                                            |
-| details           | ```CompanyDetails``` |                          | Vendor-specific information (see [CompanyDetails entity](#CompanyDetails)) |
-| deletedAt         | ```string```         |                          | The date when the customer was deleted                                     |
-| emailContact      | ```string```         | nobody@example.com       | Contact email for the company                                              |
-| headcount         | ```string```         | null                     | Head count                                                                 |
-| internalReference | ```string```         |                          | Internal reference (must be unique if not empty)                           |
-| receptionPhone    | ```string```         | 1-800-555-1111           | Phone number                                                               |
-| ref               | ```string```         | COMPANY12345             | Accronym                                                                   |
-| reference         | ```string```         | XSP12345                 | The identifier of the company within ArrowSphere                           |
-| state             | ```string```         | NJ                       | State                                                                      |
-| taxNumber         | ```string```         |                          | VAT number                                                                 |
-| websiteUrl        | ```string```         | https://www.dccomics.com | Company's website                                                          |
-| zip               | ```string```         | 12345                    | Zip code                                                                   |
+An end customer is managed by the `Customer` entity.
+
+| Field             | Type             | Example                  | Description                                                                |
+| ----------------- | ---------------- | ------------------------ | -------------------------------------------------------------------------- |
+| addressLine1      | `string`         | 1007 Mountain Drive      | First line of the address                                                  |
+| addressLine2      | `string`         | Wayne Manor              | Second line of the address                                                 |
+| billingId         | `string`         |                          | Billing identifier                                                         |
+| city              | `string`         | Gotham City              | The city name                                                              |
+| companyName       | `string`         | Wayne industries         | The company name                                                           |
+| contact           | `Contact`        |                          | The main contact of the company (see [Contact entity](#Contact))           |
+| countryCode       | `string`         | US                       | ISO-3166-1 alpha-2 country code                                            |
+| details           | `CompanyDetails` |                          | Vendor-specific information (see [CompanyDetails entity](#CompanyDetails)) |
+| deletedAt         | `string`         |                          | The date when the customer was deleted                                     |
+| emailContact      | `string`         | nobody@example.com       | Contact email for the company                                              |
+| headcount         | `string`         | null                     | Head count                                                                 |
+| internalReference | `string`         |                          | Internal reference (must be unique if not empty)                           |
+| receptionPhone    | `string`         | 1-800-555-1111           | Phone number                                                               |
+| ref               | `string`         | COMPANY12345             | Accronym                                                                   |
+| reference         | `string`         | XSP12345                 | The identifier of the company within ArrowSphere                           |
+| state             | `string`         | NJ                       | State                                                                      |
+| taxNumber         | `string`         |                          | VAT number                                                                 |
+| websiteUrl        | `string`         | https://www.dccomics.com | Company's website                                                          |
+| zip               | `string`         | 12345                    | Zip code                                                                   |
 
 ### Contact
-The ```Contact``` entity allows to manage the company's main contact:
 
-| Field     | Type         | Example          | Description  |
-|-----------|--------------|------------------|--------------|
-| Email     | ```string``` | test@example.com | E-mail       |
-| FirstName | ```string``` | Bruce            | First name   |
-| LastName  | ```string``` | Wayne            | Last name    |
-| Phone     | ```string``` | 1-800-555-1234   | Phone number |
+The `Contact` entity allows to manage the company's main contact:
+
+| Field     | Type     | Example          | Description  |
+| --------- | -------- | ---------------- | ------------ |
+| Email     | `string` | test@example.com | E-mail       |
+| FirstName | `string` | Bruce            | First name   |
+| LastName  | `string` | Wayne            | Last name    |
+| Phone     | `string` | 1-800-555-1234   | Phone number |
 
 ### CompanyDetails
-The ```CompanyDetails``` entity allows to manage the company's vendor-specific information:
 
-| Field             | Type         | Example              | Description                                              |
-|-------------------|--------------|----------------------|----------------------------------------------------------|
-| DomainName        | ```string``` | example.com          | Domain name on Microsoft Azure                           |
-| IBMCeId           | ```string``` | ibm CE Id            | IBM CE id                                                |
-| Maas360ResellerId | ```string``` | Maas 360 Reseller Id | IBM MaaS 360 reseller id                                 |
-| Migration         | ```bool```   | false                | Indicates if the customer's account needs to be migrated |
-| OracleOnlineKey   | ```string``` | oracle online key    | Online key for Oracle                                    |
-| TenantId          | ```string``` | tenant id            | Microsoft Tenant id                                      |
+The `CompanyDetails` entity allows to manage the company's vendor-specific information:
+
+| Field             | Type     | Example              | Description                                              |
+| ----------------- | -------- | -------------------- | -------------------------------------------------------- |
+| DomainName        | `string` | example.com          | Domain name on Microsoft Azure                           |
+| IBMCeId           | `string` | ibm CE Id            | IBM CE id                                                |
+| Maas360ResellerId | `string` | Maas 360 Reseller Id | IBM MaaS 360 reseller id                                 |
+| Migration         | `bool`   | false                | Indicates if the customer's account needs to be migrated |
+| OracleOnlineKey   | `string` | oracle online key    | Online key for Oracle                                    |
+| TenantId          | `string` | tenant id            | Microsoft Tenant id                                      |
 
 ## Usage
 
 ### Initialization
-The "customers" client is simply called ```CustomersClient```.
-You can get it through the main entry point ```PublicApiClient``` and its method ```getCustomersClient()```, or instanciate it directly:
+
+The "customers" client is simply called `CustomersClient`.
+You can get it through the main entry point `PublicApiClient` and its method `getCustomersClient()`, or instanciate it directly:
+
 ```php
 <?php
 
@@ -68,15 +74,16 @@ const API_KEY = 'your API key in ArrowSphere';
 $client = (new CustomersClient())
     ->setUrl(URL)
     ->setApiKey(API_KEY);
-
 ```
 
 ### List all the customers
-You can list all the customers by calling the ```getCustomers()``` method.
 
-This method returns a ```Generator``` and yields instances of the ```Customer``` entity.
+You can list all the customers by calling the `getCustomers()` method.
+
+This method returns a `Generator` and yields instances of the `Customer` entity.
 
 Example:
+
 ```php
 <?php
 
@@ -87,7 +94,8 @@ foreach ($customers as $customer) {
 ```
 
 ### Create a customer
-You can create a customer by calling the ```createCustomer()``` method.
+
+You can create a customer by calling the `createCustomer()` method.
 
 This method returns the reference of the newly created custoemr.
 

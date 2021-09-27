@@ -1,37 +1,40 @@
-# Consumption Analytics Monthly 
+# Consumption Analytics Monthly
 
 ## General information
-This endpoint allowed everyone to a summary of their consumption splited by Vendor / MarketPlace / classification for a dedicated month. 
+
+This endpoint allowed everyone to a summary of their consumption splited by Vendor / MarketPlace / classification for a dedicated month.
 The granularity of this endpoint based on the following attributes :
-- Month formated : YYYY-MM (2020-05) 
+
+- Month formated : YYYY-MM (2020-05)
 - [MarketPlace](general-marketPlace.md) (US / CA / FR etc)
 - Vendor (Microsoft / IBM etc)
 - [Classification](catalog-classification.md) (IAAS / SAAS)
-- [Licence](licenses.md)  reference (XSP1234 / XSP54)
+- [Licence](licenses.md) reference (XSP1234 / XSP54)
 - Tag, filter data on a specific tag (Pax8 / TELENOR etc)
 
 ## Entity
-A Monthly analytics item is managed by the ```MonthlyAnalyticsItem``` entity.
 
-| Field            | Type                     | Example     | Description                                                     |
-|------------------|--------------------------|-------------|-----------------------------------------------------------------|
-| marketPlace      | ```string```             | FR          | The marketplace attached to this split                          |
-| vendor           | ```string```             | Microsoft   | The vendor attached to this split                               |
-| classification   | ```string```             | SAAS        | The classification attached of this split                       |
-| tag              | ```string/null```        | Pax8        | The tag attached of this split                                  |
-| month            | ```string```             | 2020-05     | The month attached of this split                                |
-| localPrice       | ```PriceAnalyticsItem``` |             | The localPrice item attached of this split, in local currency   |
-| usdPrice         | ```PriceAnalyticsItem``` |             | The usdPrice localPrice attached of this split, in usd currency |
+A Monthly analytics item is managed by the `MonthlyAnalyticsItem` entity.
 
-Description of ```PriceAnalyticsItem```
+| Field          | Type                 | Example   | Description                                                     |
+| -------------- | -------------------- | --------- | --------------------------------------------------------------- |
+| marketPlace    | `string`             | FR        | The marketplace attached to this split                          |
+| vendor         | `string`             | Microsoft | The vendor attached to this split                               |
+| classification | `string`             | SAAS      | The classification attached of this split                       |
+| tag            | `string/null`        | Pax8      | The tag attached of this split                                  |
+| month          | `string`             | 2020-05   | The month attached of this split                                |
+| localPrice     | `PriceAnalyticsItem` |           | The localPrice item attached of this split, in local currency   |
+| usdPrice       | `PriceAnalyticsItem` |           | The usdPrice localPrice attached of this split, in usd currency |
 
-| Field                  | Type               | Example     | Description                                                 |
-|------------------------|--------------------|-------------|-------------------------------------------------------------|
-| resellerBuyPrice       | ```float```        | 1367.67     | The reseller buy price                                      |
-| arrowBuyPrice          | ```float/null```   | 134.34      | The arrow buy price, can be null if it is call by an MSP    |
-| endCustomerBuyPrice    | ```float/null```   | 345.32      | The end cutomer buy price, can be null for usd case         |
-| listBuyPrice           | ```float```        | 563.34      | The list buy price                                          |
-| currency               | ```string```       | EUR         | The currency attached to the arrow and reseller price       |
+Description of `PriceAnalyticsItem`
+
+| Field               | Type         | Example | Description                                              |
+| ------------------- | ------------ | ------- | -------------------------------------------------------- |
+| resellerBuyPrice    | `float`      | 1367.67 | The reseller buy price                                   |
+| arrowBuyPrice       | `float/null` | 134.34  | The arrow buy price, can be null if it is call by an MSP |
+| endCustomerBuyPrice | `float/null` | 345.32  | The end cutomer buy price, can be null for usd case      |
+| listBuyPrice        | `float`      | 563.34  | The list buy price                                       |
+| currency            | `string`     | EUR     | The currency attached to the arrow and reseller price    |
 
 ## Usage
 
@@ -52,16 +55,16 @@ $items = $client->getMonthly('2020-05', ['SAAS'], ['Microsoft'], ['US'], ['XSP43
 foreach ($items as $item) {
     echo $item->getVendor() . '->' . $item->getLocalPrice()->getResellerBuyPrice() . PHP_EOL;
 }
-
 ```
 
-You can get montly analytics item by calling the ```getMonthly()``` method with the following parameters:
-- ```string $month```: The dedicated month of the consumption (ex. ```'2020-05'```)
-- ```array $classification```: the [classification](catalog-classification.md) (ex. ```'SAAS'```)
-- ```array $vendor```: (ex. ```'microsoft'```)
-- ```array $marketPlace```: the [MarketPlace](general-marketPlace.md) (ex. ```'FR'```)
-- ```array $license```: the license reference (ex. ```'XSP43'```)
-- ```string $tag```: The filter tag (ex. ```'Pax8'```)
+You can get montly analytics item by calling the `getMonthly()` method with the following parameters:
+
+- `string $month`: The dedicated month of the consumption (ex. `'2020-05'`)
+- `array $classification`: the [classification](catalog-classification.md) (ex. `'SAAS'`)
+- `array $vendor`: (ex. `'microsoft'`)
+- `array $marketPlace`: the [MarketPlace](general-marketPlace.md) (ex. `'FR'`)
+- `array $license`: the license reference (ex. `'XSP43'`)
+- `string $tag`: The filter tag (ex. `'Pax8'`)
 
 Please note that all parameters are case-insensitive.
 

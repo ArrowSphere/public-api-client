@@ -18,6 +18,7 @@ $ composer require arrowsphere/public-api-client
 ```
 
 ## Basic usage
+
 ```php
 <?php
 
@@ -36,16 +37,17 @@ $client = (new PublicApiClient())
 
 $whoami = $client->getWhoamiClient()->getWhoami();
 echo "Hello " . $whoami->getCompanyName();
-
 ```
 
 ## Specific API clients
 
 ### General clients
+
 - [Who Am I](doc/general-whoami.md)
 - [Check Domain](doc/general-checkDomain.md)
 
 ### Catalog clients
+
 - [Classification](doc/catalog-classification.md)
 - [Program](doc/catalog-program.md)
 - [Service](doc/catalog-service.md) (deprecated in favor of [Family](doc/catalog-family.md))
@@ -54,14 +56,18 @@ echo "Hello " . $whoami->getCompanyName();
 - [Family](doc/catalog-family.md)
 
 ### Customers clients
+
 - [Customers](doc/customers.md)
 
 ### Consumption clients
+
 - [HealthCheck](doc/consumption-healthCheck.md)
 - [Monthly analytics](doc/consumption-monthlyAnalytics.md)
 
 ### Licenses clients
+
 - [Licenses](doc/licenses.md)
 
 ### Campaigns clients
+
 - [Campaigns](doc/campaigns.md)
