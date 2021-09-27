@@ -3,6 +3,8 @@
 namespace ArrowSphere\PublicApiClient\Tests\Campaigns;
 
 use ArrowSphere\PublicApiClient\Campaigns\CampaignsClient;
+use ArrowSphere\PublicApiClient\Campaigns\Entities\Asset\Asset;
+use ArrowSphere\PublicApiClient\Campaigns\Entities\Asset\AssetUploadUrl;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\Banner;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\Campaign;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
@@ -612,6 +614,23 @@ JSON;
      * @throws PublicApiClientException
      * @throws GuzzleException
      */
+    public function testGetCampaignAssetsRaw(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE . '/assets')
+            ->willReturn(new Response(200, [], 'OK USA'))
+        ;
+
+        $this->client->getCampaignAssetsRaw(self::CAMPAIGN_REFERENCE);
+    }
+
+    /**
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     * @throws GuzzleException
+     */
     public function testGetCampaignAssets(): void
     {
         $expected = <<<JSON
@@ -620,7 +639,7 @@ JSON;
         "assets": [
             {
                 "uuid": "bbbb-bbb-bbbb-bbbb-bb",
-                "url": ""
+                "url": "https://www.example.com"
             }
         ]
     }
@@ -637,7 +656,29 @@ JSON;
             ->willReturn(new Response(200, [], $expected))
         ;
 
-        $this->client->getCampaignAssets(self::CAMPAIGN_REFERENCE);
+        $assets = $this->client->getCampaignAssets(self::CAMPAIGN_REFERENCE);
+        self::assertCount(1, $assets);
+        $asset = array_shift($assets);
+        self::assertInstanceOf(Asset::class, $asset);
+        self::assertSame('https://www.example.com', $asset->getUrl());
+        self::assertSame('bbbb-bbb-bbbb-bbbb-bb', $asset->getUuid());
+    }
+
+    /**
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     * @throws GuzzleException
+     */
+    public function testGetCampaignAssetsUploadUrlRaw(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE . '/assets/upload')
+            ->willReturn(new Response(200, [], 'OK USA'))
+        ;
+
+        $this->client->getCampaignAssetsUploadUrlRaw(self::CAMPAIGN_REFERENCE);
     }
 
     /**
@@ -650,20 +691,20 @@ JSON;
         $expected = <<<JSON
 {
     "data": {
-        "banners": [
+        "assets": [
             {
                 "uuid": "bbbb-bbb-bbbb-bbb-bb",
                 "image": {
                     "url": "https://image-url",
                     "fields": {
-                        "Key": "assets/6def2e63-ca33-49de-9939-329f7f67c3ca/banner0.png",
-                        "bucket": "bucketName",
+                        "Key": "assets\/00000000-1111-2222-aaaa-123412341234\/98765432-aaaa-bbbb-cccc-123412344321",
+                        "bucket": "my-super-bucket",
                         "X-Amz-Algorithm": "AWS4-HMAC-SHA256",
-                        "X-Amz-Credential": "ASIAXR4KPOTAUXHLNGWB/20210713/eu-west-1/s3/aws4_request",
-                        "X-Amz-Date": "20210713T083654Z",
-                        "X-Amz-Security-Token": "LOremIPsumDOLorSItamEtconSEcTeTuRaDIpisIcingEliT",
-                        "Policy": "LOremIPsumDOLorSItamEtconSEcTeTuRaDIpisIcingEliT",
-                        "X-Amz-Signature": "LOremIPsumDOLorSItamEtconSEcTeTuRaDIpisIcingEliT"
+                        "X-Amz-Credential": "blabla\/20210927\/eu-west-1\/s3\/aws4_request",
+                        "X-Amz-Date": "20210927T103402Z",
+                        "X-Amz-Security-Token": "my super security token",
+                        "Policy": "my marvelous policy",
+                        "X-Amz-Signature": "1337 signature"
                     }
                 }
             }
@@ -672,9 +713,6 @@ JSON;
 }
 JSON;
 
-        // This line is to have minified JSON because it's what will be generated in the payload
-        $expected = json_encode(json_decode($expected, true));
-
         $this->httpClient
             ->expects(self::once())
             ->method('request')
@@ -682,7 +720,27 @@ JSON;
             ->willReturn(new Response(200, [], $expected))
         ;
 
-        $this->client->getCampaignAssetsUploadUrl(self::CAMPAIGN_REFERENCE);
+        $assetUploadUrls = $this->client->getCampaignAssetsUploadUrl(self::CAMPAIGN_REFERENCE);
+
+        self::assertCount(1, $assetUploadUrls);
+
+        /** @var AssetUploadUrl $assetUploadUrl */
+        $assetUploadUrl = array_shift($assetUploadUrls);
+        self::assertInstanceOf(AssetUploadUrl::class, $assetUploadUrl);
+        self::assertSame('bbbb-bbb-bbbb-bbb-bb', $assetUploadUrl->getUuid());
+
+        $assetImage = $assetUploadUrl->getImage();
+        self::assertSame('https://image-url', $assetImage->getUrl());
+
+        $assetImageFields = $assetImage->getFields();
+        self::assertSame('assets/00000000-1111-2222-aaaa-123412341234/98765432-aaaa-bbbb-cccc-123412344321', $assetImageFields->getKey());
+        self::assertSame('my-super-bucket', $assetImageFields->getBucket());
+        self::assertSame('AWS4-HMAC-SHA256', $assetImageFields->getAmzAlgorithm());
+        self::assertSame('blabla/20210927/eu-west-1/s3/aws4_request', $assetImageFields->getAmzCredential());
+        self::assertSame('20210927T103402Z', $assetImageFields->getAmzDate());
+        self::assertSame('my super security token', $assetImageFields->getAmzSecurityToken());
+        self::assertSame('my marvelous policy', $assetImageFields->getPolicy());
+        self::assertSame('1337 signature', $assetImageFields->getAmzSignature());
     }
 
     /**
