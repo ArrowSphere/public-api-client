@@ -1,210 +1,217 @@
 # License Client
 
 ## General information
+
 A license is the entity which holds information about the customer's subscription.
-A license is identified in ArrowSphere by its *partner ref*, which is typically 'XSP' followed by a few digits (e.g XSP987654321).
+A license is identified in ArrowSphere by its _partner ref_, which is typically 'XSP' followed by a few digits (e.g XSP987654321).
 
 ## Entities
 
 ### License and its sub-entities
 
 #### License
-A license is managed by the ```License``` entity.
 
-| Field                 | Type              | Example                                              | Description                                                                                           |
-|-----------------------|-------------------|------------------------------------------------------|-------------------------------------------------------------------------------------------------------|
-| acceptEula            | ```bool```        | false                                                |                                                                                                       |
-| activeSeats           | ```ActiveSeats``` | an instance of [ActiveSeats](#ActiveSeats)           | The [active seats](#ActiveSeats)                                                                      |
-| autoRenew             | ```bool```        | true                                                 | True if the license is renewed automatically upon expiration                                          |
-| baseSeat              | ```int```         | 6                                                    | The number of seats at the time of the license purchase                                               |
-| category              | ```string```      | BaseProduct                                          | Indicates if the offer is a BaseProduct or an Addon                                                   |
-| classification        | ```string```      | SaaS                                                 | The [classification](catalog-classification.md)                                                       |
-| configs               | ```Config[]```    | an array of [Configs](#Config)                       | The list of applicable [configs](#Config) for this license                                            |
-| customerName          | ```string```      | My customer                                          | The name of the end-customer                                                                          |
-| customerRef           | ```string```      | XSP123456789                                         | The reference of the end-customer                                                                     |
-| endDate               | ```string```      | 2021-11-18T17:48:43.000Z                             | The end date of the license                                                                           |
-| friendlyName          | ```string```      | XSP12345|MS-0B-O365-ENTERPRIS|XSP555555|XSP987654321 | The friendly name of the license                                                                      |
-| id                    | ```int```         | 123456                                               | The license identifier (an internal identifier)                                                       |
-| isEnabled             | ```bool```        | true                                                 | True if the license is active                                                                         |
-| lastUpdate            | ```string```      | 2020-12-08T15:42:30.069Z                             | The last time the license's data was updated (for any reason)                                         |
-| marketplace           | ```string```      | US                                                   | The [marketplace](general-marketPlace.md)                                                             |
-| message               | ```string```      |                                                      | If an action is currently performed on the license, this message will indicate it                     |
-| offer                 | ```string```      |                                                      | The name of the offer                                                                                 |
-| parentLineId          | ```int```         | null                                                 | An internal reference indicating a parent license for this license                                    |
-| parentOrderRef        | ```string```      | null                                                 | An internal reference indicating a parent order                                                       |
-| partnerRef            | ```string```      | XSP987654321                                         | The ArrowSphere identifier of the license, to be used as an identifier in other ArrowSphere endpoints |
-| price                 | ```Price```       | an instance of [Price](#Price)                       | The [price](#Price)                                                                                   |
-| periodicity           | ```int```         | 720                                                  | The license's billing cycle (See [Term ans periodicity](#term-and-periodicity)                        |
-| resellerName          | ```string```      | My reseller                                          | The name of the reseller                                                                              |
-| resellerRef           | ```string```      | XSP12345                                             | The reference of the reseller                                                                         |
-| seat                  | ```int```         | 6                                                    | The number of available seats                                                                         |
-| serviceRef            | ```string```      | MS-0B-O365-ENTERPRIS                                 | The family identifier for this SKU (See [services](catalog-service.md))                               |
-| sku                   | ```string```      | ABCDABCD-1234-5678-9876-ABCDEFABCDEF                 | The SKU of the license                                                                                |
-| startDate             | ```string```      | 2020-11-18T17:48:43.000Z                             | The start date of the license                                                                         |
-| statusCode            | ```int```         | 86                                                   | An internal code indicating the status of the license                                                 |
-| statusLabel           | ```float```       | activation_ok                                        | An internal label indicating the status of the license                                                |
-| subscriptionId        | ```string```      | 12345678-AAAA-CCCC-FFFF-987654321012                 | Another internal identifier for the license                                                           |
-| subsidiaryName        | ```string```      | Arrow ECS Denmark                                    | The arrow company that manages the license                                                            |
-| term                  | ```int```         | 8640                                                 | The license's term (See [Term ans periodicity](#term-and-periodicity)                                 |
-| trial                 | ```bool```        | false                                                | True if the license is a trial                                                                        |
-| type                  | ```string```      | recurring                                            |                                                                                                       |
-| uom                   | ```string```      | LICENSE                                              | The unit of measure, is the unit of what is billed for this offer                                     |
-| vendorCode            | ```string```      | Microsoft                                            | The vendor code of the offer                                                                          |
-| vendorName            | ```string```      | Microsoft                                            | The vendor of the offer                                                                               |
-| vendorSubscriptionId  | ```string```      | AABBCCDD-1111-2222-3333-ABCDEFABCDEF                 | An external identifier for the license                                                                |
-| warnings              | ```Warning[]```   | an array of [Warnings](#Warning)                     | The list of [warnings](#Warning) for this license                                            |
+A license is managed by the `License` entity.
+
+| Field                | Type          | Example                                    | Description                                                                                           |
+| -------------------- | ------------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
+| acceptEula           | `bool`        | false                                      |                                                                                                       |
+| activeSeats          | `ActiveSeats` | an instance of [ActiveSeats](#ActiveSeats) | The [active seats](#ActiveSeats)                                                                      |
+| autoRenew            | `bool`        | true                                       | True if the license is renewed automatically upon expiration                                          |
+| baseSeat             | `int`         | 6                                          | The number of seats at the time of the license purchase                                               |
+| category             | `string`      | BaseProduct                                | Indicates if the offer is a BaseProduct or an Addon                                                   |
+| classification       | `string`      | SaaS                                       | The [classification](catalog-classification.md)                                                       |
+| configs              | `Config[]`    | an array of [Configs](#Config)             | The list of applicable [configs](#Config) for this license                                            |
+| customerName         | `string`      | My customer                                | The name of the end-customer                                                                          |
+| customerRef          | `string`      | XSP123456789                               | The reference of the end-customer                                                                     |
+| endDate              | `string`      | 2021-11-18T17:48:43.000Z                   | The end date of the license                                                                           |
+| friendlyName         | `string`      | XSP12345                                   | MS-0B-O365-ENTERPRIS                                                                                  |
+| id                   | `int`         | 123456                                     | The license identifier (an internal identifier)                                                       |
+| isEnabled            | `bool`        | true                                       | True if the license is active                                                                         |
+| lastUpdate           | `string`      | 2020-12-08T15:42:30.069Z                   | The last time the license's data was updated (for any reason)                                         |
+| marketplace          | `string`      | US                                         | The [marketplace](general-marketPlace.md)                                                             |
+| message              | `string`      |                                            | If an action is currently performed on the license, this message will indicate it                     |
+| offer                | `string`      |                                            | The name of the offer                                                                                 |
+| parentLineId         | `int`         | null                                       | An internal reference indicating a parent license for this license                                    |
+| parentOrderRef       | `string`      | null                                       | An internal reference indicating a parent order                                                       |
+| partnerRef           | `string`      | XSP987654321                               | The ArrowSphere identifier of the license, to be used as an identifier in other ArrowSphere endpoints |
+| price                | `Price`       | an instance of [Price](#Price)             | The [price](#Price)                                                                                   |
+| periodicity          | `int`         | 720                                        | The license's billing cycle (See [Term ans periodicity](#term-and-periodicity)                        |
+| resellerName         | `string`      | My reseller                                | The name of the reseller                                                                              |
+| resellerRef          | `string`      | XSP12345                                   | The reference of the reseller                                                                         |
+| seat                 | `int`         | 6                                          | The number of available seats                                                                         |
+| serviceRef           | `string`      | MS-0B-O365-ENTERPRIS                       | The family identifier for this SKU (See [services](catalog-service.md))                               |
+| sku                  | `string`      | ABCDABCD-1234-5678-9876-ABCDEFABCDEF       | The SKU of the license                                                                                |
+| startDate            | `string`      | 2020-11-18T17:48:43.000Z                   | The start date of the license                                                                         |
+| statusCode           | `int`         | 86                                         | An internal code indicating the status of the license                                                 |
+| statusLabel          | `float`       | activation_ok                              | An internal label indicating the status of the license                                                |
+| subscriptionId       | `string`      | 12345678-AAAA-CCCC-FFFF-987654321012       | Another internal identifier for the license                                                           |
+| subsidiaryName       | `string`      | Arrow ECS Denmark                          | The arrow company that manages the license                                                            |
+| term                 | `int`         | 8640                                       | The license's term (See [Term ans periodicity](#term-and-periodicity)                                 |
+| trial                | `bool`        | false                                      | True if the license is a trial                                                                        |
+| type                 | `string`      | recurring                                  |                                                                                                       |
+| uom                  | `string`      | LICENSE                                    | The unit of measure, is the unit of what is billed for this offer                                     |
+| vendorCode           | `string`      | Microsoft                                  | The vendor code of the offer                                                                          |
+| vendorName           | `string`      | Microsoft                                  | The vendor of the offer                                                                               |
+| vendorSubscriptionId | `string`      | AABBCCDD-1111-2222-3333-ABCDEFABCDEF       | An external identifier for the license                                                                |
+| warnings             | `Warning[]`   | an array of [Warnings](#Warning)           | The list of [warnings](#Warning) for this license                                                     |
 
 #### ActiveSeats
 
 The active seats represent the seats that are currently assigned on the license. Depending on the vendor, it may or may not be applicable.
 
-| Field      | Type         | Example                  | Description                                         |
-|------------|--------------|--------------------------|-----------------------------------------------------|
-| lastUpdate | ```string``` | 2021-03-12T22:35:18.000Z | The last time the assigned seats have been modified |
-| number     | ```float```  | 12                       | The current number of assigned seats, if applicable |
+| Field      | Type     | Example                  | Description                                         |
+| ---------- | -------- | ------------------------ | --------------------------------------------------- |
+| lastUpdate | `string` | 2021-03-12T22:35:18.000Z | The last time the assigned seats have been modified |
+| number     | `float`  | 12                       | The current number of assigned seats, if applicable |
 
 #### Config
 
 The config is a set of parameters that can be defined for a license.
 
-| Field | Type         | Example              | Description                     |
-|-------|--------------|----------------------|---------------------------------|
-| name  | ```string``` | purchaseReservations | The name of the config          |
-| scope | ```string``` | role                 | The scope of the config         |
-| state | ```string``` | enabled              | The current state of the config |
+| Field | Type     | Example              | Description                     |
+| ----- | -------- | -------------------- | ------------------------------- |
+| name  | `string` | purchaseReservations | The name of the config          |
+| scope | `string` | role                 | The scope of the config         |
+| state | `string` | enabled              | The current state of the config |
 
 #### Warning
 
 The warning is an alert for a license.
 
-| Field | Type         | Example                              | Description                     |
-|-------|--------------|--------------------------------------|---------------------------------|
-| key     | ```string``` | PEC ratio issue                    | The key of the warning          |
-| message | ```string``` | current value is 0 instead of 0.15 | The message of the warning      |
+| Field   | Type     | Example                            | Description                |
+| ------- | -------- | ---------------------------------- | -------------------------- |
+| key     | `string` | PEC ratio issue                    | The key of the warning     |
+| message | `string` | current value is 0 instead of 0.15 | The message of the warning |
 
 #### Price
 
 The prices applicable at the time of the license purchase.
 
-| Field     | Type         | Example | Description                                           |
-|-----------|--------------|---------|-------------------------------------------------------|
-| buyPrice  | ```float```  | 10.4    | The buy price at the time of the license purchase     |
-| currency  | ```string``` | USD     | The currency used at the time of the license purchase |
-| listPrice | ```float```  | 15.52   | The list price at the time of the license purchase    |
+| Field     | Type     | Example | Description                                           |
+| --------- | -------- | ------- | ----------------------------------------------------- |
+| buyPrice  | `float`  | 10.4    | The buy price at the time of the license purchase     |
+| currency  | `string` | USD     | The currency used at the time of the license purchase |
+| listPrice | `float`  | 15.52   | The list price at the time of the license purchase    |
 
 ### Offer and its sub-entities
 
 #### Offer
-An offer is managed by the ```Offer``` entity.
+
+An offer is managed by the `Offer` entity.
 This offer entity is essentially a subset of the original [Offer entity from the catalog](catalog-offer.md#Offer).
 Its purpose is to present some fields of the offer linked to the license, updated in real-time, as opposed to the fields in the License entity, which represent data as it was the day of the order.
 
-| Field          | Type              | Example                                                  | Description                                         |
-|----------------|-------------------|----------------------------------------------------------|-----------------------------------------------------|
-| actionFlags    | ```ActionFlags``` | an instance of [ActionFlags](#ActionFlags for the Offer) | The possible actions for this offer                 |
-| classification | ```string```      | SaaS                                                     | The [classification](catalog-classification.md)     |
-| isEnabled      | ```bool```        | true                                                     | A flag that indicates if the offer is active        |
-| lastUpdate     | ```string```      | 2021-03-12T22:35:18.000Z                                 | The last time the offer was updated                 |
-| name           | ```string```      | The updated name of the offer                            | The current name of the offer, updated in real-time |
-| priceBand      | ```PriceBand```   | an instance of [PriceBand](#PriceBand)                   | The price band                                      |
+| Field          | Type          | Example                                                  | Description                                         |
+| -------------- | ------------- | -------------------------------------------------------- | --------------------------------------------------- |
+| actionFlags    | `ActionFlags` | an instance of [ActionFlags](#ActionFlags for the Offer) | The possible actions for this offer                 |
+| classification | `string`      | SaaS                                                     | The [classification](catalog-classification.md)     |
+| isEnabled      | `bool`        | true                                                     | A flag that indicates if the offer is active        |
+| lastUpdate     | `string`      | 2021-03-12T22:35:18.000Z                                 | The last time the offer was updated                 |
+| name           | `string`      | The updated name of the offer                            | The current name of the offer, updated in real-time |
+| priceBand      | `PriceBand`   | an instance of [PriceBand](#PriceBand)                   | The price band                                      |
 
 #### ActionFlags for the Offer
 
-| Field                | Type       | Example | Description                                           |
-|----------------------|------------|---------|-------------------------------------------------------|
-| isAutoRenew          | ```bool``` | true    | Indicates if the offer is auto-renewable of not       |
-| isManualProvisioning | ```bool``` | false   | Indicates if the offer is provisioned manually or not |
-| renewalSku           | ```bool``` | false   | Indicates if the offer is a renewal sku               |
+| Field                | Type   | Example | Description                                           |
+| -------------------- | ------ | ------- | ----------------------------------------------------- |
+| isAutoRenew          | `bool` | true    | Indicates if the offer is auto-renewable of not       |
+| isManualProvisioning | `bool` | false   | Indicates if the offer is provisioned manually or not |
+| renewalSku           | `bool` | false   | Indicates if the offer is a renewal sku               |
 
 #### PriceBand
 
-| Field           | Type                  | Example                                                      | Description                                       |
-|-----------------|-----------------------|--------------------------------------------------------------|---------------------------------------------------|
-| actionFlags     | ```ActionFlags```     | an instance of [ActionFlags](#ActionFlags for the PriceBand) | The possible actions for this price band          |
-| billing         | ```Billing```         | an instance of [Billing](#Billing)                           | The billing rules of the license                  |
-| currency        | ```string```          | USD                                                          | The currency of the price band                    |
-| isEnabled       | ```bool```            | true                                                         | A flag that indicates if the price band is active |
-| marketplace     | ```string```          | US                                                           | The marketplace of the price band                 |
-| prices          | ```Prices```          | an instance of [Prices](#Prices)                             | The prices amounts of this price band             |
-| saleConstraints | ```SaleConstraints``` | an instance of [SaleConstraints](#SaleConstraints)           | The min and max quantities of the price band      |
+| Field           | Type              | Example                                                      | Description                                       |
+| --------------- | ----------------- | ------------------------------------------------------------ | ------------------------------------------------- |
+| actionFlags     | `ActionFlags`     | an instance of [ActionFlags](#ActionFlags for the PriceBand) | The possible actions for this price band          |
+| billing         | `Billing`         | an instance of [Billing](#Billing)                           | The billing rules of the license                  |
+| currency        | `string`          | USD                                                          | The currency of the price band                    |
+| isEnabled       | `bool`            | true                                                         | A flag that indicates if the price band is active |
+| marketplace     | `string`          | US                                                           | The marketplace of the price band                 |
+| prices          | `Prices`          | an instance of [Prices](#Prices)                             | The prices amounts of this price band             |
+| saleConstraints | `SaleConstraints` | an instance of [SaleConstraints](#SaleConstraints)           | The min and max quantities of the price band      |
 
 #### ActionFlags for the PriceBand
 
-| Field            | Type       | Example | Description |
-|------------------|------------|---------|-------------|
-| canBeCancelled   | ```bool``` | true    |             |
-| canBeReactivated | ```bool``` | true    |             |
-| canBeSuspended   | ```bool``` | true    |             |
-| canDecreaseSeats | ```bool``` | true    |             |
-| canIncreaseSeats | ```bool``` | true    |             |
+| Field            | Type   | Example | Description |
+| ---------------- | ------ | ------- | ----------- |
+| canBeCancelled   | `bool` | true    |             |
+| canBeReactivated | `bool` | true    |             |
+| canBeSuspended   | `bool` | true    |             |
+| canDecreaseSeats | `bool` | true    |             |
+| canIncreaseSeats | `bool` | true    |             |
 
 #### Billing
 
 This entity describes how often the license is billed. See [Term and periodicity](#Term and periodicity) to view explanations about the billing cycle and term.
 
-| Field | Type         | Example   | Description       |
-|-------|--------------|-----------|-------------------|
-| cycle | ```string``` | 720       | The billing cycle |
-| term  | ```string``` | 8640      | The term          |
-| type  | ```string``` | RECURRING | The pricing type  |
+| Field | Type     | Example   | Description       |
+| ----- | -------- | --------- | ----------------- |
+| cycle | `string` | 720       | The billing cycle |
+| term  | `string` | 8640      | The term          |
+| type  | `string` | RECURRING | The pricing type  |
 
 #### Prices
 
-| Field  | Type        | Example | Description      |
-|--------|-------------|---------|------------------|
-| buy    | ```float``` | 12.34   | The buy price    |
-| sell   | ```float``` | 56.78   | The sell price   |
-| public | ```float``` | 98.76   | The public price |
+| Field  | Type    | Example | Description      |
+| ------ | ------- | ------- | ---------------- |
+| buy    | `float` | 12.34   | The buy price    |
+| sell   | `float` | 56.78   | The sell price   |
+| public | `float` | 98.76   | The public price |
 
 #### SaleConstraints
 
-| Field       | Type        | Example | Description                                                        |
-|-------------|-------------|---------|--------------------------------------------------------------------|
-| minQuantity | ```float``` | 1.0     | the minimum quantity required to purchase this offer at this price |
-| maxQuantity | ```float``` | 1.0     | the maximum quantity required to purchase this offer at this price |
+| Field       | Type    | Example | Description                                                        |
+| ----------- | ------- | ------- | ------------------------------------------------------------------ |
+| minQuantity | `float` | 1.0     | the minimum quantity required to purchase this offer at this price |
+| maxQuantity | `float` | 1.0     | the maximum quantity required to purchase this offer at this price |
 
 ### Other entities
 
 #### FindResult
+
 This entity is the main wrapper of the search result, returned by the [Find endpoint](#find-endpoint).
 It contains the [filters](#FilterFindResult) and the [license/offers](#LicenseOfferFindResult) returned for the search.
 
 #### FilterFindResult
+
 This entity represents a filter returned by the [Find endpoint](#find-endpoint).
 It shows a number of possible filters in the search results and the count for each of them.
 
-| Field  | Type         | Example     | Description              |
-|--------|--------------|-------------|--------------------------|
-| name   | ```string``` | vendor      | The name of the filter   |
-| values | ```array```  | (see below) | The values of the filter |
+| Field  | Type     | Example     | Description              |
+| ------ | -------- | ----------- | ------------------------ |
+| name   | `string` | vendor      | The name of the filter   |
+| values | `array`  | (see below) | The values of the filter |
 
-Each entry in the ```values``` array looks like this:
+Each entry in the `values` array looks like this:
 
-| Field | Type         | Example   | Description                                   |
-|-------|--------------|-----------|-----------------------------------------------|
-| value | ```string``` | Microsoft | The value of the entry                        |
-| count | ```int```    | 3         | How many results are available for this entry |
+| Field | Type     | Example   | Description                                   |
+| ----- | -------- | --------- | --------------------------------------------- |
+| value | `string` | Microsoft | The value of the entry                        |
+| count | `int`    | 3         | How many results are available for this entry |
 
 The focus of these filters is to allow to display them to the user as a list of checkboxes
 with how many results are available in each of them.
 
 #### LicenseOfferFindResult
+
 This entity represents a search result.
 A search result is a combination of the [License](#License) entity and the [Offer](#Offer) entity.
 All fields of both the [License](#License) entity and the [Offer](#Offer) entity are available.
 This entity should be used to display search results or to make a listing of licenses.
 
-| Field     | Type          | Example                           | Description                                                                                      |
-|-----------|---------------|-----------------------------------|--------------------------------------------------------------------------------------------------|
-| highlight | ```array```   | ['sku' => '<strong>ABC</strong>'] | An associative array which shows which values are to be highlighted based on the search keywords |
-| license   | ```License``` |                                   | All the fields contained in the [License](#License) entity                                       |
-| offer     | ```Offer```   |                                   | All the fields contained in the [Offer](#Offer) entity                                           |
+| Field     | Type      | Example                           | Description                                                                                      |
+| --------- | --------- | --------------------------------- | ------------------------------------------------------------------------------------------------ |
+| highlight | `array`   | ['sku' => '<strong>ABC</strong>'] | An associative array which shows which values are to be highlighted based on the search keywords |
+| license   | `License` |                                   | All the fields contained in the [License](#License) entity                                       |
+| offer     | `Offer`   |                                   | All the fields contained in the [Offer](#Offer) entity                                           |
 
-Please note that the ```highlight``` field is only available if the ```DATA_HIGHLIGHT``` option is set to ```true``` while searching.
+Please note that the `highlight` field is only available if the `DATA_HIGHLIGHT` option is set to `true` while searching.
 
 ## Usage
-The license client is simply called ```LicensesClient```.
-You can get it through the main entry point ```PublicApiClient``` and its method ```getLicensesClient()```, or instanciate it directly.
+
+The license client is simply called `LicensesClient`.
+You can get it through the main entry point `PublicApiClient` and its method `getLicensesClient()`, or instanciate it directly.
 
 ## Term and periodicity
 
@@ -218,7 +225,7 @@ For example, the typical license has a term of 8640 and a periodicity of 720, wh
 Here are some possible values for these values:
 
 | value | Term         | Periodicity                 |
-|-------|--------------|-----------------------------|
+| ----- | ------------ | --------------------------- |
 | 0     | No term      | one time (no billing cycle) |
 | 24    | One day      | Daily                       |
 | 720   | One month    | Monthly                     |
@@ -231,15 +238,16 @@ The "Find" endpoint has been designed specifically to perform quick and easy sea
 This is the endpoint called by xSP on its search bar and on the listing pages
 
 The postData is supposed to contain the following keys:
-- ```LicensesClient::DATA_KEYWORD```: a string to be searched in all the fields. Supports inexact matches (i.e. Ofice for Office)
-- ```LicensesClient::DATA_KEYWORDS```: an array containing the fields to search on, and their possible values, as well as an operator to specify how to use them. This array is indexed by column name, then contains 2 keys with ```LicensesClient::KEYWORDS_VALUES``` containing the values and ```LicensesClient::KEYWORDS_OPERATOR``` containing an operator (use ```LicensesClient::OPERATOR_AND```, ```LicensesClient::OPERATOR_OR``` or ```LicensesClient::OPERATOR_BETWEEN``` for the operator)
-- ```LicensesClient::DATA_COMPARE```: an array containing the fields to compare on, and their field to compare, as well as an operator to specify how to make compare. This array is indexed by column name, then contains 2 keys with ```LicensesClient::COMPARE_FIELD``` containing the column you want to compare with and ```LicensesClient::COMPARE_OPERATOR``` containing an operator (use ```LicensesClient::OPERATOR_EQ```, ```LicensesClient::OPERATOR_NEQ```, ```LicensesClient::OPERATOR_GT```, ```LicensesClient::OPERATOR_LT``` or ```LicensesClient::OPERATOR_LTE``` for the operator)
-- ```LicensesClient::DATA_FILTERS```: an array of strings containing exact matches for individual fields (field name as key and field value as value)
-- ```LicensesClient::DATA_EXCLUSION_FILTERS```: an array of strings containing must not matches for individual fields (field name as key and field value as value)
-- ```LicensesClient::DATA_SORT```: an array of strings containing the order in which sort the data (field name as key and a ```LicensesClient::SORT_*``` const for the sort direction)
-- ```LicensesClient::DATA_HIGHLIGHT```: a boolean value, search results will contain a field giving highlights if set to ```true``` (defaults to ```false```)
 
-Please note that the field names must be used with the consts from the ```LicenseFindFieldEnum``` class.
+- `LicensesClient::DATA_KEYWORD`: a string to be searched in all the fields. Supports inexact matches (i.e. Ofice for Office)
+- `LicensesClient::DATA_KEYWORDS`: an array containing the fields to search on, and their possible values, as well as an operator to specify how to use them. This array is indexed by column name, then contains 2 keys with `LicensesClient::KEYWORDS_VALUES` containing the values and `LicensesClient::KEYWORDS_OPERATOR` containing an operator (use `LicensesClient::OPERATOR_AND`, `LicensesClient::OPERATOR_OR` or `LicensesClient::OPERATOR_BETWEEN` for the operator)
+- `LicensesClient::DATA_COMPARE`: an array containing the fields to compare on, and their field to compare, as well as an operator to specify how to make compare. This array is indexed by column name, then contains 2 keys with `LicensesClient::COMPARE_FIELD` containing the column you want to compare with and `LicensesClient::COMPARE_OPERATOR` containing an operator (use `LicensesClient::OPERATOR_EQ`, `LicensesClient::OPERATOR_NEQ`, `LicensesClient::OPERATOR_GT`, `LicensesClient::OPERATOR_LT` or `LicensesClient::OPERATOR_LTE` for the operator)
+- `LicensesClient::DATA_FILTERS`: an array of strings containing exact matches for individual fields (field name as key and field value as value)
+- `LicensesClient::DATA_EXCLUSION_FILTERS`: an array of strings containing must not matches for individual fields (field name as key and field value as value)
+- `LicensesClient::DATA_SORT`: an array of strings containing the order in which sort the data (field name as key and a `LicensesClient::SORT_*` const for the sort direction)
+- `LicensesClient::DATA_HIGHLIGHT`: a boolean value, search results will contain a field giving highlights if set to `true` (defaults to `false`)
+
+Please note that the field names must be used with the consts from the `LicenseFindFieldEnum` class.
 
 ```php
 <?php
@@ -305,14 +313,15 @@ foreach ($licenses as $license) {
 }
 ```
 
-The ```LicensesClient::find()``` method returns a ```FindResult``` object that allows these methods:
-- ```getNbResults()```: returns the total number of results for this search
-- ```getTotalPages()```: returns the total number of pages for this search
-- ```getFilters()```: returns an array of ```FilterFindResult``` entities (see [FilterFindResult entity](#FilterFindResult))
-- ```getLicensesForCurrentPage()```: returns a ```Generator``` and yields instances of the ```LicenseOfferFindResult``` entity (see [LicenseOfferFindResult entity](#LicenseOfferFindResult))
-- ```getLicenses()```: returns a ```Generator``` and yields instances of the ```LicenseOfferFindResult``` entity
+The `LicensesClient::find()` method returns a `FindResult` object that allows these methods:
 
-The difference between ```getLicensesForCurrentPage()``` and ```getLicenses()``` is that ```getLicensesForCurrentPage()``` only shows the results for the current page, you have to perform a new ```find()``` passing another ```$page``` to get more licenses. ```getLicenses()``` automatically calls the API as many times as needed and yields all the licenses for the search results.
+- `getNbResults()`: returns the total number of results for this search
+- `getTotalPages()`: returns the total number of pages for this search
+- `getFilters()`: returns an array of `FilterFindResult` entities (see [FilterFindResult entity](#FilterFindResult))
+- `getLicensesForCurrentPage()`: returns a `Generator` and yields instances of the `LicenseOfferFindResult` entity (see [LicenseOfferFindResult entity](#LicenseOfferFindResult))
+- `getLicenses()`: returns a `Generator` and yields instances of the `LicenseOfferFindResult` entity
+
+The difference between `getLicensesForCurrentPage()` and `getLicenses()` is that `getLicensesForCurrentPage()` only shows the results for the current page, you have to perform a new `find()` passing another `$page` to get more licenses. `getLicenses()` automatically calls the API as many times as needed and yields all the licenses for the search results.
 
 ### GetConfigs endpoint
 
@@ -341,10 +350,11 @@ foreach ($configs as $config) {
 }
 ```
 
-The ```LicensesClient::getConfigs()``` method returns a ```Generator``` and yields instances of the ```Config``` entity.
-- ```getScope()```: returns the scope of this configuration
-- ```getName()```: returns the name of the configuration
-- ```getState()```: returns one of the 3 possible states which are ```disabled```, ```enabled``` and ```pending```
+The `LicensesClient::getConfigs()` method returns a `Generator` and yields instances of the `Config` entity.
+
+- `getScope()`: returns the scope of this configuration
+- `getName()`: returns the name of the configuration
+- `getState()`: returns one of the 3 possible states which are `disabled`, `enabled` and `pending`
 
 ### UpdateConfig endpoint
 
@@ -377,6 +387,7 @@ $config = $client->updateConfig('XSP1234', $configToUpdate);
 echo $config->getName() . ' is now ' . $config->getState() . PHP_EOL . PHP_EOL;
 ```
 
-The ```LicensesClient::updateConfig()``` method returns a ```Config``` with actualized values.
-- ```getName()```: returns the name of the configuration
-- ```getState()```: returns one of the 3 possible states which are ```disabled```, ```enabled``` and ```pending```
+The `LicensesClient::updateConfig()` method returns a `Config` with actualized values.
+
+- `getName()`: returns the name of the configuration
+- `getState()`: returns one of the 3 possible states which are `disabled`, `enabled` and `pending`
