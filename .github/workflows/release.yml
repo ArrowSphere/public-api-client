@@ -19,6 +19,9 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      - name: Create release branch
+        run: git checkout -b release/${{ github.event.inputs.version }}
+
       - name: Update changelog
         uses: thomaseizinger/keep-a-changelog-new-release@v1
         with:
@@ -40,8 +43,27 @@ jobs:
           git commit --message "Release ${{ github.event.inputs.version }}"
           echo "LAST_COMMIT=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
-      - name: Push changelog modifications to master
-        run: git push origin master
+      - name: Push new branch
+        run: git push origin release/${{ github.event.inputs.version }}
+
+      - name: Create pull request
+        id: create-pull-request
+        uses: thomaseizinger/create-pull-request@1.0.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          head: release/${{ github.event.inputs.version }}
+          base: master
+          title: Release version ${{ github.event.inputs.version }}
+          body: |
+            Automatic pull request for release version ${{ github.event.inputs.version }}
+
+      - name: Merge Pull Request
+        uses: juliangruber/merge-pull-request-action@v1
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          number: ${{ steps.create-pull-request.outputs.number }}
+          method: rebase
 
       - name: Create Release
         uses: thomaseizinger/create-release@1.0.0
