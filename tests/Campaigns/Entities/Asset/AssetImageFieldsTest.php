@@ -1,0 +1,45 @@
+<?php
+
+namespace ArrowSphere\PublicApiClient\Tests\Campaigns\Entities\Asset;
+
+use ArrowSphere\PublicApiClient\Campaigns\Entities\Asset\AssetImageFields;
+use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
+
+/**
+ * Class AssetImageFieldsTest
+ */
+class AssetImageFieldsTest extends AbstractEntityTest
+{
+    public const CLASS_NAME = AssetImageFields::class;
+
+    public function providerSerialization(): array
+    {
+        return [
+            'standard' => [
+                'fields'   => [
+                    'Key'                  => 'assets/00000000-1111-2222-aaaa-123412341234/98765432-aaaa-bbbb-cccc-123412344321',
+                    'bucket'               => 'my-super-bucket',
+                    'X-Amz-Algorithm'      => 'AWS4-HMAC-SHA256',
+                    'X-Amz-Credential'     => 'blabla/20210927/eu-west-1/s3/aws4_request',
+                    'X-Amz-Date'           => '20210927T103402Z',
+                    'X-Amz-Security-Token' => 'my super security token',
+                    'Policy'               => 'my marvelous policy',
+                    'X-Amz-Signature'      => '1337 signature',
+                ],
+                'expected' => <<<JSON
+{
+    "Key": "assets\/00000000-1111-2222-aaaa-123412341234\/98765432-aaaa-bbbb-cccc-123412344321",
+    "bucket": "my-super-bucket",
+    "X-Amz-Algorithm": "AWS4-HMAC-SHA256",
+    "X-Amz-Credential": "blabla\/20210927\/eu-west-1\/s3\/aws4_request",
+    "X-Amz-Date": "20210927T103402Z",
+    "X-Amz-Security-Token": "my super security token",
+    "Policy": "my marvelous policy",
+    "X-Amz-Signature": "1337 signature"
+}
+JSON
+                ,
+            ],
+        ];
+    }
+}

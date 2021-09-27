@@ -5,8 +5,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
 - Added a new GitHub action to automate part of the release process
+- Added the entities for the campaign assets: `Asset`, `AssetImage`, `AssetImageFields` and `AssetUploadUrl`, along with their unit tests
+
+### Fixed
+
 - Reformatted the markdown files
+
+### Changed
+
+- The method `CampaignClient::getCampaignAssets()` has been renamed to `CampaignClient::getCampaignAssetsRaw()`
+- The method `CampaignClient::getCampaignAssetsUploadUrl()` has been renamed to `CampaignClient::getCampaignAssetsUploadUrlRaw()`
 
 ## [0.5.0] - 2021-09-24
 

@@ -3,6 +3,8 @@
 namespace ArrowSphere\PublicApiClient\Campaigns;
 
 use ArrowSphere\PublicApiClient\AbstractClient;
+use ArrowSphere\PublicApiClient\Campaigns\Entities\Asset\Asset;
+use ArrowSphere\PublicApiClient\Campaigns\Entities\Asset\AssetUploadUrl;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\Campaign;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
@@ -162,12 +164,32 @@ class CampaignsClient extends AbstractClient
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function getCampaignAssets(string $reference): string
+    public function getCampaignAssetsRaw(string $reference): string
     {
         $reference = urlencode($reference);
         $this->path = self::FIND_PATH . "/$reference/assets";
 
         return $this->get();
+    }
+
+    /**
+     * @param string $reference
+     *
+     * @return Asset[]
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getCampaignAssets(string $reference): array
+    {
+        $rawResponse = $this->getCampaignAssetsRaw($reference);
+
+        $data = $this->decodeResponse($rawResponse);
+
+        return array_map(static function (array $asset) {
+            return new Asset($asset);
+        }, $data['data']['assets']);
     }
 
     /**
@@ -179,12 +201,32 @@ class CampaignsClient extends AbstractClient
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function getCampaignAssetsUploadUrl(string $reference): string
+    public function getCampaignAssetsUploadUrlRaw(string $reference): string
     {
         $reference = urlencode($reference);
         $this->path = self::FIND_PATH . "/$reference/assets/upload";
 
         return $this->get();
+    }
+
+    /**
+     * @param string $reference
+     *
+     * @return AssetUploadUrl[]
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getCampaignAssetsUploadUrl(string $reference): array
+    {
+        $rawResponse = $this->getCampaignAssetsUploadUrlRaw($reference);
+
+        $data = $this->decodeResponse($rawResponse);
+
+        return array_map(static function (array $assetUploadUrl) {
+            return new AssetUploadUrl($assetUploadUrl);
+        }, $data['data']['assets']);
     }
 
     /**
