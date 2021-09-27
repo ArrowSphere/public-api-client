@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2021-09-27
+
 ### Added
 
 - Added a new GitHub action to automate part of the release process
@@ -129,7 +131,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-- New warnings attribute. Collections of Warning[]
+- New warnings attribute. Collections of Warning\[]
 - Enrichment License.jsonSerialize() output
 
 ### Changed
@@ -172,8 +174,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Adapted the code to handle the new /licenses/find v2 endpoint, which implicate several breaking changes (see below)
 - The `License` entity has been moved to a sub namespace `License` of the `Entities` namespace to better sort the entities that have dependencies between them
-- The `License` entity has been changed to reflect the arborescence of objects returned by the API, so 2 new classes have been created to handle this: `ActiveSeats` and `Price`. See [Upgrade guide](UPGRADING.md#Changes to the license entity)
-- The fields that need to be used with the licenses find endpoint must be prefixed. To handle this, use the `LicenseFindFieldEnum` consts. See [Upgrade guide](UPGRADING.md#Changes due to the integration of the v2 license endpoint)
+- The `License` entity has been changed to reflect the arborescence of objects returned by the API, so 2 new classes have been created to handle this: `ActiveSeats` and `Price`. See [Upgrade guide]\(UPGRADING.md#Changes to the license entity)
+- The fields that need to be used with the licenses find endpoint must be prefixed. To handle this, use the `LicenseFindFieldEnum` consts. See [Upgrade guide]\(UPGRADING.md#Changes due to the integration of the v2 license endpoint)
 
 ### Fixed
 
@@ -299,3 +301,5 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 [0.2.0]: https://github.com/ArrowSphere/public-api-client/compare/0.1.2...0.2.0
 [0.1.2]: https://github.com/ArrowSphere/public-api-client/compare/0.1.1...0.1.2
 [0.1.1]: https://github.com/ArrowSphere/public-api-client/compare/0.1.0...0.1.1
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.6.0...HEAD
+[0.6.0]: https://github.com/ArrowSphere/public-api-client/compare/0.5.0...0.6.0
