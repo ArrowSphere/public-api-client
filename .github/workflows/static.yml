@@ -7,6 +7,18 @@ on:
   pull_request:
 
 jobs:
+
+  changelog:
+    name: Changelog checker
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Changelog checker
+        uses: dangoslen/changelog-enforcer@v2
+
   phpstan:
     name: PHPStan
     runs-on: ubuntu-latest

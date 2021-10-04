@@ -19,6 +19,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Changelog checker
+        uses: dangoslen/changelog-enforcer@v2
+
       - name: Install PHP
         uses: shivammathur/setup-php@v2
         with:
