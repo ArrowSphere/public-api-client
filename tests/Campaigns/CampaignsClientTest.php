@@ -143,7 +143,9 @@ class CampaignsClientTest extends AbstractClientTest
             "vendorLogoUuid": "fff-fff-fffff-fff-ff"
           },
           "body": {
-            "backgroundImageUuid": "ggg-ggg-gggg-ggg-gg"
+            "backgroundImageUuid": "ggg-ggg-gggg-ggg-gg",
+            "buttonText": null,
+            "contactEmail": null
           }
         }
       },
@@ -178,7 +180,9 @@ class CampaignsClientTest extends AbstractClientTest
             "vendorLogoUuid": "fff-fff-fffff-fff-55"
           },
           "body": {
-            "backgroundImageUuid": "ggg-ggg-gggg-ggg-66"
+            "backgroundImageUuid": "ggg-ggg-gggg-ggg-66",
+            "buttonText": null,
+            "contactEmail": null
           }
         }
       }
@@ -264,6 +268,8 @@ JSON;
         self::assertSame('', $body->getType());
         self::assertSame('', $body->getDescription());
         self::assertNull($body->getVideoUrl());
+        self::assertNull($body->getButtonText());
+        self::assertNull($body->getContactEmail());
 
         $footer = $landingPage->getFooter();
         self::assertSame('', $footer->getTitle());
@@ -330,6 +336,8 @@ JSON;
         self::assertSame('', $body->getType());
         self::assertSame('', $body->getDescription());
         self::assertNull($body->getVideoUrl());
+        self::assertNull($body->getButtonText());
+        self::assertNull($body->getContactEmail());
 
         $footer = $landingPage->getFooter();
         self::assertSame('', $footer->getTitle());
@@ -469,7 +477,9 @@ JSON;
                 "vendorLogoUuid": "fff-fff-fffff-fff-ff"
             },
             "body": {
-                "backgroundImageUuid": "ggg-ggg-gggg-ggg-gg"
+                "backgroundImageUuid": "ggg-ggg-gggg-ggg-gg",
+                "buttonText": null,
+                "contactEmail": null
             }
         }
     }
@@ -537,6 +547,8 @@ JSON;
         self::assertSame('', $body->getType());
         self::assertSame('', $body->getDescription());
         self::assertNull($body->getVideoUrl());
+        self::assertNull($body->getButtonText());
+        self::assertNull($body->getContactEmail());
 
         $footer = $landingPage->getFooter();
         self::assertSame('', $footer->getTitle());

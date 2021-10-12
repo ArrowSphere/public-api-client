@@ -12,12 +12,16 @@ class LandingPageBody extends AbstractEntity
     public const COLUMN_TITLE = 'title';
     public const COLUMN_DESCRIPTION = 'description';
     public const COLUMN_VIDEOURL = 'videoUrl';
+    public const COLUMN_BUTTONTEXT = 'buttonText';
+    public const COLUMN_CONTACTEMAIL = 'contactEmail';
 
     public const DEFAULT_VALUE_BACKGROUNDIMAGEUUID = '';
     public const DEFAULT_VALUE_TYPE = '';
     public const DEFAULT_VALUE_TITLE = '';
     public const DEFAULT_VALUE_DESCRIPTION = '';
     public const DEFAULT_VALUE_VIDEOURL = null;
+    public const DEFAULT_VALUE_BUTTONTEXT = null;
+    public const DEFAULT_VALUE_CONTACTEMAIL = null;
 
     /**
      * @var string
@@ -45,6 +49,16 @@ class LandingPageBody extends AbstractEntity
     private $videoUrl;
 
     /**
+     * @var string|null
+     */
+    private $buttonText;
+
+    /**
+     * @var string|null
+     */
+    private $contactEmail;
+
+    /**
      * Statement constructor.
      *
      * @param array $data
@@ -61,6 +75,8 @@ class LandingPageBody extends AbstractEntity
         $this->title = $data[self::COLUMN_TITLE] ?? self::DEFAULT_VALUE_TITLE;
         $this->description = $data[self::COLUMN_DESCRIPTION] ?? self::DEFAULT_VALUE_DESCRIPTION;
         $this->videoUrl = $data[self::COLUMN_VIDEOURL] ?? self::DEFAULT_VALUE_VIDEOURL;
+        $this->buttonText = $data[self::COLUMN_BUTTONTEXT] ?? self::DEFAULT_VALUE_BUTTONTEXT;
+        $this->contactEmail = $data[self::COLUMN_CONTACTEMAIL] ?? self::DEFAULT_VALUE_CONTACTEMAIL;
     }
 
     /**
@@ -104,6 +120,22 @@ class LandingPageBody extends AbstractEntity
     }
 
     /**
+     * @return string|null
+     */
+    public function getButtonText(): ?string
+    {
+        return $this->buttonText;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getContactEmail(): ?string
+    {
+        return $this->contactEmail;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
@@ -114,6 +146,8 @@ class LandingPageBody extends AbstractEntity
             self::COLUMN_TITLE               => $this->getTitle(),
             self::COLUMN_DESCRIPTION         => $this->getDescription(),
             self::COLUMN_VIDEOURL            => $this->getVideoUrl(),
+            self::COLUMN_BUTTONTEXT          => $this->getButtonText(),
+            self::COLUMN_CONTACTEMAIL        => $this->getContactEmail(),
         ];
     }
 }

@@ -38,7 +38,7 @@ This entity represents the banners of the campaign.
 | buttonText          | `string` or `null` | Click here                           | If the banner has a button, this is its text.                           |
 | text                | `string` or `null` | Banner Title                         | The banner's title. Optional only if the banner is of PICTURE type.     |
 | textColor           | `string` or `null` | #119E0F                              | The banner's text color. Used for the button text and border too.       |
-| type                | `string`           | PICTURE                              | The type of banner: PICTURE or BACKGROUND_COLOR0                        |
+| type                | `string`           | PICTURE                              | The type of banner: PICTURE or BACKGROUND_COLOR                         |
 
 #### LandingPage and its sub-entities
 
@@ -68,13 +68,15 @@ This entity describes the header of the campaign's landing page.
 
 This entity describes the body of the campaign's landing page.
 
-| Field               | Type               | Example                                     | Description                                            |
-| ------------------- | ------------------ | ------------------------------------------- | ------------------------------------------------------ |
-| backgroundImageUuid | `string`           | 0fed6621-fe0c-4290-813a-58217e37b3ae        | The uuid to use if the header has an image.            |
-| description         | `string`           | <p>This is a great description.</p>         | The landing page's body description. Can contain html. |
-| title               | `string`           | This is a body title.                       | The landing page's body title.                         |
-| type                | `string`           | PICTURE                                     | The landing page's body type, PICTURE or VIDEO.        |
-| videoUrl            | `string` or `null` | https://www.youtube.com/watch?v=dQw4w9WgXcQ | The landing page's body video url, if any.             |
+| Field               | Type               | Example                                     | Description                                             |
+| ------------------- | ------------------ | ------------------------------------------- | ------------------------------------------------------- |
+| backgroundImageUuid | `string`           | 0fed6621-fe0c-4290-813a-58217e37b3ae        | The uuid to use if the body has an image.               |
+| buttonText          | `string`           | Register                                    | The button text if the body is a form type.             |
+| contactEmail        | `string`           | myemail@mail.com                            | The e-mail used to send information with the Form type. |
+| description         | `string`           | <p>This is a great description.</p>         | The landing page's body description. Can contain html.  |
+| title               | `string`           | This is a body title.                       | The landing page's body title.                          |
+| type                | `string`           | PICTURE                                     | The landing page's body type, PICTURE, VIDEO OR FORM.   |
+| videoUrl            | `string` or `null` | https://www.youtube.com/watch?v=dQw4w9WgXcQ | The landing page's body video url, if any.              |
 
 ##### LandingPageFooter
 

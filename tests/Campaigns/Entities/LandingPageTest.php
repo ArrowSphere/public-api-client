@@ -41,7 +41,9 @@ class LandingPageTest extends AbstractEntityTest
         "type": "",
         "title": "",
         "description": "",
-        "videoUrl": null
+        "videoUrl": null,
+        "buttonText": null,
+        "contactEmail": null
     },
     "footer": {
         "backgroundColor": "",

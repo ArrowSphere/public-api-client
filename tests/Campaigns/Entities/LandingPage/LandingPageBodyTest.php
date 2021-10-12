@@ -19,6 +19,8 @@ class LandingPageBodyTest extends AbstractEntityTest
                     'title'               => 'story',
                     'description'         => 'bro',
                     'videoUrl'            => 'my video url',
+                    'buttonText'          => null,
+                    'contactEmail'        => null,
                 ],
                 'expected' => <<<JSON
 {
@@ -26,7 +28,9 @@ class LandingPageBodyTest extends AbstractEntityTest
     "type": "cool",
     "title": "story",
     "description": "bro",
-    "videoUrl": "my video url"
+    "videoUrl": "my video url",
+    "buttonText": null,
+    "contactEmail": null
 }
 JSON
                 ,
@@ -41,7 +45,9 @@ JSON
     "type": "",
     "title": "",
     "description": "",
-    "videoUrl": null
+    "videoUrl": null,
+    "buttonText": null,
+    "contactEmail": null
 }
 JSON
                 ,
