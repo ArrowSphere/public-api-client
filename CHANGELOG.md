@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Adding new fields to the Landing Page to be able to use the Form type.
+
+### Fixed
+- Fixed a typo in the Landing Page Body documentation.
+
 ## [0.6.2] - 2021-10-04
 
 ### Fixed
