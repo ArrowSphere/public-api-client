@@ -5,10 +5,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.3] - 2021-10-18
+
 ### Added
+
 - Adding new fields to the Landing Page to be able to use the Form type.
 
 ### Fixed
+
 - Fixed a typo in the Landing Page Body documentation.
 
 ## [0.6.2] - 2021-10-04
@@ -309,7 +313,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.6.2...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.6.3...HEAD
+[0.6.3]: https://github.com/ArrowSphere/public-api-client/compare/0.6.2...0.6.3
 [0.6.2]: https://github.com/ArrowSphere/public-api-client/compare/0.6.1...0.6.2
 [0.6.1]: https://github.com/ArrowSphere/public-api-client/compare/0.6.0...0.6.1
 [0.6.0]: https://github.com/ArrowSphere/public-api-client/compare/0.5.0...0.6.0
