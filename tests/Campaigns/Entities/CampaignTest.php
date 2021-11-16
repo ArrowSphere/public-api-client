@@ -57,6 +57,7 @@ class CampaignTest extends AbstractEntityTest
     "banners": [
         {
             "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb",
+            "backgroundColor": null,
             "type": "BACKGROUND_COLOR",
             "buttonPlacement": "RIGHT",
             "buttonText": null,
@@ -65,6 +66,7 @@ class CampaignTest extends AbstractEntityTest
         },
         {
             "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc",
+            "backgroundColor": null,
             "type": "BACKGROUND_COLOR",
             "buttonPlacement": "RIGHT",
             "buttonText": null,
@@ -73,6 +75,7 @@ class CampaignTest extends AbstractEntityTest
         },
         {
             "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd",
+            "backgroundColor": null,
             "type": "BACKGROUND_COLOR",
             "buttonPlacement": "RIGHT",
             "buttonText": null,

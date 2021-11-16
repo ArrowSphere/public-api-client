@@ -8,6 +8,7 @@ use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 class Banner extends AbstractEntity
 {
     public const COLUMN_BACKGROUNDIMAGEUUID = 'backgroundImageUuid';
+    public const COLUMN_BACKGROUNDCOLOR = 'backgroundColor';
     public const COLUMN_TYPE = 'type';
     public const COLUMN_BUTTONPLACEMENT = 'buttonPlacement';
     public const COLUMN_BUTTONTEXT = 'buttonText';
@@ -15,6 +16,7 @@ class Banner extends AbstractEntity
     public const COLUMN_TEXTCOLOR = 'textColor';
 
     public const DEFAULT_VALUE_BACKGROUNDIMAGEUUID = '';
+    public const DEFAULT_VALUE_BACKGROUNDCOLOR = null;
     public const DEFAULT_VALUE_TYPE = 'BACKGROUND_COLOR';
     public const DEFAULT_VALUE_BUTTONPLACEMENT = 'RIGHT';
     public const DEFAULT_VALUE_BUTTONTEXT = null;
@@ -25,6 +27,11 @@ class Banner extends AbstractEntity
      * @var string
      */
     private $backgroundImageUuid;
+
+    /**
+     * @var string|null
+     */
+    private $backgroundColor;
 
     /**
      * @var string
@@ -64,6 +71,7 @@ class Banner extends AbstractEntity
         parent::__construct($data);
 
         $this->backgroundImageUuid = $data[self::COLUMN_BACKGROUNDIMAGEUUID] ?? self::DEFAULT_VALUE_BACKGROUNDIMAGEUUID;
+        $this->backgroundColor = $data[self::COLUMN_BACKGROUNDCOLOR] ?? self::DEFAULT_VALUE_BACKGROUNDCOLOR;
         $this->type = $data[self::COLUMN_TYPE] ?? self::DEFAULT_VALUE_TYPE;
         $this->buttonPlacement = $data[self::COLUMN_BUTTONPLACEMENT] ?? self::DEFAULT_VALUE_BUTTONPLACEMENT;
         $this->buttonText = $data[self::COLUMN_BUTTONTEXT] ?? self::DEFAULT_VALUE_BUTTONTEXT;
@@ -77,6 +85,14 @@ class Banner extends AbstractEntity
     public function getBackgroundImageUuid(): string
     {
         return $this->backgroundImageUuid;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getBackgroundColor(): ?string
+    {
+        return $this->backgroundColor;
     }
 
     /**
@@ -126,6 +142,7 @@ class Banner extends AbstractEntity
     {
         return [
             self::COLUMN_BACKGROUNDIMAGEUUID => $this->getBackgroundImageUuid(),
+            self::COLUMN_BACKGROUNDCOLOR     => $this->getBackgroundColor(),
             self::COLUMN_TYPE                => $this->getType(),
             self::COLUMN_BUTTONPLACEMENT     => $this->getButtonPlacement(),
             self::COLUMN_BUTTONTEXT          => $this->getButtonText(),

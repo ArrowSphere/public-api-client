@@ -34,6 +34,7 @@ This entity represents the banners of the campaign.
 | Field               | Type               | Example                              | Description                                                             |
 | ------------------- | ------------------ | ------------------------------------ | ----------------------------------------------------------------------- |
 | backgroundImageUuid | `string`           | d8553daa-1d39-489e-89c0-3731c0d3ad0b | The uuid to use if the banner has a background image.                   |
+| backgroundColor     | `string` or `null` | #FFF                                 | The background color of the campaign's header.                          |
 | buttonPlacement     | `string`           | RIGHT                                | If the banner has a button, this defines its placement. Default: RIGHT. |
 | buttonText          | `string` or `null` | Click here                           | If the banner has a button, this is its text.                           |
 | text                | `string` or `null` | Banner Title                         | The banner's title. Optional only if the banner is of PICTURE type.     |

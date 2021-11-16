@@ -49,6 +49,8 @@ class CampaignsClient extends AbstractClient
     /**
      * Get a single active campaign
      *
+     * @param string $customerRef
+     *
      * @return Campaign|null
      *
      * @throws GuzzleException
@@ -56,9 +58,9 @@ class CampaignsClient extends AbstractClient
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function getActiveCampaign(): ?Campaign
+    public function getActiveCampaign(string $customerRef): ?Campaign
     {
-        $response = $this->getActiveCampaignRaw();
+        $response = $this->getActiveCampaignRaw($customerRef);
         $data = $this->decodeResponse($response);
         $result = null;
         if ($data['data']) {
@@ -142,15 +144,17 @@ class CampaignsClient extends AbstractClient
     }
 
     /**
+     * @param string $customerRef
+     *
      * @return string
      *
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function getActiveCampaignRaw(): string
+    public function getActiveCampaignRaw(string $customerRef): string
     {
-        $this->path = self::FIND_PATH . "/active";
+        $this->path = self::FIND_PATH . "/active?customer=" . $customerRef;
 
         return $this->get();
     }

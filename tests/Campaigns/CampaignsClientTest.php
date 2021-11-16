@@ -25,6 +25,7 @@ class CampaignsClientTest extends AbstractClientTest
 
     protected const ASSET_REFERENCE = 'bbb-bbb-bbbb-bb';
     protected const CAMPAIGN_REFERENCE = 'aaa-aaa-aaaa-aaa';
+    protected const CUSTOMER_REF = 'XSP12345';
 
     /**
      * @throws GuzzleException
@@ -614,11 +615,11 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/campaigns/active')
+            ->with('get', 'https://www.test.com/campaigns/active?customer=' . self::CUSTOMER_REF)
             ->willReturn(new Response(200, [], $expected))
         ;
 
-        $this->client->getActiveCampaignRaw();
+        $this->client->getActiveCampaignRaw(self::CUSTOMER_REF);
     }
 
     /**

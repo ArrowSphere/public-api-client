@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+- Add the missing background color to the banner entity
+- Add the customer reference to get an active campaign
+
 ## [0.6.3] - 2021-10-18
 
 ### Added

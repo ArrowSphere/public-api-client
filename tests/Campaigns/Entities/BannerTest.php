@@ -22,6 +22,7 @@ class BannerTest extends AbstractEntityTest
                 'expected' => <<<JSON
 {
     "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb",
+    "backgroundColor": null,
     "type": "BACKGROUND_COLOR",
     "buttonPlacement": "RIGHT",
     "buttonText": null,
@@ -34,6 +35,7 @@ JSON
             'all fields' => [
                 'fields'   => [
                     "backgroundImageUuid" => "1111-222-3333-444-55",
+                    "backgroundColor"     => 'white',
                     'type'                => 'my type',
                     'buttonPlacement'     => 'cool',
                     'buttonText'          => 'story',
@@ -43,6 +45,7 @@ JSON
                 'expected' => <<<JSON
 {
     "backgroundImageUuid": "1111-222-3333-444-55",
+    "backgroundColor": "white",
     "type": "my type",
     "buttonPlacement": "cool",
     "buttonText": "story",
