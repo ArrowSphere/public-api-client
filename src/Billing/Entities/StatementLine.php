@@ -199,7 +199,7 @@ class StatementLine extends AbstractEntity
     {
         parent::__construct($data);
 
-        if (! BillingPeriodicityEnum::isValidValue($data[self::COLUMN_BILLING_PERIODICITY])) {
+        if (self::$enableValidation && ! BillingPeriodicityEnum::isValidValue($data[self::COLUMN_BILLING_PERIODICITY])) {
             throw new EntityValidationException('Billing periodicity: ' . $data[self::COLUMN_BILLING_PERIODICITY] . ' not supported');
         }
 
