@@ -24,34 +24,29 @@ class StatementsClient extends AbstractBillingClient
     public const STATEMENT_REF = 'statementRef';
 
     /**
+     * @var string vendorName index
+     */
+    public const VENDOR_NAME = 'vendorName';
+
+    /**
+     * @var string classification index
+     */
+    public const CLASSIFICATION = 'classification';
+
+    /**
+     * @var string strategyGroup index
+     */
+    public const STRATEGY_GROUP = 'strategyGroup';
+
+    /**
      * @var string reportPeriod index
      */
     public const REPORT_PERIOD = 'reportPeriod';
 
     /**
-     * @var string customerName index
+     * @var string marketplace index
      */
-    public const CUSTOMER_NAME = 'customerName';
-
-    /**
-     * @var string customerXspRef index
-     */
-    public const CUSTOMER_XSP_REF = 'customerXspRef';
-
-    /**
-     * @var string currency index
-     */
-    public const CURRENCY = 'currency';
-
-    /**
-     * @var string buyTotal index
-     */
-    public const BUY_TOTAL = 'buyTotal';
-
-    /**
-     * @var string sellTotal index
-     */
-    public const SELL_TOTAL = 'sellTotal';
+    public const MARKETPLACE = 'marketplace';
 
     /**
      * @var string issueDate index
@@ -69,6 +64,41 @@ class StatementsClient extends AbstractBillingClient
     public const ISSUE_DATE_TO = 'issueDateTo';
 
     /**
+     * @var string customerName index
+     */
+    public const CUSTOMER_NAME = 'customerName';
+
+    /**
+     * @var string customerXspRef index
+     */
+    public const CUSTOMER_XSP_REF = 'customerXspRef';
+
+    /**
+     * @var string resellerName index (reserved for internal use)
+     */
+    public const RESELLER_NAME = 'resellerName';
+
+    /**
+     * @var string resellerXspRef index (reserved for internal use)
+     */
+    public const RESELLER_XSP_REF = 'resellerXspRef';
+
+    /**
+     * @var string currency index
+     */
+    public const CURRENCY = 'currency';
+
+    /**
+     * @var string buyTotal index
+     */
+    public const BUY_TOTAL = 'buyTotal';
+
+    /**
+     * @var string sellTotal index
+     */
+    public const SELL_TOTAL = 'sellTotal';
+
+    /**
      * @var string tier index
      */
     public const TIER = 'tier';
@@ -77,6 +107,11 @@ class StatementsClient extends AbstractBillingClient
      * @var string format index
      */
     public const FORMAT = 'format';
+
+    /**
+     * @var string per page default value
+     */
+    private const PER_PAGE_DEFAULT = 1000;
 
     /**
      * @param string $reference
@@ -119,12 +154,7 @@ class StatementsClient extends AbstractBillingClient
      * Lists the statements.
      * Returns an array (generator) of Statement.
      *
-     * @param string[] $reportPeriod YYYY-MM
-     * @param string $customerName
-     * @param string $currency
-     * @param string $buyTotal
-     * @param string $sellTotal
-     * @param string $issueDate
+     * @param array $parameters
      *
      * @return Generator|Statement[]
      *
@@ -133,16 +163,19 @@ class StatementsClient extends AbstractBillingClient
      * @throws PublicApiClientException
      * @throws ReflectionException
      */
-    public function getStatements(array $reportPeriod = [], string $customerName = '', string $currency = '', string $buyTotal = '', string $sellTotal = '', string $issueDate = ''): Generator
+    public function getStatements(array $parameters): Generator
     {
-        $this->setPerPage(100);
+        if (empty($this->perPage)) {
+            $this->setPerPage(self::PER_PAGE_DEFAULT);
+        }
+
         $currentPage = 1;
         $lastPage = false;
 
         while (! $lastPage) {
             $this->setPage($currentPage);
 
-            $rawResponse = $this->getStatementsRaw($reportPeriod, $customerName, $currency, $buyTotal, $sellTotal, $issueDate);
+            $rawResponse = $this->getStatementsRaw($parameters);
             $response = $this->decodeResponse($rawResponse);
 
             if (! isset($response['pagination']['totalPages'])) {
@@ -166,29 +199,21 @@ class StatementsClient extends AbstractBillingClient
     }
 
     /**
-     * @param string[] $reportPeriod YYYY-MM
-     * @param string $customerName
-     * @param string $currency
-     * @param string $buyTotal
-     * @param string $sellTotal
-     * @param string $issueDate
+     * @param array $parameters Optional parameters to add to the URL
      *
      * @return string
      *
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function getStatementsRaw(array $reportPeriod = [], string $customerName = '', string $currency = '', string $buyTotal = '', string $sellTotal = '', string $issueDate = ''): string
+    public function getStatementsRaw(array $parameters = []): string
     {
+        // Parameters should contains string keys
+        if (! empty($parameters) && is_numeric(array_keys($parameters)[0])) {
+            throw new PublicApiClientException('Error: Invalid parameters value', 400);
+        }
+
         $this->path = '/statements';
-        $parameters = [
-            self::REPORT_PERIOD => $reportPeriod,
-            self::CUSTOMER_NAME => $customerName,
-            self::CURRENCY      => $currency,
-            self::BUY_TOTAL     => $buyTotal,
-            self::SELL_TOTAL    => $sellTotal,
-            self::ISSUE_DATE    => $issueDate,
-        ];
 
         return $this->get(array_filter($parameters, static function ($val) {
             return $val !== '' && $val !== [];
@@ -210,7 +235,10 @@ class StatementsClient extends AbstractBillingClient
      */
     public function getStatementLines(string $statementReference): Generator
     {
-        $this->setPerPage(100);
+        if (empty($this->perPage)) {
+            $this->setPerPage(self::PER_PAGE_DEFAULT);
+        }
+
         $currentPage = 1;
         $lastPage = false;
 
@@ -258,27 +286,23 @@ class StatementsClient extends AbstractBillingClient
     }
 
     /**
-     * @param string[] $statementRef
-     * @param string[] $reportPeriod YYYY-MM
-     * @param string[] $customerName
-     * @param string[] $customerXspRef
-     * @param string $currency
-     * @param string $buyTotal
-     * @param string $sellTotal
-     * @param string $issueDateFrom
-     * @param string $issueDateTo
+     * @param array $parameters Optional parameters to add to the URL
      * @param int[] $tier
      * @param string $format
      *
-     * @return void
+     * @return string requestRef
      *
      * @throws NotFoundException
      * @throws PublicApiClientException
      * @throws ReflectionException
      * @throws GuzzleException
      */
-    public function createExport(array $statementRef = [], array $reportPeriod = [], array $customerName = [], array $customerXspRef = [], string $currency = '', string $buyTotal = '', string $sellTotal = '', string $issueDateFrom = '', string $issueDateTo = '', array $tier = [TierEnum::RESELLER, TierEnum::END_CUSTOMER], string $format = 'xlsx'): void
+    public function createExport(array $parameters = [], array $tier = [TierEnum::RESELLER, TierEnum::END_CUSTOMER], string $format = 'xlsx'): string
     {
+        // Parameters should contains string keys
+        if (! empty($parameters) && is_numeric(array_keys($parameters)[0])) {
+            throw new PublicApiClientException('Error: Invalid parameters value', 400);
+        }
         if (count($tier) === 0 && count($tier) !== count(array_filter($tier, [TierEnum::class, 'isValidValue']))) {
             throw new PublicApiClientException('Error: Invalid tier value', 400);
         }
@@ -287,22 +311,16 @@ class StatementsClient extends AbstractBillingClient
         }
 
         $this->path = '/exports';
-        $parameters = [
-            self::STATEMENT_REF    => $statementRef,
-            self::REPORT_PERIOD    => $reportPeriod,
-            self::CUSTOMER_NAME    => $customerName,
-            self::CUSTOMER_XSP_REF => $customerXspRef,
-            self::CURRENCY         => $currency,
-            self::BUY_TOTAL        => $buyTotal,
-            self::SELL_TOTAL       => $sellTotal,
-            self::ISSUE_DATE_FROM  => $issueDateFrom,
-            self::ISSUE_DATE_TO    => $issueDateTo,
-            self::TIER             => $tier,
-            self::FORMAT           => $format,
-        ];
 
-        $this->post(array_filter($parameters, static function ($val) {
+        $parameters[self::TIER] = $tier;
+        $parameters[self::FORMAT] = $format;
+
+        $rawResponse = (string)$this->post(array_filter($parameters, static function ($val) {
             return $val !== '' && $val !== [];
         }));
+
+        $response = $this->decodeResponse($rawResponse);
+
+        return $response['data']['requestRef'];
     }
 }

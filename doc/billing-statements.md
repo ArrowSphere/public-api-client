@@ -11,22 +11,23 @@ use billing preferences to set how billing statements are generated.
 
 The Statement entity allow to get information about the billing statement header.
 
-| Field              | Type          | Example                                 | Description                                     |
-| ------------------ | ------------- | --------------------------------------- | ----------------------------------------------- |
-| reference          | `string`      | H1-AAA-0123456789ABCDEF0123456789ABCDEF | Identifier of the statement                     |
-| billingGroup       | `string`      | ResellerBilling                         | Billing group name                              |
-| vendorName         | `string`      | Microsoft                               | Vendor name                                     |
-| classification     | `string`      | saas                                    | End Customer Total Buy Price in vendor currency |
-| reportPeriod       | `string`      | 2021-04                                 | Report Period                                   |
-| billingStatementId | `string`      |                                         | Billing Statement ID                            |
-| billingPreference  | `string`      |                                         | Billing Preference                              |
-| marketplace        | `string`      | US                                      | Country code                                    |
-| issueDate          | `string/null` | 2021-04-01                              | Date of the issue                               |
-| from               | `Identity`    |                                         | Identity of the reseller                        |
-| to                 | `Identity`    |                                         | Identities of customers                         |
-| currency           | `string`      | USD                                     | Country Currency                                |
-| prices             | `Prices`      |                                         | Prices for reseller/customer                    |
-| description        | `string`      |                                         | Rule's name that led to this statement          |
+| Field              | Type                   | Example                                 | Description                                     |
+| ------------------ | ---------------------- | --------------------------------------- | ----------------------------------------------- |
+| billingGroup       | `string`               | ResellerBilling                         | Billing group name                              |
+| billingStrategy    | `string/null`          | mscsp-saas-monthly                      | Billing strategy name                           |
+| classification     | `string`               | saas                                    | End Customer Total Buy Price in vendor currency |
+| currency           | `string`               | USD                                     | Country Currency                                |
+| description        | `string`               |                                         | Rule's name that led to this statement          |
+| from               | `Identity`             |                                         | Identity of the reseller                        |
+| issueDate          | `string/null`          | 2021-04-01                              | Date of the issue                               |
+| marketplace        | `string`               | US                                      | Country code                                    |
+| prices             | `Prices`               |                                         | Prices for reseller/customer                    |
+| reference          | `string`               | H1-AAA-0123456789ABCDEF0123456789ABCDEF | Identifier of the statement                     |
+| reportPeriod       | `string`               | 2021-04                                 | Report Period                                   |
+| sequence           | `string`               | MSM12-0123456789                        | Sequence of the statement                       |
+| status             | `null`                 |                                         | Reserved for future use                         |
+| to                 | `Identity`             |                                         | Identities of customers                         |
+| vendorName         | `string`               | Microsoft                               | Vendor name                                     |
 
 ### Identity
 
@@ -52,12 +53,12 @@ The Prices entity allow to store reference and name about a reseller or a custom
 
 | Field     | Type                | Example | Description               |
 | --------- | ------------------- | ------- | ------------------------- |
-| listUnit  | `numeric/undefined` | 12.3    | Retail Unit Price         |
-| listTotal | `numeric/undefined` | 12.3    | Retail Total Price        |
-| buyUnit   | `numeric/undefined` | 12.3    | Reseller Buy Unit Price   |
 | buyTotal  | `numeric`           | 12.3    | Reseller Buy Total Price  |
-| sellUnit  | `numeric/undefined` | 12.3    | Reseller Sell Unit Price  |
+| buyUnit   | `numeric/undefined` | 12.3    | Reseller Buy Unit Price   |
+| listTotal | `numeric/undefined` | 12.3    | Retail Total Price        |
+| listUnit  | `numeric/undefined` | 12.3    | Retail Unit Price         |
 | sellTotal | `numeric`           | 12.3    | Reseller Sell Total Price |
+| sellUnit  | `numeric/undefined` | 12.3    | Reseller Sell Unit Price  |
 
 ### StatementLine
 
@@ -65,31 +66,31 @@ The StatementLine entity allow to get information about a billing statement line
 
 | Field                           | Type          | Example                                 | Description               |
 | ------------------------------- | ------------- | --------------------------------------- | ------------------------- |
+| arrowSku                        | `string`      |                                         |                           |
+| arsSubscriptionId               | `string/null` | XSP123                                  |                           |
+| billingPeriodEnd                | `string/null` | 2021-02-01                              |                           |
+| billingPeriodStart              | `string/null` | 2021-01-01                              |                           |
+| billingPeriodicity              | `string/null` | Monthly                                 | Monthly or Yearly         |
+| classification                  | `string/null` |                                         |                           |
+| currency                        | `string`      | EUR                                     |                           |
+| description                     | `string/null` | Description                             | Line-specific description |
+| offerName                       | `string/null` | Offer Name                              |                           |
+| orderId                         | `string/null` |                                         |                           |
+| prices                          | `Prices`      |                                         |                           |
+| quantity                        | `string/null` | 2.0                                     |                           |
+| rates                           | `Rates`       |                                         |                           |
 | reference                       | `string`      | L1-AAA-0123456789ABCDEF0123456789ABCDEF |                           |
+| resellerOrderId                 | `string/null` |                                         |                           |
+| subscriptionEndDate             | `string/null` | 2021-12-01                              |                           |
+| subscriptionFriendlyName        | `string/null` |                                         |                           |
+| subscriptionStartDate           | `string/null` | 2020-12-01                              |                           |
+| usageEndDate                    | `string`      | 2021-04-17                              |                           |
+| usageStartDate                  | `string`      | 2021-04-02                              |                           |
 | vendorEndCustomerSubscriptionId | `string/null` |                                         |                           |
 | vendorName                      | `string/null` | Microsoft                               |                           |
-| vendorProgram                   | `string/null` | Vendor Program                          |                           |
-| classification                  | `string/null` |                                         |                           |
 | vendorProductName               | `string/null` | Microsoft Product                       |                           |
+| vendorProgram                   | `string/null` | Vendor Program                          |                           |
 | vendorSku                       | `string/null` |                                         |                           |
-| arrowSku                        | `string`      |                                         |                           |
-| offerName                       | `string/null` | Offer Name                              |                           |
-| subscriptionFriendlyName        | `string/null` |                                         |                           |
-| arsSubscriptionId               | `string/null` | XSP123                                  |                           |
-| orderId                         | `string/null` |                                         |                           |
-| resellerOrderId                 | `string/null` |                                         |                           |
-| subscriptionStartDate           | `string/null` | 2020-12-01                              |                           |
-| subscriptionEndDate             | `string/null` | 2021-12-01                              |                           |
-| billingPeriodicity              | `string/null` | Monthly                                 | Monthly or Yearly         |
-| billingPeriodStart              | `string/null` | 2021-01-01                              |                           |
-| billingPeriodEnd                | `string/null` | 2021-02-01                              |                           |
-| usageStartDate                  | `string`      | 2021-04-02                              |                           |
-| usageEndDate                    | `string`      | 2021-04-17                              |                           |
-| rates                           | `Rates`       |                                         |                           |
-| quantity                        | `string/null` | 2.0                                     |                           |
-| currency                        | `string`      | EUR                                     |                           |
-| prices                          | `Prices`      |                                         |                           |
-| description                     | `string/null` | Description                             | Line-specific description |
 
 ## Usage
 
@@ -122,8 +123,10 @@ Example:
 ```php
 <?php
 
-$reportPeriod = '2021-01';
-$statements = $client->getStatements($reportPeriod);
+$parameters = [
+    StatementsClient::REPORT_PERIOD => '2021-01'
+];
+$statements = $client->getStatements($parameters);
 foreach ($statements as $statement) {
     echo $statement->getReference() . PHP_EOL;
 }
@@ -172,7 +175,9 @@ Example:
 
 ```php
 <?php
-$reportPeriod = ['2021-04'];
+$parameters = [
+    StatementsClient::REPORT_PERIOD => ['2021-04']
+];
 
-$client->createExport($reportPeriod);
+$client->createExport($parameters);
 ```

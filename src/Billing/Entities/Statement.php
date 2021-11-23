@@ -8,12 +8,12 @@ use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 class Statement extends AbstractEntity
 {
     public const COLUMN_REFERENCE = 'reference';
+    public const COLUMN_SEQUENCE = 'sequence';
     public const COLUMN_BILLING_GROUP = 'billingGroup';
+    public const COLUMN_BILLING_STRATEGY = 'billingStrategy';
     public const COLUMN_VENDOR_NAME = 'vendorName';
     public const COLUMN_CLASSIFICATION = 'classification';
     public const COLUMN_REPORT_PERIOD = 'reportPeriod';
-    public const COLUMN_BILLING_STATEMENT_ID = 'billingStatementId';
-    public const COLUMN_BILLING_PREFERENCE = 'billingPreference';
     public const COLUMN_MARKETPLACE = 'marketplace';
     public const COLUMN_ISSUE_DATE = 'issueDate';
     public const COLUMN_FROM = 'from';
@@ -21,15 +21,24 @@ class Statement extends AbstractEntity
     public const COLUMN_CURRENCY = 'currency';
     public const COLUMN_PRICES = 'prices';
     public const COLUMN_DESCRIPTION = 'description';
+    public const COLUMN_STATUS = 'status';
 
     protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
         self::COLUMN_REFERENCE => 'string|required',
+        self::COLUMN_SEQUENCE => 'string|present|nullable',
         self::COLUMN_BILLING_GROUP => 'string|required',
+        self::COLUMN_BILLING_STRATEGY => 'string|present|nullable',
+        self::COLUMN_VENDOR_NAME => 'string|present|nullable',
+        self::COLUMN_CLASSIFICATION => 'string|present|nullable',
+        self::COLUMN_REPORT_PERIOD => 'string|required',
+        self::COLUMN_MARKETPLACE => 'string|required',
+        self::COLUMN_ISSUE_DATE => 'string|present|nullable',
         self::COLUMN_FROM => 'array|required',
         self::COLUMN_TO => 'array|required',
-        self::COLUMN_ISSUE_DATE => 'string|present|nullable',
-        self::COLUMN_MARKETPLACE => 'string|required',
         self::COLUMN_CURRENCY => 'string|required',
+        self::COLUMN_PRICES => 'array|required',
+        self::COLUMN_DESCRIPTION => 'string|present|nullable',
+        self::COLUMN_STATUS => 'array|nullable',
     ];
 
     /**
@@ -38,17 +47,27 @@ class Statement extends AbstractEntity
     private $reference;
 
     /**
+     * @var string|null
+     */
+    private $sequence;
+
+    /**
      * @var string
      */
     private $billingGroup;
 
     /**
-     * @var string
+     * @var string|null
+     */
+    private $billingStrategy;
+
+    /**
+     * @var string|null
      */
     private $vendorName;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $classification;
 
@@ -56,16 +75,6 @@ class Statement extends AbstractEntity
      * @var string
      */
     private $reportPeriod;
-
-    /**
-     * @var string
-     */
-    private $billingStatementId;
-
-    /**
-     * @var string
-     */
-    private $billingPreference;
 
     /**
      * @var string
@@ -98,9 +107,14 @@ class Statement extends AbstractEntity
     private $prices;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $description;
+
+    /**
+     * @var StatementStatus|null
+     */
+    private $status;
 
     /**
      * Statement constructor.
@@ -115,12 +129,12 @@ class Statement extends AbstractEntity
         parent::__construct($data);
 
         $this->reference = $data[self::COLUMN_REFERENCE];
+        $this->sequence = $data[self::COLUMN_SEQUENCE];
         $this->billingGroup = $data[self::COLUMN_BILLING_GROUP];
+        $this->billingStrategy = $data[self::COLUMN_BILLING_STRATEGY];
         $this->vendorName = $data[self::COLUMN_VENDOR_NAME];
         $this->classification = $data[self::COLUMN_CLASSIFICATION];
         $this->reportPeriod = $data[self::COLUMN_REPORT_PERIOD];
-        $this->billingStatementId = $data[self::COLUMN_BILLING_STATEMENT_ID];
-        $this->billingPreference = $data[self::COLUMN_BILLING_PREFERENCE];
         $this->marketplace = $data[self::COLUMN_MARKETPLACE];
         $this->issueDate = $data[self::COLUMN_ISSUE_DATE];
         $this->from = new Identity($data[self::COLUMN_FROM]);
@@ -128,6 +142,7 @@ class Statement extends AbstractEntity
         $this->currency = $data[self::COLUMN_CURRENCY];
         $this->prices = new Prices($data[self::COLUMN_PRICES]);
         $this->description = $data[self::COLUMN_DESCRIPTION];
+        $this->status = isset($data[self::COLUMN_STATUS]) ? new StatementStatus($data[self::COLUMN_STATUS]) : null;
     }
 
     /**
@@ -139,6 +154,14 @@ class Statement extends AbstractEntity
     }
 
     /**
+     * @return string|null
+     */
+    public function getSequence(): ?string
+    {
+        return $this->sequence;
+    }
+
+    /**
      * @return string
      */
     public function getBillingGroup(): string
@@ -147,17 +170,25 @@ class Statement extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getVendorName(): string
+    public function getBillingStrategy(): ?string
+    {
+        return $this->billingStrategy;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getVendorName(): ?string
     {
         return $this->vendorName;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getClassification(): string
+    public function getClassification(): ?string
     {
         return $this->classification;
     }
@@ -168,22 +199,6 @@ class Statement extends AbstractEntity
     public function getReportPeriod(): string
     {
         return $this->reportPeriod;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBillingPreference(): string
-    {
-        return $this->billingPreference;
-    }
-
-    /**
-     * @return string
-     */
-    public function getBillingStatementId(): string
-    {
-        return $this->billingStatementId;
     }
 
     /**
@@ -243,18 +258,28 @@ class Statement extends AbstractEntity
     }
 
     /**
+     * @return StatementStatus
+     */
+    public function getStatus(): ?StatementStatus
+    {
+        return $this->status;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
     {
+        $status = $this->getStatus();
+
         return [
             self::COLUMN_REFERENCE => $this->getReference(),
+            self::COLUMN_SEQUENCE => $this->getSequence(),
             self::COLUMN_BILLING_GROUP => $this->getBillingGroup(),
+            self::COLUMN_BILLING_STRATEGY => $this->getBillingStrategy(),
             self::COLUMN_VENDOR_NAME => $this->getVendorName(),
             self::COLUMN_CLASSIFICATION => $this->getClassification(),
             self::COLUMN_REPORT_PERIOD => $this->getReportPeriod(),
-            self::COLUMN_BILLING_STATEMENT_ID => $this->getBillingStatementId(),
-            self::COLUMN_BILLING_PREFERENCE => $this->getBillingPreference(),
             self::COLUMN_MARKETPLACE => $this->getMarketplace(),
             self::COLUMN_ISSUE_DATE => $this->getIssueDate(),
             self::COLUMN_FROM => $this->getFrom()->jsonSerialize(),
@@ -262,6 +287,7 @@ class Statement extends AbstractEntity
             self::COLUMN_CURRENCY => $this->getCurrency(),
             self::COLUMN_PRICES => $this->getPrices()->jsonSerialize(),
             self::COLUMN_DESCRIPTION => $this->getDescription(),
+            self::COLUMN_STATUS => $status === null ? null : $status->jsonSerialize(),
         ];
     }
 }

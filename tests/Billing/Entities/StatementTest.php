@@ -18,12 +18,12 @@ class StatementTest extends AbstractEntityTest
             'standard' => [
                 'fields' => [
                     'reference' => 'H1-MSM-deadbeefdeadbeefdeadbeefdeadbeef',
+                    'sequence' => 'MSM21-123456789',
                     'billingGroup' => 'ArrowBilling',
+                    'billingStrategy' => 'mscsp-saas-monthly',
                     'vendorName' => 'microsoft',
                     'classification' => 'saas',
                     'reportPeriod' => '2021-04',
-                    'billingStatementId' => '',
-                    'billingPreference' => '',
                     'marketplace' => 'US',
                     'issueDate' => '2021-04-29 13:37:00',
                     'from' => [
@@ -45,12 +45,12 @@ class StatementTest extends AbstractEntityTest
                 'expected' => <<<JSON
 {
     "reference": "H1-MSM-deadbeefdeadbeefdeadbeefdeadbeef",
+    "sequence": "MSM21-123456789",
     "billingGroup": "ArrowBilling",
+    "billingStrategy": "mscsp-saas-monthly",
     "vendorName": "microsoft",
     "classification": "saas",
     "reportPeriod": "2021-04",
-    "billingStatementId": "",
-    "billingPreference": "",
     "marketplace": "US",
     "issueDate": "2021-04-29 13:37:00",
     "from": {
@@ -67,7 +67,8 @@ class StatementTest extends AbstractEntityTest
         "buyTotal": 42.05,
         "sellTotal": 23.1
     },
-    "description": "rule1"
+    "description": "rule1",
+    "status": null
 }
 JSON
             ],

@@ -1,5 +1,33 @@
 # Upgrade guide
 
+## 0.7 to 0.8
+
+### Changes to the Billing client
+
+Any filter can now be passed as a parameters array to `StatementsClient::getStatements()`,
+`StatementsClient::getStatementsRaw()` and `StatementsClient::createExport()`.
+This implies you cannot pass one argument per filter anymore.
+
+v0.7
+```php
+<?php
+
+$reportPeriods = ['2021-01', '2021-02'];
+$customerName = 'XSP123';
+$statements = $client->getStatements($reportPeriods, $customerName);
+```
+
+v0.8
+```php
+<?php
+
+$parameters = [
+    StatementsClient::REPORT_PERIOD => ['2021-01', '2021-02'],
+    StatementsClient::CUSTOMER_NAME => 'XSP123'
+];
+$statements = $client->getStatements($parameters);
+```
+
 ## 0.6 to 0.7
 
 ### Changes to the campaigns client

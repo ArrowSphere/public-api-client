@@ -17,12 +17,12 @@ class Rates extends AbstractEntity
     ];
 
     /**
-     * @var float
+     * @var float|null
      */
     private $sellRate;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $sellRateType;
 
@@ -38,7 +38,7 @@ class Rates extends AbstractEntity
     {
         parent::__construct($data);
 
-        if (! RateTypeEnum::isValidValue($data[self::COLUMN_SELL_RATE_TYPE])) {
+        if (self::$enableValidation && $data[self::COLUMN_SELL_RATE_TYPE] !== null && ! RateTypeEnum::isValidValue($data[self::COLUMN_SELL_RATE_TYPE])) {
             throw new EntityValidationException('End Customer Rate type: ' . $data[self::COLUMN_SELL_RATE_TYPE] . ' not supported');
         }
 
@@ -49,15 +49,15 @@ class Rates extends AbstractEntity
     /**
      * @return float
      */
-    public function getSellRate(): float
+    public function getSellRate(): ?float
     {
         return $this->sellRate;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getSellRateType(): string
+    public function getSellRateType(): ?string
     {
         return $this->sellRateType;
     }

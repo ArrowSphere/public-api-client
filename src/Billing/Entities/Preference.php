@@ -71,15 +71,17 @@ class Preference extends AbstractEntity
     {
         parent::__construct($data);
 
-        if (! PreferenceTypeEnum::isValidValue($data[self::KEY_IDENTIFIER])) {
-            throw new EntityValidationException('Identifier: ' . $data[self::KEY_IDENTIFIER] . ' not supported');
-        }
+        if (self::$enableValidation) {
+            if (! PreferenceTypeEnum::isValidValue($data[self::KEY_IDENTIFIER])) {
+                throw new EntityValidationException('Identifier: ' . $data[self::KEY_IDENTIFIER] . ' not supported');
+            }
 
-        if ($data[self::KEY_IDENTIFIER] === PreferenceTypeEnum::GROUP_BY) {
-            $values = PreferenceGroupByColumnsEnum::invalidValues($data[self::KEY_PARAMETERS][self::KEY_COLUMNS]);
+            if ($data[self::KEY_IDENTIFIER] === PreferenceTypeEnum::GROUP_BY) {
+                $values = PreferenceGroupByColumnsEnum::invalidValues($data[self::KEY_PARAMETERS][self::KEY_COLUMNS]);
 
-            if (! empty($values)) {
-                throw new EntityValidationException('GroupBy Columns: ' . implode(' ', $values) . ' not supported');
+                if (! empty($values)) {
+                    throw new EntityValidationException('GroupBy Columns: ' . implode(' ', $values) . ' not supported');
+                }
             }
         }
 

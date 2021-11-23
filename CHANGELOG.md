@@ -5,6 +5,25 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added `status`, `billingStrategy` and `sequence` attributes in the Billing Statement entity
+- Added `StatementsClient::postExport()` return value
+
+### Changed
+
+- Changed `StatementsClient::getStatements()` and `StatementsClient::getStatementsRaw()` parameters
+- Changed `StatementsClient::postExport()` parameters
+
+### Fixed
+
+- Fixed null rate type and null rate value in the Billing Rates entity
+- Fixed allow using `setPerPage` for `StatementsClient::getStatements()` and `StatementsClient::getStatementLines()`
+
+### Removed
+
+- Removed `billingStatementId` and `billingPreference` attributes from the Billing Statement entity
+
 ### Fixed
 
 - Fixed the UPGRADING.md documentation to add exactly what breaking changes each version brings.
