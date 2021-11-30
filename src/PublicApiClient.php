@@ -11,6 +11,8 @@ use ArrowSphere\PublicApiClient\Catalog\FamilyClient;
 use ArrowSphere\PublicApiClient\Catalog\OfferClient;
 use ArrowSphere\PublicApiClient\Catalog\ProgramClient;
 use ArrowSphere\PublicApiClient\Catalog\ServiceClient;
+use ArrowSphere\PublicApiClient\Consumption\AnalyticsClient;
+use ArrowSphere\PublicApiClient\Consumption\HealthCheckClient;
 use ArrowSphere\PublicApiClient\Customers\CustomersClient;
 use ArrowSphere\PublicApiClient\General\CheckDomainClient;
 use ArrowSphere\PublicApiClient\General\WhoamiClient;
@@ -149,6 +151,26 @@ class PublicApiClient extends AbstractClient
     public function getCampaignsClient(): CampaignsClient
     {
         return (new CampaignsClient($this->client))
+            ->setUrl($this->url)
+            ->setApiKey($this->apiKey);
+    }
+
+    /**
+     * @return AnalyticsClient
+     */
+    public function getAnalyticsClient(): AnalyticsClient
+    {
+        return (new AnalyticsClient($this->client))
+            ->setUrl($this->url)
+            ->setApiKey($this->apiKey);
+    }
+
+    /**
+     * @return HealthCheckClient
+     */
+    public function getHealthCheckClient(): HealthCheckClient
+    {
+        return (new HealthCheckClient($this->client))
             ->setUrl($this->url)
             ->setApiKey($this->apiKey);
     }

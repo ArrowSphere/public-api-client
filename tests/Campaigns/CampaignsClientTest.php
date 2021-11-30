@@ -382,10 +382,10 @@ JSON;
         "banners": [
             {
                 "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
-            }, 
+            },
             {
                 "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
-            }, 
+            },
             {
                 "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
             }
@@ -464,10 +464,10 @@ JSON;
         "banners": [
             {
                 "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
-            }, 
+            },
             {
                 "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
-            }, 
+            },
             {
                 "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
             }
@@ -588,10 +588,10 @@ JSON;
         "banners": [
             {
                 "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
-            }, 
+            },
             {
                 "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
-            }, 
+            },
             {
                 "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
             }
@@ -781,10 +781,10 @@ JSON;
         {
             "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb",
             "type": "PICTURE"
-        }, 
+        },
         {
             "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
-        }, 
+        },
         {
             "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
         }
@@ -821,10 +821,10 @@ JSON;
             {
                 "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb",
                 "type": "PICTURE"
-            }, 
+            },
             {
                 "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
-            }, 
+            },
             {
                 "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
             }
@@ -907,10 +907,10 @@ JSON;
             {
                 "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb",
                 "type": "PICTURE"
-            }, 
+            },
             {
                 "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
-            }, 
+            },
             {
                 "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
             }
