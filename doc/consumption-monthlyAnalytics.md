@@ -38,6 +38,9 @@ Description of `PriceAnalyticsItem`
 
 ## Usage
 
+You can get it through the main entry point `PublicApiClient` and its method `getAnalyticsClient()`, or instanciate it directly as follow:
+
+
 ```php
 <?php
 

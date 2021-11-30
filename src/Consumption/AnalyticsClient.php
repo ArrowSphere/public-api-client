@@ -9,7 +9,7 @@ use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ReflectionException;
 
 /**
- * Class HealthCheckClient
+ * Class AnalyticsClient
  */
 class AnalyticsClient extends AbstractConsumptionClient
 {
