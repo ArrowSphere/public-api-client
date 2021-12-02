@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.2] - 2021-12-02
+
 ### Added
 
 - Added a getter to AnalyticsClient and HealthCheckClient from PublicApiClient
@@ -330,7 +332,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.7.1...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.7.2...HEAD
+[0.7.2]: https://github.com/ArrowSphere/public-api-client/compare/0.7.1...0.7.2
 [0.7.1]: https://github.com/ArrowSphere/public-api-client/compare/0.7.0...0.7.1
 [0.7.0]: https://github.com/ArrowSphere/public-api-client/compare/0.6.3...0.7.0
 [0.6.3]: https://github.com/ArrowSphere/public-api-client/compare/0.6.2...0.6.3
