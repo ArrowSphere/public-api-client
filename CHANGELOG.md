@@ -5,24 +5,28 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed the UPGRADING.md documentation to add exactly what breaking changes each version brings.
+
 ## [0.7.2] - 2021-12-02
 
 ### Added
 
-- Added a getter to AnalyticsClient and HealthCheckClient from PublicApiClient
+- Added a getter to `AnalyticsClient` and `HealthCheckClient` from `PublicApiClient`
 
 ## [0.7.1] - 2021-11-19
 
 ### Added
 
-- Added sell_price property in license's prices in public-api-license client
+- Added `sell_price` property in license's prices in `LicensesClient`
 
 ## [0.7.0] - 2021-11-16
 
 ### Fixed
 
-- Add the missing background color to the banner entity
-- Add the customer reference to get an active campaign
+- Added the missing background color to the banner entity
+- Added the customer reference to get an active campaign
 
 ## [0.6.3] - 2021-10-18
 
