@@ -13,6 +13,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - Added a default `Content-Type` header as `application/json` to all the calls
 
+### Added
+
+- Added methods to manage invitations to the customer portal.
+
 ## [0.9.0] - 2022-03-02
 
 ### Added

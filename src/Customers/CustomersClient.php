@@ -4,6 +4,7 @@ namespace ArrowSphere\PublicApiClient\Customers;
 
 use ArrowSphere\PublicApiClient\AbstractClient;
 use ArrowSphere\PublicApiClient\Customers\Entities\Customer;
+use ArrowSphere\PublicApiClient\Customers\Entities\Invitation;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
@@ -94,5 +95,71 @@ class CustomersClient extends AbstractClient
         $response = $this->decodeResponse($rawResponse);
 
         return $response['data']['reference'];
+    }
+
+    /**
+     * @param string $code
+     * @param array $parameters
+     *
+     * @return string
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getInvitationRaw(string $code, array $parameters = []): string
+    {
+        $this->path = sprintf(
+            '/customers/invitations/%s',
+            $code
+        );
+
+        return $this->get($parameters);
+    }
+
+    /**
+     * @param string $code
+     * @param array $parameters
+     *
+     * @return Invitation
+     *
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getInvitation(string $code, array $parameters = []): Invitation
+    {
+        $rawResponse = $this->getInvitationRaw($code, $parameters);
+
+        $response = $this->decodeResponse($rawResponse);
+
+        return new Invitation($response['data']);
+    }
+
+    /**
+     * @param int $contactId
+     * @param array $parameters
+     *
+     * @return Invitation
+     *
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function createInvitation(int $contactId, array $parameters = []): Invitation
+    {
+        $payload = [
+            'contactId' => $contactId,
+        ];
+
+        $this->path = '/customers/invitations';
+
+        $rawResponse = $this->post($payload, $parameters);
+
+        $response = $this->decodeResponse($rawResponse);
+
+        return new Invitation($response['data']);
     }
 }
