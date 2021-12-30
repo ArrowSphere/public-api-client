@@ -11,7 +11,7 @@ The information below aims to manage the end customers. As a reseller, you need 
 An end customer is managed by the `Customer` entity.
 
 | Field             | Type             | Example                  | Description                                                                |
-| ----------------- | ---------------- | ------------------------ | -------------------------------------------------------------------------- |
+|-------------------|------------------|--------------------------|----------------------------------------------------------------------------|
 | addressLine1      | `string`         | 1007 Mountain Drive      | First line of the address                                                  |
 | addressLine2      | `string`         | Wayne Manor              | Second line of the address                                                 |
 | billingId         | `string`         |                          | Billing identifier                                                         |
@@ -37,7 +37,7 @@ An end customer is managed by the `Customer` entity.
 The `Contact` entity allows to manage the company's main contact:
 
 | Field     | Type     | Example          | Description  |
-| --------- | -------- | ---------------- | ------------ |
+|-----------|----------|------------------|--------------|
 | Email     | `string` | test@example.com | E-mail       |
 | FirstName | `string` | Bruce            | First name   |
 | LastName  | `string` | Wayne            | Last name    |
@@ -48,13 +48,27 @@ The `Contact` entity allows to manage the company's main contact:
 The `CompanyDetails` entity allows to manage the company's vendor-specific information:
 
 | Field             | Type     | Example              | Description                                              |
-| ----------------- | -------- | -------------------- | -------------------------------------------------------- |
+|-------------------|----------|----------------------|----------------------------------------------------------|
 | DomainName        | `string` | example.com          | Domain name on Microsoft Azure                           |
 | IBMCeId           | `string` | ibm CE Id            | IBM CE id                                                |
 | Maas360ResellerId | `string` | Maas 360 Reseller Id | IBM MaaS 360 reseller id                                 |
 | Migration         | `bool`   | false                | Indicates if the customer's account needs to be migrated |
 | OracleOnlineKey   | `string` | oracle online key    | Online key for Oracle                                    |
 | TenantId          | `string` | tenant id            | Microsoft Tenant id                                      |
+
+### Invitation
+
+The `Invitation` entity allows inviting customer contacts to the customer portal.
+
+| Field             | Type     | Example             | Description                                                              |
+|-------------------|----------|---------------------|--------------------------------------------------------------------------|
+| code              | `string` | ABCD12345           | The code sent to the user allowing him to register himself to the portal |
+| createdAt         | `string` | 2021-12-25 23:59:52 | The date when the invitation was created                                 |
+| updatedAt         | `string` | 2022-01-01 12:23:32 | The date when the invitation was updated                                 |
+| company.reference | `string` | ABC123              | The reference of the company of this end customer                        |
+| contact.email     | `string` | noreply@example.com | The email address of the invited contact                                 |
+| contact.firstName | `string` | Bruce               | The first name of the invited contact                                    |
+| contact.lastName  | `string` | Wayne               | The last name of the invited contact                                     |
 
 ## Usage
 
@@ -97,7 +111,7 @@ foreach ($customers as $customer) {
 
 You can create a customer by calling the `createCustomer()` method.
 
-This method returns the reference of the newly created custoemr.
+This method returns the reference of the newly created customer.
 
 Example:
 
@@ -139,4 +153,25 @@ $customer = new Customer([
 $reference = $client->createCustomer($customer);
 
 echo "New customer's reference is: " . $reference . PHP_EOL;
+```
+
+### Create an invitation
+
+You can create an invitation by calling the `createInvitation()` method.
+
+The user will receive an e-mail inviting him to connect to the customer portal.
+
+Ths method returns an `Invitation` entity.
+
+Example:
+
+```php
+<?php
+
+$contactId = 12345;
+
+$invitation = $client->createInvitation($contactId);
+
+echo "New invitation with keycode " . $invitation->getKeycode() . PHP_EOL;
+
 ```

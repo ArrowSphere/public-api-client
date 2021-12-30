@@ -81,9 +81,18 @@ class CustomersClientTest extends AbstractClientTest
             ->expects(self::exactly(3))
             ->method('request')
             ->withConsecutive(
-                ['get', 'https://www.test.com/customers?abc=def&ghi=0&per_page=100'],
-                ['get', 'https://www.test.com/customers?abc=def&ghi=0&page=2&per_page=100'],
-                ['get', 'https://www.test.com/customers?abc=def&ghi=0&page=3&per_page=100']
+                [
+                    'get',
+                    'https://www.test.com/customers?abc=def&ghi=0&per_page=100',
+                ],
+                [
+                    'get',
+                    'https://www.test.com/customers?abc=def&ghi=0&page=2&per_page=100',
+                ],
+                [
+                    'get',
+                    'https://www.test.com/customers?abc=def&ghi=0&page=3&per_page=100',
+                ]
             )
             ->willReturn(new Response(200, [], $response));
 
@@ -296,5 +305,170 @@ JSON;
         ]);
 
         self::assertSame('XSP123456', $reference);
+    }
+
+    /**
+     * @return void
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetInvitationRaw(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/customers/invitations/ABCD12345?abc=def&ghi=0')
+            ->willReturn(new Response(200, [], 'OK USA'));
+
+        $this->client->getInvitationRaw(
+            'ABCD12345',
+            [
+                'abc' => 'def',
+                'ghi' => false,
+            ]
+        );
+    }
+
+    /**
+     * @return void
+     *
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetInvitationWithInvalidResponse(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/customers/invitations/ABCD12345?abc=def&ghi=0')
+            ->willReturn(new Response(200, [], '{'));
+
+        $this->expectException(PublicApiClientException::class);
+        $this->client->getInvitation(
+            'ABCD12345',
+            [
+                'abc' => 'def',
+                'ghi' => false,
+            ]
+        );
+    }
+
+    /**
+     * @return void
+     *
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetInvitation(): void
+    {
+        $response = <<<JSON
+{
+  "status": 200,
+  "data": {
+    "code": "ABCD12345",
+    "createdAt": "2021-12-25 23:59:51",
+    "updatedAt": "2022-01-01 12:23:34",
+    "contact": {
+      "username": "aaaabbbb-cccc-dddd-eeee-ffff00001111",
+      "email": "noreply@example.com",
+      "firstName": "Bruce",
+      "lastName": "Wayne"
+    },
+    "company": {
+      "reference": "ABC123"
+    }
+  }
+}
+JSON;
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/customers/invitations/ABCD12345?abc=def&ghi=0')
+            ->willReturn(new Response(200, [], $response));
+
+        $invitation = $this->client->getInvitation(
+            'ABCD12345',
+            [
+                'abc' => 'def',
+                'ghi' => false,
+            ]
+        );
+
+        self::assertSame('ABCD12345', $invitation->getcode());
+        self::assertSame('2021-12-25 23:59:51', $invitation->getCreatedAt());
+        self::assertSame('2022-01-01 12:23:34', $invitation->getUpdatedAt());
+        self::assertSame('aaaabbbb-cccc-dddd-eeee-ffff00001111', $invitation->getContact()->getUsername());
+        self::assertSame('noreply@example.com', $invitation->getContact()->getEmail());
+        self::assertSame('Bruce', $invitation->getContact()->getFirstName());
+        self::assertSame('Wayne', $invitation->getContact()->getLastName());
+        self::assertSame('ABC123', $invitation->getCompany()->getReference());
+    }
+
+    /**
+     * @return void
+     *
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testCreateInvitation(): void
+    {
+        $payload = [
+            'contactId' => 12345,
+        ];
+
+        $response = <<<JSON
+{
+    "status": 201,
+    "data": {
+        "code": "ABCD12345",
+        "createdAt": "2021-12-25 23:59:51",
+        "updatedAt": "2022-01-01 12:23:34",
+        "contact": {
+            "username": "aaaabbbb-cccc-dddd-eeee-ffff00001111",
+            "email": "noreply@example.com",
+            "firstName": "Bruce",
+            "lastName": "Wayne"
+        },
+        "company": {
+            "reference": "ABC123"
+        }
+    }
+}
+JSON;
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('post', 'https://www.test.com/customers/invitations?abc=def&ghi=0', [
+                'headers' => [
+                    'apiKey' => '123456',
+                    'Content-Type' => 'application/json',
+                ],
+                'body'    => json_encode($payload),
+            ])
+            ->willReturn(new Response(200, [], $response));
+
+        $invitation = $this->client->createInvitation(12345, [
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
+
+        self::assertSame('ABCD12345', $invitation->getcode());
+        self::assertSame('2021-12-25 23:59:51', $invitation->getCreatedAt());
+        self::assertSame('2022-01-01 12:23:34', $invitation->getUpdatedAt());
+        self::assertSame('aaaabbbb-cccc-dddd-eeee-ffff00001111', $invitation->getContact()->getUsername());
+        self::assertSame('noreply@example.com', $invitation->getContact()->getEmail());
+        self::assertSame('Bruce', $invitation->getContact()->getFirstName());
+        self::assertSame('Wayne', $invitation->getContact()->getLastName());
+        self::assertSame('ABC123', $invitation->getCompany()->getReference());
     }
 }
