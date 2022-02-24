@@ -55,6 +55,10 @@ echo "Hello " . $whoami->getCompanyName();
 - [Add-on](doc/catalog-addon.md)
 - [Family](doc/catalog-family.md)
 
+### Subscriptions clients
+
+- [Subscriptions](doc/subscriptions.md)
+
 ### Customers clients
 
 - [Customers](doc/customers.md)
