@@ -1,5 +1,25 @@
 # Upgrade guide
 
+## 0.8 to 0.9
+
+## Changes to the Billing client
+
+Attribute `vendorProgram` is renamed to `programCode` in the `BillingStatementLine` entity.
+
+v0.8
+```php
+<?php
+
+$program = $statementLine->getVendorProgram();
+```
+
+v0.9
+```php
+<?php
+
+$program = $statementLine->getProgramCode();
+```
+
 ## 0.7 to 0.8
 
 ### Changes to the Billing client

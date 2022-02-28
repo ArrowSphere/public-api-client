@@ -12,6 +12,7 @@ class Statement extends AbstractEntity
     public const COLUMN_BILLING_GROUP = 'billingGroup';
     public const COLUMN_BILLING_STRATEGY = 'billingStrategy';
     public const COLUMN_VENDOR_NAME = 'vendorName';
+    public const COLUMN_PROGRAM_CODE = 'programCode';
     public const COLUMN_CLASSIFICATION = 'classification';
     public const COLUMN_REPORT_PERIOD = 'reportPeriod';
     public const COLUMN_MARKETPLACE = 'marketplace';
@@ -29,6 +30,7 @@ class Statement extends AbstractEntity
         self::COLUMN_BILLING_GROUP => 'string|required',
         self::COLUMN_BILLING_STRATEGY => 'string|present|nullable',
         self::COLUMN_VENDOR_NAME => 'string|present|nullable',
+        self::COLUMN_PROGRAM_CODE => 'string|present|nullable',
         self::COLUMN_CLASSIFICATION => 'string|present|nullable',
         self::COLUMN_REPORT_PERIOD => 'string|required',
         self::COLUMN_MARKETPLACE => 'string|required',
@@ -65,6 +67,11 @@ class Statement extends AbstractEntity
      * @var string|null
      */
     private $vendorName;
+
+    /**
+     * @var string|null
+     */
+    private $programCode;
 
     /**
      * @var string|null
@@ -133,6 +140,7 @@ class Statement extends AbstractEntity
         $this->billingGroup = $data[self::COLUMN_BILLING_GROUP];
         $this->billingStrategy = $data[self::COLUMN_BILLING_STRATEGY];
         $this->vendorName = $data[self::COLUMN_VENDOR_NAME];
+        $this->programCode = $data[self::COLUMN_PROGRAM_CODE];
         $this->classification = $data[self::COLUMN_CLASSIFICATION];
         $this->reportPeriod = $data[self::COLUMN_REPORT_PERIOD];
         $this->marketplace = $data[self::COLUMN_MARKETPLACE];
@@ -183,6 +191,14 @@ class Statement extends AbstractEntity
     public function getVendorName(): ?string
     {
         return $this->vendorName;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getProgramCode(): ?string
+    {
+        return $this->programCode;
     }
 
     /**
@@ -278,6 +294,7 @@ class Statement extends AbstractEntity
             self::COLUMN_BILLING_GROUP => $this->getBillingGroup(),
             self::COLUMN_BILLING_STRATEGY => $this->getBillingStrategy(),
             self::COLUMN_VENDOR_NAME => $this->getVendorName(),
+            self::COLUMN_PROGRAM_CODE => $this->getProgramCode(),
             self::COLUMN_CLASSIFICATION => $this->getClassification(),
             self::COLUMN_REPORT_PERIOD => $this->getReportPeriod(),
             self::COLUMN_MARKETPLACE => $this->getMarketplace(),

@@ -11,7 +11,7 @@ class StatementLine extends AbstractEntity
     public const COLUMN_REFERENCE = 'reference';
     public const COLUMN_VENDOR_END_CUSTOMER_SUBSCRIPTION_ID = 'vendorEndCustomerSubscriptionId';
     public const COLUMN_VENDOR_NAME = 'vendorName';
-    public const COLUMN_VENDOR_PROGRAM = 'vendorProgram';
+    public const COLUMN_PROGRAM_CODE = 'programCode';
     public const COLUMN_CLASSIFICATION = 'classification';
     public const COLUMN_VENDOR_PRODUCT_NAME = 'vendorProductName';
     public const COLUMN_VENDOR_SKU = 'vendorSku';
@@ -38,7 +38,7 @@ class StatementLine extends AbstractEntity
         self::COLUMN_REFERENCE => 'string|required',
         self::COLUMN_VENDOR_END_CUSTOMER_SUBSCRIPTION_ID => 'string|present|nullable',
         self::COLUMN_VENDOR_NAME => 'string|present|nullable',
-        self::COLUMN_VENDOR_PROGRAM => 'string|present|nullable',
+        self::COLUMN_PROGRAM_CODE => 'string|present|nullable',
         self::COLUMN_CLASSIFICATION => 'string|present|nullable',
         self::COLUMN_VENDOR_PRODUCT_NAME => 'string|present|nullable',
         self::COLUMN_VENDOR_SKU => 'string|present|nullable',
@@ -80,7 +80,7 @@ class StatementLine extends AbstractEntity
     /**
      * @var string|null
      */
-    private $vendorProgram;
+    private $programCode;
 
     /**
      * @var string|null
@@ -206,7 +206,7 @@ class StatementLine extends AbstractEntity
         $this->reference = $data[self::COLUMN_REFERENCE];
         $this->vendorEndCustomerSubscriptionId = $data[self::COLUMN_VENDOR_END_CUSTOMER_SUBSCRIPTION_ID];
         $this->vendorName = $data[self::COLUMN_VENDOR_NAME];
-        $this->vendorProgram = $data[self::COLUMN_VENDOR_PROGRAM];
+        $this->programCode = $data[self::COLUMN_PROGRAM_CODE];
         $this->classification = $data[self::COLUMN_CLASSIFICATION];
         $this->vendorProductName = $data[self::COLUMN_VENDOR_PRODUCT_NAME];
         $this->vendorSku = $data[self::COLUMN_VENDOR_SKU];
@@ -257,9 +257,9 @@ class StatementLine extends AbstractEntity
     /**
      * @return string|null
      */
-    public function getVendorProgram(): ?string
+    public function getProgramCode(): ?string
     {
-        return $this->vendorProgram;
+        return $this->programCode;
     }
 
     /**
@@ -439,7 +439,7 @@ class StatementLine extends AbstractEntity
             self::COLUMN_REFERENCE => $this->getReference(),
             self::COLUMN_VENDOR_END_CUSTOMER_SUBSCRIPTION_ID => $this->getVendorEndCustomerSubscriptionId(),
             self::COLUMN_VENDOR_NAME => $this->getVendorName(),
-            self::COLUMN_VENDOR_PROGRAM => $this->getVendorProgram(),
+            self::COLUMN_PROGRAM_CODE => $this->getProgramCode(),
             self::COLUMN_CLASSIFICATION => $this->getClassification(),
             self::COLUMN_VENDOR_PRODUCT_NAME => $this->getVendorProductName(),
             self::COLUMN_VENDOR_SKU => $this->getVendorSku(),

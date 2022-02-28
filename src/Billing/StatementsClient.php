@@ -29,6 +29,11 @@ class StatementsClient extends AbstractBillingClient
     public const VENDOR_NAME = 'vendorName';
 
     /**
+     * @var string programCode index
+     */
+    public const PROGRAM_CODE = 'programCode';
+
+    /**
      * @var string classification index
      */
     public const CLASSIFICATION = 'classification';

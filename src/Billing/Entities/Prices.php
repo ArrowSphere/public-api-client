@@ -74,7 +74,7 @@ class Prices extends AbstractEntity
     }
 
     /**
-     * @return float
+     * @return float|null
      */
     public function getListUnit(): ?float
     {
@@ -82,7 +82,7 @@ class Prices extends AbstractEntity
     }
 
     /**
-     * @return float
+     * @return float|null
      */
     public function getListTotal(): ?float
     {
@@ -90,7 +90,7 @@ class Prices extends AbstractEntity
     }
 
     /**
-     * @return float
+     * @return float|null
      */
     public function getBuyUnit(): ?float
     {
@@ -106,7 +106,7 @@ class Prices extends AbstractEntity
     }
 
     /**
-     * @return float
+     * @return float|null
      */
     public function getSellUnit(): ?float
     {

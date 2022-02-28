@@ -5,6 +5,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added `programCode` attribute in the Billing Statement entity
+
+### Changed
+
+- Renamed `vendorProgram` to `programCode` in the Billing Statement Line entity
+
 ## [0.8.0] - 2022-01-13
 
 ### Added

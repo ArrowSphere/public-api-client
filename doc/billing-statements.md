@@ -11,23 +11,24 @@ use billing preferences to set how billing statements are generated.
 
 The Statement entity allow to get information about the billing statement header.
 
-| Field              | Type                   | Example                                 | Description                                     |
-| ------------------ | ---------------------- | --------------------------------------- | ----------------------------------------------- |
-| billingGroup       | `string`               | ResellerBilling                         | Billing group name                              |
-| billingStrategy    | `string/null`          | mscsp-saas-monthly                      | Billing strategy name                           |
-| classification     | `string`               | saas                                    | End Customer Total Buy Price in vendor currency |
-| currency           | `string`               | USD                                     | Country Currency                                |
-| description        | `string`               |                                         | Rule's name that led to this statement          |
-| from               | `Identity`             |                                         | Identity of the reseller                        |
-| issueDate          | `string/null`          | 2021-04-01                              | Date of the issue                               |
-| marketplace        | `string`               | US                                      | Country code                                    |
-| prices             | `Prices`               |                                         | Prices for reseller/customer                    |
-| reference          | `string`               | H1-AAA-0123456789ABCDEF0123456789ABCDEF | Identifier of the statement                     |
-| reportPeriod       | `string`               | 2021-04                                 | Report Period                                   |
-| sequence           | `string`               | MSM12-0123456789                        | Sequence of the statement                       |
-| status             | `null`                 |                                         | Reserved for future use                         |
-| to                 | `Identity`             |                                         | Identities of customers                         |
-| vendorName         | `string`               | Microsoft                               | Vendor name                                     |
+| Field              | Type                   | Example                                 | Description                                                    |
+| ------------------ | ---------------------- | --------------------------------------- | -------------------------------------------------------------- |
+| billingGroup       | `string`               | ResellerBilling                         | Billing group name                                             |
+| billingStrategy    | `string/null`          | mscsp-saas-monthly                      | Billing strategy name                                          |
+| classification     | `string`               | saas                                    | End Customer Total Buy Price in vendor currency                |
+| currency           | `string`               | USD                                     | Country Currency                                               |
+| description        | `string`               |                                         | Rule's name that led to this statement                         |
+| from               | `Identity`             |                                         | Identity of the reseller                                       |
+| issueDate          | `string/null`          | 2021-04-01                              | Date of the issue                                              |
+| marketplace        | `string`               | US                                      | Country code                                                   |
+| prices             | `Prices`               |                                         | Prices for reseller/customer                                   |
+| programCode        | `string/null`          | MSCSP                                   | Program name, null if multiple programs for the same statement |
+| reference          | `string`               | H1-AAA-0123456789ABCDEF0123456789ABCDEF | Identifier of the statement                                    |
+| reportPeriod       | `string`               | 2021-04                                 | Report Period                                                  |
+| sequence           | `string`               | MSM12-0123456789                        | Sequence of the statement                                      |
+| status             | `null`                 |                                         | Reserved for future use                                        |
+| to                 | `Identity`             |                                         | Identities of customers                                        |
+| vendorName         | `string`               | Microsoft                               | Vendor name                                                    |
 
 ### Identity
 
@@ -77,6 +78,7 @@ The StatementLine entity allow to get information about a billing statement line
 | offerName                       | `string/null` | Offer Name                              |                           |
 | orderId                         | `string/null` |                                         |                           |
 | prices                          | `Prices`      |                                         |                           |
+| programCode                     | `string/null` | MSCSP                                   |                           |
 | quantity                        | `string/null` | 2.0                                     |                           |
 | rates                           | `Rates`       |                                         |                           |
 | reference                       | `string`      | L1-AAA-0123456789ABCDEF0123456789ABCDEF |                           |
@@ -89,7 +91,6 @@ The StatementLine entity allow to get information about a billing statement line
 | vendorEndCustomerSubscriptionId | `string/null` |                                         |                           |
 | vendorName                      | `string/null` | Microsoft                               |                           |
 | vendorProductName               | `string/null` | Microsoft Product                       |                           |
-| vendorProgram                   | `string/null` | Vendor Program                          |                           |
 | vendorSku                       | `string/null` |                                         |                           |
 
 ## Usage
