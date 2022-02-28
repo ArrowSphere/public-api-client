@@ -60,6 +60,7 @@ class StatementsClientTest extends AbstractClientTest
                     'billingGroup' => 'ArrowBilling',
                     'billingStrategy' => 'mscsp-saas-monthly',
                     'vendorName' => 'microsoft',
+                    'programCode' => 'MSCSP',
                     'classification' => 'saas',
                     'reportPeriod' => '2021-04',
                     'marketplace' => 'US',
@@ -96,6 +97,7 @@ class StatementsClientTest extends AbstractClientTest
         self::assertSame('ArrowBilling', $statement->getBillingGroup());
         self::assertSame('mscsp-saas-monthly', $statement->getBillingStrategy());
         self::assertSame('microsoft', $statement->getVendorName());
+        self::assertSame('MSCSP', $statement->getProgramCode());
         self::assertSame('saas', $statement->getClassification());
         self::assertSame('2021-04-29 13:37:00', $statement->getIssueDate());
         self::assertSame('US', $statement->getMarketplace());
@@ -192,6 +194,7 @@ class StatementsClientTest extends AbstractClientTest
                         'billingGroup' => 'ArrowBilling',
                         'billingStrategy' => null,
                         'vendorName' => 'microsoft',
+                        'programCode' => 'MSCSP',
                         'classification' => 'saas',
                         'reportPeriod' => '2021-04',
                         'marketplace' => 'US',
@@ -218,6 +221,7 @@ class StatementsClientTest extends AbstractClientTest
                         'billingGroup' => 'ArrowBilling',
                         'billingStrategy' => null,
                         'vendorName' => 'microsoft',
+                        'programCode' => 'MSCSP',
                         'classification' => 'saas',
                         'reportPeriod' => '2021-04',
                         'marketplace' => 'US',
@@ -250,6 +254,7 @@ class StatementsClientTest extends AbstractClientTest
                         'billingGroup' => 'ArrowBilling',
                         'billingStrategy' => null,
                         'vendorName' => 'microsoft',
+                        'programCode' => 'MSCSP',
                         'classification' => 'saas',
                         'reportPeriod' => '2021-04',
                         'marketplace' => 'US',
@@ -300,6 +305,7 @@ class StatementsClientTest extends AbstractClientTest
         self::assertSame('ArrowBilling', $statement->getBillingGroup());
         self::assertNull($statement->getBillingStrategy());
         self::assertSame('microsoft', $statement->getVendorName());
+        self::assertSame('MSCSP', $statement->getProgramCode());
         self::assertSame('saas', $statement->getClassification());
         self::assertSame('2021-04', $statement->getReportPeriod());
         self::assertSame('2021-04-29 13:37:00', $statement->getIssueDate());
@@ -418,7 +424,7 @@ class StatementsClientTest extends AbstractClientTest
                         'reference' => 'H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef',
                         'vendorEndCustomerSubscriptionId' => '12345678-1234-1234-1234-123456789012',
                         'vendorName' => 'Vendor',
-                        'vendorProgram' => 'Program',
+                        'programCode' => 'Program',
                         'classification' => 'SAAS',
                         'vendorProductName' => 'Product Name',
                         'vendorSku' => '12345678-1234-1234-1234-123456789012',
@@ -455,7 +461,7 @@ class StatementsClientTest extends AbstractClientTest
                         'reference' => 'H1-BBB-deadbeefdeadbeefdeadbeefdeadbeef',
                         'vendorEndCustomerSubscriptionId' => '12345678-1234-1234-1234-123456789012',
                         'vendorName' => 'Vendor',
-                        'vendorProgram' => 'Program',
+                        'programCode' => 'Program',
                         'classification' => 'SAAS',
                         'vendorProductName' => 'Product Name',
                         'vendorSku' => '12345678-1234-1234-1234-123456789012',
@@ -492,7 +498,7 @@ class StatementsClientTest extends AbstractClientTest
                         'reference' => 'H1-CCC-deadbeefdeadbeefdeadbeefdeadbeef',
                         'vendorEndCustomerSubscriptionId' => '12345678-1234-1234-1234-123456789012',
                         'vendorName' => 'Vendor',
-                        'vendorProgram' => 'Program',
+                        'programCode' => 'Program',
                         'classification' => 'SAAS',
                         'vendorProductName' => 'Product Name',
                         'vendorSku' => '12345678-1234-1234-1234-123456789012',
@@ -553,7 +559,7 @@ class StatementsClientTest extends AbstractClientTest
         self::assertSame('H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef', $line->getReference());
         self::assertSame('12345678-1234-1234-1234-123456789012', $line->getVendorEndCustomerSubscriptionId());
         self::assertSame('Vendor', $line->getVendorName());
-        self::assertSame('Program', $line->getVendorProgram());
+        self::assertSame('Program', $line->getProgramCode());
         self::assertSame('SAAS', $line->getClassification());
         self::assertSame('Product Name', $line->getVendorProductName());
         self::assertSame('12345678-1234-1234-1234-123456789012', $line->getVendorSku());
