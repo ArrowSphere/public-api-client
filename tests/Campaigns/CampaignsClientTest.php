@@ -414,7 +414,8 @@ JSON;
                 'https://www.test.com/campaigns',
                 [
                     'headers' => [
-                        'apiKey' => '123456'
+                        'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
                     ],
                     'body'    => json_encode($payload),
                 ]
@@ -853,7 +854,8 @@ JSON;
                 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE,
                 [
                     'headers' => [
-                        'apiKey' => '123456'
+                        'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
                     ],
                     'body'    => $payload,
                 ]

@@ -613,6 +613,7 @@ class StatementsClientTest extends AbstractClientTest
                     'body'    => '{"statementRef":"STATEMENT_REF_EXAMPLE","reportPeriod":"2021-04","customerXspRef":["XSP12345","XSP23456"],"tier":[2,3],"format":"xlsx"}',
                     'headers' => [
                         'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
                     ],
                 ]
             )

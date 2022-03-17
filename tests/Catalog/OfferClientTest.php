@@ -49,6 +49,7 @@ class OfferClientTest extends AbstractClientTest
                 [
                     'headers' => [
                         'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
                     ],
                     'body'    => json_encode($postData),
                 ]
@@ -112,6 +113,7 @@ JSON;
                 [
                     'headers' => [
                         'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
                     ],
                     'body'    => $expected,
                 ]
@@ -338,6 +340,7 @@ JSON;
                 [
                     'headers' => [
                         'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
                     ],
                     'body'    => json_encode($postData),
                 ]
@@ -487,6 +490,7 @@ JSON;
                 [
                     'headers' => [
                         'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
                     ],
                     'body'    => json_encode($postData),
                 ]

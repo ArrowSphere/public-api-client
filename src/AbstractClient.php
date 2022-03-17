@@ -67,7 +67,9 @@ abstract class AbstractClient
     /**
      * @var array Some headers to be added to each request
      */
-    protected $defaultHeaders = [];
+    protected $defaultHeaders = [
+        'Content-Type' => 'application/json',
+    ];
 
     /**
      * AbstractClient constructor.

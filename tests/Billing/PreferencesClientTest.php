@@ -63,6 +63,7 @@ class PreferencesClientTest extends AbstractClientTest
             ->with('get', 'https://www.test.com/billing/preferences/2020-04', [
                 'headers' => [
                     'apiKey' => '123456',
+                    'Content-Type' => 'application/json',
                 ],
             ])
             ->willReturn(new Response(200, [], $response));
@@ -124,6 +125,7 @@ class PreferencesClientTest extends AbstractClientTest
             ->with('post', 'https://www.test.com/billing/preferences/2020-04', [
                 'headers' => [
                     'apiKey' => '123456',
+                    'Content-Type' => 'application/json',
                 ],
                 'body'    => '[' . json_encode($payload) . ']',
             ])
