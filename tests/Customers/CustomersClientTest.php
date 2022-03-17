@@ -284,6 +284,7 @@ JSON;
             ->with('post', 'https://www.test.com/customers?abc=def&ghi=0', [
                 'headers' => [
                     'apiKey' => '123456',
+                    'Content-Type' => 'application/json',
                 ],
                 'body'    => json_encode($payload),
             ])

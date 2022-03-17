@@ -844,6 +844,7 @@ JSON;
                 [
                     'headers' => [
                         'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
                     ],
                 ]
             )
@@ -892,6 +893,7 @@ JSON;
                 [
                     'headers' => [
                         'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
                     ],
                 ]
             )

@@ -33,6 +33,7 @@ class CatalogClientTest extends AbstractClientTest
                 [
                     'headers' => [
                         'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
                     ],
                     'body'    => json_encode(
                         [
