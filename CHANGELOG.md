@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Added support for PHP 8.1 in the CI
+
 ## [0.9.0] - 2022-03-02
 
 ### Added
