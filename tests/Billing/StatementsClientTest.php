@@ -219,7 +219,6 @@ class StatementsClientTest extends AbstractClientTest
                         'reference' => 'H1-BBB-deadbeefdeadbeefdeadbeefdeadbeef',
                         'sequence' => null,
                         'billingGroup' => 'ArrowBilling',
-                        'billingStrategy' => null,
                         'vendorName' => 'microsoft',
                         'programCode' => 'MSCSP',
                         'classification' => 'saas',

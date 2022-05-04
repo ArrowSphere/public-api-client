@@ -28,7 +28,7 @@ class Statement extends AbstractEntity
         self::COLUMN_REFERENCE => 'string|required',
         self::COLUMN_SEQUENCE => 'string|present|nullable',
         self::COLUMN_BILLING_GROUP => 'string|required',
-        self::COLUMN_BILLING_STRATEGY => 'string|present|nullable',
+        self::COLUMN_BILLING_STRATEGY => 'string|nullable',
         self::COLUMN_VENDOR_NAME => 'string|present|nullable',
         self::COLUMN_PROGRAM_CODE => 'string|present|nullable',
         self::COLUMN_CLASSIFICATION => 'string|present|nullable',
@@ -138,7 +138,7 @@ class Statement extends AbstractEntity
         $this->reference = $data[self::COLUMN_REFERENCE];
         $this->sequence = $data[self::COLUMN_SEQUENCE];
         $this->billingGroup = $data[self::COLUMN_BILLING_GROUP];
-        $this->billingStrategy = $data[self::COLUMN_BILLING_STRATEGY];
+        $this->billingStrategy = $data[self::COLUMN_BILLING_STRATEGY] ?? null;
         $this->vendorName = $data[self::COLUMN_VENDOR_NAME];
         $this->programCode = $data[self::COLUMN_PROGRAM_CODE];
         $this->classification = $data[self::COLUMN_CLASSIFICATION];

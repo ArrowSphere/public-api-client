@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Changed `Statement::$billingStrategy` attribute to be null if not in the API payload
+
 ## [0.9.2] - 2022-05-31
 
 ### Added
