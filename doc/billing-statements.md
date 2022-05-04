@@ -14,7 +14,7 @@ The Statement entity allow to get information about the billing statement header
 | Field              | Type                   | Example                                 | Description                                                    |
 | ------------------ | ---------------------- | --------------------------------------- | -------------------------------------------------------------- |
 | billingGroup       | `string`               | ResellerBilling                         | Billing group name                                             |
-| billingStrategy    | `string/null`          | mscsp-saas-monthly                      | Billing strategy name                                          |
+| billingStrategy    | `null`                 |                                         | Reserved for future use                                        |
 | classification     | `string`               | saas                                    | End Customer Total Buy Price in vendor currency                |
 | currency           | `string`               | USD                                     | Country Currency                                               |
 | description        | `string`               |                                         | Rule's name that led to this statement                         |
