@@ -244,6 +244,7 @@ class StatementsClientTest extends AbstractClientTest
                             'creationDate' => '2021-01-01',
                             'submissionDate' => '2021-01-02',
                             'validationDate' => '2021-01-03',
+                            'rejectionDate' => null,
                             'state' => 'Open',
                         ]
                     ],

@@ -20,6 +20,7 @@ class StatementStatusTest extends AbstractEntityTest
                     'creationDate' => '2020-01-01',
                     'submissionDate' => '2020-01-02',
                     'validationDate' => '2020-01-03',
+                    'rejectionDate' => null,
                     'state' => 'Needs Validation',
                 ],
                 'expected' => <<<JSON
@@ -27,6 +28,7 @@ class StatementStatusTest extends AbstractEntityTest
     "creationDate": "2020-01-01",
     "submissionDate": "2020-01-02",
     "validationDate": "2020-01-03",
+    "rejectionDate": null,
     "state": "Needs Validation"
 }
 JSON

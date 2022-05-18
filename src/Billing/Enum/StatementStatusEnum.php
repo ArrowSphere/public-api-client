@@ -20,4 +20,9 @@ class StatementStatusEnum extends AbstractEnum
      * @var string Open index
      */
     public const OPEN = 'Open';
+
+    /**
+     * @var string Rejected index
+     */
+    public const REJECTED = 'Rejected';
 }
