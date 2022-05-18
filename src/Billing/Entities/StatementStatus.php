@@ -11,12 +11,14 @@ class StatementStatus extends AbstractEntity
     public const COLUMN_CREATION_DATE = 'creationDate';
     public const COLUMN_SUBMISSION_DATE = 'submissionDate';
     public const COLUMN_VALIDATION_DATE = 'validationDate';
+    public const COLUMN_REJECTION_DATE = 'rejectionDate';
     public const COLUMN_STATE = 'state';
 
     protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
         self::COLUMN_CREATION_DATE => 'string|present|nullable',
         self::COLUMN_SUBMISSION_DATE => 'string|present|nullable',
         self::COLUMN_VALIDATION_DATE => 'string|present|nullable',
+        self::COLUMN_REJECTION_DATE => 'string|present|nullable',
         self::COLUMN_STATE => 'string|required',
     ];
 
@@ -34,6 +36,11 @@ class StatementStatus extends AbstractEntity
      * @var string|null
      */
     private $validationDate;
+
+    /**
+     * @var string|null
+     */
+    private $rejectionDate;
 
     /**
      * @var string
@@ -59,6 +66,7 @@ class StatementStatus extends AbstractEntity
         $this->creationDate = $data[self::COLUMN_CREATION_DATE];
         $this->submissionDate = $data[self::COLUMN_SUBMISSION_DATE];
         $this->validationDate = $data[self::COLUMN_VALIDATION_DATE];
+        $this->rejectionDate = $data[self::COLUMN_REJECTION_DATE];
         $this->state = $data[self::COLUMN_STATE];
     }
 
@@ -87,6 +95,14 @@ class StatementStatus extends AbstractEntity
     }
 
     /**
+     * @return string|null
+     */
+    public function getRejectionDate(): ?string
+    {
+        return $this->rejectionDate;
+    }
+
+    /**
      * @return string
      */
     public function getState(): string
@@ -103,6 +119,7 @@ class StatementStatus extends AbstractEntity
             self::COLUMN_CREATION_DATE => $this->getCreationDate(),
             self::COLUMN_SUBMISSION_DATE => $this->getSubmissionDate(),
             self::COLUMN_VALIDATION_DATE => $this->getValidationDate(),
+            self::COLUMN_REJECTION_DATE => $this->getRejectionDate(),
             self::COLUMN_STATE => $this->getState(),
         ];
     }
