@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added status value 'Rejected' for Billing Statement entity
+
 ## [0.9.1] - 2022-03-24
 
 ### Changed
