@@ -26,6 +26,7 @@ class CampaignsClientTest extends AbstractClientTest
     protected const ASSET_REFERENCE = 'bbb-bbb-bbbb-bb';
     protected const CAMPAIGN_REFERENCE = 'aaa-aaa-aaaa-aaa';
     protected const CUSTOMER_REF = 'XSP12345';
+    protected const LOCATION_MCP = 'MCP';
 
     /**
      * @throws GuzzleException
@@ -621,6 +622,61 @@ JSON;
         ;
 
         $this->client->getActiveCampaignRaw(self::CUSTOMER_REF);
+    }
+
+    /**
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     * @throws GuzzleException
+     */
+    public function testGetActiveCampaignRawV2(): void
+    {
+        $expected = <<<JSON
+{
+    "data": {
+        "reference": "aaa-aaa-aaaa-aaa",
+        "name": "My campaign",
+        "category": "BANNER",
+        "isActivated": true,
+        "createdAt": "2021-06-25T16:00:00Z",
+        "rules": {
+            "locations": ["MCP"],
+            "roles": [],
+            "marketplaces": [],
+            "subscriptions": [],
+            "resellers": [],
+            "endCustomers": []
+        },
+        "weight": 1,
+        "banners": [
+            {
+                "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
+            },
+            {
+                "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
+            },
+            {
+                "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
+            }
+        ],
+        "landingPage": {
+            "url": "https://www.test.com/landing-page"
+        }
+    }
+}
+JSON;
+
+        // This line is to have minified JSON because it's what will be generated in the payload
+        $expected = json_encode(json_decode($expected, true));
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/campaigns/active?location=' . self::LOCATION_MCP . '&customer=' . self::CUSTOMER_REF)
+            ->willReturn(new Response(200, [], $expected))
+        ;
+
+        $this->client->getActiveCampaignRawV2(self::LOCATION_MCP, self::CUSTOMER_REF);
     }
 
     /**

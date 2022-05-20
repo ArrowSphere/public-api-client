@@ -5,6 +5,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added new methods getActiveCampaignRawV2 and getActiveCampaignV2 which will replace getActiveCampaignRaw (deprecated) and getActiveCampaignRaw (deprecated)
+
+### Deprecated
+
+- getActiveCampaignRaw: this is the old method get active campaign in raw mode, the getActiveCampaignRawV2 should now be used instead
+- getActiveCampaign: this is the old method get active campaign, the getActiveCampaignV2 should now be used instead
+
 ## [0.9.1] - 2022-03-24
 
 ### Changed
