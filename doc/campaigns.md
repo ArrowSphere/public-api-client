@@ -108,9 +108,9 @@ This entity describes the feature in the footer of the campaign's landing page.
 This entity represents the rules of the campaign.
 
 | Field         | Type       | Example                  | Description                                                     |
-| ------------- | ---------- | ------------------------ | --------------------------------------------------------------- |
+| ------------- | ---------- |--------------------------| --------------------------------------------------------------- |
 | endCustomers  | `string[]` | ['XSP7894', 'XSP79541']  | The different customers that will see the campaign.             |
-| locations     | `string[]` | ['SDK']                  | The different locations of the campaign, where it can be shown. |
+| locations     | `string[]` | ['MCP', 'ARROWSPHERE']   | The different locations of the campaign, where it can be shown. |
 | marketplaces  | `string[]` | ['FR', 'US', 'UK']       | The different marketplaces of the campaign.                     |
 | resellers     | `string[]` | ['XSP12345', 'XSP45678'] | The different resellers associated to the campaign.             |
 | subscriptions | `string[]` | ['MSCSP']                | The different subscriptions related to the campaign.            |
@@ -129,10 +129,16 @@ The `CampaignsClient::getCampaigns()` method returns a `string` that is the json
 
 ### GetCampaign, GetActiveCampaign, GetCampaignAssets & GetCampaignAssetsUploadUrl
 
-The "GetCampaign" endpoint is used to retrieve one specific campaign, and GetActiveCampaign will return one random active campaign for the user. "GetCampaignAssets" retrieves the assets of the campaigns, linked with the main object using UUID. The "GetCampaignAssetsUploadUrl" retrieves the url needed to upload any assets for the campaign. These too are linked with an UUID.
+The "GetCampaign" endpoint is used to retrieve one specific campaign, and GetActiveCampaign (deprecated) will return one random active campaign for the user. "GetCampaignAssets" retrieves the assets of the campaigns, linked with the main object using UUID. The "GetCampaignAssetsUploadUrl" retrieves the url needed to upload any assets for the campaign. These too are linked with an UUID.
 These endpoints are called by xSP on the Cloud Portal Campaign "View" or "Edit" pages.
 
 This three endpoints are using the campaign's `reference` as parameters. The `CampaignsClient::getCampaign()` method returns a `Campaign` object, while `CampaignsClient::getCampaignsAssets()` and `CampaignsClient::getCampaignAssetsUploadUrl()` return a json `string`.
+
+### GetActiveCampaignV2
+
+GetActiveCampaignV2 will replace the deprecated one (GetActiveCampaign) return one random active campaign for the user. This method has two parameters :
+- **$location** - *required* : location of the campaign, where it can be shown (`MCP` or `ARROWSPHERE`)
+- **$customerRef** - *optional* : The customer reference, only the campaign directed at this customer will be returned
 
 ### CreateCampaign
 

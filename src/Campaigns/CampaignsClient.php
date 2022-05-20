@@ -57,10 +57,37 @@ class CampaignsClient extends AbstractClient
      * @throws EntityValidationException
      * @throws NotFoundException
      * @throws PublicApiClientException
+     *
+     * @deprecated This method is obsolete. Please use the new version of the same method, getActiveCampaignV2.
      */
     public function getActiveCampaign(string $customerRef): ?Campaign
     {
         $response = $this->getActiveCampaignRaw($customerRef);
+        $data = $this->decodeResponse($response);
+        $result = null;
+        if ($data['data']) {
+            $result = new Campaign($data['data']);
+        }
+
+        return $result;
+    }
+
+    /**
+     * Get a single active campaign
+     *
+     * @param string $location
+     * @param string|null $customerRef
+     *
+     * @return Campaign|null
+     *
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getActiveCampaignV2(string $location, ?string $customerRef = null): ?Campaign
+    {
+        $response = $this->getActiveCampaignRawV2($location, $customerRef);
         $data = $this->decodeResponse($response);
         $result = null;
         if ($data['data']) {
@@ -151,10 +178,33 @@ class CampaignsClient extends AbstractClient
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
+     *
+     * @deprecated This method is obsolete. Please use the new version of the same method, getActiveCampaignRawV2.
      */
     public function getActiveCampaignRaw(string $customerRef): string
     {
         $this->path = self::FIND_PATH . "/active?customer=" . $customerRef;
+
+        return $this->get();
+    }
+
+    /**
+     * @param string $location example : MCP, ARROWSPHERE
+     * @param string|null $customerRef
+     *
+     * @return string
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getActiveCampaignRawV2(string $location, ?string $customerRef = null): string
+    {
+        $params = ['location' => $location];
+        if ($customerRef !== null) {
+            $params['customer'] = $customerRef;
+        }
+        $this->path = self::FIND_PATH . "/active?" . http_build_query($params);
 
         return $this->get();
     }
