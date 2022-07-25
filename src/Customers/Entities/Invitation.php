@@ -22,6 +22,8 @@ class Invitation extends AbstractEntity
 
     public const COLUMN_COMPANY = 'company';
 
+    public const COLUMN_POLICY = 'policy';
+
     /**
      * @var string
      */
@@ -48,6 +50,11 @@ class Invitation extends AbstractEntity
     private $company;
 
     /**
+     * @var string
+     */
+    private $policy;
+
+    /**
      * @param array $data
      *
      * @throws EntityValidationException
@@ -61,6 +68,7 @@ class Invitation extends AbstractEntity
         $this->updatedAt = $data[self::COLUMN_UPDATED_AT];
         $this->contact = new InvitationContact($data[self::COLUMN_CONTACT]);
         $this->company = new InvitationCompany($data[self::COLUMN_COMPANY]);
+        $this->policy = $data[self::COLUMN_POLICY];
     }
 
     /**
@@ -164,6 +172,26 @@ class Invitation extends AbstractEntity
     }
 
     /**
+     * @return string
+     */
+    public function getPolicy(): string
+    {
+        return $this->policy;
+    }
+
+    /**
+     * @param string $policy
+     *
+     * @return static
+     */
+    public function setPolicy(string $policy): self
+    {
+        $this->policy = $policy;
+
+        return $this;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
@@ -174,6 +202,7 @@ class Invitation extends AbstractEntity
             self::COLUMN_UPDATED_AT => $this->updatedAt,
             self::COLUMN_CONTACT => $this->contact->jsonSerialize(),
             self::COLUMN_COMPANY => $this->company->jsonSerialize(),
+            self::COLUMN_POLICY => $this->policy,
         ];
     }
 }

@@ -382,7 +382,8 @@ JSON;
     },
     "company": {
       "reference": "ABC123"
-    }
+    },
+    "policy": "admin"
   }
 }
 JSON;
@@ -409,6 +410,7 @@ JSON;
         self::assertSame('Bruce', $invitation->getContact()->getFirstName());
         self::assertSame('Wayne', $invitation->getContact()->getLastName());
         self::assertSame('ABC123', $invitation->getCompany()->getReference());
+        self::assertSame('admin', $invitation->getPolicy());
     }
 
     /**
@@ -423,6 +425,7 @@ JSON;
     {
         $payload = [
             'contactId' => 12345,
+            'policy' => 'admin',
         ];
 
         $response = <<<JSON
@@ -440,7 +443,8 @@ JSON;
         },
         "company": {
             "reference": "ABC123"
-        }
+        },
+        "policy": "admin"
     }
 }
 JSON;
@@ -457,7 +461,7 @@ JSON;
             ])
             ->willReturn(new Response(200, [], $response));
 
-        $invitation = $this->client->createInvitation(12345, [
+        $invitation = $this->client->createInvitation(12345, 'admin', [
             'abc' => 'def',
             'ghi' => false,
         ]);
