@@ -29,6 +29,7 @@ class InvitationTest extends AbstractEntityTest
                         'firstName' => 'Bruce',
                         'lastName' => 'Wayne',
                     ],
+                    'policy' => 'admin'
                 ],
                 'expected' => <<<JSON
 {
@@ -43,7 +44,8 @@ class InvitationTest extends AbstractEntityTest
     },
     "company": {
         "reference": "ABC123"
-    }
+    },
+    "policy": "admin"
 }
 JSON
             ],

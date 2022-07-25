@@ -8,6 +8,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
 - Added the `License::$vendorBillingId` attribute (as `string|null`) to manage this new vendor-specific field
+- Added policy value for customer invitation entity
+
+### Changed
+
+- Changed method `CustomersClient::createInvitation()`, add parameter `$policy` to pass more information
 
 ## [0.9.3] - 2022-06-30
 

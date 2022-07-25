@@ -139,6 +139,7 @@ class CustomersClient extends AbstractClient
 
     /**
      * @param int $contactId
+     * @param string $policy
      * @param array $parameters
      *
      * @return Invitation
@@ -148,10 +149,11 @@ class CustomersClient extends AbstractClient
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function createInvitation(int $contactId, array $parameters = []): Invitation
+    public function createInvitation(int $contactId, string $policy, array $parameters = []): Invitation
     {
         $payload = [
             'contactId' => $contactId,
+            'policy' => $policy,
         ];
 
         $this->path = '/customers/invitations';
