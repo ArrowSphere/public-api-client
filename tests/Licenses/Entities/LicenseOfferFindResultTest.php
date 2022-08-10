@@ -63,6 +63,7 @@ class LicenseOfferFindResultTest extends AbstractEntityTest
                             'lastUpdate' => null,
                         ],
                         'friendly_name'          => 'XSP12345|MS-0B-O365-ENTERPRIS|XSP555555|XSP987654321',
+                        'vendor_billing_id' => 'ABC123',
                         'vendor_subscription_id' => 'AABBCCDD-1111-2222-3333-ABCDEFABCDEF',
                         'message'                => '',
                         'periodicity'            => 720,
@@ -120,6 +121,7 @@ class LicenseOfferFindResultTest extends AbstractEntityTest
             "number": null
         },
         "friendly_name": "XSP12345|MS-0B-O365-ENTERPRIS|XSP555555|XSP987654321",
+        "vendor_billing_id": "ABC123",
         "vendor_subscription_id": "AABBCCDD-1111-2222-3333-ABCDEFABCDEF",
         "message": "",
         "periodicity": 720,
