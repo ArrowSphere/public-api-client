@@ -118,6 +118,8 @@ class LicenseFindFieldEnum extends AbstractEnum
 
     public const LICENSE_WARNINGS = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_WARNINGS;
 
+    public const LICENSE_VENDOR_BILLING_ID = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_VENDOR_BILLING_ID;
+
     public const OFFER_NAME = LicenseOfferFindResult::COLUMN_OFFER . '.' . Offer::COLUMN_NAME;
 
     public const OFFER_CLASSIFICATION = LicenseOfferFindResult::COLUMN_OFFER . '.' . Offer::COLUMN_CLASSIFICATION;

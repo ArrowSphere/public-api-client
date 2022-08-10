@@ -82,6 +82,8 @@ class License extends AbstractEntity
 
     public const COLUMN_UOM = 'uom';
 
+    public const COLUMN_VENDOR_BILLING_ID = 'vendor_billing_id';
+
     public const COLUMN_VENDOR_CODE = 'vendor_code';
 
     public const COLUMN_VENDOR_NAME = 'vendor_name';
@@ -291,6 +293,11 @@ class License extends AbstractEntity
     private $uom;
 
     /**
+     * @var string|null
+     */
+    private $vendorBillingId;
+
+    /**
      * @var string
      */
     private $vendorCode;
@@ -369,6 +376,7 @@ class License extends AbstractEntity
         $this->trial = $data[self::COLUMN_TRIAL];
         $this->type = $data[self::COLUMN_TYPE];
         $this->uom = $data[self::COLUMN_UOM];
+        $this->vendorBillingId = $data[self::COLUMN_VENDOR_BILLING_ID] ?? null;
         $this->vendorCode = $data[self::COLUMN_VENDOR_CODE];
         $this->vendorName = $data[self::COLUMN_VENDOR_NAME];
         $this->vendorSubscriptionId = $data[self::COLUMN_VENDOR_SUBSCRIPTION_ID];
@@ -663,6 +671,14 @@ class License extends AbstractEntity
     }
 
     /**
+     * @return string|null
+     */
+    public function getVendorBillingId(): ?string
+    {
+        return $this->vendorBillingId;
+    }
+
+    /**
      * @return string
      */
     public function getVendorCode(): string
@@ -700,46 +716,47 @@ class License extends AbstractEntity
     public function jsonSerialize(): array
     {
         return [
-            self::COLUMN_ID                     => $this->id,
-            self::COLUMN_SUBSCRIPTION_ID        => $this->subscriptionId,
-            self::COLUMN_PARENT_LINE_ID         => $this->parentLineId,
-            self::COLUMN_PARENT_ORDER_REF       => $this->parentOrderRef,
-            self::COLUMN_VENDOR_NAME            => $this->vendorName,
-            self::COLUMN_VENDOR_CODE            => $this->vendorCode,
-            self::COLUMN_SUBSIDIARY_NAME        => $this->subsidiaryName,
-            self::COLUMN_PARTNER_REF            => $this->partnerRef,
-            self::COLUMN_STATUS_CODE            => $this->statusCode,
-            self::COLUMN_STATUS_LABEL           => $this->statusLabel,
-            self::COLUMN_SERVICE_REF            => $this->serviceRef,
-            self::COLUMN_SKU                    => $this->sku,
-            self::COLUMN_UOM                    => $this->uom,
-            self::COLUMN_PRICE                  => $this->price->jsonSerialize(),
-            self::COLUMN_CLOUD_TYPE             => $this->classification,
-            self::COLUMN_BASE_SEAT              => $this->baseSeat,
-            self::COLUMN_CONFIGS                => $this->jsonSerializeConfigs(),
-            self::COLUMN_SEAT                   => $this->seat,
-            self::COLUMN_TRIAL                  => $this->trial,
-            self::COLUMN_AUTO_RENEW             => $this->autoRenew,
-            self::COLUMN_OFFER                  => $this->offer,
-            self::COLUMN_CATEGORY               => $this->category,
-            self::COLUMN_TYPE                   => $this->type,
-            self::COLUMN_START_DATE             => $this->startDate,
-            self::COLUMN_END_DATE               => $this->endDate,
-            self::COLUMN_ACCEPT_EULA            => $this->acceptEula,
-            self::COLUMN_CUSTOMER_REF           => $this->customerRef,
-            self::COLUMN_CUSTOMER_NAME          => $this->customerName,
-            self::COLUMN_RESELLER_REF           => $this->resellerRef,
-            self::COLUMN_RESELLER_NAME          => $this->resellerName,
-            self::COLUMN_MARKETPLACE            => $this->marketplace,
-            self::COLUMN_ACTIVE_SEATS           => $this->activeSeats->jsonSerialize(),
-            self::COLUMN_FRIENDLY_NAME          => $this->friendlyName,
+            self::COLUMN_ID => $this->id,
+            self::COLUMN_SUBSCRIPTION_ID => $this->subscriptionId,
+            self::COLUMN_PARENT_LINE_ID => $this->parentLineId,
+            self::COLUMN_PARENT_ORDER_REF => $this->parentOrderRef,
+            self::COLUMN_VENDOR_NAME => $this->vendorName,
+            self::COLUMN_VENDOR_CODE => $this->vendorCode,
+            self::COLUMN_SUBSIDIARY_NAME => $this->subsidiaryName,
+            self::COLUMN_PARTNER_REF => $this->partnerRef,
+            self::COLUMN_STATUS_CODE => $this->statusCode,
+            self::COLUMN_STATUS_LABEL => $this->statusLabel,
+            self::COLUMN_SERVICE_REF => $this->serviceRef,
+            self::COLUMN_SKU => $this->sku,
+            self::COLUMN_UOM => $this->uom,
+            self::COLUMN_PRICE => $this->price->jsonSerialize(),
+            self::COLUMN_CLOUD_TYPE => $this->classification,
+            self::COLUMN_BASE_SEAT => $this->baseSeat,
+            self::COLUMN_CONFIGS => $this->jsonSerializeConfigs(),
+            self::COLUMN_SEAT => $this->seat,
+            self::COLUMN_TRIAL => $this->trial,
+            self::COLUMN_AUTO_RENEW => $this->autoRenew,
+            self::COLUMN_OFFER => $this->offer,
+            self::COLUMN_CATEGORY => $this->category,
+            self::COLUMN_TYPE => $this->type,
+            self::COLUMN_START_DATE => $this->startDate,
+            self::COLUMN_END_DATE => $this->endDate,
+            self::COLUMN_ACCEPT_EULA => $this->acceptEula,
+            self::COLUMN_CUSTOMER_REF => $this->customerRef,
+            self::COLUMN_CUSTOMER_NAME => $this->customerName,
+            self::COLUMN_RESELLER_REF => $this->resellerRef,
+            self::COLUMN_RESELLER_NAME => $this->resellerName,
+            self::COLUMN_MARKETPLACE => $this->marketplace,
+            self::COLUMN_ACTIVE_SEATS => $this->activeSeats->jsonSerialize(),
+            self::COLUMN_FRIENDLY_NAME => $this->friendlyName,
+            self::COLUMN_VENDOR_BILLING_ID => $this->vendorBillingId,
             self::COLUMN_VENDOR_SUBSCRIPTION_ID => $this->vendorSubscriptionId,
-            self::COLUMN_MESSAGE                => $this->message,
-            self::COLUMN_PERIODICITY            => $this->periodicity,
-            self::COLUMN_TERM                   => $this->term,
-            self::COLUMN_IS_ENABLED             => $this->isEnabled,
-            self::COLUMN_LAST_UPDATE            => $this->lastUpdate,
-            self::COLUMN_WARNINGS               => $this->jsonSerializeWarnings(),
+            self::COLUMN_MESSAGE => $this->message,
+            self::COLUMN_PERIODICITY => $this->periodicity,
+            self::COLUMN_TERM => $this->term,
+            self::COLUMN_IS_ENABLED => $this->isEnabled,
+            self::COLUMN_LAST_UPDATE => $this->lastUpdate,
+            self::COLUMN_WARNINGS => $this->jsonSerializeWarnings(),
         ];
     }
 

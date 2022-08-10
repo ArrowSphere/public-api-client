@@ -14,7 +14,7 @@ A license is identified in ArrowSphere by its _partner ref_, which is typically 
 A license is managed by the `License` entity.
 
 | Field                | Type          | Example                                    | Description                                                                                           |
-| -------------------- | ------------- | ------------------------------------------ | ----------------------------------------------------------------------------------------------------- |
+|----------------------|---------------|--------------------------------------------|-------------------------------------------------------------------------------------------------------|
 | acceptEula           | `bool`        | false                                      |                                                                                                       |
 | activeSeats          | `ActiveSeats` | an instance of [ActiveSeats](#ActiveSeats) | The [active seats](#ActiveSeats)                                                                      |
 | autoRenew            | `bool`        | true                                       | True if the license is renewed automatically upon expiration                                          |
@@ -29,7 +29,7 @@ A license is managed by the `License` entity.
 | id                   | `int`         | 123456                                     | The license identifier (an internal identifier)                                                       |
 | isEnabled            | `bool`        | true                                       | True if the license is active                                                                         |
 | lastUpdate           | `string`      | 2020-12-08T15:42:30.069Z                   | The last time the license's data was updated (for any reason)                                         |
-| marketplace          | `string`      | US                                         | The [marketplace](general-marketPlace.md)                                                             |
+| marketplace          | `string`      | US                                         | The [marketplace](general-marketplace.md)                                                             |
 | message              | `string`      |                                            | If an action is currently performed on the license, this message will indicate it                     |
 | offer                | `string`      |                                            | The name of the offer                                                                                 |
 | parentLineId         | `int`         | null                                       | An internal reference indicating a parent license for this license                                    |
@@ -51,6 +51,7 @@ A license is managed by the `License` entity.
 | trial                | `bool`        | false                                      | True if the license is a trial                                                                        |
 | type                 | `string`      | recurring                                  |                                                                                                       |
 | uom                  | `string`      | LICENSE                                    | The unit of measure, is the unit of what is billed for this offer                                     |
+| vendorBillingId      | `string`      | ABC123                                     | The vendor billing id of the license                                                                  |
 | vendorCode           | `string`      | Microsoft                                  | The vendor code of the offer                                                                          |
 | vendorName           | `string`      | Microsoft                                  | The vendor of the offer                                                                               |
 | vendorSubscriptionId | `string`      | AABBCCDD-1111-2222-3333-ABCDEFABCDEF       | An external identifier for the license                                                                |
@@ -61,7 +62,7 @@ A license is managed by the `License` entity.
 The active seats represent the seats that are currently assigned on the license. Depending on the vendor, it may or may not be applicable.
 
 | Field      | Type     | Example                  | Description                                         |
-| ---------- | -------- | ------------------------ | --------------------------------------------------- |
+|------------|----------|--------------------------|-----------------------------------------------------|
 | lastUpdate | `string` | 2021-03-12T22:35:18.000Z | The last time the assigned seats have been modified |
 | number     | `float`  | 12                       | The current number of assigned seats, if applicable |
 
@@ -70,7 +71,7 @@ The active seats represent the seats that are currently assigned on the license.
 The config is a set of parameters that can be defined for a license.
 
 | Field | Type     | Example              | Description                     |
-| ----- | -------- | -------------------- | ------------------------------- |
+|-------|----------|----------------------|---------------------------------|
 | name  | `string` | purchaseReservations | The name of the config          |
 | scope | `string` | role                 | The scope of the config         |
 | state | `string` | enabled              | The current state of the config |
@@ -80,7 +81,7 @@ The config is a set of parameters that can be defined for a license.
 The warning is an alert for a license.
 
 | Field   | Type     | Example                            | Description                |
-| ------- | -------- | ---------------------------------- | -------------------------- |
+|---------|----------|------------------------------------|----------------------------|
 | key     | `string` | PEC ratio issue                    | The key of the warning     |
 | message | `string` | current value is 0 instead of 0.15 | The message of the warning |
 
@@ -89,7 +90,7 @@ The warning is an alert for a license.
 The prices applicable at the time of the license purchase.
 
 | Field                   | Type     | Example                                                      | Description                                           |
-| ----------------------- | -------- | ------------------------------------------------------------ | ----------------------------------------------------- |
+|-------------------------|----------|--------------------------------------------------------------|-------------------------------------------------------|
 | buyPrice                | `float`  | 10.4                                                         | The buy price at the time of the license purchase     |
 | currency                | `string` | USD                                                          | The currency used at the time of the license purchase |
 | listPrice               | `float`  | 15.52                                                        | The list price at the time of the license purchase    |
@@ -105,7 +106,7 @@ This offer entity is essentially a subset of the original [Offer entity from the
 Its purpose is to present some fields of the offer linked to the license, updated in real-time, as opposed to the fields in the License entity, which represent data as it was the day of the order.
 
 | Field          | Type          | Example                                                  | Description                                         |
-| -------------- | ------------- | -------------------------------------------------------- | --------------------------------------------------- |
+|----------------|---------------|----------------------------------------------------------|-----------------------------------------------------|
 | actionFlags    | `ActionFlags` | an instance of [ActionFlags](#ActionFlags for the Offer) | The possible actions for this offer                 |
 | classification | `string`      | SaaS                                                     | The [classification](catalog-classification.md)     |
 | isEnabled      | `bool`        | true                                                     | A flag that indicates if the offer is active        |
@@ -116,7 +117,7 @@ Its purpose is to present some fields of the offer linked to the license, update
 #### ActionFlags for the Offer
 
 | Field                | Type   | Example | Description                                           |
-| -------------------- | ------ | ------- | ----------------------------------------------------- |
+|----------------------|--------|---------|-------------------------------------------------------|
 | isAutoRenew          | `bool` | true    | Indicates if the offer is auto-renewable of not       |
 | isManualProvisioning | `bool` | false   | Indicates if the offer is provisioned manually or not |
 | renewalSku           | `bool` | false   | Indicates if the offer is a renewal sku               |
@@ -124,7 +125,7 @@ Its purpose is to present some fields of the offer linked to the license, update
 #### PriceBand
 
 | Field           | Type              | Example                                                      | Description                                       |
-| --------------- | ----------------- | ------------------------------------------------------------ | ------------------------------------------------- |
+|-----------------|-------------------|--------------------------------------------------------------|---------------------------------------------------|
 | actionFlags     | `ActionFlags`     | an instance of [ActionFlags](#ActionFlags for the PriceBand) | The possible actions for this price band          |
 | billing         | `Billing`         | an instance of [Billing](#Billing)                           | The billing rules of the license                  |
 | currency        | `string`          | USD                                                          | The currency of the price band                    |
@@ -137,7 +138,7 @@ Its purpose is to present some fields of the offer linked to the license, update
 #### ActionFlags for the PriceBand
 
 | Field            | Type   | Example | Description |
-| ---------------- | ------ | ------- | ----------- |
+|------------------|--------|---------|-------------|
 | canBeCancelled   | `bool` | true    |             |
 | canBeReactivated | `bool` | true    |             |
 | canBeSuspended   | `bool` | true    |             |
@@ -149,20 +150,20 @@ Its purpose is to present some fields of the offer linked to the license, update
 This entity describes how often the license is billed. See [Term and periodicity](#Term and periodicity) to view explanations about the billing cycle and term.
 
 | Field | Type     | Example   | Description       |
-| ----- | -------- | --------- | ----------------- |
+|-------|----------|-----------|-------------------|
 | cycle | `string` | 720       | The billing cycle |
 | term  | `string` | 8640      | The term          |
 | type  | `string` | RECURRING | The pricing type  |
 
 #### Identifiers
-| Field       | Type          | Example                                          | Description                                              |
-| ----------- | ------------- | ------------------------------------------------ | -------------------------------------------------------- |
-| arrowsphere | `Arrowsphere` | An instance of [Arrowsphere](#Arrowsphere)       | An object with some identifiers for arrowsphere (sku...) |
+| Field       | Type          | Example                                    | Description                                              |
+|-------------|---------------|--------------------------------------------|----------------------------------------------------------|
+| arrowsphere | `Arrowsphere` | An instance of [Arrowsphere](#Arrowsphere) | An object with some identifiers for arrowsphere (sku...) |
 
 #### Prices
 
 | Field  | Type    | Example | Description      |
-| ------ | ------- | ------- | ---------------- |
+|--------|---------|---------|------------------|
 | buy    | `float` | 12.34   | The buy price    |
 | sell   | `float` | 56.78   | The sell price   |
 | public | `float` | 98.76   | The public price |
@@ -170,14 +171,14 @@ This entity describes how often the license is billed. See [Term and periodicity
 #### SaleConstraints
 
 | Field       | Type    | Example | Description                                                        |
-| ----------- | ------- | ------- | ------------------------------------------------------------------ |
+|-------------|---------|---------|--------------------------------------------------------------------|
 | minQuantity | `float` | 1.0     | the minimum quantity required to purchase this offer at this price |
 | maxQuantity | `float` | 1.0     | the maximum quantity required to purchase this offer at this price |
 
 #### Arrowsphere
-| Field | Type     | Example                                                      | Description               |
-| ----- | -------- | ------------------------------------------------------------ | ------------------------- |
-| sku   | `string` | MS_195416C1_3447_423A_B37B_EE59A99A19C4_EUR_1_RECURRING_SEAT | the price band's sku      |
+| Field | Type     | Example                                                      | Description          |
+|-------|----------|--------------------------------------------------------------|----------------------|
+| sku   | `string` | MS_195416C1_3447_423A_B37B_EE59A99A19C4_EUR_1_RECURRING_SEAT | the price band's sku |
 
 ### Other entities
 
@@ -192,14 +193,14 @@ This entity represents a filter returned by the [Find endpoint](#find-endpoint).
 It shows a number of possible filters in the search results and the count for each of them.
 
 | Field  | Type     | Example     | Description              |
-| ------ | -------- | ----------- | ------------------------ |
+|--------|----------|-------------|--------------------------|
 | name   | `string` | vendor      | The name of the filter   |
 | values | `array`  | (see below) | The values of the filter |
 
 Each entry in the `values` array looks like this:
 
 | Field | Type     | Example   | Description                                   |
-| ----- | -------- | --------- | --------------------------------------------- |
+|-------|----------|-----------|-----------------------------------------------|
 | value | `string` | Microsoft | The value of the entry                        |
 | count | `int`    | 3         | How many results are available for this entry |
 
@@ -214,7 +215,7 @@ All fields of both the [License](#License) entity and the [Offer](#Offer) entity
 This entity should be used to display search results or to make a listing of licenses.
 
 | Field     | Type      | Example                           | Description                                                                                      |
-| --------- | --------- | --------------------------------- | ------------------------------------------------------------------------------------------------ |
+|-----------|-----------|-----------------------------------|--------------------------------------------------------------------------------------------------|
 | highlight | `array`   | ['sku' => '<strong>ABC</strong>'] | An associative array which shows which values are to be highlighted based on the search keywords |
 | license   | `License` |                                   | All the fields contained in the [License](#License) entity                                       |
 | offer     | `Offer`   |                                   | All the fields contained in the [Offer](#Offer) entity                                           |
@@ -238,7 +239,7 @@ For example, the typical license has a term of 8640 and a periodicity of 720, wh
 Here are some possible values for these values:
 
 | value | Term         | Periodicity                 |
-| ----- | ------------ | --------------------------- |
+|-------|--------------|-----------------------------|
 | 0     | No term      | one time (no billing cycle) |
 | 24    | One day      | Daily                       |
 | 720   | One month    | Monthly                     |
