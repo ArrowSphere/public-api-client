@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.4] - 2022-08-11
+
 ### Added
 
 - Added the `License::$vendorBillingId` attribute (as `string|null`) to manage this new vendor-specific field
@@ -411,7 +413,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.9.3...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.9.4...HEAD
+[0.9.4]: https://github.com/ArrowSphere/public-api-client/compare/0.9.3...0.9.4
 [0.9.3]: https://github.com/ArrowSphere/public-api-client/compare/0.9.2...0.9.3
 [0.9.2]: https://github.com/ArrowSphere/public-api-client/compare/0.9.1...0.9.2
 [0.9.1]: https://github.com/ArrowSphere/public-api-client/compare/0.9.0...0.9.1
