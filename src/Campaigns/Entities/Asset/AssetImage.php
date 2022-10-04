@@ -46,7 +46,7 @@ class AssetImage extends AbstractEntity
         return $this->fields;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             self::COLUMN_URL    => $this->url,

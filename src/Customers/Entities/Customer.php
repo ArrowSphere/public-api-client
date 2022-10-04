@@ -197,7 +197,7 @@ class Customer extends AbstractEntity
     /**
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             self::COLUMN_ADDRESS_LINE_1     => $this->addressLine1,

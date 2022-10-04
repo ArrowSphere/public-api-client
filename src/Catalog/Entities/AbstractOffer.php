@@ -438,7 +438,7 @@ abstract class AbstractOffer extends AbstractEntity
         });
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             self::COLUMN_ADDONS            => $this->getAddons(),

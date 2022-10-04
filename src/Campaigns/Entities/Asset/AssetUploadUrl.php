@@ -46,7 +46,7 @@ class AssetUploadUrl extends AbstractEntity
         return $this->image;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             self::COLUMN_UUID  => $this->uuid,

@@ -62,7 +62,7 @@ class FilterFindResult extends AbstractEntity
         return $this->values;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             self::COLUMN_NAME   => $this->getName(),

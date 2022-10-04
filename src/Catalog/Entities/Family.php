@@ -131,7 +131,7 @@ class Family extends AbstractEntity
     /**
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             self::COLUMN_CLASSIFICATION => $this->classification,

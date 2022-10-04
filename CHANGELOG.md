@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Changed overridden method `JsonSerializable::jsonSerialize()`, add return type
+
 ## [0.9.4] - 2022-08-11
 
 ### Added
