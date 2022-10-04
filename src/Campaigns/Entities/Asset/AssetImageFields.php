@@ -142,7 +142,7 @@ class AssetImageFields extends AbstractEntity
         return $this->amzSignature;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             self::COLUMN_KEY                  => $this->key,

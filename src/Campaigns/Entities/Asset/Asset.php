@@ -46,7 +46,7 @@ class Asset extends AbstractEntity
         return $this->url;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             self::COLUMN_UUID => $this->uuid,

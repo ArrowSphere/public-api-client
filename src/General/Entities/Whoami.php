@@ -298,7 +298,7 @@ class Whoami extends AbstractEntity
         return $this->internalReference;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             self::COLUMN_COMPANY_NAME       => $this->getCompanyName(),

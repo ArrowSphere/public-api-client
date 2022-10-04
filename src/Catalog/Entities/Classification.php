@@ -43,7 +43,7 @@ class Classification extends AbstractEntity
         return $this->name;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): string
     {
         return $this->name;
     }

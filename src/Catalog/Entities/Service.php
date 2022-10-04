@@ -146,7 +146,7 @@ class Service extends AbstractEntity
         return $this->serviceTags;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             self::COLUMN_ASSOCIATED_SUBSCRIPTION_PROGRAM => $this->getAssociatedSubscriptionProgram(),

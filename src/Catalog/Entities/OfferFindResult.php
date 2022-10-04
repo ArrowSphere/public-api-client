@@ -62,7 +62,7 @@ class OfferFindResult extends AbstractOffer
     /**
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return array_merge(parent::jsonSerialize(), [
             'highlight' => $this->getHighlight(),

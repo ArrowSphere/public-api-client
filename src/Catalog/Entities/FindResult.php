@@ -167,7 +167,7 @@ class FindResult extends AbstractEntity
         return $this->totalPage;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             'offers'    => $this->getOffers(),

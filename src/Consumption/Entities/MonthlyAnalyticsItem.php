@@ -154,7 +154,7 @@ class MonthlyAnalyticsItem extends AbstractEntity
         return $this->month;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             self::COLUMN_VENDOR         => $this->getVendor(),

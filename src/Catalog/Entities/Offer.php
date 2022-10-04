@@ -241,7 +241,7 @@ class Offer extends AbstractOffer
     /**
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return array_merge(parent::jsonSerialize(), [
             self::COLUMN_BUYING_PROGRAM        => $this->getBuyingProgram(),

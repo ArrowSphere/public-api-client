@@ -212,7 +212,7 @@ class PriceBand extends AbstractEntity
         return $this->termAsHours;
     }
 
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return [
             self::COLUMN_MIN_QUANTITY         => $this->getMinQuantity(),

@@ -78,7 +78,7 @@ class CompanyDetails extends AbstractEntity
     /**
      * @return array
      */
-    public function jsonSerialize()
+    public function jsonSerialize(): array
     {
         return array_filter([
             self::COLUMN_DOMAIN_NAME              => $this->domainName,
