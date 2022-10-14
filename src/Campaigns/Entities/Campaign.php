@@ -7,25 +7,28 @@ use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class Campaign extends AbstractEntity
 {
-    public const COLUMN_BANNERS = 'banners';
+    public const COLUMN_BANNER = 'banner';
     public const COLUMN_CATEGORY = 'category';
-    public const COLUMN_CREATEDAT = 'createdAt';
-    public const COLUMN_DELETEDAT = 'deletedAt';
-    public const COLUMN_ENDDATE = 'endDate';
+    public const COLUMN_CREATED_AT = 'createdAt';
+    public const COLUMN_DELETED_AT = 'deletedAt';
+    public const COLUMN_END_DATE = 'endDate';
     public const COLUMN_IS_ACTIVATED = 'isActivated';
-    public const COLUMN_LANDINGPAGE = 'landingPage';
+    public const COLUMN_LANDING_PAGE = 'landingPage';
     public const COLUMN_NAME = 'name';
     public const COLUMN_REFERENCE = 'reference';
     public const COLUMN_RULES = 'rules';
-    public const COLUMN_STARTDATE = 'startDate';
-    public const COLUMN_UPDATEDAT = 'updatedAt';
+    public const COLUMN_START_DATE = 'startDate';
+    public const COLUMN_UPDATED_AT = 'updatedAt';
     public const COLUMN_WEIGHT = 'weight';
 
     public const DEFAULT_VALUE_CATEGORY = 'BANNER';
-    public const DEFAULT_VALUE_DELETEDAT = null;
-    public const DEFAULT_VALUE_ENDDATE = null;
-    public const DEFAULT_VALUE_STARTDATE = null;
-    public const DEFAULT_VALUE_UPDATEDAT = null;
+    public const DEFAULT_VALUE_CREATED_AT = null;
+    public const DEFAULT_VALUE_DELETED_AT = null;
+    public const DEFAULT_VALUE_END_DATE = null;
+    public const DEFAULT_VALUE_NAME = '';
+    public const DEFAULT_VALUE_REFERENCE = '';
+    public const DEFAULT_VALUE_START_DATE = null;
+    public const DEFAULT_VALUE_UPDATED_AT = null;
     public const DEFAULT_VALUE_WEIGHT = 1;
 
     /**
@@ -84,9 +87,9 @@ class Campaign extends AbstractEntity
     private $endDate;
 
     /**
-     * @var Banner[]
+     * @var Banner
      */
-    private $banners;
+    private $banner;
 
     /**
      * @var LandingPage
@@ -104,21 +107,18 @@ class Campaign extends AbstractEntity
     {
         parent::__construct($data);
 
-        $this->banners = array_map(static function (array $banner) {
-            return new Banner($banner);
-        }, $data[self::COLUMN_BANNERS]);
-
+        $this->banner = new Banner($data[self::COLUMN_BANNER] ?? []);
         $this->category = $data[self::COLUMN_CATEGORY] ?? self::DEFAULT_VALUE_CATEGORY;
         $this->isActivated = $data[self::COLUMN_IS_ACTIVATED] ?? false;
-        $this->createdAt = $data[self::COLUMN_CREATEDAT];
-        $this->deletedAt = $data[self::COLUMN_DELETEDAT] ?? self::DEFAULT_VALUE_DELETEDAT;
-        $this->endDate = $data[self::COLUMN_ENDDATE] ?? self::DEFAULT_VALUE_ENDDATE;
-        $this->landingPage = new LandingPage($data[self::COLUMN_LANDINGPAGE]);
-        $this->name = $data[self::COLUMN_NAME];
-        $this->reference = $data[self::COLUMN_REFERENCE];
+        $this->createdAt = $data[self::COLUMN_CREATED_AT] ?? self::DEFAULT_VALUE_CREATED_AT;
+        $this->deletedAt = $data[self::COLUMN_DELETED_AT] ?? self::DEFAULT_VALUE_DELETED_AT;
+        $this->endDate = $data[self::COLUMN_END_DATE] ?? self::DEFAULT_VALUE_END_DATE;
+        $this->landingPage = new LandingPage($data[self::COLUMN_LANDING_PAGE] ?? []);
+        $this->name = $data[self::COLUMN_NAME] ?? self::DEFAULT_VALUE_NAME ;
+        $this->reference = $data[self::COLUMN_REFERENCE] ?? self::DEFAULT_VALUE_REFERENCE;
         $this->rules = new Rules($data[self::COLUMN_RULES] ?? []);
-        $this->startDate = $data[self::COLUMN_STARTDATE] ?? self::DEFAULT_VALUE_STARTDATE;
-        $this->updatedAt = $data[self::COLUMN_UPDATEDAT] ?? self::DEFAULT_VALUE_UPDATEDAT;
+        $this->startDate = $data[self::COLUMN_START_DATE] ?? self::DEFAULT_VALUE_START_DATE;
+        $this->updatedAt = $data[self::COLUMN_UPDATED_AT] ?? self::DEFAULT_VALUE_UPDATED_AT;
         $this->weight = $data[self::COLUMN_WEIGHT] ?? self::DEFAULT_VALUE_WEIGHT;
     }
 
@@ -211,11 +211,11 @@ class Campaign extends AbstractEntity
     }
 
     /**
-     * @return Banner[]
+     * @return Banner
      */
-    public function getBanners(): array
+    public function getBanner(): Banner
     {
-        return $this->banners;
+        return $this->banner;
     }
 
     /**
@@ -232,18 +232,18 @@ class Campaign extends AbstractEntity
     public function jsonSerialize(): array
     {
         return [
-            self::COLUMN_BANNERS      => $this->getBanners(),
+            self::COLUMN_BANNER       => $this->getBanner(),
             self::COLUMN_CATEGORY     => $this->getCategory(),
             self::COLUMN_IS_ACTIVATED => $this->getIsActivated(),
-            self::COLUMN_CREATEDAT    => $this->getCreatedAt(),
-            self::COLUMN_DELETEDAT    => $this->getDeletedAt(),
-            self::COLUMN_ENDDATE      => $this->getEndDate(),
-            self::COLUMN_LANDINGPAGE  => $this->getLandingPage(),
+            self::COLUMN_CREATED_AT   => $this->getCreatedAt(),
+            self::COLUMN_DELETED_AT   => $this->getDeletedAt(),
+            self::COLUMN_END_DATE     => $this->getEndDate(),
+            self::COLUMN_LANDING_PAGE => $this->getLandingPage(),
             self::COLUMN_NAME         => $this->getName(),
             self::COLUMN_REFERENCE    => $this->getReference(),
             self::COLUMN_RULES        => $this->getRules(),
-            self::COLUMN_STARTDATE    => $this->getStartDate(),
-            self::COLUMN_UPDATEDAT    => $this->getUpdatedAt(),
+            self::COLUMN_START_DATE   => $this->getStartDate(),
+            self::COLUMN_UPDATED_AT   => $this->getUpdatedAt(),
             self::COLUMN_WEIGHT       => $this->getWeight(),
         ];
     }

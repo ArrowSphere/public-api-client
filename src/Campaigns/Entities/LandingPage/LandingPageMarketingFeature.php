@@ -5,7 +5,7 @@ namespace ArrowSphere\PublicApiClient\Campaigns\Entities\LandingPage;
 use ArrowSphere\PublicApiClient\AbstractEntity;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
-class LandingPageFeature extends AbstractEntity
+class LandingPageMarketingFeature extends AbstractEntity
 {
     public const COLUMN_DESCRIPTION = 'description';
     public const COLUMN_TITLE = 'title';
@@ -25,7 +25,7 @@ class LandingPageFeature extends AbstractEntity
     private $description;
 
     /**
-     * @var LandingPageFeatureItem[]
+     * @var LandingPageMarketingFeatureItem[]
      */
     private $items;
 
@@ -45,7 +45,7 @@ class LandingPageFeature extends AbstractEntity
         $this->description = $data[self::COLUMN_DESCRIPTION] ?? self::DEFAULT_VALUE_DESCRIPTION;
         $this->items = array_map(
             static function (array $items) {
-                return new LandingPageFeatureItem($items);
+                return new LandingPageMarketingFeatureItem($items);
             },
             $data[self::COLUMN_ITEMS] ?? []
         );

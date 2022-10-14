@@ -47,60 +47,9 @@ class CampaignsClient extends AbstractClient
     }
 
     /**
-     * Get a single active campaign
+     * Get a single campaign.
      *
-     * @param string $customerRef
-     *
-     * @return Campaign|null
-     *
-     * @throws GuzzleException
-     * @throws EntityValidationException
-     * @throws NotFoundException
-     * @throws PublicApiClientException
-     *
-     * @deprecated This method is obsolete. Please use the new version of the same method, getActiveCampaignV2.
-     */
-    public function getActiveCampaign(string $customerRef): ?Campaign
-    {
-        $response = $this->getActiveCampaignRaw($customerRef);
-        $data = $this->decodeResponse($response);
-        $result = null;
-        if ($data['data']) {
-            $result = new Campaign($data['data']);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Get a single active campaign
-     *
-     * @param string $location
-     * @param string|null $customerRef
-     *
-     * @return Campaign|null
-     *
-     * @throws EntityValidationException
-     * @throws GuzzleException
-     * @throws NotFoundException
-     * @throws PublicApiClientException
-     */
-    public function getActiveCampaignV2(string $location, ?string $customerRef = null): ?Campaign
-    {
-        $response = $this->getActiveCampaignRawV2($location, $customerRef);
-        $data = $this->decodeResponse($response);
-        $result = null;
-        if ($data['data']) {
-            $result = new Campaign($data['data']);
-        }
-
-        return $result;
-    }
-
-    /**
-     * Lists all the campaigns.
-     *
-     * @param array $parameters
+     * @param string $reference The reference of the campaign
      *
      * @return string
      *
@@ -108,11 +57,55 @@ class CampaignsClient extends AbstractClient
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function getCampaignsRaw(array $parameters = []): string
+    public function getCampaignRaw(string $reference): string
     {
-        $this->path = self::FIND_PATH;
+        $reference = urlencode($reference);
+        $this->path = self::FIND_PATH . "/$reference";
 
-        return $this->get($parameters);
+        return $this->get();
+    }
+
+    /**
+     * Get a all active campaigns
+     *
+     * @param string $location
+     * @param string|null $customerRef
+     *
+     * @return Generator|Campaign[]
+     *
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getActiveCampaigns(string $location, ?string $customerRef = null): Generator
+    {
+        $response = $this->getActiveCampaignsRaw($location, $customerRef);
+        $data = $this->decodeResponse($response);
+        foreach ($data['data'] as $data) {
+            yield new Campaign($data);
+        }
+    }
+
+    /**
+     * @param string $location example : MCP, ARROWSPHERE
+     * @param string|null $customerRef
+     *
+     * @return string
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getActiveCampaignsRaw(string $location, ?string $customerRef = null): string
+    {
+        $params = ['location' => $location];
+        if ($customerRef !== null) {
+            $params['customer'] = $customerRef;
+        }
+        $this->path = self::FIND_PATH . "/active?" . http_build_query($params);
+
+        return $this->get();
     }
 
     /**
@@ -145,52 +138,16 @@ class CampaignsClient extends AbstractClient
 
             $currentPage++;
 
-            foreach ($response['data']['campaigns'] as $data) {
+            foreach ($response['data'] as $data) {
                 yield new Campaign($data);
             }
         }
     }
 
     /**
-     * Get a single campaign.
+     * Lists all the campaigns.
      *
-     * @param string $reference The reference of the campaign
-     *
-     * @return string
-     *
-     * @throws GuzzleException
-     * @throws NotFoundException
-     * @throws PublicApiClientException
-     */
-    public function getCampaignRaw(string $reference): string
-    {
-        $reference = urlencode($reference);
-        $this->path = self::FIND_PATH . "/$reference";
-
-        return $this->get();
-    }
-
-    /**
-     * @param string $customerRef
-     *
-     * @return string
-     *
-     * @throws GuzzleException
-     * @throws NotFoundException
-     * @throws PublicApiClientException
-     *
-     * @deprecated This method is obsolete. Please use the new version of the same method, getActiveCampaignRawV2.
-     */
-    public function getActiveCampaignRaw(string $customerRef): string
-    {
-        $this->path = self::FIND_PATH . "/active?customer=" . $customerRef;
-
-        return $this->get();
-    }
-
-    /**
-     * @param string $location example : MCP, ARROWSPHERE
-     * @param string|null $customerRef
+     * @param array $parameters
      *
      * @return string
      *
@@ -198,32 +155,11 @@ class CampaignsClient extends AbstractClient
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function getActiveCampaignRawV2(string $location, ?string $customerRef = null): string
+    public function getCampaignsRaw(array $parameters = []): string
     {
-        $params = ['location' => $location];
-        if ($customerRef !== null) {
-            $params['customer'] = $customerRef;
-        }
-        $this->path = self::FIND_PATH . "/active?" . http_build_query($params);
+        $this->path = self::FIND_PATH;
 
-        return $this->get();
-    }
-
-    /**
-     * @param string $reference
-     *
-     * @return string
-     *
-     * @throws GuzzleException
-     * @throws NotFoundException
-     * @throws PublicApiClientException
-     */
-    public function getCampaignAssetsRaw(string $reference): string
-    {
-        $reference = urlencode($reference);
-        $this->path = self::FIND_PATH . "/$reference/assets";
-
-        return $this->get();
+        return $this->get($parameters);
     }
 
     /**
@@ -255,10 +191,10 @@ class CampaignsClient extends AbstractClient
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function getCampaignAssetsUploadUrlRaw(string $reference): string
+    public function getCampaignAssetsRaw(string $reference): string
     {
         $reference = urlencode($reference);
-        $this->path = self::FIND_PATH . "/$reference/assets/upload";
+        $this->path = self::FIND_PATH . "/$reference/assets";
 
         return $this->get();
     }
@@ -281,6 +217,23 @@ class CampaignsClient extends AbstractClient
         return array_map(static function (array $assetUploadUrl) {
             return new AssetUploadUrl($assetUploadUrl);
         }, $data['data']['assets']);
+    }
+
+    /**
+     * @param string $reference
+     *
+     * @return string
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getCampaignAssetsUploadUrlRaw(string $reference): string
+    {
+        $reference = urlencode($reference);
+        $this->path = self::FIND_PATH . "/$reference/assets/upload";
+
+        return $this->get();
     }
 
     /**
