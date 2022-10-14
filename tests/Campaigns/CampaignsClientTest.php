@@ -7,6 +7,8 @@ use ArrowSphere\PublicApiClient\Campaigns\Entities\Asset\Asset;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\Asset\AssetUploadUrl;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\Banner;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\Campaign;
+use ArrowSphere\PublicApiClient\Campaigns\Entities\LandingPage\LandingPageFeature;
+use ArrowSphere\PublicApiClient\Campaigns\Entities\LandingPage\LandingPageMarketingFeature;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
@@ -82,9 +84,7 @@ class CampaignsClientTest extends AbstractClientTest
     public function testGetCampaignsWithPagination(): void
     {
         $response = json_encode([
-            'data'       => [
-                'campaigns' => [],
-            ],
+            'data'       => [],
             'pagination' => [
                 'total_page' => 3,
             ],
@@ -111,93 +111,105 @@ class CampaignsClientTest extends AbstractClientTest
     {
         $response = <<<JSON
 {
-  "status": 200,
-  "data": {
-    "campaigns": [
-      {
-        "reference": "aaa-aaa-aaaa-aaa",
-        "name": "My campaign",
-        "category": "BANNER",
-        "createdAt": "2021-06-25T16:00:00Z",
-        "rules": {
-          "locations": [],
-          "roles": [],
-          "marketplaces": [],
-          "subscriptions": [],
-          "resellers": [],
-          "endCustomers": []
+    "status": 200,
+    "data": [
+        {
+            "reference": "aaa-aaa-aaaa-aaa",
+            "name": "My campaign",
+            "category": "BANNER",
+            "createdAt": "2021-06-25T16:00:00Z",
+            "rules": {
+                "locations": [],
+                "roles": [],
+                "marketplaces": [],
+                "subscriptions": [],
+                "resellers": [],
+                "endCustomers": []
+            },
+            "weight": 1,
+            "banner": {
+                "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
+            },
+            "landingPage": {
+                "header": {
+                    "backgroundImageUuid": "eee-eee-eeee-eee-ee",
+                    "vendorLogoUuid": "fff-fff-fffff-fff-ff"
+                },
+                "body": {
+                    "backgroundImageUuid": "ggg-ggg-gggg-ggg-gg",
+                    "buttonText": null,
+                    "contactEmail": null
+                },
+                "footer": {
+                    "marketingFeature": {
+                        "items": [
+                            {
+                                "imageUuid": "aaaaa-aaaa-aa-aaaaa-aaa"
+                            },
+                            {
+                                "imageUuid": "bbbbb-bbbb-bb-bbbbb-bbb"
+                            },
+                            {
+                                "imageUuid": "ccccc-cccc-cc-ccccc-ccc"
+                            }
+                        ]
+                    }
+                }
+            }
         },
-        "weight": 1,
-        "banners": [
-          {
-            "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
-          },
-          {
-            "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
-          },
-          {
-            "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
-          }
-        ],
-        "landingPage": {
-          "header": {
-            "backgroundImageUuid": "eee-eee-eeee-eee-ee",
-            "vendorLogoUuid": "fff-fff-fffff-fff-ff"
-          },
-          "body": {
-            "backgroundImageUuid": "ggg-ggg-gggg-ggg-gg",
-            "buttonText": null,
-            "contactEmail": null
-          }
+        {
+            "reference": "bbb-bbb-bbbb-bbb",
+            "name": "My campaign 2",
+            "category": "BANNER 2",
+            "createdAt": "2021-12-25T16:00:00Z",
+            "rules": {
+                "locations": [],
+                "roles": [],
+                "marketplaces": [],
+                "subscriptions": [],
+                "resellers": [],
+                "endCustomers": []
+            },
+            "weight": 2,
+            "banner": {
+                "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
+            },
+            "landingPage": {
+                "header": {
+                    "backgroundImageUuid": "eee-eee-eeee-eee-44",
+                    "vendorLogoUuid": "fff-fff-fffff-fff-55"
+                },
+                "body": {
+                    "backgroundImageUuid": "ggg-ggg-gggg-ggg-66",
+                    "buttonText": null,
+                    "contactEmail": null
+                },
+                "footer": {
+                    "marketingFeature": {
+                        "items": [
+                            {
+                                "imageUuid": "aaaaa-aaaa-aa-aaaaa-aaa"
+                            },
+                            {
+                                "imageUuid": "bbbbb-bbbb-bb-bbbbb-bbb"
+                            },
+                            {
+                                "imageUuid": "ccccc-cccc-cc-ccccc-ccc"
+                            }
+                        ]
+                    }
+                }
+            }
         }
-      },
-      {
-        "reference": "bbb-bbb-bbbb-bbb",
-        "name": "My campaign 2",
-        "category": "BANNER 2",
-        "createdAt": "2021-12-25T16:00:00Z",
-        "rules": {
-          "locations": [],
-          "roles": [],
-          "marketplaces": [],
-          "subscriptions": [],
-          "resellers": [],
-          "endCustomers": []
-        },
-        "weight": 2,
-        "banners": [
-          {
-            "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-11"
-          },
-          {
-            "backgroundImageUuid": "ccc-ccc-cccc-ccc-22"
-          },
-          {
-            "backgroundImageUuid": "ddd-ddd-dddd-ddd-33"
-          }
-        ],
-        "landingPage": {
-          "header": {
-            "backgroundImageUuid": "eee-eee-eeee-eee-44",
-            "vendorLogoUuid": "fff-fff-fffff-fff-55"
-          },
-          "body": {
-            "backgroundImageUuid": "ggg-ggg-gggg-ggg-66",
-            "buttonText": null,
-            "contactEmail": null
-          }
-        }
-      }
-    ]
-  },
-  "pagination": {
-    "per_page": 100,
-    "current_page": 1,
-    "total_page": 1,
-    "total": 2,
-    "next": null,
-    "previous": null
-  }
+    ],
+    "pagination": {
+        "per_page": 100,
+        "current_page": 1,
+        "total_page": 1,
+        "total": 2,
+        "next": null,
+        "previous": null
+    }
 }
 JSON;
 
@@ -235,23 +247,9 @@ JSON;
 
         self::assertSame(1, $campaign->getWeight());
 
-        $banners = $campaign->getBanners();
-        self::assertCount(3, $banners);
-
-        /** @var Banner $banner */
-        $banner = array_shift($banners);
+        $banner = $campaign->getBanner();
         self::assertInstanceOf(Banner::class, $banner);
         self::assertSame('bbbb-bbb-bbbb-bbb-bb', $banner->getBackgroundImageUuid());
-
-        /** @var Banner $banner */
-        $banner = array_shift($banners);
-        self::assertInstanceOf(Banner::class, $banner);
-        self::assertSame('ccc-ccc-cccc-ccc-cc', $banner->getBackgroundImageUuid());
-
-        /** @var Banner $banner */
-        $banner = array_shift($banners);
-        self::assertInstanceOf(Banner::class, $banner);
-        self::assertSame('ddd-ddd-dddd-ddd-dd', $banner->getBackgroundImageUuid());
 
         $landingPage = $campaign->getLandingPage();
         self::assertNull($landingPage->getUrl());
@@ -279,8 +277,10 @@ JSON;
         self::assertSame('', $footer->getBackgroundColor());
         self::assertSame('', $footer->getButtonText());
         self::assertSame('', $footer->getButtonUrl());
-
-        self::assertEmpty($footer->getFeatures());
+        $feature = $footer->getFeature();
+        self::assertInstanceOf(LandingPageFeature::class, $feature);
+        $marketingFeature = $footer->getMarketingFeature();
+        self::assertInstanceOf(LandingPageMarketingFeature::class, $marketingFeature);
 
         /** @var Campaign $campaign */
         $campaign = array_shift($list);
@@ -303,23 +303,10 @@ JSON;
 
         self::assertSame(2, $campaign->getWeight());
 
-        $banners = $campaign->getBanners();
-        self::assertCount(3, $banners);
-
         /** @var Banner $banner */
-        $banner = array_shift($banners);
+        $banner = $campaign->getBanner();
         self::assertInstanceOf(Banner::class, $banner);
-        self::assertSame('bbbb-bbb-bbbb-bbb-11', $banner->getBackgroundImageUuid());
-
-        /** @var Banner $banner */
-        $banner = array_shift($banners);
-        self::assertInstanceOf(Banner::class, $banner);
-        self::assertSame('ccc-ccc-cccc-ccc-22', $banner->getBackgroundImageUuid());
-
-        /** @var Banner $banner */
-        $banner = array_shift($banners);
-        self::assertInstanceOf(Banner::class, $banner);
-        self::assertSame('ddd-ddd-dddd-ddd-33', $banner->getBackgroundImageUuid());
+        self::assertSame('bbbb-bbb-bbbb-bbb-bb', $banner->getBackgroundImageUuid());
 
         $landingPage = $campaign->getLandingPage();
         self::assertNull($landingPage->getUrl());
@@ -347,8 +334,10 @@ JSON;
         self::assertSame('', $footer->getBackgroundColor());
         self::assertSame('', $footer->getButtonText());
         self::assertSame('', $footer->getButtonUrl());
-
-        self::assertEmpty($footer->getFeatures());
+        $feature = $footer->getFeature();
+        self::assertInstanceOf(LandingPageFeature::class, $feature);
+        $marketingFeature = $footer->getMarketingFeature();
+        self::assertInstanceOf(LandingPageMarketingFeature::class, $marketingFeature);
     }
 
     /**
@@ -380,17 +369,9 @@ JSON;
             "endCustomers": []
         },
         "weight": 1,
-        "banners": [
-            {
-                "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
-            },
-            {
-                "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
-            },
-            {
-                "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
-            }
-        ],
+        "banner": {
+          "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
+        },
         "landingPage": {
             "header": {
                 "backgroundImageUuid": "eee-eee-eeee-eee-ee",
@@ -398,6 +379,21 @@ JSON;
             },
             "body": {
                 "backgroundImageUuid": "ggg-ggg-gggg-ggg-gg"
+            },
+            "footer": {
+                "marketingFeature": {
+                    "items": [
+                        {
+                            "imageUuid": "aaaaa-aaaa-aa-aaaaa-aaa"
+                        },
+                        {
+                            "imageUuid": "bbbbb-bbbb-bb-bbbbb-bbb"
+                        },
+                        {
+                            "imageUuid": "ccccc-cccc-cc-ccccc-ccc"
+                        }
+                    ]
+                }
             }
         }
     }
@@ -463,17 +459,9 @@ JSON;
             "endCustomers": []
         },
         "weight": 1,
-        "banners": [
-            {
-                "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
-            },
-            {
-                "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
-            },
-            {
-                "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
-            }
-        ],
+        "banner": {
+            "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
+        },
         "landingPage": {
             "header": {
                 "backgroundImageUuid": "eee-eee-eeee-eee-ee",
@@ -483,6 +471,21 @@ JSON;
                 "backgroundImageUuid": "ggg-ggg-gggg-ggg-gg",
                 "buttonText": null,
                 "contactEmail": null
+            },
+            "footer": {
+                "marketingFeature": {
+                    "items": [
+                        {
+                            "imageUuid": "aaaaa-aaaa-aa-aaaaa-aaa"
+                        },
+                        {
+                            "imageUuid": "bbbbb-bbbb-bb-bbbbb-bbb"
+                        },
+                        {
+                            "imageUuid": "ccccc-cccc-cc-ccccc-ccc"
+                        }
+                    ]
+                }
             }
         }
     }
@@ -515,23 +518,10 @@ JSON;
 
         self::assertSame(1, $campaign->getWeight());
 
-        $banners = $campaign->getBanners();
-        self::assertCount(3, $banners);
-
         /** @var Banner $banner */
-        $banner = array_shift($banners);
+        $banner = $campaign->getBanner();
         self::assertInstanceOf(Banner::class, $banner);
         self::assertSame('bbbb-bbb-bbbb-bbb-bb', $banner->getBackgroundImageUuid());
-
-        /** @var Banner $banner */
-        $banner = array_shift($banners);
-        self::assertInstanceOf(Banner::class, $banner);
-        self::assertSame('ccc-ccc-cccc-ccc-cc', $banner->getBackgroundImageUuid());
-
-        /** @var Banner $banner */
-        $banner = array_shift($banners);
-        self::assertInstanceOf(Banner::class, $banner);
-        self::assertSame('ddd-ddd-dddd-ddd-dd', $banner->getBackgroundImageUuid());
 
         $landingPage = $campaign->getLandingPage();
         self::assertNull($landingPage->getUrl());
@@ -559,8 +549,10 @@ JSON;
         self::assertSame('', $footer->getBackgroundColor());
         self::assertSame('', $footer->getButtonText());
         self::assertSame('', $footer->getButtonUrl());
-
-        self::assertEmpty($footer->getFeatures());
+        $feature = $footer->getFeature();
+        self::assertInstanceOf(LandingPageFeature::class, $feature);
+        $marketingFeature = $footer->getMarketingFeature();
+        self::assertInstanceOf(LandingPageMarketingFeature::class, $marketingFeature);
     }
 
     /**
@@ -568,115 +560,16 @@ JSON;
      * @throws PublicApiClientException
      * @throws GuzzleException
      */
-    public function testGetActiveCampaignRaw(): void
+    public function testGetActiveCampaignsRaw(): void
     {
-        $expected = <<<JSON
-{
-    "data": {
-        "reference": "aaa-aaa-aaaa-aaa",
-        "name": "My campaign",
-        "category": "BANNER",
-        "isActivated": true,
-        "createdAt": "2021-06-25T16:00:00Z",
-        "rules": {
-            "locations": [],
-            "roles": [],
-            "marketplaces": [],
-            "subscriptions": [],
-            "resellers": [],
-            "endCustomers": []
-        },
-        "weight": 1,
-        "banners": [
-            {
-                "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
-            },
-            {
-                "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
-            },
-            {
-                "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
-            }
-        ],
-        "landingPage": {
-            "header": {
-                "backgroundImageUuid": "eee-eee-eeee-eee-ee",
-                "vendorLogoUuid": "fff-fff-fffff-fff-ff"
-            },
-            "body": {
-                "backgroundImageUuid": "ggg-ggg-gggg-ggg-gg"
-            }
-        }
-    }
-}
-JSON;
-
-        // This line is to have minified JSON because it's what will be generated in the payload
-        $expected = json_encode(json_decode($expected, true));
-
-        $this->httpClient
-            ->expects(self::once())
-            ->method('request')
-            ->with('get', 'https://www.test.com/campaigns/active?customer=' . self::CUSTOMER_REF)
-            ->willReturn(new Response(200, [], $expected))
-        ;
-
-        $this->client->getActiveCampaignRaw(self::CUSTOMER_REF);
-    }
-
-    /**
-     * @throws NotFoundException
-     * @throws PublicApiClientException
-     * @throws GuzzleException
-     */
-    public function testGetActiveCampaignRawV2(): void
-    {
-        $expected = <<<JSON
-{
-    "data": {
-        "reference": "aaa-aaa-aaaa-aaa",
-        "name": "My campaign",
-        "category": "BANNER",
-        "isActivated": true,
-        "createdAt": "2021-06-25T16:00:00Z",
-        "rules": {
-            "locations": ["MCP"],
-            "roles": [],
-            "marketplaces": [],
-            "subscriptions": [],
-            "resellers": [],
-            "endCustomers": []
-        },
-        "weight": 1,
-        "banners": [
-            {
-                "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
-            },
-            {
-                "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
-            },
-            {
-                "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
-            }
-        ],
-        "landingPage": {
-            "url": "https://www.test.com/landing-page"
-        }
-    }
-}
-JSON;
-
-        // This line is to have minified JSON because it's what will be generated in the payload
-        $expected = json_encode(json_decode($expected, true));
-
         $this->httpClient
             ->expects(self::once())
             ->method('request')
             ->with('get', 'https://www.test.com/campaigns/active?location=' . self::LOCATION_MCP . '&customer=' . self::CUSTOMER_REF)
-            ->willReturn(new Response(200, [], $expected))
+            ->willReturn(new Response(200, [], 'OK USA'))
         ;
 
-        $this->client->getActiveCampaignRawV2(self::LOCATION_MCP, self::CUSTOMER_REF);
+        $this->client->getActiveCampaignsRaw(self::LOCATION_MCP, self::CUSTOMER_REF);
     }
 
     /**
@@ -834,18 +727,10 @@ JSON;
         "endCustomers": []
     },
     "weight": 1,
-    "banners": [
-        {
-            "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb",
-            "type": "PICTURE"
-        },
-        {
-            "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
-        },
-        {
-            "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
-        }
-    ],
+    "banner": {
+        "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb",
+        "type": "PICTURE"
+    },
     "landingPage": {
         "header": {
             "backgroundImageUuid": "eee-eee-eeee-eee-ee",
@@ -853,6 +738,21 @@ JSON;
         },
         "body": {
             "backgroundImageUuid": "ggg-ggg-gggg-ggg-gg"
+        },
+        "footer": {
+            "marketingFeature": {
+                "items": [
+                    {
+                        "imageUuid": "aaaaa-aaaa-aa-aaaaa-aaa"
+                    },
+                    {
+                        "imageUuid": "bbbbb-bbbb-bb-bbbbb-bbb"
+                    },
+                    {
+                        "imageUuid": "ccccc-cccc-cc-ccccc-ccc"
+                    }
+                ]
+            }
         }
     }
 }
@@ -874,18 +774,10 @@ JSON;
             "endCustomers": []
         },
         "weight": 1,
-        "banners": [
-            {
-                "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb",
-                "type": "PICTURE"
-            },
-            {
-                "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
-            },
-            {
-                "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
-            }
-        ],
+        "banner": {
+            "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb",
+            "type": "PICTURE"
+        },
         "landingPage": {
             "header": {
                 "backgroundImageUuid": "eee-eee-eeee-eee-ee",
@@ -893,6 +785,22 @@ JSON;
             },
             "body": {
                 "backgroundImageUuid": "ggg-ggg-gggg-ggg-gg"
+            },
+            "footer": {
+                "marketingFeature": {
+                    "items": [
+                        {
+                            "imageUuid": "aaaaa-aaaa-aa-aaaaa-aaa"
+                        },
+                        {
+                            "imageUuid": "bbbbb-bbbb-bb-bbbbb-bbb"
+                        },
+                        {
+                            "imageUuid": "ccccc-cccc-cc-ccccc-ccc"
+                        }
+
+                    ]
+                }
             }
         }
     }
@@ -961,18 +869,10 @@ JSON;
             "endCustomers": []
         },
         "weight": 1,
-        "banners": [
-            {
-                "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb",
-                "type": "PICTURE"
-            },
-            {
-                "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
-            },
-            {
-                "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
-            }
-        ],
+        "banner": {
+            "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb",
+            "type": "PICTURE"
+        },
         "landingPage": {
             "header": {
                 "backgroundImageUuid": "eee-eee-eeee-eee-ee",
@@ -980,6 +880,21 @@ JSON;
             },
             "body": {
                 "backgroundImageUuid": "ggg-ggg-gggg-ggg-gg"
+            },
+            "footer": {
+                "marketingFeature": {
+                    "items": [
+                        {
+                            "imageUuid": "aaaaa-aaaa-aa-aaaaa-aaa"
+                        },
+                        {
+                            "imageUuid": "bbbbb-bbbb-bb-bbbbb-bbb"
+                        },
+                        {
+                            "imageUuid": "ccccc-cccc-cc-ccccc-ccc"
+                        }
+                    ]
+                }
             }
         }
     }

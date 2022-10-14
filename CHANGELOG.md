@@ -5,6 +5,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+- Added new entities for LandingPage to reflect the new Campaign format: LandingPageFeatureItem, LandingPageMarketingFeature & LandingPageMarketingFeatureItem
+
+### Changed
+- Changed the `CampaignsClient::getActiveCampaign()` methods to `CampaignsClient::getActiveCampaigns()` due to the changes in the API: we know are getting every active campaigns for a user.
+- Changed the Campaign entity to reflect the new Campaign format
+- Changed the LandingPageFeature and LandingPageFooter entities for the same reasons
+
+### Removed
+- Removing `CampaignsClient::getActiveCampaignV2`
+- Removing `CampaignsClient::getActiveCampaignRawV2`
+
+
 ## [0.9.5] - 2022-10-04
 
 ### Changed

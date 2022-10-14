@@ -14,7 +14,7 @@ A campaign is managed by the `Campaign` entity.
 
 | Field       | Type               | Example                                    | Description                                                                                |
 | ----------- | ------------------ | ------------------------------------------ | ------------------------------------------------------------------------------------------ |
-| banners     | `Banner[]`         | an array of [Banner](#Banner)              | The campaign's banners (max 3).                                                            |
+| banner      | `Banner`           | an instance of [Banner](#Banner)           | The campaign's banner.                                                                     |
 | category    | `string`           | BANNER                                     | The type of campaign. It could be BANNER or NOTIFICATION (the later is not supported yet). |
 | createdAt   | `string`           | 2021-06-25T16:00:00:00Z                    | The creation date of the campaign.                                                         |
 | deletedAt   | `string` or `null` | 2021-08-26T18:00:00:00Z                    | The campaign are soft deleted, so this value indicates when it has been deleted.           |
@@ -29,7 +29,7 @@ A campaign is managed by the `Campaign` entity.
 
 #### Banner
 
-This entity represents the banners of the campaign.
+This entity represents the banner of the campaign.
 
 | Field               | Type               | Example                              | Description                                                             |
 | ------------------- | ------------------ | ------------------------------------ | ----------------------------------------------------------------------- |
@@ -61,6 +61,7 @@ This entity describes the header of the campaign's landing page.
 | backgroundColor     | `string` or `null` | #001E96                              | The landing page's header background color.           |
 | backgroundImageUuid | `string`           | 0fed6621-fe0c-4290-813a-58217e37b3ae | The uuid to use if the header has a background image. |
 | baseline            | `string`           | This page will explain...            | The landing page's baseline.                          |
+| circleColor         | `string` or `null` | #012345                              | The background color behind the vendor logo if needed |
 | textColor           | `string` or `null` | #FFFFFF                              | The landing page's text color.                        |
 | title               | `string`           | My big campaign                      | The landing page's title.                             |
 | vendorLogoUuid      | `string`           | e174e2a2-7545-4ef1-8f0c-122d0140cdea | The uuid to use to upload the vendor logo.            |
@@ -83,25 +84,62 @@ This entity describes the body of the campaign's landing page.
 
 This entity describes the footer of the campaign's landing page.
 
-| Field           | Type                   | Example                                               | Description                                          |
-| --------------- | ---------------------- | ----------------------------------------------------- | ---------------------------------------------------- |
-| backgroundColor | `string`               | #EE2436                                               | The landing page's footer background color.          |
-| buttonText      | `string`               | Click here!                                           | The text of the footer's button, after the features. |
-| buttonUrl       | `string`               | http://mywebsite.com                                  | The url of the footer's button.                      |
-| features        | `LandingPageFeature[]` | an array of [LandingPageFeature](#LandingPageFeature) | The landing page's features.                         |
-| textColor       | `string`               | #FFFFFF                                               | The landing page's footer text color.                |
-| title           | `string`               | My campaign's features                                | The landing page's footer title.                     |
+| Field            | Type                          | Example                                                                    | Description                                                     |
+| ---------------- | ----------------------------- | -------------------------------------------------------------------------- | --------------------------------------------------------------- |
+| backgroundColor  | `string`                      | #EE2436                                                                    | The landing page's footer background color. Uneditable for now. |
+| buttonText       | `string`                      | Click here!                                                                | The text of the footer's button, after the features.            |
+| buttonUrl        | `string`                      | http://mywebsite.com                                                       | The url of the footer's button.                                 |
+| feature          | `LandingPageFeature`          | an instance of [LandingPageFeature](#LandingPageFeature)                   | The landing page's features.                                    |
+| marketingFeature | `LandingPageMarketingFeature` | an instance of [LandingPageMarketingFeature](#LandingPageMarketingFeature) | The landing page's marketing features.                          |
+| textColor        | `string`                      | #FFFFFF                                                                    | The landing page's footer text color. Undetiable for now.       |
+| title            | `string`                      | My campaign's features                                                     | The landing page's footer title.                                |
 
 ##### LandingPageFeature
 
-This entity describes the feature in the footer of the campaign's landing page.
+This entity describes the features in the footer of the campaign's landing page.
+
+| Field       | Type                       | Example                                                       | Description                 |
+| ----------- | -------------------------- | ------------------------------------------------------------- | --------------------------- |
+| description | `string`                   | These are great features.                                     | The feature's subtitle.     |
+| items       | `LandingPageFeatureItem[]` | an array of [LandingPageFeatureItem](#LandingPageFeatureItem) | The feature's items         |
+| title       | `string`                   | My Features                                                   | The feature's title.        |
+
+##### LandingPageMarketingFeature
+
+This entity describes the marketing features in the footer of the campaign's landing page.
+
+| Field       | Type                                | Example                                                                         | Description                 |
+| ----------- | ----------------------------------- | ------------------------------------------------------------------------------- | --------------------------- |
+| description | `string`                            | These a great features.                                                         | The features' subtitle.     |
+| items       | `LandingPageMarketingFeatureItem[]` | an array of [LandingPageMarketingFeatureItem](#LandingPageMarketingFeatureItem) | The feature's items         |
+| title       | `string`                            | My Features                                                                     | The feature's title.        |
+
+#### LandingPageFeatureItem
+
+This entity describes the features' items in the footer of the campaign's landing page.
 
 | Field       | Type     | Example                  | Description                                                                              |
 | ----------- | -------- | ------------------------ | ---------------------------------------------------------------------------------------- |
+| buttonText  | `string` | Click here.              | The feature's CTA text.                                                                  |
+| buttonUrl   | `string` | http://mywebsite.com     | The feature's CTA url.                                                                   |
 | description | `string` | This is a great feature. | The feature's description.                                                               |
 | icon        | `string` | fa-icon                  | The feature's icon from Font Awesome.                                                    |
 | title       | `string` | Feature #1               | The feature's title.                                                                     |
 | size        | `int`    | 4                        | The feature's size on Bootstrap grid. Set to 4 by default, unchangeable by user for now. |
+
+
+#### LandingPagMarketingeFeatureItem
+
+This entity describes the marketing features' items in the footer of the campaign's landing page.
+
+| Field       | Type     | Example                              | Description                       |
+| ----------- | -------- | ------------------------------------ | --------------------------------- |
+| buttonText  | `string` | Click here.                          | The feature's CTA text.           |
+| buttonUrl   | `string` | http://mywebsite.com                 | The feature's CTA url.            |
+| description | `string` | This is a great feature.             | The feature's description.        |
+| imageUuid   | `string` | 0fed6621-fe0c-4290-813a-58217e37b3ae | The uuid of this feature's image. |
+| title       | `string` | Feature #1                           | The feature's title.              |
+
 
 #### Rules
 

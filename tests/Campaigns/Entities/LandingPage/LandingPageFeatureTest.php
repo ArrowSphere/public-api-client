@@ -19,32 +19,31 @@ class LandingPageFeatureTest extends AbstractEntityTest
                 'fields'   => [
                     'title'       => 'cool',
                     'description' => 'story',
-                    'icon'        => 'bro',
-                    'size'        => 42,
+                    'items'       => [],
                 ],
                 'expected' => <<<JSON
 {
     "title": "cool",
     "description": "story",
-    "icon": "bro",
-    "size": 42
+    "items": []
 }
 JSON
                 ,
-
             ],
             'empty'    => [
-                'fields'   => [],
+                'fields'   => [
+                      'title'       => '',
+                      'description' => '',
+                      'items'       => [],
+                  ],
                 'expected' => <<<JSON
 {
     "title": "",
     "description": "",
-    "icon": "",
-    "size": 4
+    "items": []
 }
 JSON
                 ,
-
             ],
         ];
     }

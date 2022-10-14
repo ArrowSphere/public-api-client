@@ -7,19 +7,21 @@ use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class LandingPageHeader extends AbstractEntity
 {
-    public const COLUMN_BACKGROUNDCOLOR = 'backgroundColor';
-    public const COLUMN_BACKGROUNDIMAGEUUID = 'backgroundImageUuid';
+    public const COLUMN_BACKGROUND_COLOR = 'backgroundColor';
+    public const COLUMN_BACKGROUND_IMAGE_UUID = 'backgroundImageUuid';
     public const COLUMN_BASELINE = 'baseline';
-    public const COLUMN_TEXTCOLOR = 'textColor';
+    public const COLUMN_CIRCLE_COLOR = 'circleColor';
+    public const COLUMN_TEXT_COLOR = 'textColor';
     public const COLUMN_TITLE = 'title';
-    public const COLUMN_VENDORLOGOUUID = 'vendorLogoUuid';
+    public const COLUMN_VENDOR_LOGO_UUID = 'vendorLogoUuid';
 
-    public const DEFAULT_VALUE_BACKGROUNDCOLOR = null;
-    public const DEFAULT_VALUE_BACKGROUNDIMAGEUUID = '';
+    public const DEFAULT_VALUE_BACKGROUND_COLOR = null;
+    public const DEFAULT_VALUE_BACKGROUND_IMAGE_UUID = '';
+    public const DEFAULT_VALUE_CIRCLE_COLOR = null;
     public const DEFAULT_VALUE_BASELINE = '';
-    public const DEFAULT_VALUE_TEXTCOLOR = null;
+    public const DEFAULT_VALUE_TEXT_COLOR = null;
     public const DEFAULT_VALUE_TITLE = '';
-    public const DEFAULT_VALUE_VENDORLOGOUUID = '';
+    public const DEFAULT_VALUE_VENDOR_LOGO_UUID = '';
 
     /**
      * @var string
@@ -52,6 +54,11 @@ class LandingPageHeader extends AbstractEntity
     private $textColor;
 
     /**
+     * @var string|null
+     */
+    private $circleColor;
+
+    /**
      * Statement constructor.
      *
      * @param array $data
@@ -63,12 +70,13 @@ class LandingPageHeader extends AbstractEntity
     {
         parent::__construct($data);
 
-        $this->backgroundImageUuid = $data[self::COLUMN_BACKGROUNDIMAGEUUID] ?? self::DEFAULT_VALUE_BACKGROUNDIMAGEUUID;
-        $this->vendorLogoUuid = $data[self::COLUMN_VENDORLOGOUUID] ?? self::DEFAULT_VALUE_VENDORLOGOUUID;
+        $this->backgroundImageUuid = $data[self::COLUMN_BACKGROUND_IMAGE_UUID] ?? self::DEFAULT_VALUE_BACKGROUND_IMAGE_UUID;
+        $this->vendorLogoUuid = $data[self::COLUMN_VENDOR_LOGO_UUID] ?? self::DEFAULT_VALUE_VENDOR_LOGO_UUID;
         $this->title = $data[self::COLUMN_TITLE] ?? self::DEFAULT_VALUE_TITLE;
-        $this->backgroundColor = $data[self::COLUMN_BACKGROUNDCOLOR] ?? self::DEFAULT_VALUE_BACKGROUNDCOLOR;
+        $this->backgroundColor = $data[self::COLUMN_BACKGROUND_COLOR] ?? self::DEFAULT_VALUE_BACKGROUND_COLOR;
         $this->baseline = $data[self::COLUMN_BASELINE] ?? self::DEFAULT_VALUE_BASELINE;
-        $this->textColor = $data[self::COLUMN_TEXTCOLOR] ?? self::DEFAULT_VALUE_TEXTCOLOR;
+        $this->textColor = $data[self::COLUMN_TEXT_COLOR] ?? self::DEFAULT_VALUE_TEXT_COLOR;
+        $this->circleColor = $data[self::COLUMN_CIRCLE_COLOR] ?? self::DEFAULT_VALUE_CIRCLE_COLOR;
     }
 
     /**
@@ -120,17 +128,26 @@ class LandingPageHeader extends AbstractEntity
     }
 
     /**
+     * @return string|null
+     */
+    public function getCircleColor(): ?string
+    {
+        return $this->circleColor;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
     {
         return [
-            self::COLUMN_BACKGROUNDIMAGEUUID => $this->getBackgroundImageUuid(),
-            self::COLUMN_VENDORLOGOUUID      => $this->getVendorLogoUuid(),
-            self::COLUMN_TITLE               => $this->getTitle(),
-            self::COLUMN_BACKGROUNDCOLOR     => $this->getBackgroundColor(),
-            self::COLUMN_BASELINE            => $this->getBaseline(),
-            self::COLUMN_TEXTCOLOR           => $this->getTextColor(),
+            self::COLUMN_BACKGROUND_IMAGE_UUID => $this->getBackgroundImageUuid(),
+            self::COLUMN_VENDOR_LOGO_UUID      => $this->getVendorLogoUuid(),
+            self::COLUMN_TITLE                 => $this->getTitle(),
+            self::COLUMN_BACKGROUND_COLOR      => $this->getBackgroundColor(),
+            self::COLUMN_BASELINE              => $this->getBaseline(),
+            self::COLUMN_TEXT_COLOR            => $this->getTextColor(),
+            self::COLUMN_CIRCLE_COLOR          => $this->getCircleColor(),
         ];
     }
 }

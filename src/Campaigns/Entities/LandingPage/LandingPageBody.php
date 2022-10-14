@@ -7,21 +7,21 @@ use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class LandingPageBody extends AbstractEntity
 {
-    public const COLUMN_BACKGROUNDIMAGEUUID = 'backgroundImageUuid';
+    public const COLUMN_BACKGROUND_IMAGE_UUID = 'backgroundImageUuid';
     public const COLUMN_TYPE = 'type';
     public const COLUMN_TITLE = 'title';
     public const COLUMN_DESCRIPTION = 'description';
-    public const COLUMN_VIDEOURL = 'videoUrl';
-    public const COLUMN_BUTTONTEXT = 'buttonText';
-    public const COLUMN_CONTACTEMAIL = 'contactEmail';
+    public const COLUMN_VIDEO_URL = 'videoUrl';
+    public const COLUMN_BUTTON_TEXT = 'buttonText';
+    public const COLUMN_CONTACT_EMAIL = 'contactEmail';
 
-    public const DEFAULT_VALUE_BACKGROUNDIMAGEUUID = '';
+    public const DEFAULT_VALUE_BACKGROUND_IMAGE_UUID = '';
     public const DEFAULT_VALUE_TYPE = '';
     public const DEFAULT_VALUE_TITLE = '';
     public const DEFAULT_VALUE_DESCRIPTION = '';
-    public const DEFAULT_VALUE_VIDEOURL = null;
-    public const DEFAULT_VALUE_BUTTONTEXT = null;
-    public const DEFAULT_VALUE_CONTACTEMAIL = null;
+    public const DEFAULT_VALUE_VIDEO_URL = null;
+    public const DEFAULT_VALUE_BUTTON_TEXT = null;
+    public const DEFAULT_VALUE_CONTACT_EMAIL = null;
 
     /**
      * @var string
@@ -70,13 +70,13 @@ class LandingPageBody extends AbstractEntity
     {
         parent::__construct($data);
 
-        $this->backgroundImageUuid = $data[self::COLUMN_BACKGROUNDIMAGEUUID] ?? self::DEFAULT_VALUE_BACKGROUNDIMAGEUUID;
+        $this->backgroundImageUuid = $data[self::COLUMN_BACKGROUND_IMAGE_UUID] ?? self::DEFAULT_VALUE_BACKGROUND_IMAGE_UUID;
         $this->type = $data[self::COLUMN_TYPE] ?? self::DEFAULT_VALUE_TYPE;
         $this->title = $data[self::COLUMN_TITLE] ?? self::DEFAULT_VALUE_TITLE;
         $this->description = $data[self::COLUMN_DESCRIPTION] ?? self::DEFAULT_VALUE_DESCRIPTION;
-        $this->videoUrl = $data[self::COLUMN_VIDEOURL] ?? self::DEFAULT_VALUE_VIDEOURL;
-        $this->buttonText = $data[self::COLUMN_BUTTONTEXT] ?? self::DEFAULT_VALUE_BUTTONTEXT;
-        $this->contactEmail = $data[self::COLUMN_CONTACTEMAIL] ?? self::DEFAULT_VALUE_CONTACTEMAIL;
+        $this->videoUrl = $data[self::COLUMN_VIDEO_URL] ?? self::DEFAULT_VALUE_VIDEO_URL;
+        $this->buttonText = $data[self::COLUMN_BUTTON_TEXT] ?? self::DEFAULT_VALUE_BUTTON_TEXT;
+        $this->contactEmail = $data[self::COLUMN_CONTACT_EMAIL] ?? self::DEFAULT_VALUE_CONTACT_EMAIL;
     }
 
     /**
@@ -141,13 +141,13 @@ class LandingPageBody extends AbstractEntity
     public function jsonSerialize(): array
     {
         return [
-            self::COLUMN_BACKGROUNDIMAGEUUID => $this->getBackgroundImageUuid(),
-            self::COLUMN_TYPE                => $this->getType(),
-            self::COLUMN_TITLE               => $this->getTitle(),
-            self::COLUMN_DESCRIPTION         => $this->getDescription(),
-            self::COLUMN_VIDEOURL            => $this->getVideoUrl(),
-            self::COLUMN_BUTTONTEXT          => $this->getButtonText(),
-            self::COLUMN_CONTACTEMAIL        => $this->getContactEmail(),
+            self::COLUMN_BACKGROUND_IMAGE_UUID => $this->getBackgroundImageUuid(),
+            self::COLUMN_TYPE                  => $this->getType(),
+            self::COLUMN_TITLE                 => $this->getTitle(),
+            self::COLUMN_DESCRIPTION           => $this->getDescription(),
+            self::COLUMN_VIDEO_URL             => $this->getVideoUrl(),
+            self::COLUMN_BUTTON_TEXT           => $this->getButtonText(),
+            self::COLUMN_CONTACT_EMAIL         => $this->getContactEmail(),
         ];
     }
 }
