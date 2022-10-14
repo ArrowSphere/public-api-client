@@ -47,25 +47,24 @@ class CampaignsClient extends AbstractClient
     }
 
     /**
-     * Get a single active campaign
+     * Lists all the active campaigns.
+     * Returns an array (generator) of Campaign
      *
-     * @return Campaign|null
+     * @return Generator|Campaign[]
      *
-     * @throws GuzzleException
      * @throws EntityValidationException
+     * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function getActiveCampaign(): ?Campaign
+    public function getActiveCampaigns(): Generator
     {
-        $response = $this->getActiveCampaignRaw();
-        $data = $this->decodeResponse($response);
-        $result = null;
-        if ($data['data']) {
-            $result = new Campaign($data['data']);
-        }
+        $rawResponse = $this->getActiveCampaignsRaw();
+        $response = $this->decodeResponse($rawResponse);
 
-        return $result;
+        foreach ($response['data'] as $data) {
+            yield new Campaign($data);
+        }
     }
 
     /**

@@ -126,17 +126,9 @@ class CampaignsClientTest extends AbstractClientTest
           "endCustomers": []
         },
         "weight": 1,
-        "banners": [
-          {
-            "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
-          },
-          {
-            "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
-          },
-          {
-            "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
-          }
-        ],
+        "banner": {
+          "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-11"
+        },
         "landingPage": {
           "header": {
             "backgroundImageUuid": "eee-eee-eeee-eee-ee",
@@ -163,17 +155,9 @@ class CampaignsClientTest extends AbstractClientTest
           "endCustomers": []
         },
         "weight": 2,
-        "banners": [
-          {
-            "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-11"
-          },
-          {
-            "backgroundImageUuid": "ccc-ccc-cccc-ccc-22"
-          },
-          {
-            "backgroundImageUuid": "ddd-ddd-dddd-ddd-33"
-          }
-        ],
+        "banner": {
+          "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-11"
+        },
         "landingPage": {
           "header": {
             "backgroundImageUuid": "eee-eee-eeee-eee-44",
@@ -233,23 +217,9 @@ JSON;
 
         self::assertSame(1, $campaign->getWeight());
 
-        $banners = $campaign->getBanners();
-        self::assertCount(3, $banners);
-
-        /** @var Banner $banner */
-        $banner = array_shift($banners);
+        $banners = $campaign->getBanner();
         self::assertInstanceOf(Banner::class, $banner);
         self::assertSame('bbbb-bbb-bbbb-bbb-bb', $banner->getBackgroundImageUuid());
-
-        /** @var Banner $banner */
-        $banner = array_shift($banners);
-        self::assertInstanceOf(Banner::class, $banner);
-        self::assertSame('ccc-ccc-cccc-ccc-cc', $banner->getBackgroundImageUuid());
-
-        /** @var Banner $banner */
-        $banner = array_shift($banners);
-        self::assertInstanceOf(Banner::class, $banner);
-        self::assertSame('ddd-ddd-dddd-ddd-dd', $banner->getBackgroundImageUuid());
 
         $landingPage = $campaign->getLandingPage();
         self::assertNull($landingPage->getUrl());
@@ -277,8 +247,10 @@ JSON;
         self::assertSame('', $footer->getBackgroundColor());
         self::assertSame('', $footer->getButtonText());
         self::assertSame('', $footer->getButtonUrl());
-
-        self::assertEmpty($footer->getFeatures());
+        $feature = $footer->getFeature();
+        self::assertInstanceOf(LandingPageFeature::class, $feature);
+        $marketingFeature = $footer->getMarketingFeature();
+        self::assertInstanceOf(LandingPageMarketingFeature::class, $marketingFeature);
 
         /** @var Campaign $campaign */
         $campaign = array_shift($list);
@@ -301,23 +273,9 @@ JSON;
 
         self::assertSame(2, $campaign->getWeight());
 
-        $banners = $campaign->getBanners();
-        self::assertCount(3, $banners);
-
-        /** @var Banner $banner */
-        $banner = array_shift($banners);
+        $banners = $campaign->getBanner();
         self::assertInstanceOf(Banner::class, $banner);
-        self::assertSame('bbbb-bbb-bbbb-bbb-11', $banner->getBackgroundImageUuid());
-
-        /** @var Banner $banner */
-        $banner = array_shift($banners);
-        self::assertInstanceOf(Banner::class, $banner);
-        self::assertSame('ccc-ccc-cccc-ccc-22', $banner->getBackgroundImageUuid());
-
-        /** @var Banner $banner */
-        $banner = array_shift($banners);
-        self::assertInstanceOf(Banner::class, $banner);
-        self::assertSame('ddd-ddd-dddd-ddd-33', $banner->getBackgroundImageUuid());
+        self::assertSame('bbbb-bbb-bbbb-bbb-bb', $banner->getBackgroundImageUuid());
 
         $landingPage = $campaign->getLandingPage();
         self::assertNull($landingPage->getUrl());
@@ -345,8 +303,10 @@ JSON;
         self::assertSame('', $footer->getBackgroundColor());
         self::assertSame('', $footer->getButtonText());
         self::assertSame('', $footer->getButtonUrl());
-
-        self::assertEmpty($footer->getFeatures());
+        $feature = $footer->getFeature();
+        self::assertInstanceOf(LandingPageFeature::class, $feature);
+        $marketingFeature = $footer->getMarketingFeature();
+        self::assertInstanceOf(LandingPageMarketingFeature::class, $marketingFeature);
     }
 
     /**
@@ -378,17 +338,9 @@ JSON;
             "endCustomers": []
         },
         "weight": 1,
-        "banners": [
-            {
-                "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
-            }, 
-            {
-                "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
-            }, 
-            {
-                "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
-            }
-        ],
+        "banners": {
+            "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
+        },
         "landingPage": {
             "header": {
                 "backgroundImageUuid": "eee-eee-eeee-eee-ee",
@@ -460,17 +412,9 @@ JSON;
             "endCustomers": []
         },
         "weight": 1,
-        "banners": [
-            {
-                "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
-            }, 
-            {
-                "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
-            }, 
-            {
-                "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
-            }
-        ],
+        "banners": {
+            "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
+        },
         "landingPage": {
             "header": {
                 "backgroundImageUuid": "eee-eee-eeee-eee-ee",
@@ -512,23 +456,9 @@ JSON;
 
         self::assertSame(1, $campaign->getWeight());
 
-        $banners = $campaign->getBanners();
-        self::assertCount(3, $banners);
-
-        /** @var Banner $banner */
-        $banner = array_shift($banners);
+        $banners = $campaign->getBanner();
         self::assertInstanceOf(Banner::class, $banner);
         self::assertSame('bbbb-bbb-bbbb-bbb-bb', $banner->getBackgroundImageUuid());
-
-        /** @var Banner $banner */
-        $banner = array_shift($banners);
-        self::assertInstanceOf(Banner::class, $banner);
-        self::assertSame('ccc-ccc-cccc-ccc-cc', $banner->getBackgroundImageUuid());
-
-        /** @var Banner $banner */
-        $banner = array_shift($banners);
-        self::assertInstanceOf(Banner::class, $banner);
-        self::assertSame('ddd-ddd-dddd-ddd-dd', $banner->getBackgroundImageUuid());
 
         $landingPage = $campaign->getLandingPage();
         self::assertNull($landingPage->getUrl());
@@ -556,8 +486,10 @@ JSON;
         self::assertSame('', $footer->getBackgroundColor());
         self::assertSame('', $footer->getButtonText());
         self::assertSame('', $footer->getButtonUrl());
-
-        self::assertEmpty($footer->getFeatures());
+        $feature = $footer->getFeature();
+        self::assertInstanceOf(LandingPageFeature::class, $feature);
+        $marketingFeature = $footer->getMarketingFeature();
+        self::assertInstanceOf(LandingPageMarketingFeature::class, $marketingFeature);
     }
 
     /**
@@ -565,11 +497,11 @@ JSON;
      * @throws PublicApiClientException
      * @throws GuzzleException
      */
-    public function testGetActiveCampaignRaw(): void
+    public function testGetActiveCampaignsRaw(): void
     {
         $expected = <<<JSON
 {
-    "data": {
+    "data": [{
         "reference": "aaa-aaa-aaaa-aaa",
         "name": "My campaign",
         "category": "BANNER",
@@ -584,17 +516,9 @@ JSON;
             "endCustomers": []
         },
         "weight": 1,
-        "banners": [
-            {
-                "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
-            }, 
-            {
-                "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc"
-            }, 
-            {
-                "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd"
-            }
-        ],
+        "banner": {
+            "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
+        },
         "landingPage": {
             "header": {
                 "backgroundImageUuid": "eee-eee-eeee-eee-ee",
@@ -604,7 +528,7 @@ JSON;
                 "backgroundImageUuid": "ggg-ggg-gggg-ggg-gg"
             }
         }
-    }
+    }]
 }
 JSON;
 
@@ -618,7 +542,7 @@ JSON;
             ->willReturn(new Response(200, [], $expected))
         ;
 
-        $this->client->getActiveCampaignRaw();
+        $this->client->getActiveCampaignsRaw();
     }
 
     /**

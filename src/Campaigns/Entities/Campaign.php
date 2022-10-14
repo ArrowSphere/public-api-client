@@ -7,7 +7,7 @@ use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class Campaign extends AbstractEntity
 {
-    public const COLUMN_BANNERS = 'banners';
+    public const COLUMN_BANNER = 'banner';
     public const COLUMN_CATEGORY = 'category';
     public const COLUMN_CREATEDAT = 'createdAt';
     public const COLUMN_DELETEDAT = 'deletedAt';
@@ -84,9 +84,9 @@ class Campaign extends AbstractEntity
     private $endDate;
 
     /**
-     * @var Banner[]
+     * @var Banner
      */
-    private $banners;
+    private $banner;
 
     /**
      * @var LandingPage
@@ -104,10 +104,7 @@ class Campaign extends AbstractEntity
     {
         parent::__construct($data);
 
-        $this->banners = array_map(static function (array $banner) {
-            return new Banner($banner);
-        }, $data[self::COLUMN_BANNERS]);
-
+        $this->banner = new Banner($data[self::COLUMN_BANNER] ?? []);
         $this->category = $data[self::COLUMN_CATEGORY] ?? self::DEFAULT_VALUE_CATEGORY;
         $this->isActivated = $data[self::COLUMN_IS_ACTIVATED] ?? false;
         $this->createdAt = $data[self::COLUMN_CREATEDAT];
@@ -211,11 +208,11 @@ class Campaign extends AbstractEntity
     }
 
     /**
-     * @return Banner[]
+     * @return Banner
      */
-    public function getBanners(): array
+    public function getBanner(): Banner
     {
-        return $this->banners;
+        return $this->banner;
     }
 
     /**
@@ -232,7 +229,7 @@ class Campaign extends AbstractEntity
     public function jsonSerialize(): array
     {
         return [
-            self::COLUMN_BANNERS      => $this->getBanners(),
+            self::COLUMN_BANNER       => $this->getBanner(),
             self::COLUMN_CATEGORY     => $this->getCategory(),
             self::COLUMN_IS_ACTIVATED => $this->getIsActivated(),
             self::COLUMN_CREATEDAT    => $this->getCreatedAt(),
