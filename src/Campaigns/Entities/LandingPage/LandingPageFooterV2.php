@@ -5,12 +5,13 @@ namespace ArrowSphere\PublicApiClient\Campaigns\Entities\LandingPage;
 use ArrowSphere\PublicApiClient\AbstractEntity;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
-class LandingPageFooter extends AbstractEntity
+class LandingPageFooterV2 extends AbstractEntity
 {
     public const COLUMN_BACKGROUND_COLOR = 'backgroundColor';
     public const COLUMN_BUTTON_TEXT = 'buttonText';
     public const COLUMN_BUTTON_URL = 'buttonUrl';
-    public const COLUMN_FEATURES = 'features';
+    public const COLUMN_FEATURE = 'feature';
+    public const COLUMN_MARKETING_FEATURE = 'marketingFeature';
     public const COLUMN_TEXT_COLOR = 'textColor';
     public const COLUMN_TITLE = 'title';
 
@@ -46,9 +47,14 @@ class LandingPageFooter extends AbstractEntity
     private $textColor;
 
     /**
-     * @var LandingPageFeature[]
+     * @var LandingPageFeatureV2
      */
-    private $features;
+    private $feature;
+
+    /**
+     * @var LandingPageMarketingFeature
+     */
+    private $marketingFeature;
 
     /**
      * Statement constructor.
@@ -65,12 +71,8 @@ class LandingPageFooter extends AbstractEntity
         $this->backgroundColor = $data[self::COLUMN_BACKGROUND_COLOR] ?? self::DEFAULT_VALUE_BACKGROUND_COLOR;
         $this->buttonText = $data[self::COLUMN_BUTTON_TEXT] ?? self::DEFAULT_VALUE_BUTTON_TEXT;
         $this->buttonUrl = $data[self::COLUMN_BUTTON_URL] ?? self::DEFAULT_VALUE_BUTTON_URL;
-        $this->features = array_map(
-            static function (array $features) {
-                return new LandingPageFeature($features);
-            },
-            $data[self::COLUMN_FEATURES] ?? []
-        );
+        $this->feature = new LandingPageFeatureV2($data[self::COLUMN_FEATURE] ?? []);
+        $this->marketingFeature = new LandingPageMarketingFeature($data[self::COLUMN_MARKETING_FEATURE] ?? []);
         $this->textColor = $data[self::COLUMN_TEXT_COLOR] ?? self::DEFAULT_VALUE_TEXT_COLOR;
         $this->title = $data[self::COLUMN_TITLE] ?? self::DEFAULT_VALUE_TITLE;
     }
@@ -116,11 +118,19 @@ class LandingPageFooter extends AbstractEntity
     }
 
     /**
-     * @return LandingPageFeature[]
+     * @return LandingPageFeatureV2
      */
-    public function getFeatures(): array
+    public function getFeature(): LandingPageFeatureV2
     {
-        return $this->features;
+        return $this->feature;
+    }
+
+    /**
+     * @return LandingPageMarketingFeature
+     */
+    public function getMarketingFeature(): LandingPageMarketingFeature
+    {
+        return $this->marketingFeature;
     }
 
     /**
@@ -129,12 +139,13 @@ class LandingPageFooter extends AbstractEntity
     public function jsonSerialize(): array
     {
         return [
-            self::COLUMN_BACKGROUND_COLOR => $this->getBackgroundColor(),
-            self::COLUMN_BUTTON_TEXT      => $this->getButtonText(),
-            self::COLUMN_BUTTON_URL       => $this->getButtonUrl(),
-            self::COLUMN_FEATURES         => $this->getFeatures(),
-            self::COLUMN_TEXT_COLOR       => $this->getTextColor(),
-            self::COLUMN_TITLE            => $this->getTitle(),
+            self::COLUMN_BACKGROUND_COLOR  => $this->getBackgroundColor(),
+            self::COLUMN_BUTTON_TEXT       => $this->getButtonText(),
+            self::COLUMN_BUTTON_URL        => $this->getButtonUrl(),
+            self::COLUMN_FEATURE           => $this->getFeature(),
+            self::COLUMN_MARKETING_FEATURE => $this->getMarketingFeature(),
+            self::COLUMN_TEXT_COLOR        => $this->getTextColor(),
+            self::COLUMN_TITLE             => $this->getTitle(),
         ];
     }
 }

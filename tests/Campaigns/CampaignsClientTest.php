@@ -7,7 +7,8 @@ use ArrowSphere\PublicApiClient\Campaigns\Entities\Asset\Asset;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\Asset\AssetUploadUrl;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\Banner;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\Campaign;
-use ArrowSphere\PublicApiClient\Campaigns\Entities\LandingPage\LandingPageFeature;
+use ArrowSphere\PublicApiClient\Campaigns\Entities\CampaignV2;
+use ArrowSphere\PublicApiClient\Campaigns\Entities\LandingPage\LandingPageFeatureV2;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\LandingPage\LandingPageMarketingFeature;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
@@ -226,11 +227,11 @@ JSON;
         $list = iterator_to_array($test);
         self::assertCount(2, $list);
 
-        /** @var Campaign $campaign */
+        /** @var CampaignV2 $campaign */
         $campaign = array_shift($list);
-        self::assertInstanceOf(Campaign::class, $campaign);
+        self::assertInstanceOf(CampaignV2::class, $campaign);
 
-        self::assertInstanceOf(Campaign::class, $campaign);
+        self::assertInstanceOf(CampaignV2::class, $campaign);
         self::assertSame('aaa-aaa-aaaa-aaa', $campaign->getReference());
         self::assertSame('My campaign', $campaign->getName());
         self::assertSame('BANNER', $campaign->getCategory());
@@ -278,15 +279,15 @@ JSON;
         self::assertSame('', $footer->getButtonText());
         self::assertSame('', $footer->getButtonUrl());
         $feature = $footer->getFeature();
-        self::assertInstanceOf(LandingPageFeature::class, $feature);
+        self::assertInstanceOf(LandingPageFeatureV2::class, $feature);
         $marketingFeature = $footer->getMarketingFeature();
         self::assertInstanceOf(LandingPageMarketingFeature::class, $marketingFeature);
 
         /** @var Campaign $campaign */
         $campaign = array_shift($list);
-        self::assertInstanceOf(Campaign::class, $campaign);
+        self::assertInstanceOf(CampaignV2::class, $campaign);
 
-        self::assertInstanceOf(Campaign::class, $campaign);
+        self::assertInstanceOf(CampaignV2::class, $campaign);
         self::assertSame('bbb-bbb-bbbb-bbb', $campaign->getReference());
         self::assertSame('My campaign 2', $campaign->getName());
         self::assertSame('BANNER 2', $campaign->getCategory());
@@ -335,7 +336,7 @@ JSON;
         self::assertSame('', $footer->getButtonText());
         self::assertSame('', $footer->getButtonUrl());
         $feature = $footer->getFeature();
-        self::assertInstanceOf(LandingPageFeature::class, $feature);
+        self::assertInstanceOf(LandingPageFeatureV2::class, $feature);
         $marketingFeature = $footer->getMarketingFeature();
         self::assertInstanceOf(LandingPageMarketingFeature::class, $marketingFeature);
     }
@@ -428,19 +429,19 @@ JSON;
      * @throws PublicApiClientException
      * @throws GuzzleException
      */
-    public function testGetCampaignRaw(): void
+    public function testGetCampaignV2Raw(): void
     {
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE)
+            ->with('get', 'https://www.test.com/campaigns/v2/' . self::CAMPAIGN_REFERENCE)
             ->willReturn(new Response(200, [], 'OK USA'))
         ;
 
-        $this->client->getCampaignRaw(self::CAMPAIGN_REFERENCE);
+        $this->client->getCampaignV2Raw(self::CAMPAIGN_REFERENCE);
     }
 
-    public function testGetCampaign(): void
+    public function testGetCampaignV2(): void
     {
         $expected = <<<JSON
 {
@@ -495,13 +496,13 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE)
+            ->with('get', 'https://www.test.com/campaigns/v2/' . self::CAMPAIGN_REFERENCE)
             ->willReturn(new Response(200, [], $expected))
         ;
 
-        $campaign = $this->client->getCampaign(self::CAMPAIGN_REFERENCE);
+        $campaign = $this->client->getCampaignV2(self::CAMPAIGN_REFERENCE);
 
-        self::assertInstanceOf(Campaign::class, $campaign);
+        self::assertInstanceOf(CampaignV2::class, $campaign);
         self::assertSame('aaa-aaa-aaaa-aaa', $campaign->getReference());
         self::assertSame('My campaign', $campaign->getName());
         self::assertSame('BANNER', $campaign->getCategory());
@@ -550,7 +551,7 @@ JSON;
         self::assertSame('', $footer->getButtonText());
         self::assertSame('', $footer->getButtonUrl());
         $feature = $footer->getFeature();
-        self::assertInstanceOf(LandingPageFeature::class, $feature);
+        self::assertInstanceOf(LandingPageFeatureV2::class, $feature);
         $marketingFeature = $footer->getMarketingFeature();
         self::assertInstanceOf(LandingPageMarketingFeature::class, $marketingFeature);
     }
@@ -565,7 +566,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/campaigns/active?location=' . self::LOCATION_MCP . '&customer=' . self::CUSTOMER_REF)
+            ->with('get', 'https://www.test.com/campaigns/v2/active?location=' . self::LOCATION_MCP . '&customer=' . self::CUSTOMER_REF)
             ->willReturn(new Response(200, [], 'OK USA'))
         ;
 

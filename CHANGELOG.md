@@ -6,16 +6,16 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Added new entities for LandingPage to reflect the new Campaign format: LandingPageFeatureItem, LandingPageMarketingFeature & LandingPageMarketingFeatureItem
+- Added a new entity named `CampaignV2` to reflect the new Campaign layout. This entity comes with V2 version of the entities `LandingPage`, `LandingPageFooter` and `LandingPageFeature` as the last one have changed too.
+- Added a new entity named `LandingPageFeatureItem` called by `LandingPageFeatureV2`.
+- Added a new entity named `LandingPageMarketingFeature` called by `LandingPageFooterV2`.
+- Added a new entity named `LandingPageMarketingFeatureItem` called by `LandingPageMarketingFeature`.
+- Added a new method `CampaignsClient::getActiveCampaigns()` due to the changes in the API: we know are getting every active campaigns for a user when calling a v2.
+- Added a new method `CampaignsClient::getCampaignV2()` giving the new version of Campaigns for a single campaign.
 
 ### Changed
-- Changed the `CampaignsClient::getActiveCampaign()` methods to `CampaignsClient::getActiveCampaigns()` due to the changes in the API: we know are getting every active campaigns for a user.
-- Changed the Campaign entity to reflect the new Campaign format
-- Changed the LandingPageFeature and LandingPageFooter entities for the same reasons
-
-### Removed
-- Removing `CampaignsClient::getActiveCampaignV2`
-- Removing `CampaignsClient::getActiveCampaignRawV2`
+- Reorganization of the order of the methods in `CampaignsClient` for better clarity when you're reading this file.
+- The method `CampaignsClient::getCampaigns()` is now returning a Generator|CampaignV2[] instead of Generator|Campaign[]
 
 
 ## [0.9.5] - 2022-10-04

@@ -2,15 +2,15 @@
 
 namespace ArrowSphere\PublicApiClient\Tests\Campaigns\Entities;
 
-use ArrowSphere\PublicApiClient\Campaigns\Entities\Campaign;
+use ArrowSphere\PublicApiClient\Campaigns\Entities\CampaignV2;
 use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
 
 /**
- * Class CampaignTest
+ * Class CampaignV2Test
  */
-class CampaignTest extends AbstractEntityTest
+class CampaignV2Test extends AbstractEntityTest
 {
-    protected const CLASS_NAME = Campaign::class;
+    protected const CLASS_NAME = CampaignV2::class;
 
     public function providerSerialization(): array
     {
@@ -31,16 +31,8 @@ class CampaignTest extends AbstractEntityTest
                         "endCustomers"  => [],
                     ],
                     "weight"      => 1,
-                    "banners"     => [
-                        [
-                            "backgroundImageUuid" => "bbbb-bbb-bbbb-bbb-bb",
-                        ],
-                        [
-                            "backgroundImageUuid" => "ccc-ccc-cccc-ccc-cc",
-                        ],
-                        [
-                            "backgroundImageUuid" => "ddd-ddd-dddd-ddd-dd",
-                        ],
+                    "banner"      => [
+                        "backgroundImageUuid" => "bbbb-bbb-bbbb-bbb-bb",
                     ],
                     "landingPage" => [
                         "header" => [
@@ -50,39 +42,34 @@ class CampaignTest extends AbstractEntityTest
                         "body"   => [
                             "backgroundImageUuid" => "ggg-ggg-gggg-ggg-gg",
                         ],
+                        "footer" => [
+                            "marketingFeature" => [
+                                "items" => [
+                                    [
+                                        'imageUuid' => 'aaaaa-aaaa-aa-aaaaa-aaa',
+                                    ],
+                                    [
+                                        'imageUuid' => 'bbbbb-bbbb-bb-bbbbb-bbb',
+                                    ],
+                                    [
+                                        'imageUuid' => 'ccccc-cccc-cc-ccccc-ccc',
+                                    ],
+                                ]
+                            ]
+                        ]
                     ],
                 ],
                 'expected' => <<<JSON
 {
-    "banners": [
-        {
-            "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb",
-            "backgroundColor": null,
-            "type": "BACKGROUND_COLOR",
-            "buttonPlacement": "RIGHT",
-            "buttonText": null,
-            "text": null,
-            "textColor": null
-        },
-        {
-            "backgroundImageUuid": "ccc-ccc-cccc-ccc-cc",
-            "backgroundColor": null,
-            "type": "BACKGROUND_COLOR",
-            "buttonPlacement": "RIGHT",
-            "buttonText": null,
-            "text": null,
-            "textColor": null
-        },
-        {
-            "backgroundImageUuid": "ddd-ddd-dddd-ddd-dd",
-            "backgroundColor": null,
-            "type": "BACKGROUND_COLOR",
-            "buttonPlacement": "RIGHT",
-            "buttonText": null,
-            "text": null,
-            "textColor": null
-        }
-    ],
+    "banner": {
+        "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb",
+        "backgroundColor": null,
+        "type": "BACKGROUND_COLOR",
+        "buttonPlacement": "RIGHT",
+        "buttonText": null,
+        "text": null,
+        "textColor": null
+    },
     "category": "BANNER",
     "isActivated": false,
     "createdAt": "2021-06-25T16:00:00Z",
@@ -112,7 +99,38 @@ class CampaignTest extends AbstractEntityTest
             "backgroundColor": "",
             "buttonText": "",
             "buttonUrl": "",
-            "features": [],
+            "feature": {
+                "title": "",
+                "description": "",
+                "items": []
+            },
+            "marketingFeature": {
+                "title": "",
+                "description": "",
+                "items": [
+                    {
+                        "title": "",
+                        "description": "",
+                        "buttonText": "",
+                        "buttonUrl": "",
+                        "imageUuid": "aaaaa-aaaa-aa-aaaaa-aaa"
+                    },
+                    {
+                        "title": "",
+                        "description": "",
+                        "buttonText": "",
+                        "buttonUrl": "",
+                        "imageUuid": "bbbbb-bbbb-bb-bbbbb-bbb"
+                    },
+                    {
+                        "title": "",
+                        "description": "",
+                        "buttonText": "",
+                        "buttonUrl": "",
+                        "imageUuid": "ccccc-cccc-cc-ccccc-ccc"
+                    }
+                ]
+            },
             "textColor": "#FFF",
             "title": ""
         }

@@ -10,11 +10,11 @@ A campaign is the entity which is used to make communications.
 
 #### Campaign
 
-A campaign is managed by the `Campaign` entity.
+A campaign in its old format is managed by the `CampaignV` entity.
 
 | Field       | Type               | Example                                    | Description                                                                                |
 | ----------- | ------------------ | ------------------------------------------ | ------------------------------------------------------------------------------------------ |
-| banner      | `Banner`           | an instance of [Banner](#Banner)           | The campaign's banner.                                                                     |
+| banners     | `Banner[]`         | an array of [Banner](#Banner)              | The campaign's banners (max 3).                                                            |
 | category    | `string`           | BANNER                                     | The type of campaign. It could be BANNER or NOTIFICATION (the later is not supported yet). |
 | createdAt   | `string`           | 2021-06-25T16:00:00:00Z                    | The creation date of the campaign.                                                         |
 | deletedAt   | `string` or `null` | 2021-08-26T18:00:00:00Z                    | The campaign are soft deleted, so this value indicates when it has been deleted.           |
@@ -27,9 +27,30 @@ A campaign is managed by the `Campaign` entity.
 | updatedAt   | `string` or `null` | 2021-06-26T18:00:00:00Z                    | The date of the last time the campaign has been updated.                                   |
 | weight      | `int`              | 1                                          | The weight indicate the importance of the campaign.                                        |
 
+
+#### CampaignV2
+
+A campaign in its new format is managed by the `CampaignV2` entity.
+
+| Field       | Type               | Example                                        | Description                                                                                |
+| ----------- | ------------------ | ---------------------------------------------- | ------------------------------------------------------------------------------------------ |
+| banner      | `Banner`           | an instance of [Banner](#Banner)               | The campaign's banner.                                                                     |
+| category    | `string`           | BANNER                                         | The type of campaign. It could be BANNER or NOTIFICATION (the later is not supported yet). |
+| createdAt   | `string`           | 2021-06-25T16:00:00:00Z                        | The creation date of the campaign.                                                         |
+| deletedAt   | `string` or `null` | 2021-08-26T18:00:00:00Z                        | The campaign are soft deleted, so this value indicates when it has been deleted.           |
+| endDate     | `string` or `null` | 2021-08-01                                     | The ending date of the campaign.                                                           |
+| landingPage | `LandingPageV2`    | an instance of [LandingPageV2](#LandingPageV2) | The campaign's landing page.                                                               |
+| name        | `string`           | My Campaign                                    | The name of the campaign. The only value needed from the client when creating a campaign.  |
+| reference   | `string`           | c925ec6e-e029-4146-8400-2867c7761743           | This is the reference of the campaign. This string is unique.                              |
+| rules       | `Rules`            | an instance of [Rules](#Rules)                 | The campaign's various rules, like end customers or locations.                             |
+| startDate   | `string` or `null` | 2021-08-01                                     | The starting date of the campaign.                                                         |
+| updatedAt   | `string` or `null` | 2021-06-26T18:00:00:00Z                        | The date of the last time the campaign has been updated.                                   |
+| weight      | `int`              | 1                                              | The weight indicate the importance of the campaign.                                        |
+
+
 #### Banner
 
-This entity represents the banner of the campaign.
+This entity represents the banner(s) of the campaign.
 
 | Field               | Type               | Example                              | Description                                                             |
 | ------------------- | ------------------ | ------------------------------------ | ----------------------------------------------------------------------- |
@@ -41,7 +62,11 @@ This entity represents the banner of the campaign.
 | textColor           | `string` or `null` | #119E0F                              | The banner's text color. Used for the button text and border too.       |
 | type                | `string`           | PICTURE                              | The type of banner: PICTURE or BACKGROUND_COLOR                         |
 
+
+
 #### LandingPage and its sub-entities
+
+##### LandingPage
 
 This entity and its sub-entities describe the campaign's landing page.
 
@@ -52,19 +77,33 @@ This entity and its sub-entities describe the campaign's landing page.
 | header | `LandingPageHeader` | an instance of [LandingPageHeader](#LandingPageHeader) | The header of the landing page, with title, baseline and logo vender.  |
 | url    | `string` or `null`  | http://mylandingpage.com                               | The url of the landing page. Null if the landing page is self-created. |
 
+
+##### LandingPageV2
+
+This entity and its sub-entities describe the campaign's landing page in its V2 form.
+
+| Field  | Type                  | Example                                                    | Description                                                            |
+| ------ | --------------------- | ---------------------------------------------------------- | ---------------------------------------------------------------------- |
+| body   | `LandingPageBody`     | an instance of [LandingPageBody](#LandingPageBody)         | The body of the landing page, with description, image or video.        |
+| footer | `LandingPageFooterV2` | an instance of [LandingPageFooterV2](#LandingPageFooterV2) | The footer of the landing page, with its features.                     |
+| header | `LandingPageHeader`   | an instance of [LandingPageHeader](#LandingPageHeader)     | The header of the landing page, with title, baseline and logo vender.  |
+| url    | `string` or `null`    | http://mylandingpage.com                                   | The url of the landing page. Null if the landing page is self-created. |
+
+
 ##### LandingPageHeader
 
 This entity describes the header of the campaign's landing page.
 
-| Field               | Type               | Example                              | Description                                           |
-| ------------------- | ------------------ | ------------------------------------ | ----------------------------------------------------- |
-| backgroundColor     | `string` or `null` | #001E96                              | The landing page's header background color.           |
-| backgroundImageUuid | `string`           | 0fed6621-fe0c-4290-813a-58217e37b3ae | The uuid to use if the header has a background image. |
-| baseline            | `string`           | This page will explain...            | The landing page's baseline.                          |
-| circleColor         | `string` or `null` | #012345                              | The background color behind the vendor logo if needed |
-| textColor           | `string` or `null` | #FFFFFF                              | The landing page's text color.                        |
-| title               | `string`           | My big campaign                      | The landing page's title.                             |
-| vendorLogoUuid      | `string`           | e174e2a2-7545-4ef1-8f0c-122d0140cdea | The uuid to use to upload the vendor logo.            |
+| Field               | Type               | Example                              | Description                                                                    |
+| ------------------- | ------------------ | ------------------------------------ | ------------------------------------------------------------------------------ |
+| backgroundColor     | `string` or `null` | #001E96                              | The landing page's header background color.                                    |
+| backgroundImageUuid | `string`           | 0fed6621-fe0c-4290-813a-58217e37b3ae | The uuid to use if the header has a background image.                          |
+| baseline            | `string`           | This page will explain...            | The landing page's baseline.                                                   |
+| circleColor         | `string` or `null` | #012345                              | The background color behind the vendor logo if needed. This is a V2 exclusive. |
+| textColor           | `string` or `null` | #FFFFFF                              | The landing page's text color.                                                 |
+| title               | `string`           | My big campaign                      | The landing page's title.                                                      |
+| vendorLogoUuid      | `string`           | e174e2a2-7545-4ef1-8f0c-122d0140cdea | The uuid to use to upload the vendor logo.                                     |
+
 
 ##### LandingPageBody
 
@@ -80,7 +119,22 @@ This entity describes the body of the campaign's landing page.
 | type                | `string`           | PICTURE                                     | The landing page's body type, PICTURE, VIDEO OR FORM.   |
 | videoUrl            | `string` or `null` | https://www.youtube.com/watch?v=dQw4w9WgXcQ | The landing page's body video url, if any.              |
 
+
 ##### LandingPageFooter
+
+This entity describes the footer of the campaign's landing page.
+
+| Field           | Type                   | Example                                               | Description                                          |
+| --------------- | ---------------------- | ----------------------------------------------------- | ---------------------------------------------------- |
+| backgroundColor | `string`               | #EE2436                                               | The landing page's footer background color.          |
+| buttonText      | `string`               | Click here!                                           | The text of the footer's button, after the features. |
+| buttonUrl       | `string`               | http://mywebsite.com                                  | The url of the footer's button.                      |
+| features        | `LandingPageFeature[]` | an array of [LandingPageFeature](#LandingPageFeature) | The landing page's features.                         |
+| textColor       | `string`               | #FFFFFF                                               | The landing page's footer text color.                |
+| title           | `string`               | My campaign's features                                | The landing page's footer title.                     |   
+
+
+##### LandingPageFooterV2
 
 This entity describes the footer of the campaign's landing page.
 
@@ -89,12 +143,25 @@ This entity describes the footer of the campaign's landing page.
 | backgroundColor  | `string`                      | #EE2436                                                                    | The landing page's footer background color. Uneditable for now. |
 | buttonText       | `string`                      | Click here!                                                                | The text of the footer's button, after the features.            |
 | buttonUrl        | `string`                      | http://mywebsite.com                                                       | The url of the footer's button.                                 |
-| feature          | `LandingPageFeature`          | an instance of [LandingPageFeature](#LandingPageFeature)                   | The landing page's features.                                    |
+| feature          | `LandingPageFeatureV2`        | an instance of [LandingPageFeatureV2](#LandingPageFeatureV2)               | The landing page's features.                                    |
 | marketingFeature | `LandingPageMarketingFeature` | an instance of [LandingPageMarketingFeature](#LandingPageMarketingFeature) | The landing page's marketing features.                          |
 | textColor        | `string`                      | #FFFFFF                                                                    | The landing page's footer text color. Undetiable for now.       |
 | title            | `string`                      | My campaign's features                                                     | The landing page's footer title.                                |
 
+
 ##### LandingPageFeature
+
+This entity describes the feature in the footer of the campaign's landing page.
+
+| Field       | Type     | Example                  | Description                                                                              |
+| ----------- | -------- | ------------------------ | ---------------------------------------------------------------------------------------- |
+| description | `string` | This is a great feature. | The feature's description.                                                               |
+| icon        | `string` | fa-icon                  | The feature's icon from Font Awesome.                                                    |
+| title       | `string` | Feature #1               | The feature's title.                                                                     |
+| size        | `int`    | 4                        | The feature's size on Bootstrap grid. Set to 4 by default, unchangeable by user for now. |
+
+
+##### LandingPageFeatureV2
 
 This entity describes the features in the footer of the campaign's landing page.
 
@@ -104,9 +171,10 @@ This entity describes the features in the footer of the campaign's landing page.
 | items       | `LandingPageFeatureItem[]` | an array of [LandingPageFeatureItem](#LandingPageFeatureItem) | The feature's items         |
 | title       | `string`                   | My Features                                                   | The feature's title.        |
 
+
 ##### LandingPageMarketingFeature
 
-This entity describes the marketing features in the footer of the campaign's landing page.
+This entity describes the marketing features in the footer of the campaign's landing page. This is a V2 excluvise.
 
 | Field       | Type                                | Example                                                                         | Description                 |
 | ----------- | ----------------------------------- | ------------------------------------------------------------------------------- | --------------------------- |
@@ -114,9 +182,10 @@ This entity describes the marketing features in the footer of the campaign's lan
 | items       | `LandingPageMarketingFeatureItem[]` | an array of [LandingPageMarketingFeatureItem](#LandingPageMarketingFeatureItem) | The feature's items         |
 | title       | `string`                            | My Features                                                                     | The feature's title.        |
 
+
 #### LandingPageFeatureItem
 
-This entity describes the features' items in the footer of the campaign's landing page.
+This entity describes the features' items in the footer of the campaign's landing page. This is a V2 exclusive.
 
 | Field       | Type     | Example                  | Description                                                                              |
 | ----------- | -------- | ------------------------ | ---------------------------------------------------------------------------------------- |
@@ -152,6 +221,7 @@ This entity represents the rules of the campaign.
 | marketplaces  | `string[]` | ['FR', 'US', 'UK']       | The different marketplaces of the campaign.                     |
 | resellers     | `string[]` | ['XSP12345', 'XSP45678'] | The different resellers associated to the campaign.             |
 | subscriptions | `string[]` | ['MSCSP']                | The different subscriptions related to the campaign.            |
+
 
 ## Usage
 

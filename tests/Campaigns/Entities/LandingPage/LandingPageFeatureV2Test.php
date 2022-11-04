@@ -2,15 +2,15 @@
 
 namespace ArrowSphere\PublicApiClient\Tests\Campaigns\Entities\LandingPage;
 
-use ArrowSphere\PublicApiClient\Campaigns\Entities\LandingPage\LandingPageFeature;
+use ArrowSphere\PublicApiClient\Campaigns\Entities\LandingPage\LandingPageFeatureV2;
 use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
 
 /**
- * Class LandingPageFeatureTest
+ * Class LandingPageFeatureV2Test
  */
-class LandingPageFeatureTest extends AbstractEntityTest
+class LandingPageFeatureV2Test extends AbstractEntityTest
 {
-    public const CLASS_NAME = LandingPageFeature::class;
+    public const CLASS_NAME = LandingPageFeatureV2::class;
 
     public function providerSerialization(): array
     {
@@ -19,32 +19,31 @@ class LandingPageFeatureTest extends AbstractEntityTest
                 'fields'   => [
                     'title'       => 'cool',
                     'description' => 'story',
-                    'icon'        => 'bro',
-                    'size'        => 42,
+                    'items'       => [],
                 ],
                 'expected' => <<<JSON
 {
     "title": "cool",
     "description": "story",
-    "icon": "bro",
-    "size": 42
+    "items": []
 }
 JSON
                 ,
-
             ],
             'empty'    => [
-                'fields'   => [],
+                'fields'   => [
+                      'title'       => '',
+                      'description' => '',
+                      'items'       => [],
+                  ],
                 'expected' => <<<JSON
 {
     "title": "",
     "description": "",
-    "icon": "",
-    "size": 4
+    "items": []
 }
 JSON
                 ,
-
             ],
         ];
     }
