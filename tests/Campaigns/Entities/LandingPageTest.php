@@ -24,21 +24,6 @@ class LandingPageTest extends AbstractEntityTest
                     "body"   => [
                         "backgroundImageUuid" => "ggg-ggg-gggg-ggg-gg",
                     ],
-                    "footer" => [
-                        "marketingFeature" => [
-                            "items" => [
-                                [
-                                    'imageUuid' => 'aaaaa-aaaa-aa-aaaaa-aaa',
-                                ],
-                                [
-                                    'imageUuid' => 'bbbbb-bbbb-bb-bbbbb-bbb',
-                                ],
-                                [
-                                    'imageUuid' => 'ccccc-cccc-cc-ccccc-ccc',
-                                ],
-                            ]
-                        ]
-                    ]
                 ],
                 'expected' => <<<JSON
 {
@@ -65,38 +50,7 @@ class LandingPageTest extends AbstractEntityTest
         "backgroundColor": "",
         "buttonText": "",
         "buttonUrl": "",
-        "feature": {
-            "title": "",
-            "description": "",
-            "items": []
-        },
-        "marketingFeature": {
-            "title": "",
-            "description": "",
-            "items": [
-                {
-                    "title": "",
-                    "description": "",
-                    "buttonText": "",
-                    "buttonUrl": "",
-                    "imageUuid": "aaaaa-aaaa-aa-aaaaa-aaa"
-                },
-                {
-                    "title": "",
-                    "description": "",
-                    "buttonText": "",
-                    "buttonUrl": "",
-                    "imageUuid": "bbbbb-bbbb-bb-bbbbb-bbb"
-                },
-                {
-                    "title": "",
-                    "description": "",
-                    "buttonText": "",
-                    "buttonUrl": "",
-                    "imageUuid": "ccccc-cccc-cc-ccccc-ccc"
-                }
-            ]
-        },
+        "features": [],
         "textColor": "#FFF",
         "title": ""
     }

@@ -5,16 +5,13 @@ namespace ArrowSphere\PublicApiClient\Campaigns\Entities\LandingPage;
 use ArrowSphere\PublicApiClient\AbstractEntity;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
-class LandingPageFeature extends AbstractEntity
+class LandingPageFeatureV2 extends AbstractEntity
 {
     public const COLUMN_DESCRIPTION = 'description';
-    public const COLUMN_ICON = 'icon';
-    public const COLUMN_SIZE = 'size';
     public const COLUMN_TITLE = 'title';
+    public const COLUMN_ITEMS = 'items';
 
     public const DEFAULT_VALUE_DESCRIPTION = '';
-    public const DEFAULT_VALUE_ICON = '';
-    public const DEFAULT_VALUE_SIZE = 4;
     public const DEFAULT_VALUE_TITLE = '';
 
     /**
@@ -28,14 +25,9 @@ class LandingPageFeature extends AbstractEntity
     private $description;
 
     /**
-     * @var string
+     * @var LandingPageFeatureItem[]
      */
-    private $icon;
-
-    /**
-     * @var int
-     */
-    private $size;
+    private $items;
 
     /**
      * Statement constructor.
@@ -51,8 +43,12 @@ class LandingPageFeature extends AbstractEntity
 
         $this->title = $data[self::COLUMN_TITLE] ?? self::DEFAULT_VALUE_TITLE;
         $this->description = $data[self::COLUMN_DESCRIPTION] ?? self::DEFAULT_VALUE_DESCRIPTION;
-        $this->icon = $data[self::COLUMN_ICON] ?? self::DEFAULT_VALUE_ICON;
-        $this->size = $data[self::COLUMN_SIZE] ?? self::DEFAULT_VALUE_SIZE;
+        $this->items = array_map(
+            static function (array $items) {
+                return new LandingPageFeatureItem($items);
+            },
+            $data[self::COLUMN_ITEMS] ?? []
+        );
     }
 
     /**
@@ -72,19 +68,11 @@ class LandingPageFeature extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return array
      */
-    public function getIcon(): string
+    public function getItems(): array
     {
-        return $this->icon;
-    }
-
-    /**
-     * @return int
-     */
-    public function getSize(): int
-    {
-        return $this->size;
+        return $this->items;
     }
 
     /**
@@ -95,8 +83,7 @@ class LandingPageFeature extends AbstractEntity
         return [
             self::COLUMN_TITLE       => $this->getTitle(),
             self::COLUMN_DESCRIPTION => $this->getDescription(),
-            self::COLUMN_ICON        => $this->getIcon(),
-            self::COLUMN_SIZE        => $this->getSize(),
+            self::COLUMN_ITEMS       => $this->getItems(),
         ];
     }
 }
