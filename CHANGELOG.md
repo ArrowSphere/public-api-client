@@ -5,7 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.6] - 2022-11-15
+
 ### Added
+
 - Added a new entity named `CampaignV2` to reflect the new Campaign layout. This entity comes with V2 version of the entities `LandingPage`, `LandingPageFooter` and `LandingPageFeature` as the last one have changed too.
 - Added a new entity named `LandingPageFeatureItem` called by `LandingPageFeatureV2`.
 - Added a new entity named `LandingPageMarketingFeature` called by `LandingPageFooterV2`.
@@ -14,9 +17,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Added a new method `CampaignsClient::getCampaignV2()` giving the new version of Campaigns for a single campaign.
 
 ### Changed
-- Reorganization of the order of the methods in `CampaignsClient` for better clarity when you're reading this file.
-- The method `CampaignsClient::getCampaigns()` is now returning a Generator|CampaignV2[] instead of Generator|Campaign[]
 
+- Reorganization of the order of the methods in `CampaignsClient` for better clarity when you're reading this file.
+- The method `CampaignsClient::getCampaigns()` is now returning a Generator|CampaignV2\[] instead of Generator|Campaign\[]
 
 ## [0.9.5] - 2022-10-04
 
@@ -432,7 +435,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.9.5...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.9.6...HEAD
+[0.9.6]: https://github.com/ArrowSphere/public-api-client/compare/0.9.5...0.9.6
 [0.9.5]: https://github.com/ArrowSphere/public-api-client/compare/0.9.4...0.9.5
 [0.9.4]: https://github.com/ArrowSphere/public-api-client/compare/0.9.3...0.9.4
 [0.9.3]: https://github.com/ArrowSphere/public-api-client/compare/0.9.2...0.9.3
