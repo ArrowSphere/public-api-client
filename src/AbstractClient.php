@@ -20,6 +20,11 @@ abstract class AbstractClient
     private const API_KEY = 'apiKey';
 
     /**
+     * @var string The xAP id token for authentication on the Public API endpoints who used cognito authorizer
+     */
+    private const ID_TOKEN = 'idToken';
+
+    /**
      * @var string The page keyword for pagination
      */
     protected const PAGE = 'page';
@@ -28,6 +33,11 @@ abstract class AbstractClient
      * @var string The keyword for number of results per page for pagination
      */
     protected const PER_PAGE = 'per_page';
+
+    /**
+     * @var string The header key authorizer
+     */
+    protected const Authorization = 'Authorization';
 
     /**
      * @var string The base path of the API
@@ -53,6 +63,11 @@ abstract class AbstractClient
      * @var string The API key
      */
     protected $apiKey;
+
+    /**
+     * @var string The xAP id token
+     */
+    protected $idToken;
 
     /**
      * @var int The page number
@@ -91,6 +106,20 @@ abstract class AbstractClient
     public function setApiKey(string $apiKey): self
     {
         $this->apiKey = $apiKey;
+
+        return $this;
+    }
+
+    /**
+     * Sets the xAP id token in header for authentication with cognito
+     *
+     * @param string $idToken
+     *
+     * @return static
+     */
+    public function setIdToken(string $idToken): self
+    {
+        $this->idToken = $idToken;
 
         return $this;
     }
@@ -192,7 +221,7 @@ abstract class AbstractClient
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    private function getResponse(ResponseInterface $response): StreamInterface
+    protected function getResponse(ResponseInterface $response): StreamInterface
     {
         $statusCode = $response->getStatusCode();
         if ($statusCode === 404) {
@@ -230,16 +259,29 @@ abstract class AbstractClient
     }
 
     /**
+     * @param string $response
+     *
+     * @return array
+     *
+     * @throws PublicApiClientException
+     */
+    protected function getResponseData(string $response): array
+    {
+        return $this->decodeResponse($response)['data'] ?? [];
+    }
+
+    /**
      * @param array $headers
      *
      * @return array
      */
-    private function prepareHeaders(array $headers): array
+    protected function prepareHeaders(array $headers): array
     {
+        $authentication = [];
+        ! empty($this->apiKey) ? $authentication[self::API_KEY] = $this->apiKey : $authentication[self::ID_TOKEN] = $this->idToken;
+
         return array_merge(
-            [
-                self::API_KEY => $this->apiKey,
-            ],
+            $authentication,
             $headers,
             $this->defaultHeaders
         );
@@ -262,6 +304,33 @@ abstract class AbstractClient
     {
         $response = $this->client->request(
             'post',
+            $this->generateUrl($parameters),
+            [
+                'headers' => $this->prepareHeaders($headers),
+                'body'    => json_encode($payload),
+            ]
+        );
+
+        return $this->getResponse($response);
+    }
+
+    /**
+     * Sends a PATCH request and returns the response
+     *
+     * @param array $payload
+     * @param array $parameters
+     * @param array $headers
+     *
+     * @return StreamInterface
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    protected function patch(array $payload, array $parameters = [], array $headers = []): StreamInterface
+    {
+        $response = $this->client->request(
+            'patch',
             $this->generateUrl($parameters),
             [
                 'headers' => $this->prepareHeaders($headers),

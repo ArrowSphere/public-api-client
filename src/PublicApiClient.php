@@ -5,6 +5,7 @@ namespace ArrowSphere\PublicApiClient;
 use ArrowSphere\PublicApiClient\Billing\PreferencesClient;
 use ArrowSphere\PublicApiClient\Billing\StatementsClient;
 use ArrowSphere\PublicApiClient\Campaigns\CampaignsClient;
+use ArrowSphere\PublicApiClient\Cart\CartClient;
 use ArrowSphere\PublicApiClient\Catalog\AddonClient;
 use ArrowSphere\PublicApiClient\Catalog\ClassificationClient;
 use ArrowSphere\PublicApiClient\Catalog\FamilyClient;
@@ -173,5 +174,16 @@ class PublicApiClient extends AbstractClient
         return (new HealthCheckClient($this->client))
             ->setUrl($this->url)
             ->setApiKey($this->apiKey);
+    }
+
+    /**
+     * @return CartClient
+     */
+    public function getCartClient(): CartClient
+    {
+        return (new CartClient($this->client))
+            ->setUrl($this->url)
+            ->setIdToken($this->idToken)
+            ->setDefaultHeaders(array_merge($this->defaultHeaders, [self::Authorization => $this->idToken]));
     }
 }
