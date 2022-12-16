@@ -71,3 +71,7 @@ echo "Hello " . $whoami->getCompanyName();
 ### Campaigns clients
 
 - [Campaigns](doc/campaigns.md)
+
+### Cart clients
+
+- [Cart](doc/cart.md)

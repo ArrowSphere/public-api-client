@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added a new client named `CartClient` in order to manage all actions related to the cart.
+- Added a new client named `NotificationClient` for handle all actions related to the screen notifications.
+- Added a new client named `SupportClient` to manage all actions related to the cart.
+
 ## [0.9.7] - 2023-01-31
 
 ### Added
