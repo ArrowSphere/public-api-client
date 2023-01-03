@@ -12,7 +12,7 @@ class RateTypeEnum extends AbstractEnum
     public const DISCOUNT = 'discount';
 
     /**
-     * @var string null index
+     * @var string none index
      */
     public const NONE = null;
 

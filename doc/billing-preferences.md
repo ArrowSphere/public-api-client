@@ -1,8 +1,10 @@
 # Billing preferences client
 
 ## General information
+The billing preferences consist of set of preferences such as company main contacts used to generate
+custom billing statements with custom headers. For more information about billing statements [click here](billing-statements.md).
 
-This API will allow you to access and edit your preferences and retrieve your custom billing statements.
+This client will gives an uniform access to see and edit your preferences and retrieve your custom billing statements.
 
 ## Entities
 

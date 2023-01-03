@@ -2,6 +2,7 @@
 
 namespace ArrowSphere\PublicApiClient;
 
+use ArrowSphere\PublicApiClient\Billing\ErpExportsClient;
 use ArrowSphere\PublicApiClient\Billing\PreferencesClient;
 use ArrowSphere\PublicApiClient\Billing\StatementsClient;
 use ArrowSphere\PublicApiClient\Campaigns\CampaignsClient;
@@ -134,6 +135,16 @@ class PublicApiClient extends AbstractClient
     public function getBillingStatementsClient(): StatementsClient
     {
         return (new StatementsClient($this->client))
+            ->setUrl($this->url)
+            ->setApiKey($this->apiKey);
+    }
+
+    /**
+     * @return ErpExportsClient
+     */
+    public function getErpExportsClient(): ErpExportsClient
+    {
+        return (new ErpExportsClient($this->client))
             ->setUrl($this->url)
             ->setApiKey($this->apiKey);
     }

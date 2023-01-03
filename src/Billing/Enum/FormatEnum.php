@@ -10,4 +10,9 @@ class FormatEnum extends AbstractEnum
      * @var string XLSX index
      */
     public const XLSX = 'xlsx';
+
+    /**
+     * @var string CSV index
+     */
+    public const CSV = 'csv';
 }

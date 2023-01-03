@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add a new client named `ErpExportsClient` for billing ERP export, its entities and its tests.
+
 ## [0.10.1] - 2023-02-15
 
 ### Changed
