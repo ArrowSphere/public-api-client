@@ -114,7 +114,7 @@ class StatementsClient extends AbstractBillingClient
     public const FORMAT = 'format';
 
     /**
-     * @var string per page default value
+     * @var int per page default value
      */
     private const PER_PAGE_DEFAULT = 1000;
 
@@ -308,7 +308,7 @@ class StatementsClient extends AbstractBillingClient
         if (! empty($parameters) && is_numeric(array_keys($parameters)[0])) {
             throw new PublicApiClientException('Error: Invalid parameters value', 400);
         }
-        if (count($tier) === 0 && count($tier) !== count(array_filter($tier, [TierEnum::class, 'isValidValue']))) {
+        if (count($tier) === 0 || count($tier) !== count(array_filter($tier, [TierEnum::class, 'isValidValue']))) {
             throw new PublicApiClientException('Error: Invalid tier value', 400);
         }
         if (! FormatEnum::isValidValue($format)) {

@@ -1,9 +1,22 @@
 # Billing statements client
 
 ## General information
+Billing statements are the documents issued prior to the issue of the local invoice.
+This client gives an uniform access to all the billing information before their transformation 
+into the invoice that will fit the local country's legislation.
 
-A billing statement is a way to present your invoice. As a reseller,
-use billing preferences to set how billing statements are generated.
+The billing statement will mainly contain transactional data.
+The invoices will have local information such as tax rates and full coordinates 
+of the transacting entities.
+
+Billing statements are composed of two elements:
+- The header
+- The line
+
+Billing statements and their lines are technically referenced by their "reference" field,
+but they also have a distinct sequence each.
+The sequence is the identifier that is most likely to be used within the ERPs that 
+will issue the local invoice.
 
 ## Entities
 
@@ -19,13 +32,13 @@ The Statement entity allow to get information about the billing statement header
 | currency           | `string`               | USD                                     | Country Currency                                               |
 | description        | `string`               |                                         | Rule's name that led to this statement                         |
 | from               | `Identity`             |                                         | Identity of the reseller                                       |
-| issueDate          | `string/null`          | 2021-04-01                              | Date of the issue                                              |
+| issueDate          | `string|null`          | 2021-04-01                              | Date of the issue of billing statement                         |
 | marketplace        | `string`               | US                                      | Country code                                                   |
 | prices             | `Prices`               |                                         | Prices for reseller/customer                                   |
-| programCode        | `string/null`          | MSCSP                                   | Program name, null if multiple programs for the same statement |
-| reference          | `string`               | H1-AAA-0123456789ABCDEF0123456789ABCDEF | Identifier of the statement                                    |
+| programCode        | `string|null`          | MSCSP                                   | Program name, null if multiple programs for the same statement |
+| reference          | `string`               | H1-AAA-0123456789ABCDEF0123456789ABCDEF | Identifier of the billing statement                            |
 | reportPeriod       | `string`               | 2021-04                                 | Report Period                                                  |
-| sequence           | `string`               | MSM12-0123456789                        | Sequence of the statement                                      |
+| sequence           | `string`               | MSM12-0123456789                        | Sequence of the billing statement                              |
 | status             | `null`                 |                                         | Reserved for future use                                        |
 | to                 | `Identity`             |                                         | Identities of customers                                        |
 | vendorName         | `string`               | Microsoft                               | Vendor name                                                    |
