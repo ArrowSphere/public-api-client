@@ -128,7 +128,10 @@ class LicenseOfferFindResultTest extends AbstractEntityTest
         "term": 8640,
         "isEnabled": true,
         "lastUpdate": "2020-12-08T15:42:30.069Z",
-        "warnings": null
+        "warnings": null,
+        "security": {
+            "activeFraudEvents": null
+        }
     }
 }
 JSON

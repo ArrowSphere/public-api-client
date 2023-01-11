@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added new entity `Security`
+- Added new property `security` to License entity which is a type of `Security` class.
+- Added Enum `LICENSE_SECURITY` to `LicenseFindFieldEnum` class.
+
 ## [0.9.6] - 2022-11-15
 
 ### Added
