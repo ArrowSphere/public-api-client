@@ -38,18 +38,17 @@ class CartClient extends AbstractClient
      * @param string $itemId
      * @param array $payload
      *
-     * @return array
+     * @return string
      *
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function patchUpdateOneCartItem(string $itemId, array $payload): array
+    public function patchUpdateOneCartItem(string $itemId, array $payload): string
     {
         $this->path = '/' . urlencode($itemId);
-        $response = $this->patch($payload);
 
-        return $this->getResponseData($response);
+        return $this->patch($payload);
     }
 
     /**

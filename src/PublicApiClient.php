@@ -18,6 +18,8 @@ use ArrowSphere\PublicApiClient\Customers\CustomersClient;
 use ArrowSphere\PublicApiClient\General\CheckDomainClient;
 use ArrowSphere\PublicApiClient\General\WhoamiClient;
 use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
+use ArrowSphere\PublicApiClient\Notification\NotificationClient;
+use ArrowSphere\PublicApiClient\Support\SupportClient;
 
 /**
  * Class PublicApiClient
@@ -184,6 +186,26 @@ class PublicApiClient extends AbstractClient
         return (new CartClient($this->client))
             ->setUrl($this->url)
             ->setIdToken($this->idToken)
-            ->setDefaultHeaders(array_merge($this->defaultHeaders, [self::Authorization => $this->idToken]));
+            ->setDefaultHeaders(array_merge($this->defaultHeaders, [self::AUTHORIZATION => $this->idToken]));
+    }
+
+    /**
+     * @return NotificationClient
+     */
+    public function getNotificationClient(): NotificationClient
+    {
+        return (new NotificationClient($this->client))
+            ->setUrl($this->url)
+            ->setIdToken($this->idToken);
+    }
+
+    /**
+     * @return SupportClient
+     */
+    public function getSupportClient(): SupportClient
+    {
+        return (new SupportClient($this->client))
+            ->setUrl($this->url)
+            ->setApiKey($this->apiKey);
     }
 }

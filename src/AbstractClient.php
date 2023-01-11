@@ -20,9 +20,14 @@ abstract class AbstractClient
     private const API_KEY = 'apiKey';
 
     /**
-     * @var string The xAP id token for authentication on the Public API endpoints who used cognito authorizer
+     * @var string The header key authorizer
      */
-    private const ID_TOKEN = 'idToken';
+    protected const AUTHORIZATION = 'Authorization';
+
+    /**
+     * @var string The header key cognito username
+     */
+    protected const USERNAME = 'username';
 
     /**
      * @var string The page keyword for pagination
@@ -35,9 +40,29 @@ abstract class AbstractClient
     protected const PER_PAGE = 'per_page';
 
     /**
-     * @var string The header key authorizer
+     * @var string
      */
-    protected const Authorization = 'Authorization';
+    protected const BODY = 'body';
+
+    /**
+     * @var string
+     */
+    protected const HEADERS = 'headers';
+
+    /**
+     * @var string
+     */
+    protected const STATUS = 'status';
+
+    /**
+     * @var string
+     */
+    protected const DATA = 'data';
+
+    /**
+     * @var string
+     */
+    protected const PAGINATION = 'pagination';
 
     /**
      * @var string The base path of the API
@@ -68,6 +93,11 @@ abstract class AbstractClient
      * @var string The xAP id token
      */
     protected $idToken;
+
+    /**
+     * @var string|null The cognito name of the user we want to handle the notifications (in case of impersonate)
+     */
+    protected $username;
 
     /**
      * @var int The page number
@@ -120,6 +150,20 @@ abstract class AbstractClient
     public function setIdToken(string $idToken): self
     {
         $this->idToken = $idToken;
+
+        return $this;
+    }
+
+    /**
+     * Sets the xAP username for impersonate options
+     *
+     * @param string $userName
+     *
+     * @return static
+     */
+    public function setUserName(string $userName): self
+    {
+        $this->username = $userName;
 
         return $this;
     }
@@ -206,7 +250,7 @@ abstract class AbstractClient
             'get',
             $this->generateUrl($parameters),
             [
-                'headers' => $this->prepareHeaders($headers),
+                self::HEADERS => $this->prepareHeaders($headers),
             ]
         );
 
@@ -259,15 +303,39 @@ abstract class AbstractClient
     }
 
     /**
+     * @param string|StreamInterface $response
+     *
+     * @return array
+     *
+     * @throws PublicApiClientException
+     */
+    protected function getResponseData($response): array
+    {
+        return $this->decodeResponse($response)[self::DATA] ?? [];
+    }
+
+    /**
      * @param string $response
      *
      * @return array
      *
      * @throws PublicApiClientException
      */
-    protected function getResponseData(string $response): array
+    protected function getPagination(string $response): array
     {
-        return $this->decodeResponse($response)['data'] ?? [];
+        return $this->decodeResponse($response)[self::PAGINATION] ?? [];
+    }
+
+    /**
+     * @param string $response
+     *
+     * @return int|null
+     *
+     * @throws PublicApiClientException
+     */
+    protected function getResponseStatus(string $response): ?int
+    {
+        return $this->decodeResponse($response)[self::STATUS] ?? null;
     }
 
     /**
@@ -277,11 +345,10 @@ abstract class AbstractClient
      */
     protected function prepareHeaders(array $headers): array
     {
-        $authentication = [];
-        ! empty($this->apiKey) ? $authentication[self::API_KEY] = $this->apiKey : $authentication[self::ID_TOKEN] = $this->idToken;
-
         return array_merge(
-            $authentication,
+            [
+                self::API_KEY => $this->apiKey,
+            ],
             $headers,
             $this->defaultHeaders
         );
@@ -306,8 +373,8 @@ abstract class AbstractClient
             'post',
             $this->generateUrl($parameters),
             [
-                'headers' => $this->prepareHeaders($headers),
-                'body'    => json_encode($payload),
+                self::HEADERS => $this->prepareHeaders($headers),
+                self::BODY    => json_encode($payload),
             ]
         );
 
@@ -315,7 +382,7 @@ abstract class AbstractClient
     }
 
     /**
-     * Sends a PATCH request and returns the response
+     * Sends a PATCH request and returns the body, or status response if there is no content
      *
      * @param array $payload
      * @param array $parameters
@@ -333,8 +400,8 @@ abstract class AbstractClient
             'patch',
             $this->generateUrl($parameters),
             [
-                'headers' => $this->prepareHeaders($headers),
-                'body'    => json_encode($payload),
+                self::HEADERS => $this->prepareHeaders($headers),
+                self::BODY    => json_encode($payload),
             ]
         );
 
@@ -360,8 +427,8 @@ abstract class AbstractClient
             'put',
             $this->generateUrl($parameters),
             [
-                'headers' => $this->prepareHeaders($headers),
-                'body'    => $payload,
+                self::HEADERS => $this->prepareHeaders($headers),
+                self::BODY    => $payload,
             ]
         );
 
@@ -431,7 +498,7 @@ abstract class AbstractClient
             'delete',
             $this->generateUrl($parameters),
             [
-                'headers' => $this->prepareHeaders($headers),
+                self::HEADERS => $this->prepareHeaders($headers),
             ]
         );
 

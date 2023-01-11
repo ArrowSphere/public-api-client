@@ -75,3 +75,12 @@ echo "Hello " . $whoami->getCompanyName();
 ### Cart clients
 
 - [Cart](doc/cart.md)
+
+### Notification clients
+
+- [Notification](doc/notification.md)
+
+### Support clients
+
+- [Support](doc/support.md)
+
