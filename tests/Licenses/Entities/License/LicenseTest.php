@@ -78,6 +78,9 @@ class LicenseTest extends AbstractEntityTest
                             'message' => 'current value is 0 instead of 0.15',
                         ],
                     ],
+                    'security'               => [
+                        'activeFraudEvents' => null,
+                    ],
                 ],
                 'expected' => <<<JSON
 {
@@ -141,7 +144,10 @@ class LicenseTest extends AbstractEntityTest
             "key": "PEC ratio issue",
             "message": "current value is 0 instead of 0.15"
         }
-    ]
+    ],
+    "security": {
+        "activeFraudEvents": null
+    }
 }
 JSON
                 ,

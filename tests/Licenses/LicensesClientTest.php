@@ -255,6 +255,9 @@ JSON;
                         'term'                   => 8640,
                         'isEnabled'              => true,
                         'lastUpdate'             => '2020-12-08T15:42:30.069Z',
+                        'security'               => [
+                            'activeFraudEvents' => 30,
+                        ],
                     ],
                 ];
             }

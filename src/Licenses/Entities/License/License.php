@@ -92,6 +92,8 @@ class License extends AbstractEntity
 
     public const COLUMN_WARNINGS = 'warnings';
 
+    public const COLUMN_SECURITY = 'security';
+
     protected const VALIDATION_RULES = [
         self::COLUMN_ACCEPT_EULA     => 'present|boolean',
         self::COLUMN_AUTO_RENEW      => 'present|boolean',
@@ -318,6 +320,11 @@ class License extends AbstractEntity
     private $warnings;
 
     /**
+     * @var Security
+     */
+    private $security;
+
+    /**
      * License constructor.
      *
      * @param array $data
@@ -380,6 +387,7 @@ class License extends AbstractEntity
         $this->vendorCode = $data[self::COLUMN_VENDOR_CODE];
         $this->vendorName = $data[self::COLUMN_VENDOR_NAME];
         $this->vendorSubscriptionId = $data[self::COLUMN_VENDOR_SUBSCRIPTION_ID];
+        $this->security = new Security($data[self::COLUMN_SECURITY] ?? []);
     }
 
     /**
@@ -711,6 +719,14 @@ class License extends AbstractEntity
     }
 
     /**
+     * @return Security
+     */
+    public function getSecurity(): Security
+    {
+        return $this->security;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
@@ -757,6 +773,7 @@ class License extends AbstractEntity
             self::COLUMN_IS_ENABLED => $this->isEnabled,
             self::COLUMN_LAST_UPDATE => $this->lastUpdate,
             self::COLUMN_WARNINGS => $this->jsonSerializeWarnings(),
+            self::COLUMN_SECURITY => $this->security,
         ];
     }
 

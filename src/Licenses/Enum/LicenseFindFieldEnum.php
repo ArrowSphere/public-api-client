@@ -6,6 +6,7 @@ use ArrowSphere\PublicApiClient\AbstractEnum;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\ActiveSeats;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\License;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\Price;
+use ArrowSphere\PublicApiClient\Licenses\Entities\License\Security;
 use ArrowSphere\PublicApiClient\Licenses\Entities\LicenseOfferFindResult;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\ActionFlags;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\Offer;
@@ -185,4 +186,7 @@ class LicenseFindFieldEnum extends AbstractEnum
     public const OFFER_LAST_UPDATE = LicenseOfferFindResult::COLUMN_OFFER . '.' . Offer::COLUMN_LAST_UPDATE;
 
     public const OFFER_ARROW_SUB_CATEGORIES = LicenseOfferFindResult::COLUMN_OFFER . '.' . Offer::COLUMN_ARROW_SUB_CATEGORIES;
+
+    public const LICENSE_SECURITY = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_SECURITY;
+    public const LICENSE_SECURITY_ACTIVE_FRAUD_EVENTS = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_SECURITY . '.' . Security::COLUMN_ACTIVE_FRAUD_EVENTS;
 }
