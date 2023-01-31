@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.7] - 2023-01-31
+
 ### Added
 
 - Added new entity `Security`
@@ -441,7 +443,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.9.6...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.9.7...HEAD
+[0.9.7]: https://github.com/ArrowSphere/public-api-client/compare/0.9.6...0.9.7
 [0.9.6]: https://github.com/ArrowSphere/public-api-client/compare/0.9.5...0.9.6
 [0.9.5]: https://github.com/ArrowSphere/public-api-client/compare/0.9.4...0.9.5
 [0.9.4]: https://github.com/ArrowSphere/public-api-client/compare/0.9.3...0.9.4
