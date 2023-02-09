@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added a new entity named `predictionResponse` to reflect the predictions which is data that can be used to anticipate and plan for future consumption demand . 
+- Added a new entity named  `Predictions` to reflect the prediction endpoint paylaod structure .   
+- Added a new method named `LicenseClient::getPredictions()` in order to get Predictions for API Endpoint .  
+
 ## [0.10.2] - 2023-02-16
 
 - Add a new client named `ErpExportsClient` for billing ERP export, its entities and its tests.

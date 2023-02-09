@@ -6,6 +6,7 @@ use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\Config;
+use ArrowSphere\PublicApiClient\Licenses\Entities\License\Predictions;
 use ArrowSphere\PublicApiClient\Licenses\Entities\LicenseOfferFindResult;
 use ArrowSphere\PublicApiClient\Licenses\Enum\LicenseFindFieldEnum;
 use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
@@ -856,6 +857,26 @@ JSON;
         $this->client->getConfigsRaw('XSP1234');
     }
 
+    public function testGetPredictionsRaw(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'get',
+                'https://www.test.com/licenses/XSP1234/predictions/daily',
+                [
+                    'headers' => [
+                        'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
+                    ],
+                ]
+            )
+            ->willReturn(new Response(200, [], 'OK USA'));
+
+        $this->client->getPredictionDailyRaw('XSP1234');
+    }
+
     /**
      * @throws EntityValidationException
      * @throws GuzzleException
@@ -926,6 +947,73 @@ JSON;
         self::assertSame('authorization', $config->getScope());
         self::assertSame('allow something', $config->getName());
         self::assertSame('pending', $config->getState());
+    }
+
+    public function testGetPredictionRaw(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'get',
+                'https://www.test.com/licenses/XSP1234/predictions/daily',
+                [
+                    'headers' => [
+                        'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
+                    ],
+                ]
+            )
+            ->willReturn(new Response(200, [], 'OK USA'));
+
+        $this->client->getPredictionDailyRaw('XSP1234');
+    }
+
+    public function testGetPrediction(): void
+    {
+        $response = json_encode([
+            "status" => 200,
+            "data"=>
+                [
+                    "currency"=> "EUR",
+                    "updatedAt"=> "2022-10-26",
+                    "licenseReference"=> "XSP264509",
+                    "predictions"=> [
+                        [
+                            "date"=> "2022-10-26",
+                            "amount"=> 521.0391398926142
+                        ],
+                        [
+                            "date" => "2022-10-27",
+                            "amount"=> 552.5630766601322
+                        ],
+                        [
+                            "date"=> "2022-10-28",
+                            "amount"=> 544.5792517089964
+                        ]
+                    ]
+                ]]);
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'get',
+                'https://www.test.com/licenses/XSP1234/predictions/daily',
+                [
+                    'headers' => [
+                        'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
+                    ],
+                ]
+            )
+            ->willReturn(new Response(200, [], $response));
+
+        $prediction = $this->client->getPrediction('XSP1234');
+        self::assertInstanceOf(Predictions::class, $prediction);
+        self::assertSame('EUR', $prediction->getCurrency());
+        self::assertSame('2022-10-26', $prediction->getUpdatedAt());
+        self::assertSame('XSP264509', $prediction->getLicenseReference());
+        self::assertIsArray($prediction->getPredictionResponse());
     }
 
     /**
