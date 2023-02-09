@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.0] - 2023-02-09
+
 ### Added
 
 - Added a new client named `CartClient` in order to manage all actions related to the cart.
@@ -449,7 +451,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.9.7...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.10.0...HEAD
+[0.10.0]: https://github.com/ArrowSphere/public-api-client/compare/0.9.7...0.10.0
 [0.9.7]: https://github.com/ArrowSphere/public-api-client/compare/0.9.6...0.9.7
 [0.9.6]: https://github.com/ArrowSphere/public-api-client/compare/0.9.5...0.9.6
 [0.9.5]: https://github.com/ArrowSphere/public-api-client/compare/0.9.4...0.9.5
