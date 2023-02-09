@@ -405,3 +405,33 @@ The `LicensesClient::updateConfig()` method returns a `Config` with actualized v
 
 - `getName()`: returns the name of the configuration
 - `getState()`: returns one of the 3 possible states which are `disabled`, `enabled` and `pending`
+
+### getPredictions endpoint
+
+The "getPredictions" endpoint allows getting predictions for specific license .
+
+It is necessary to specify desired license reference .
+It should be noted that endpoint will return an error (ie a not-200 result code) if the predictions of the specified license is missing.
+
+```php
+<?php
+
+use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
+use ArrowSphere\PublicApiClient\Licenses\Entities\License\Predictions;
+
+const URL = 'https://your-url-to-arrowsphere.example.com';
+const API_KEY = 'your API key in ArrowSphere';
+
+$client = (new LicensesClient())
+    ->setUrl(URL)
+    ->setApiKey(API_KEY);
+
+$predictions = $client->getPredictions('XSP1234');
+```
+
+The `LicensesClient::getPredictions()` method returns a `Predictions` with Predictions values.
+
+- `getCurrency()`: returns the currecny  of the license and predictions.
+- `getUpdatedAt()`: returns the last date the prediction machine learning script was launched .
+- `getLicenseReference()`: returns the license reference .
+- `getPredictionResponse()`: returns an array of predictionResponse with the date and value .

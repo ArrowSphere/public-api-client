@@ -7,6 +7,7 @@ use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Licenses\Entities\FindResult;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\Config;
+use ArrowSphere\PublicApiClient\Licenses\Entities\License\Predictions;
 use Generator;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -24,6 +25,11 @@ class LicensesClient extends AbstractLicensesClient
      * @var string The path of the Configs endpoint
      */
     private const CONFIGS_PATH = '/configs';
+
+    /**
+     * @var string The path of the Predictions endpoint
+     */
+    private const PREDICTION_PATH = '/predictions/daily';
 
     /**
      * @var string The key for keyword search query parameter (to search one string in all available search fields)
@@ -201,6 +207,40 @@ class LicensesClient extends AbstractLicensesClient
         $this->path = '/' . $reference . self::CONFIGS_PATH;
 
         return $this->get();
+    }
+
+    /**
+     * @param string $reference
+     *
+     * @return string
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getPredictionDailyRaw(string $reference, array $parameters = []): string
+    {
+        $this->path = '/' . $reference . self::PREDICTION_PATH;
+
+        return $this->get();
+    }
+
+    /**
+     * @param string $reference
+     *
+     * @return Predictions
+     *
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getPrediction(string $reference): Predictions
+    {
+        $rawResponse = $this->getPredictionDailyRaw($reference);
+        $response = $this->decodeResponse($rawResponse);
+
+        return new Predictions($response['data']);
     }
 
     /**
