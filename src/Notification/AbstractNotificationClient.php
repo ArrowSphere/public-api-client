@@ -40,9 +40,7 @@ abstract class AbstractNotificationClient extends AbstractClient
     protected $defaultHeaders = [];
 
     /**
-     * @param array $headers
-     *
-     * @return array
+     * @inheritdoc
      */
     protected function prepareHeaders(array $headers): array
     {

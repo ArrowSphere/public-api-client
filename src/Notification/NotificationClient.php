@@ -26,16 +26,17 @@ class NotificationClient extends AbstractNotificationClient
     }
 
     /**
+     * @param array $filterQueryData
+     *
      * @return array
      *
      * @throws GuzzleException
-     * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function listNotifications(): array
+    public function listNotifications(array $filterQueryData = []): array
     {
         $this->path = '';
-        $response = $this->get();
+        $response = $this->get($filterQueryData);
 
         return [
             self::NOTIFICATIONS => $this->getResponseData($response)[self::NOTIFICATIONS] ?? [],
@@ -86,8 +87,8 @@ class NotificationClient extends AbstractNotificationClient
     {
         $this->path = '';
 
-        if (isset($this->defaultHeaders['username'])) {
-            unset($this->defaultHeaders['username']);
+        if (! empty($this->username)) {
+            $this->username = null;
         }
 
         $response = $this->post($payload);

@@ -5,6 +5,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- Check on method `NotificationClient::createNotification()` to ensure that if the username field is passed by mistake in the header it is not taken into account.
+- Refacto on method `CommentClient::listAllComments()` to ensure good performance and apply good practice.
+
 ## [0.10.0] - 2023-02-09
 
 ### Added
