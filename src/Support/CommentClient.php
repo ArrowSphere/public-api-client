@@ -51,21 +51,23 @@ class CommentClient extends SupportClient
     {
         $data = [];
         $result = [];
-        //$pagination['current_page'] is Bugged in the API, so I'm doing it manually
         $currentPage = 1;
+
         do {
             $response = $this->listCommentsWithPagination($issueId, $data);
             $pagination = $this->getPagination($response);
-            $result = [$result, $this->getResponseData($response)];
-            if (empty($pagination['next'])) {
+            $result[] = $this->getResponseData($response);
+
+            if (! isset($pagination['next'])) {
                 break;
             }
+
             $url = is_string(parse_url($pagination['next'], PHP_URL_QUERY)) ? parse_url($pagination['next'], PHP_URL_QUERY) : '';
             parse_str($url, $data);
             $currentPage++;
         } while ($currentPage <= $pagination['total_page']);
 
-        return $result;
+        return array_merge(...$result);
     }
 
     /**
