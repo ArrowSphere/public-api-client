@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.1] - 2023-02-15
+
 ### Changed
 
 - Check on method `NotificationClient::createNotification()` to ensure that if the username field is passed by mistake in the header it is not taken into account.
@@ -456,7 +458,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.10.0...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.10.1...HEAD
+[0.10.1]: https://github.com/ArrowSphere/public-api-client/compare/0.10.0...0.10.1
 [0.10.0]: https://github.com/ArrowSphere/public-api-client/compare/0.9.7...0.10.0
 [0.9.7]: https://github.com/ArrowSphere/public-api-client/compare/0.9.6...0.9.7
 [0.9.6]: https://github.com/ArrowSphere/public-api-client/compare/0.9.5...0.9.6
