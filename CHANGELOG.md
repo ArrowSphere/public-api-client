@@ -5,11 +5,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.3] - 2023-02-22
+
 ### Added
 
-- Added a new entity named `predictionResponse` to reflect the predictions which is data that can be used to anticipate and plan for future consumption demand . 
-- Added a new entity named  `Predictions` to reflect the prediction endpoint paylaod structure .   
-- Added a new method named `LicenseClient::getPredictions()` in order to get Predictions for API Endpoint .  
+- Added a new entity named `predictionResponse` to reflect the predictions which is data that can be used to anticipate and plan for future consumption demand .
+- Added a new entity named `Predictions` to reflect the prediction endpoint paylaod structure .
+- Added a new method named `LicenseClient::getPredictions()` in order to get Predictions for API Endpoint .
 
 ## [0.10.2] - 2023-02-16
 
@@ -468,7 +470,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.10.2...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.10.3...HEAD
+[0.10.3]: https://github.com/ArrowSphere/public-api-client/compare/0.10.2...0.10.3
 [0.10.2]: https://github.com/ArrowSphere/public-api-client/compare/0.10.1...0.10.2
 [0.10.1]: https://github.com/ArrowSphere/public-api-client/compare/0.10.0...0.10.1
 [0.10.0]: https://github.com/ArrowSphere/public-api-client/compare/0.9.7...0.10.0
