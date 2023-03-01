@@ -55,15 +55,15 @@ class SupportClient extends AbstractSupportClient
      * @param int $issueId
      * @param array $data
      *
-     * @return array|null
+     * @return void
      *
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function closeIssue(int $issueId, array $data): ?array
+    public function closeIssue(int $issueId, array $data): void
     {
-        return $this->getIssueClient()->closeIssue($issueId, $data);
+        $this->getIssueClient()->closeIssue($issueId, $data);
     }
 
     /**

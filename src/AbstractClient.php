@@ -327,18 +327,6 @@ abstract class AbstractClient
     }
 
     /**
-     * @param string $response
-     *
-     * @return int|null
-     *
-     * @throws PublicApiClientException
-     */
-    protected function getResponseStatus(string $response): ?int
-    {
-        return $this->decodeResponse($response)[self::STATUS] ?? null;
-    }
-
-    /**
      * @param array $headers
      *
      * @return array

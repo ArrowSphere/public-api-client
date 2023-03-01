@@ -48,11 +48,10 @@ class IssueClient extends SupportClient
     /**
      * @inheritdoc
      */
-    public function closeIssue(int $issueId, array $data): array
+    public function closeIssue(int $issueId, array $data): void
     {
         $this->path = '/' . $issueId;
-        $response = $this->patch($data);
 
-        return $this->getResponseData($response);
+        $this->patch($data);
     }
 }
