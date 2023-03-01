@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- edit method `IssueClient::closeIssue()` to not return a value and just do the patch update request
+
 ## [0.10.3] - 2023-02-22
 
 ### Added
