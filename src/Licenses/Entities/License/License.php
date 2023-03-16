@@ -94,6 +94,8 @@ class License extends AbstractEntity
 
     public const COLUMN_SECURITY = 'security';
 
+    public const COLUMN_CUSTOMER_VENDOR_REFERENCE = 'customer_vendor_reference';
+
     protected const VALIDATION_RULES = [
         self::COLUMN_ACCEPT_EULA     => 'present|boolean',
         self::COLUMN_AUTO_RENEW      => 'present|boolean',
@@ -310,6 +312,11 @@ class License extends AbstractEntity
     private $vendorName;
 
     /**
+     * @var string
+     */
+    private $customerVendorReference;
+
+    /**
      * @var string|null
      */
     private $vendorSubscriptionId;
@@ -356,6 +363,7 @@ class License extends AbstractEntity
 
         $this->customerName = $data[self::COLUMN_CUSTOMER_NAME];
         $this->customerRef = $data[self::COLUMN_CUSTOMER_REF];
+        $this->customerVendorReference = $data[self::COLUMN_CUSTOMER_VENDOR_REFERENCE] ?? '';
         $this->endDate = $data[self::COLUMN_END_DATE];
         $this->friendlyName = $data[self::COLUMN_FRIENDLY_NAME];
         $this->id = $data[self::COLUMN_ID];
@@ -468,6 +476,14 @@ class License extends AbstractEntity
     public function getCustomerRef(): string
     {
         return $this->customerRef;
+    }
+
+    /**
+     * @return string
+     */
+    public function getCustomerVendorReference(): string
+    {
+        return $this->customerVendorReference;
     }
 
     /**
@@ -760,6 +776,7 @@ class License extends AbstractEntity
             self::COLUMN_ACCEPT_EULA => $this->acceptEula,
             self::COLUMN_CUSTOMER_REF => $this->customerRef,
             self::COLUMN_CUSTOMER_NAME => $this->customerName,
+            self::COLUMN_CUSTOMER_VENDOR_REFERENCE => $this->customerVendorReference,
             self::COLUMN_RESELLER_REF => $this->resellerRef,
             self::COLUMN_RESELLER_NAME => $this->resellerName,
             self::COLUMN_MARKETPLACE => $this->marketplace,
