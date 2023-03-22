@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.5] - 2023-03-22
+
 - Add `customerVendorRef` attribute on license entity
 
 ## [0.10.4] - 2023-03-02
@@ -478,7 +480,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.10.4...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.10.5...HEAD
+[0.10.5]: https://github.com/ArrowSphere/public-api-client/compare/0.10.4...0.10.5
 [0.10.4]: https://github.com/ArrowSphere/public-api-client/compare/0.10.3...0.10.4
 [0.10.3]: https://github.com/ArrowSphere/public-api-client/compare/0.10.2...0.10.3
 [0.10.2]: https://github.com/ArrowSphere/public-api-client/compare/0.10.1...0.10.2
