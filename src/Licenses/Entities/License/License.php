@@ -94,7 +94,7 @@ class License extends AbstractEntity
 
     public const COLUMN_SECURITY = 'security';
 
-    public const COLUMN_CUSTOMER_VENDOR_REFERENCE = 'customer_vendor_reference';
+    public const COLUMN_CUSTOMER_VENDOR_REFERENCE = 'customerVendorReference';
 
     protected const VALIDATION_RULES = [
         self::COLUMN_ACCEPT_EULA     => 'present|boolean',
