@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add const `LicenseFindFieldEnum::LICENSE_CUSTOMER_VENDOR_REF`
+- Manage unit Price on `Price` object
+
 ## [0.10.6] - 2023-03-23
 
 - Fix cast for `customerVendorRef` attribute on license entity

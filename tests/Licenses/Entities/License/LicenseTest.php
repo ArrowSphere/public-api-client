@@ -103,6 +103,9 @@ class LicenseTest extends AbstractEntityTest
         "buy_price": 10,
         "sell_price": 15,
         "list_price": 15,
+        "unit_buy_price": 1.67,
+        "unit_sell_price": 2.5,
+        "unit_list_price": 2.5,
         "currency": "USD"
     },
     "cloud_type": "SaaS",
