@@ -376,7 +376,7 @@ class License extends AbstractEntity
         $this->parentOrderRef = $data[self::COLUMN_PARENT_ORDER_REF];
         $this->partnerRef = $data[self::COLUMN_PARTNER_REF];
         $this->periodicity = $data[self::COLUMN_PERIODICITY];
-        $this->price = new Price($data[self::COLUMN_PRICE]);
+        $this->price = new Price($data[self::COLUMN_PRICE], $data[self::COLUMN_SEAT]);
         $this->resellerName = $data[self::COLUMN_RESELLER_NAME];
         $this->resellerRef = $data[self::COLUMN_RESELLER_REF];
         $this->seat = $data[self::COLUMN_SEAT];

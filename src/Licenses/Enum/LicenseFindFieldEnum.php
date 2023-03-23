@@ -61,6 +61,12 @@ class LicenseFindFieldEnum extends AbstractEnum
 
     public const LICENSE_PRICE_LIST_PRICE = self::LICENSE_PRICE . '.' . Price::COLUMN_LIST_PRICE;
 
+    public const LICENSE_PRICE_UNIT_BUY_PRICE = self::LICENSE_PRICE . '.' . Price::COLUMN_UNIT_BUY_PRICE;
+
+    public const LICENSE_PRICE_UNIT_SELL_PRICE = self::LICENSE_PRICE . '.' . Price::COLUMN_UNIT_SELL_PRICE;
+
+    public const LICENSE_PRICE_UNIT_LIST_PRICE = self::LICENSE_PRICE . '.' . Price::COLUMN_UNIT_LIST_PRICE;
+
     public const LICENSE_PRICE_CURRENCY = self::LICENSE_PRICE . '.' . Price::COLUMN_CURRENCY;
 
     public const LICENSE_CLOUD_TYPE = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_CLOUD_TYPE;
@@ -86,6 +92,8 @@ class LicenseFindFieldEnum extends AbstractEnum
     public const LICENSE_ACCEPT_EULA = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_ACCEPT_EULA;
 
     public const LICENSE_CUSTOMER_REF = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_CUSTOMER_REF;
+
+    public const LICENSE_CUSTOMER_VENDOR_REF = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_CUSTOMER_VENDOR_REFERENCE;
 
     public const LICENSE_CUSTOMER_NAME = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_CUSTOMER_NAME;
 
