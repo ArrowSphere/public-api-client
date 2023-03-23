@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.7] - 2023-03-23
+
 - Add const `LicenseFindFieldEnum::LICENSE_CUSTOMER_VENDOR_REF`
 - Manage unit Price on `Price` object
 
@@ -487,7 +489,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.10.6...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.10.7...HEAD
+[0.10.7]: https://github.com/ArrowSphere/public-api-client/compare/0.10.6...0.10.7
 [0.10.6]: https://github.com/ArrowSphere/public-api-client/compare/0.10.5...0.10.6
 [0.10.5]: https://github.com/ArrowSphere/public-api-client/compare/0.10.4...0.10.5
 [0.10.4]: https://github.com/ArrowSphere/public-api-client/compare/0.10.3...0.10.4
