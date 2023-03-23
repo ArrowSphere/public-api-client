@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fix cast for `customerVendorRef` attribute on license entity
+
 ## [0.10.5] - 2023-03-22
 
 - Add `customerVendorRef` attribute on license entity
