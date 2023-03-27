@@ -18,11 +18,11 @@ class Price extends AbstractEntity
 
     public const COLUMN_LIST_PRICE = 'list_price';
 
-    public const COLUMN_UNIT_BUY_PRICE = 'unit_buy_price';
+    public const COLUMN_TOTAL_BUY_PRICE = 'total_buy_price';
 
-    public const COLUMN_UNIT_SELL_PRICE = 'unit_sell_price';
+    public const COLUMN_TOTAL_SELL_PRICE = 'total_sell_price';
 
-    public const COLUMN_UNIT_LIST_PRICE = 'unit_list_price';
+    public const COLUMN_TOTAL_LIST_PRICE = 'total_list_price';
 
     public const COLUMN_CURRENCY = 'currency';
 
@@ -49,17 +49,17 @@ class Price extends AbstractEntity
     /**
      * @var float
      */
-    private $unitBuyPrice;
+    private $totalBuyPrice;
 
     /**
      * @var float
      */
-    private $unitListPrice;
+    private $totalListPrice;
 
     /**
      * @var float
      */
-    private $unitSellPrice;
+    private $totalSellPrice;
 
     /**
      * @var string|null
@@ -82,7 +82,7 @@ class Price extends AbstractEntity
      *
      * @throws EntityValidationException
      */
-    public function __construct(array $data, int $qty)
+    public function __construct(array $data, int $qty = 1)
     {
         parent::__construct($data);
 
@@ -91,11 +91,9 @@ class Price extends AbstractEntity
         $this->sellPrice = $data[self::COLUMN_SELL_PRICE];
         $this->listPrice = $data[self::COLUMN_LIST_PRICE];
         $this->currency = $data[self::COLUMN_CURRENCY];
-        if ($qty !== 0) {
-            $this->unitListPrice = round($this->listPrice / $qty, 2);
-            $this->unitBuyPrice = round($this->buyPrice / $qty, 2);
-            $this->unitSellPrice = round($this->sellPrice / $qty, 2);
-        }
+        $this->totalListPrice = round($this->listPrice * $qty, 2);
+        $this->totalBuyPrice = round($this->buyPrice * $qty, 2);
+        $this->totalSellPrice = round($this->sellPrice * $qty, 2);
     }
 
     /**
@@ -133,25 +131,25 @@ class Price extends AbstractEntity
     /**
      * @return float
      */
-    public function getUnitBuyPrice(): float
+    public function getTotalBuyPrice(): float
     {
-        return $this->unitBuyPrice;
+        return $this->totalBuyPrice;
     }
 
     /**
      * @return float
      */
-    public function getUnitSellPrice(): float
+    public function getTotalSellPrice(): float
     {
-        return $this->unitSellPrice;
+        return $this->totalSellPrice;
     }
 
     /**
      * @return float
      */
-    public function getUnitListPrice(): float
+    public function getTotalListPrice(): float
     {
-        return $this->unitListPrice;
+        return $this->totalListPrice;
     }
 
     /**
@@ -172,9 +170,9 @@ class Price extends AbstractEntity
             self::COLUMN_BUY_PRICE                  => $this->buyPrice,
             self::COLUMN_SELL_PRICE                 => $this->sellPrice,
             self::COLUMN_LIST_PRICE                 => $this->listPrice,
-            self::COLUMN_UNIT_BUY_PRICE             => $this->unitBuyPrice ?? null,
-            self::COLUMN_UNIT_SELL_PRICE            => $this->unitSellPrice ?? null,
-            self::COLUMN_UNIT_LIST_PRICE            => $this->unitListPrice ?? null,
+            self::COLUMN_TOTAL_BUY_PRICE             => $this->totalBuyPrice ?? null,
+            self::COLUMN_TOTAL_SELL_PRICE            => $this->totalSellPrice ?? null,
+            self::COLUMN_TOTAL_LIST_PRICE            => $this->totalListPrice ?? null,
             self::COLUMN_CURRENCY                   => $this->currency,
         ];
     }
