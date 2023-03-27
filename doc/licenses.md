@@ -90,16 +90,16 @@ The warning is an alert for a license.
 
 The prices applicable at the time of the license purchase.
 
-| Field                   | Type     | Example                                                      | Description                                             |
-|-------------------------|----------|--------------------------------------------------------------|---------------------------------------------------------|
-| buyPrice                | `float`  | 10.4                                                         | The buy price at the time of the license purchase       |
-| sellPrice               | `float`  | 15.52                                                        | The sell price at the time of the license purchase      |
-| listPrice               | `float`  | 15.52                                                        | The list price at the time of the license purchase      |
-| unitBuyPrice            | `float`  | 10.4                                                         | The unit buy price at the time of the license purchase  |
-| unitSellPrice           | `float`  | 15.52                                                        | The unit sell price at the time of the license purchase |
-| unitListPrice           | `float`  | 15.52                                                        | The unit list price at the time of the license purchase |
-| currency                | `string` | USD                                                          | The currency used at the time of the license purchase   |
-| priceBandArrowsphereSku | `string` | MS_195416C1_3447_423A_B37B_EE59A99A19C4_EUR_1_RECURRING_SEAT | the price band's sku                                    |
+| Field                   | Type     | Example                                                      | Description                                              |
+|-------------------------|----------|--------------------------------------------------------------|----------------------------------------------------------|
+| buyPrice                | `float`  | 10.4                                                         | The buy price at the time of the license purchase        |
+| sellPrice               | `float`  | 15.52                                                        | The sell price at the time of the license purchase       |
+| listPrice               | `float`  | 15.52                                                        | The list price at the time of the license purchase       |
+| totalBuyPrice           | `float`  | 10.4                                                         | The total buy price at the time of the license purchase  |
+| totalSellPrice          | `float`  | 15.52                                                        | The total sell price at the time of the license purchase |
+| totalListPrice          | `float`  | 15.52                                                        | The total list price at the time of the license purchase |
+| currency                | `string` | USD                                                          | The currency used at the time of the license purchase    |
+| priceBandArrowsphereSku | `string` | MS_195416C1_3447_423A_B37B_EE59A99A19C4_EUR_1_RECURRING_SEAT | the price band's sku                                     |
 
 ### Offer and its sub-entities
 

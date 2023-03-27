@@ -30,9 +30,9 @@ class PriceTest extends AbstractQuantityEntityTest
     "buy_price": 12.34,
     "sell_price": 45.67,
     "list_price": 45.67,
-    "unit_buy_price": 2.47,
-    "unit_sell_price": 9.13,
-    "unit_list_price": 9.13,
+    "total_buy_price": 61.7,
+    "total_sell_price": 228.35,
+    "total_list_price": 228.35,
     "currency": "USD"
 }
 JSON

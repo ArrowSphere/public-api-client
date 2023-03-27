@@ -98,9 +98,9 @@ class LicenseOfferFindResultTest extends AbstractEntityTest
             "buy_price": 10,
             "sell_price": 15,
             "list_price": 15,
-            "unit_buy_price": 1.67,
-            "unit_sell_price": 2.5,
-            "unit_list_price": 2.5,
+            "total_buy_price": 60,
+            "total_sell_price": 90,
+            "total_list_price": 90,
             "currency": "USD"
         },
         "cloud_type": "SaaS",

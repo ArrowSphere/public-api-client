@@ -61,11 +61,11 @@ class LicenseFindFieldEnum extends AbstractEnum
 
     public const LICENSE_PRICE_LIST_PRICE = self::LICENSE_PRICE . '.' . Price::COLUMN_LIST_PRICE;
 
-    public const LICENSE_PRICE_UNIT_BUY_PRICE = self::LICENSE_PRICE . '.' . Price::COLUMN_UNIT_BUY_PRICE;
+    public const LICENSE_PRICE_TOTAL_BUY_PRICE = self::LICENSE_PRICE . '.' . Price::COLUMN_TOTAL_BUY_PRICE;
 
-    public const LICENSE_PRICE_UNIT_SELL_PRICE = self::LICENSE_PRICE . '.' . Price::COLUMN_UNIT_SELL_PRICE;
+    public const LICENSE_PRICE_TOTAL_SELL_PRICE = self::LICENSE_PRICE . '.' . Price::COLUMN_TOTAL_SELL_PRICE;
 
-    public const LICENSE_PRICE_UNIT_LIST_PRICE = self::LICENSE_PRICE . '.' . Price::COLUMN_UNIT_LIST_PRICE;
+    public const LICENSE_PRICE_TOTAL_LIST_PRICE = self::LICENSE_PRICE . '.' . Price::COLUMN_TOTAL_LIST_PRICE;
 
     public const LICENSE_PRICE_CURRENCY = self::LICENSE_PRICE . '.' . Price::COLUMN_CURRENCY;
 
