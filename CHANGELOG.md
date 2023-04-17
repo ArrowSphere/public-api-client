@@ -5,6 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.5] - 2023-04-18
+
+### Added
+
+- Added a new Abstract named `AbstractCartClient` to manage the impersonate option with `AbstractCartClient::prepareHeaders()`in order to set the username we want to impersonate.
+
 ## [0.10.8] - 2023-03-27
 
 - Manage total Price on `Price` object

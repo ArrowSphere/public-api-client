@@ -2,23 +2,12 @@
 
 namespace ArrowSphere\PublicApiClient\Cart;
 
-use ArrowSphere\PublicApiClient\AbstractClient;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use GuzzleHttp\Exception\GuzzleException;
 
-class CartClient extends AbstractClient
+class CartClient extends AbstractCartClient
 {
-    /**
-     * @var string The base path of the Cart API
-     */
-    private const ROOT_PATH = '/cart';
-
-    /**
-     * @var string The base path of the API
-     */
-    protected $basePath = self::ROOT_PATH;
-
     /**
      * @return array
      *
