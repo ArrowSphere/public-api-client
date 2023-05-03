@@ -274,6 +274,7 @@ JSON;
             'TaxNumber'         => '',
             'WebsiteUrl'        => 'https://www.dccomics.com',
             'Zip'               => '12345',
+            'OrganizationUnit'  => null
         ];
 
         $customer = new Customer($payload);

@@ -4,6 +4,7 @@ namespace ArrowSphere\PublicApiClient\Customers\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Partners\Entities\OrganizationUnit;
 
 /**
  * Class Customer
@@ -47,6 +48,8 @@ class Customer extends AbstractEntity
     public const COLUMN_WEBSITE_URL = 'WebsiteUrl';
 
     public const COLUMN_ZIP = 'Zip';
+
+    public const COLUMN_ORGANIZATION_UNIT = 'OrganizationUnit';
 
     protected const VALIDATION_RULES = [
         self::COLUMN_ADDRESS_LINE_1     => 'required',
@@ -163,6 +166,11 @@ class Customer extends AbstractEntity
     private $zip;
 
     /**
+     * @var OrganizationUnit|null
+     */
+    private $organizationUnit;
+
+    /**
      * Customer constructor.
      *
      * @param array $data
@@ -192,6 +200,7 @@ class Customer extends AbstractEntity
         $this->taxNumber = $data[self::COLUMN_TAX_NUMBER];
         $this->websiteUrl = $data[self::COLUMN_WEBSITE_URL] ?? null;
         $this->zip = $data[self::COLUMN_ZIP];
+        $this->organizationUnit = isset($data[self::COLUMN_ORGANIZATION_UNIT]) ? new OrganizationUnit($data[self::COLUMN_ORGANIZATION_UNIT]) : null;
     }
 
     /**
@@ -219,6 +228,7 @@ class Customer extends AbstractEntity
             self::COLUMN_TAX_NUMBER         => $this->taxNumber,
             self::COLUMN_WEBSITE_URL        => $this->websiteUrl,
             self::COLUMN_ZIP                => $this->zip,
+            self::COLUMN_ORGANIZATION_UNIT  => isset($this->organizationUnit) ? $this->organizationUnit->jsonSerialize() : null,
         ];
     }
 
@@ -372,5 +382,13 @@ class Customer extends AbstractEntity
     public function getZip(): string
     {
         return $this->zip;
+    }
+
+    /**
+     * @return OrganizationUnit|null
+     */
+    public function getOrganizationUnit(): ?OrganizationUnit
+    {
+        return $this->organizationUnit;
     }
 }
