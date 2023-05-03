@@ -10,27 +10,28 @@ The information below aims to manage the end customers. As a reseller, you need 
 
 An end customer is managed by the `Customer` entity.
 
-| Field             | Type             | Example                  | Description                                                                |
-|-------------------|------------------|--------------------------|----------------------------------------------------------------------------|
-| addressLine1      | `string`         | 1007 Mountain Drive      | First line of the address                                                  |
-| addressLine2      | `string`         | Wayne Manor              | Second line of the address                                                 |
-| billingId         | `string`         |                          | Billing identifier                                                         |
-| city              | `string`         | Gotham City              | The city name                                                              |
-| companyName       | `string`         | Wayne industries         | The company name                                                           |
-| contact           | `Contact`        |                          | The main contact of the company (see [Contact entity](#Contact))           |
-| countryCode       | `string`         | US                       | ISO-3166-1 alpha-2 country code                                            |
-| details           | `CompanyDetails` |                          | Vendor-specific information (see [CompanyDetails entity](#CompanyDetails)) |
-| deletedAt         | `string`         |                          | The date when the customer was deleted                                     |
-| emailContact      | `string`         | nobody@example.com       | Contact email for the company                                              |
-| headcount         | `string`         | null                     | Head count                                                                 |
-| internalReference | `string`         |                          | Internal reference (must be unique if not empty)                           |
-| receptionPhone    | `string`         | 1-800-555-1111           | Phone number                                                               |
-| ref               | `string`         | COMPANY12345             | Accronym                                                                   |
-| reference         | `string`         | XSP12345                 | The identifier of the company within ArrowSphere                           |
-| state             | `string`         | NJ                       | State                                                                      |
-| taxNumber         | `string`         |                          | VAT number                                                                 |
-| websiteUrl        | `string`         | https://www.dccomics.com | Company's website                                                          |
-| zip               | `string`         | 12345                    | Zip code                                                                   |
+| Field             | Type                | Example                  | Description                                                                |
+|-------------------|---------------------|--------------------------|----------------------------------------------------------------------------|
+| addressLine1      | `string`            | 1007 Mountain Drive      | First line of the address                                                  |
+| addressLine2      | `string`            | Wayne Manor              | Second line of the address                                                 |
+| billingId         | `string`            |                          | Billing identifier                                                         |
+| city              | `string`            | Gotham City              | The city name                                                              |
+| companyName       | `string`            | Wayne industries         | The company name                                                           |
+| contact           | `Contact`           |                          | The main contact of the company (see [Contact entity](#Contact))           |
+| countryCode       | `string`            | US                       | ISO-3166-1 alpha-2 country code                                            |
+| details           | `CompanyDetails`    |                          | Vendor-specific information (see [CompanyDetails entity](#CompanyDetails)) |
+| deletedAt         | `string`            |                          | The date when the customer was deleted                                     |
+| emailContact      | `string`            | nobody@example.com       | Contact email for the company                                              |
+| headcount         | `string`            | null                     | Head count                                                                 |
+| internalReference | `string`            |                          | Internal reference (must be unique if not empty)                           |
+| receptionPhone    | `string`            | 1-800-555-1111           | Phone number                                                               |
+| ref               | `string`            | COMPANY12345             | Accronym                                                                   |
+| reference         | `string`            | XSP12345                 | The identifier of the company within ArrowSphere                           |
+| state             | `string`            | NJ                       | State                                                                      |
+| taxNumber         | `string`            |                          | VAT number                                                                 |
+| websiteUrl        | `string`            | https://www.dccomics.com | Company's website                                                          |
+| zip               | `string`            | 12345                    | Zip code                                                                   |
+| organizationUnit  | `OrganizationUnit`  |                          | The organization unit (see [OrganizationUnit entity](#OrganizationUnit))   |
 
 ### Contact
 

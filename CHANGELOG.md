@@ -5,6 +5,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Added
+
+- Added a new client `PartnersClient` to manage organization unit
+- Updated `Customer` entity to add organization unit field
+
 ## [0.10.9] - 2023-04-20
 
 ## [0.10.5] - 2023-04-18

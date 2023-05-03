@@ -67,7 +67,8 @@ class CustomerTest extends TestCase
     "State": "NJ",
     "TaxNumber": "",
     "WebsiteUrl": "https:\/\/www.dccomics.com",
-    "Zip": "12345"
+    "Zip": "12345",
+    "OrganizationUnit": null
 }
 JSON;
 

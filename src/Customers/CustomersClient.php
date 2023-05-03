@@ -98,6 +98,60 @@ class CustomersClient extends AbstractClient
     }
 
     /**
+     * Update and return an existing customer.
+     *
+     * @param Customer $customer
+     * @param array $parameters
+     *
+     * @return Customer
+     *
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function updateCustomer(Customer $customer, array $parameters = []): Customer
+    {
+        $payload = $customer->jsonSerialize();
+        unset(
+            $payload[Customer::COLUMN_DELETED_AT],
+            $payload[Customer::COLUMN_REFERENCE]
+        );
+
+        $this->path = '/customers' . urlencode($customer->getReference());
+
+        $rawResponse = $this->patch($payload, $parameters);
+
+        $response = $this->getResponseData($rawResponse);
+
+        return new Customer($response);
+    }
+
+    /**
+     * Get a specific customer
+     *
+     * @param string $customerReference
+     * @param array $parameters
+     *
+     * @return Customer
+     *
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getCustomer(string $customerReference, array $parameters = []): Customer
+    {
+        $this->path = '/customers/' . urlencode($customerReference);
+
+        $rawResponse = $this->get($parameters);
+
+        $response = $this->getResponseData($rawResponse);
+
+        return new Customer($response['customers'][0]);
+    }
+
+    /**
      * @param string $code
      * @param array $parameters
      *
