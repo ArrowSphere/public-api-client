@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.10] - 2023-06-06
+
 ### Added
 
 - Added a new client `PartnersClient` to manage organization unit
@@ -506,7 +508,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.10.9...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.10.10...HEAD
+[0.10.10]: https://github.com/ArrowSphere/public-api-client/compare/0.10.9...0.10.10
 [0.10.9]: https://github.com/ArrowSphere/public-api-client/compare/0.10.8...0.10.9
 [0.10.8]: https://github.com/ArrowSphere/public-api-client/compare/0.10.7...0.10.8
 [0.10.7]: https://github.com/ArrowSphere/public-api-client/compare/0.10.6...0.10.7
