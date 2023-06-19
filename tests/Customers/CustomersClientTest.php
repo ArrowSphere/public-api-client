@@ -4,6 +4,7 @@ namespace ArrowSphere\PublicApiClient\Tests\Customers;
 
 use ArrowSphere\PublicApiClient\Customers\CustomersClient;
 use ArrowSphere\PublicApiClient\Customers\Entities\Customer;
+use ArrowSphere\PublicApiClient\Customers\Entities\CustomersResponse;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
@@ -238,6 +239,132 @@ JSON;
         self::assertSame('MO', $customer->getState());
         self::assertSame('', $customer->getTaxNumber());
         self::assertSame('https://www.dccomics.com', $customer->getWebsiteUrl());
+    }
+
+    /**
+     * @return void
+     *
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetCustomersPage(): void
+    {
+        $data = [
+            'customers' => [
+                [
+                    'AddressLine1' => '1007 Mountain Drive',
+                    'AddressLine2' => 'Wayne Manor',
+                    'BillingId' => '123',
+                    'City' => 'Gotham City',
+                    'CompanyName' => 'Wayne industries',
+                    'Contact' => [
+                        'Email' => 'test@example.com',
+                        'FirstName' => 'Bruce',
+                        'LastName' => 'Wayne',
+                        'Phone' => '1-800-555-1234',
+                    ],
+                    'CountryCode' => 'US',
+                    'Details' => [],
+                    'DeletedAt' => null,
+                    'EmailContact' => 'nobody@example.com',
+                    'Headcount' => null,
+                    'InternalReference' => '',
+                    'ReceptionPhone' => '1-800-555-1111',
+                    'Ref' => 'COMPANY12345',
+                    'Reference' => 'XSP12345',
+                    'State' => 'NJ',
+                    'TaxNumber' => '',
+                    'WebsiteUrl' => 'https:\/\/www.dccomics.com',
+                    'Zip' => '12345',
+                ],
+                [
+                    'AddressLine1' => '855 Main Street',
+                    'AddressLine2' => 'Police Department',
+                    'BillingId' => '456',
+                    'City' => 'Central City',
+                    'CompanyName' => 'Central City Police Department',
+                    'Contact' => [
+                        'Email' => 'test2@example.com',
+                        'FirstName' => 'Barry',
+                        'LastName' => 'Allen',
+                        'Phone' => '1-800-555-5678',
+                    ],
+                    'CountryCode' => 'US',
+                    'Details' => [],
+                    'DeletedAt' => null,
+                    'EmailContact' => 'nobody@example.com',
+                    'Headcount' => null,
+                    'InternalReference' => '',
+                    'ReceptionPhone' => '1-800-555-1111',
+                    'Ref' => 'COMPANY12346',
+                    'Reference' => 'XSP12346',
+                    'State' => 'MO',
+                    'TaxNumber' => '',
+                    'WebsiteUrl' => 'https:\/\/www.dccomics.com',
+                    'Zip' => '12346',
+                ],
+            ],
+        ];
+        $pagination = [
+            'pagination' => [
+                'per_page' => 100,
+                'current_page' => 1,
+                'total_page' => 1,
+                'total' => 2,
+                'next' => '',
+                'previous' => '',
+            ],
+        ];
+        $result = [
+            'status' => 200,
+            'data' => $data
+        ] + $pagination;
+        $response = json_encode($result);
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/customers?abc=def&ghi=0&per_page=100')
+            ->willReturn(new Response(200, [], $response));
+
+        $test = $this->client->getCustomersPage([
+            'abc' => 'def',
+            'ghi' => false,
+        ]);
+
+        $customers = $test->getCustomers();
+        $customer = array_shift($customers);
+        self::assertInstanceOf(CustomersResponse::class, $test);
+        self::assertSame('1007 Mountain Drive', $customer->getAddressLine1());
+        self::assertSame('Wayne Manor', $customer->getAddressLine2());
+        self::assertSame('123', $customer->getBillingId());
+        self::assertSame('Gotham City', $customer->getCity());
+        self::assertSame('Wayne industries', $customer->getCompanyName());
+        self::assertSame('test@example.com', $customer->getContact()->getEmail());
+        self::assertSame('Bruce', $customer->getContact()->getFirstName());
+        self::assertSame('Wayne', $customer->getContact()->getLastName());
+        self::assertSame('1-800-555-1234', $customer->getContact()->getPhone());
+        self::assertSame('US', $customer->getCountryCode());
+        self::assertNull($customer->getDeletedAt());
+        self::assertSame('nobody@example.com', $customer->getEmailContact());
+        self::assertNull($customer->getHeadcount());
+        self::assertSame('', $customer->getInternalReference());
+        self::assertSame('1-800-555-1111', $customer->getReceptionPhone());
+        self::assertSame('COMPANY12345', $customer->getRef());
+        self::assertSame('XSP12345', $customer->getReference());
+        self::assertSame('NJ', $customer->getState());
+        self::assertSame('', $customer->getTaxNumber());
+        self::assertSame('https:\/\/www.dccomics.com', $customer->getWebsiteUrl());
+
+        $pagination = $test->getPagination();
+        self::assertSame(1, $pagination->getCurrentPage());
+        self::assertSame(100, $pagination->getPerPage());
+        self::assertSame(1, $pagination->getTotalPage());
+        self::assertSame(2, $pagination->getTotal());
+        self::assertSame('', $pagination->getNextPage());
+        self::assertSame('', $pagination->getPreviousPage());
     }
 
     /**
