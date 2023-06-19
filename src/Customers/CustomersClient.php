@@ -4,7 +4,9 @@ namespace ArrowSphere\PublicApiClient\Customers;
 
 use ArrowSphere\PublicApiClient\AbstractClient;
 use ArrowSphere\PublicApiClient\Customers\Entities\Customer;
+use ArrowSphere\PublicApiClient\Customers\Entities\CustomersResponse;
 use ArrowSphere\PublicApiClient\Customers\Entities\Invitation;
+use ArrowSphere\PublicApiClient\Entities\Pagination;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
@@ -69,6 +71,31 @@ class CustomersClient extends AbstractClient
     }
 
     /**
+     * Get the customers per page.
+     * Returns a CustomersResponse that holds pagination information and the list of customers from the current page.
+     *
+     * @param array $parameters Optional parameters to add to the URL
+     *
+     * @return CustomersResponse
+     *
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getCustomersPage(array $parameters = []): CustomersResponse
+    {
+        if (! isset($this->perPage)) {
+            $this->setPerPage(100);
+        }
+
+        $rawResponse = $this->getCustomersRaw($parameters);
+        $response = $this->decodeResponse($rawResponse);
+
+        return new CustomersResponse($response);
+    }
+
+    /**
      * Creates a customer and returns its newly created reference.
      *
      * @param array $parameters Optional parameters to add to the URL
@@ -118,13 +145,13 @@ class CustomersClient extends AbstractClient
             $payload[Customer::COLUMN_REFERENCE]
         );
 
-        $this->path = '/customers' . urlencode($customer->getReference());
+        $this->path = '/customers/' . urlencode($customer->getReference());
 
         $rawResponse = $this->patch($payload, $parameters);
 
         $response = $this->getResponseData($rawResponse);
 
-        return new Customer($response);
+        return new Customer($response['customers'][0]);
     }
 
     /**

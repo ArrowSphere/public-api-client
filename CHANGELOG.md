@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fix pagination for the get customers list and get organization units list endpoints.
+- Fix url and result in customer update endpoint.
+
 ## [0.10.10] - 2023-06-06
 
 ### Added

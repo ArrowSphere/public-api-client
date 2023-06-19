@@ -7,6 +7,7 @@ use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Partners\Entities\OrganizationUnit;
+use ArrowSphere\PublicApiClient\Partners\Entities\OrganizationUnitsResponse;
 use Generator;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -39,10 +40,10 @@ class PartnersClient extends AbstractClient
     }
 
     /**
-     * List all units that belong to the company.
-     * Returns an array (generator) of OrganizationUnit.
+     * Lists the organization units.
+     * Returns an array (Generator) of OrganizationUnit.
      *
-     * @param array $parameters Optional parameters to add to the URL
+     * @param array $parameters
      *
      * @return Generator|OrganizationUnit[]
      *
@@ -51,14 +52,52 @@ class PartnersClient extends AbstractClient
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function getOrganizationUnitList(array $parameters = []): Generator
+    public function getOrganizationUnits(array $parameters = []): Generator
     {
-        $rawResponse = $this->getOrganizationUnitsRaw($parameters);
-        $response = $this->getResponseData($rawResponse);
+        $this->setPerPage(100);
+        $currentPage = 1;
+        $lastPage = false;
 
-        foreach ($response as $data) {
-            yield new OrganizationUnit($data);
+        while (! $lastPage) {
+            $this->setPage($currentPage);
+            $rawResponse = $this->getOrganizationUnitsRaw($parameters);
+            $response = $this->decodeResponse($rawResponse);
+
+            if ($response['pagination']['total_page'] <= $currentPage) {
+                $lastPage = true;
+            }
+
+            $currentPage++;
+
+            foreach ($response['data']['customers'] as $data) {
+                yield new OrganizationUnit($data);
+            }
         }
+    }
+
+    /**
+     * Get the units that belong to the company per page.
+     * Returns an OrganizationUnitsResponse that holds pagination information and the list of organization unit from the current page.
+     *
+     * @param array $parameters Optional parameters to add to the URL
+     *
+     * @return OrganizationUnitsResponse
+     *
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getOrganizationUnitsPage(array $parameters = []): OrganizationUnitsResponse
+    {
+        if (! isset($this->perPage)) {
+            $this->setPerPage(100);
+        }
+
+        $rawResponse = $this->getOrganizationUnitsRaw($parameters);
+        $response = $this->decodeResponse($rawResponse);
+
+        return new OrganizationUnitsResponse($response);
     }
 
     /**
