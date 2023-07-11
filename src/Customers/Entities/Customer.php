@@ -181,9 +181,9 @@ class Customer extends AbstractEntity
     {
         parent::__construct($data);
 
-        $this->addressLine1 = $data[self::COLUMN_ADDRESS_LINE_1];
-        $this->addressLine2 = $data[self::COLUMN_ADDRESS_LINE_2];
-        $this->billingId = $data[self::COLUMN_BILLING_ID];
+        $this->addressLine1 = $data[self::COLUMN_ADDRESS_LINE_1] ?? '';
+        $this->addressLine2 = $data[self::COLUMN_ADDRESS_LINE_2] ?? '';
+        $this->billingId = $data[self::COLUMN_BILLING_ID] ?? 0;
         $this->city = $data[self::COLUMN_CITY];
         $this->companyName = $data[self::COLUMN_COMPANY_NAME];
         $this->contact = new Contact($data[self::COLUMN_CONTACT]);

@@ -69,7 +69,7 @@ class PartnersClient extends AbstractClient
 
             $currentPage++;
 
-            foreach ($response['data']['customers'] as $data) {
+            foreach ($response['data'] as $data) {
                 yield new OrganizationUnit($data);
             }
         }
