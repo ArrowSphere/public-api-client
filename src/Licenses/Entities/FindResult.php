@@ -6,6 +6,7 @@ use ArrowSphere\PublicApiClient\AbstractEntity;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
+use ArrowSphere\PublicApiClient\Licenses\Enum\LicenseFindFieldEnum;
 use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
 use Generator;
 use GuzzleHttp\Exception\GuzzleException;
@@ -15,6 +16,8 @@ use GuzzleHttp\Exception\GuzzleException;
  */
 class FindResult extends AbstractEntity
 {
+    private const SEARCH_AFTER_PAGE_LIMIT = 10;
+
     /**
      * @var LicenseOfferFindResult[]
      */
@@ -102,7 +105,7 @@ class FindResult extends AbstractEntity
      * @throws NotFoundException
      * @throws GuzzleException
      */
-    public function getLicenses(): Generator
+    public function getLicenses(bool $searchAfterEnabled = false): Generator
     {
         // First yield the offers we already got in the response from the first page
         yield from $this->getLicensesForCurrentPage();
@@ -111,10 +114,16 @@ class FindResult extends AbstractEntity
         $currentPage = $this->currentPage;
         $lastPage = $this->totalPage <= $this->currentPage;
         $i = count($this->licenses);
+        $searchAfter = null;
 
         while (! $lastPage) {
             $currentPage++;
             $this->client->setPage($currentPage);
+
+            if ($searchAfterEnabled && $searchAfter && $currentPage === self::SEARCH_AFTER_PAGE_LIMIT) {
+                $this->postData[LicensesClient::DATA_FILTERS][LicenseFindFieldEnum::LICENSE_ID] = [LicensesClient::FILTERS_GT => $searchAfter];
+                $this->client->setPage($currentPage = 1);
+            }
 
             $rawResponse = $this->client->findRaw($this->postData, $this->parameters);
             $response = $this->client->decodeResponse($rawResponse);
@@ -124,8 +133,10 @@ class FindResult extends AbstractEntity
             }
 
             foreach ($response['results'] as $data) {
-                yield $i => new LicenseOfferFindResult($data);
+                $result = new LicenseOfferFindResult($data);
+                yield $i => $result;
                 ++$i;
+                $searchAfter = $result->getLicense()->getId();
             }
         }
     }

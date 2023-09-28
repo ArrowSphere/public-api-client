@@ -142,6 +142,21 @@ class LicensesClient extends AbstractLicensesClient
     public const OPERATOR_LTE = 'LTE';
 
     /**
+     * Use this filter to compare 2 value with other filter like FILTERS_GT / FILTERS_GTE / FILTERS_LT
+     */
+    public const FILTERS_GT = "gt";
+    public const FILTERS_GTE = "gte";
+    public const FILTERS_LT = "lt";
+    public const FILTERS_LTE = "lte";
+
+    public const FILTERS_OPERATORS = [
+        self::FILTERS_GT,
+        self::FILTERS_GTE,
+        self::FILTERS_LT,
+        self::FILTERS_LTE,
+    ];
+
+    /**
      * @param array $postData
      * @param array $parameters
      *
@@ -163,7 +178,7 @@ class LicensesClient extends AbstractLicensesClient
 
         if (isset($postData[self::DATA_FILTERS])) {
             $postData[self::DATA_FILTERS] = array_map(static function ($row) {
-                return is_array($row) ? array_values($row) : $row;
+                return is_array($row) && empty(array_intersect(array_keys($row), self::FILTERS_OPERATORS)) ? array_values($row) : $row;
             }, $postData[self::DATA_FILTERS]);
         }
 

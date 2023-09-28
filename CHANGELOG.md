@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Add support of searchAfter for get licenses list 
+
 ## [0.10.12] - 2023-07-12
 
 - Fixed bugs on customers data handling.
