@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.14] - 2023-12-11
+
 - Fix Offer entity: default value for isAutoRenew and isManualProvisioning
 
 ## [0.10.13] - 2023-10-02
@@ -523,7 +525,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.10.13...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.10.14...HEAD
+[0.10.14]: https://github.com/ArrowSphere/public-api-client/compare/0.10.13...0.10.14
 [0.10.13]: https://github.com/ArrowSphere/public-api-client/compare/0.10.12...0.10.13
 [0.10.12]: https://github.com/ArrowSphere/public-api-client/compare/0.10.11...0.10.12
 [0.10.11]: https://github.com/ArrowSphere/public-api-client/compare/0.10.10...0.10.11
