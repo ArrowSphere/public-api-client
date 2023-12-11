@@ -48,8 +48,8 @@ class ActionFlags extends AbstractEntity
     {
         parent::__construct($data);
 
-        $this->isAutoRenew = $data[self::COLUMN_IS_AUTO_RENEW];
-        $this->isManualProvisioning = $data[self::COLUMN_MANUAL_PROVISIONING];
+        $this->isAutoRenew = $data[self::COLUMN_IS_AUTO_RENEW] ?? false;
+        $this->isManualProvisioning = $data[self::COLUMN_MANUAL_PROVISIONING] ?? false;
         $this->renewalSku = $data[self::COLUMN_RENEWAL_SKU] ?? false;
     }
 
