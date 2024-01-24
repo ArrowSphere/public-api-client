@@ -359,11 +359,11 @@ class ErpExportsClient extends AbstractBillingClient
                 throw new PublicApiClientException(sprintf('Error: Pagination not found in response. Raw response was: "%s"', $rawResponse));
             }
 
-            if ($response['pagination']['perPage'] < count($response['data']['values'])) {
+            if ($response['pagination']['currentPage'] === $response['pagination']['totalPages']) {
                 $lastPage = true;
+            } else {
+                $currentPage++;
             }
-
-            $currentPage++;
 
             if (! isset($response['data']['values']) || ! isset($response['data']['headers'])) {
                 throw new PublicApiClientException(sprintf('Error: Data not found in response. Raw response was: "%s"', $rawResponse));
