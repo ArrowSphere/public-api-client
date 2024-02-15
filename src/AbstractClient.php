@@ -25,11 +25,6 @@ abstract class AbstractClient
     protected const AUTHORIZATION = 'Authorization';
 
     /**
-     * @var string The header key cognito username
-     */
-    protected const USERNAME = 'username';
-
-    /**
      * @var string The page keyword for pagination
      */
     protected const PAGE = 'page';
@@ -90,14 +85,9 @@ abstract class AbstractClient
     protected $apiKey;
 
     /**
-     * @var string The xAP id token
+     * @var string The access token
      */
-    protected $idToken;
-
-    /**
-     * @var string|null The cognito name of the user we want to handle the notifications (in case of impersonate)
-     */
-    protected $username;
+    protected $accessToken;
 
     /**
      * @var int The page number
@@ -127,6 +117,16 @@ abstract class AbstractClient
     }
 
     /**
+     * Returns the Guzzle client.
+     *
+     * @return Client
+     */
+    public function getClient(): Client
+    {
+        return $this->client;
+    }
+
+    /**
      * Sets the Api key in header for authentication
      *
      * @param string $apiKey The Api key
@@ -141,31 +141,37 @@ abstract class AbstractClient
     }
 
     /**
-     * Sets the xAP id token in header for authentication with cognito
+     * Returns the api key.
      *
-     * @param string $idToken
+     * @return string|null
+     */
+    public function getApiKey(): ?string
+    {
+        return $this->apiKey;
+    }
+
+    /**
+     * Sets the access token.
+     *
+     * @param string $accessToken
      *
      * @return static
      */
-    public function setIdToken(string $idToken): self
+    public function setAccessToken(string $accessToken): self
     {
-        $this->idToken = $idToken;
+        $this->accessToken = $accessToken;
 
         return $this;
     }
 
     /**
-     * Sets the xAP username for impersonate options
+     * Returns the access token.
      *
-     * @param string $userName
-     *
-     * @return static
+     * @return string|null
      */
-    public function setUserName(string $userName): self
+    public function getAccessToken(): ?string
     {
-        $this->username = $userName;
-
-        return $this;
+        return $this->accessToken;
     }
 
     /**
@@ -233,6 +239,16 @@ abstract class AbstractClient
     }
 
     /**
+     * Returns the default headers.
+     *
+     * @return string[]
+     */
+    public function getDefaultHeaders(): array
+    {
+        return $this->defaultHeaders;
+    }
+
+    /**
      * Sends a GET request and returns the response
      *
      * @param array $parameters
@@ -296,7 +312,10 @@ abstract class AbstractClient
     {
         $response = json_decode($rawResponse, true);
         if (json_last_error() !== JSON_ERROR_NONE) {
-            throw new PublicApiClientException(sprintf('Error: Unable to decode JSON response. Raw response was: "%s"', $rawResponse));
+            throw new PublicApiClientException(sprintf(
+                'Error: Unable to decode JSON response. Raw response was: "%s"',
+                $rawResponse
+            ));
         }
 
         return $response;
@@ -333,10 +352,16 @@ abstract class AbstractClient
      */
     protected function prepareHeaders(array $headers): array
     {
+        $baseHeaders = [
+            self::API_KEY => $this->apiKey,
+        ];
+
+        if ($this->accessToken !== null) {
+            $baseHeaders[self::AUTHORIZATION] = $this->accessToken;
+        }
+
         return array_merge(
-            [
-                self::API_KEY => $this->apiKey,
-            ],
+            $baseHeaders,
             $headers,
             $this->defaultHeaders
         );

@@ -226,7 +226,7 @@ This entity represents the rules of the campaign.
 ## Usage
 
 The campaigns client is simply called `CampaignsClient`.
-You can get it through the main entry point `PublicApiClient` and its method `getCampaignsClient()`, or instanciate it directly.
+You can get it through the main entry point `PublicApiClient` and its method `getCampaignsClient()`, or instantiate it directly.
 
 ### GetCampaigns
 

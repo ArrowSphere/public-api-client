@@ -2,7 +2,7 @@
 
 ## General information
 
-An offer is the most important data of the catalog because it's the unit of sale in ArrowSphere.
+An offer is the most important data of the catalog because it's the unit of sale in ArrowSphere Cloud.
 
 ## Entities
 
@@ -11,7 +11,7 @@ An offer is the most important data of the catalog because it's the unit of sale
 An offer is managed by the `Offer` entity.
 
 | Field               | Type          | Example                              | Description                                                                                           |
-| ------------------- | ------------- | ------------------------------------ | ----------------------------------------------------------------------------------------------------- |
+|---------------------|---------------|--------------------------------------|-------------------------------------------------------------------------------------------------------|
 | addons              | `string[]`    | ['123', '456']                       | An array containing the compatible add-ons for this offer                                             |
 | buyingProgram       | `string`      | Corporate                            |                                                                                                       |
 | category            | `string[]`    | ['Productivity']                     | An array of categories                                                                                |
@@ -60,7 +60,7 @@ The prices can change depending on these parameters, hence the concept of price 
 A price band is managed by the `PriceBand` entity.
 
 | Field              | Type     | Example   | Description                                                                                                                                                    |
-| ------------------ | -------- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+|--------------------|----------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | minQuantity        | `int`    | 1         | The minimum quantity for the price band to be valid                                                                                                            |
 | maxQuantity        | `int`    | 999       | The maximum quantity for the price band to be valid. If there's no maximum, this field takes the value `null`                                                  |
 | recurringBuyPrice  | `float`  | 12.99     | The buy price for the reseller                                                                                                                                 |
@@ -79,14 +79,14 @@ This entity represents a filter returned by the [Find endpoint](#Find endpoint).
 It shows a number of possible filters in the search results and the count for each of them.
 
 | Field  | Type     | Example     | Description              |
-| ------ | -------- | ----------- | ------------------------ |
+|--------|----------|-------------|--------------------------|
 | name   | `string` | vendor      | The name of the filter   |
 | values | `array`  | (see below) | The values of the filter |
 
 Each entry in the `values` array looks like this:
 
 | Field | Type     | Example   | Description                                   |
-| ----- | -------- | --------- | --------------------------------------------- |
+|-------|----------|-----------|-----------------------------------------------|
 | value | `string` | Microsoft | The value of the entry                        |
 | count | `int`    | 3         | How many results are available for this entry |
 
@@ -101,7 +101,7 @@ This entity is smaller because it only aims to display summary information about
 It should be used to display search results or to make a listing of offers.
 
 | Field            | Type          | Example                              | Description                                                                                       |
-| ---------------- | ------------- | ------------------------------------ | ------------------------------------------------------------------------------------------------- |
+|------------------|---------------|--------------------------------------|---------------------------------------------------------------------------------------------------|
 | addons           | `string[]`    | ['123', '456']                       | An array containing the compatible add-ons for this offer                                         |
 | category         | `string[]`    | ['Productivity']                     | An array of categories                                                                            |
 | classification   | `string`      | SAAS                                 | The [classification](catalog-classification.md)                                                   |
@@ -130,11 +130,11 @@ Please note that the `highlight` field is only available if the `DATA_HIGHLIGHT`
 ## Usage
 
 The offer client is simply called `OfferClient`.
-You can get it through the main entry point `PublicApiClient` and its method `getOfferClient()`, or instanciate it directly.
+You can get it through the main entry point `PublicApiClient` and its method `getOfferClient()`, or instantiate it directly.
 
 ArrowSphere has designed a new way to search through offers and access their details,
-to make it easier to perform searchs and display an offer's details.
-This is the encouraged way to access offers in ArrowSphere. See paragraph [Find and Details endpoints](#Find and Details endpoints)
+to make it easier to perform searches and display an offer's details.
+This is the encouraged way to access offers in ArrowSphere Cloud. See paragraph [Find and Details endpoints](#Find and Details endpoints)
 below for the documentation.
 
 The old way to access offers is still available, though, but the methods are marked as deprecated and are unlikely to be updated.

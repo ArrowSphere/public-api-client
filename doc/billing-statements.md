@@ -24,31 +24,31 @@ will issue the local invoice.
 
 The Statement entity allow to get information about the billing statement header.
 
-| Field              | Type                   | Example                                 | Description                                                    |
-| ------------------ | ---------------------- | --------------------------------------- | -------------------------------------------------------------- |
-| billingGroup       | `string`               | ResellerBilling                         | Billing group name                                             |
-| billingStrategy    | `null`                 |                                         | Reserved for future use                                        |
-| classification     | `string`               | saas                                    | End Customer Total Buy Price in vendor currency                |
-| currency           | `string`               | USD                                     | Country Currency                                               |
-| description        | `string`               |                                         | Rule's name that led to this statement                         |
-| from               | `Identity`             |                                         | Identity of the reseller                                       |
-| issueDate          | `string|null`          | 2021-04-01                              | Date of the issue of billing statement                         |
-| marketplace        | `string`               | US                                      | Country code                                                   |
-| prices             | `Prices`               |                                         | Prices for reseller/customer                                   |
-| programCode        | `string|null`          | MSCSP                                   | Program name, null if multiple programs for the same statement |
-| reference          | `string`               | H1-AAA-0123456789ABCDEF0123456789ABCDEF | Identifier of the billing statement                            |
-| reportPeriod       | `string`               | 2021-04                                 | Report Period                                                  |
-| sequence           | `string`               | MSM12-0123456789                        | Sequence of the billing statement                              |
-| status             | `null`                 |                                         | Reserved for future use                                        |
-| to                 | `Identity`             |                                         | Identities of customers                                        |
-| vendorName         | `string`               | Microsoft                               | Vendor name                                                    |
+| Field           | Type          | Example                                 | Description                                                    |
+|-----------------|---------------|-----------------------------------------|----------------------------------------------------------------|
+| billingGroup    | `string`      | ResellerBilling                         | Billing group name                                             |
+| billingStrategy | `null`        |                                         | Reserved for future use                                        |
+| classification  | `string`      | saas                                    | End Customer Total Buy Price in vendor currency                |
+| currency        | `string`      | USD                                     | Country Currency                                               |
+| description     | `string`      |                                         | Rule's name that led to this statement                         |
+| from            | `Identity`    |                                         | Identity of the reseller                                       |
+| issueDate       | `string/null` | 2021-04-01                              | Date of the issue of billing statement                         |
+| marketplace     | `string`      | US                                      | Country code                                                   |
+| prices          | `Prices`      |                                         | Prices for reseller/customer                                   |
+| programCode     | `string/null` | MSCSP                                   | Program name, null if multiple programs for the same statement |
+| reference       | `string`      | H1-AAA-0123456789ABCDEF0123456789ABCDEF | Identifier of the billing statement                            |
+| reportPeriod    | `string`      | 2021-04                                 | Report Period                                                  |
+| sequence        | `string`      | MSM12-0123456789                        | Sequence of the billing statement                              |
+| status          | `null`        |                                         | Reserved for future use                                        |
+| to              | `Identity`    |                                         | Identities of customers                                        |
+| vendorName      | `string`      | Microsoft                               | Vendor name                                                    |
 
 ### Identity
 
 The Identity entity allow to store reference and name about a reseller or a customer.
 
 | Field     | Type     | Example      | Description |
-| --------- | -------- | ------------ | ----------- |
+|-----------|----------|--------------|-------------|
 | name      | `string` | Reseller 123 |             |
 | reference | `string` | XSP123       |             |
 
@@ -57,7 +57,7 @@ The Identity entity allow to store reference and name about a reseller or a cust
 The Rates entity allow to store reference and name about a reseller or a customer.
 
 | Field        | Type      | Example | Description |
-| ------------ | --------- | ------- | ----------- |
+|--------------|-----------|---------|-------------|
 | sellRate     | `numeric` | 42.3    |             |
 | sellRateType | `string`  | uplift  |             |
 
@@ -66,7 +66,7 @@ The Rates entity allow to store reference and name about a reseller or a custome
 The Prices entity allow to store reference and name about a reseller or a customer.
 
 | Field     | Type                | Example | Description               |
-| --------- | ------------------- | ------- | ------------------------- |
+|-----------|---------------------|---------|---------------------------|
 | buyTotal  | `numeric`           | 12.3    | Reseller Buy Total Price  |
 | buyUnit   | `numeric/undefined` | 12.3    | Reseller Buy Unit Price   |
 | listTotal | `numeric/undefined` | 12.3    | Retail Total Price        |
@@ -79,7 +79,7 @@ The Prices entity allow to store reference and name about a reseller or a custom
 The StatementLine entity allow to get information about a billing statement line.
 
 | Field                           | Type          | Example                                 | Description               |
-| ------------------------------- | ------------- | --------------------------------------- | ------------------------- |
+|---------------------------------|---------------|-----------------------------------------|---------------------------|
 | arrowSku                        | `string`      |                                         |                           |
 | arsSubscriptionId               | `string/null` | XSP123                                  |                           |
 | billingPeriodEnd                | `string/null` | 2021-02-01                              |                           |
@@ -111,7 +111,7 @@ The StatementLine entity allow to get information about a billing statement line
 ### Initialization
 
 The "billing statements" client is simply called `StatementsClient`.
-You can get it through the main entry point `PublicApiClient` and its method `getBillingStatementsClient()`, or instanciate it directly:
+You can get it through the main entry point `PublicApiClient` and its method `getStatementsClient()`, or instantiate it directly:
 
 ```php
 <?php

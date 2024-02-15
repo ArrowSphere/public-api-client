@@ -16,9 +16,25 @@ use GuzzleHttp\Psr7\Response;
  */
 class NotificationClientTest extends AbstractClientTest
 {
-    use NotificationMockedDataTrait;
-
     protected const MOCKED_CLIENT_CLASS = NotificationClient::class;
+
+    private const NOTIFICATION_ID = '70993353-0db8-4d12-8880-d6eece73f93f';
+
+    /**
+     * @return array
+     */
+    public function generateMockedNotification(): array
+    {
+        return [
+            'id'          => self::NOTIFICATION_ID,
+            'userName'    => 'beatrice kido',
+            'created'     => 6765765372,
+            'expires'     => 8787687655,
+            'subject'     => 'Order fulfilled - [XSP656567]',
+            'content'     => 'Your order has been fulfilled with success',
+            'hasBeenRead' => 0
+        ];
+    }
 
     /**
      * @throws GuzzleException
@@ -27,8 +43,6 @@ class NotificationClientTest extends AbstractClientTest
      */
     public function testListNotifications(): void
     {
-        $this->client->setIdToken($this->idToken);
-        $this->client->setDefaultHeaders($this->generateDefaultHeaders());
         $this->httpClient
             ->expects(self::once())
             ->method('request')
@@ -45,9 +59,7 @@ class NotificationClientTest extends AbstractClientTest
      */
     public function testReadOneNotification(): void
     {
-        $id = $this->id;
-        $this->client->setIdToken($this->idToken);
-        $this->client->setDefaultHeaders($this->generateDefaultHeaders());
+        $id = self::NOTIFICATION_ID;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
@@ -64,8 +76,6 @@ class NotificationClientTest extends AbstractClientTest
      */
     public function testReadAllNotifications(): void
     {
-        $this->client->setIdToken($this->idToken);
-        $this->client->setDefaultHeaders($this->generateDefaultHeaders());
         $this->httpClient
             ->expects(self::once())
             ->method('request')
@@ -82,9 +92,7 @@ class NotificationClientTest extends AbstractClientTest
      */
     public function testDeleteOneNotification(): void
     {
-        $id = $this->id;
-        $this->client->setIdToken($this->idToken);
-        $this->client->setDefaultHeaders($this->generateDefaultHeaders());
+        $id = self::NOTIFICATION_ID;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
@@ -101,8 +109,6 @@ class NotificationClientTest extends AbstractClientTest
      */
     public function testDeleteAllNotifications(): void
     {
-        $this->client->setIdToken($this->idToken);
-        $this->client->setDefaultHeaders($this->generateDefaultHeaders());
         $this->httpClient
             ->expects(self::once())
             ->method('request')

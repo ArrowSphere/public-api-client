@@ -23,7 +23,7 @@ A HealthCheck item is managed by the `HealthCheckItem` entity.
 
 ## Usage
 
-You can get it through the main entry point `PublicApiClient` and its method `getHealthCheckClient()`, or instanciate it directly as follow:
+You can get it through the main entry point `PublicApiClient` and its method `getHealthCheckClient()`, or instantiate it directly as follow:
 
 ```php
 <?php

@@ -87,10 +87,6 @@ class NotificationClient extends AbstractNotificationClient
     {
         $this->path = '';
 
-        if (! empty($this->username)) {
-            $this->username = null;
-        }
-
         $response = $this->post($payload);
 
         return $this->getResponseData($response)['notification'][0];

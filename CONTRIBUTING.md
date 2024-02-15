@@ -1,4 +1,4 @@
-# ArrowSphere public-api-client package
+# ArrowSphere Cloud public-api-client package
 
 ## Adding a new client
 

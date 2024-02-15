@@ -8,6 +8,7 @@ use ArrowSphere\PublicApiClient\Billing\StatementsClient;
 use ArrowSphere\PublicApiClient\Campaigns\CampaignsClient;
 use ArrowSphere\PublicApiClient\Cart\CartClient;
 use ArrowSphere\PublicApiClient\Catalog\AddonClient;
+use ArrowSphere\PublicApiClient\Catalog\CatalogClient;
 use ArrowSphere\PublicApiClient\Catalog\ClassificationClient;
 use ArrowSphere\PublicApiClient\Catalog\FamilyClient;
 use ArrowSphere\PublicApiClient\Catalog\OfferClient;
@@ -22,218 +23,111 @@ use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
 use ArrowSphere\PublicApiClient\Notification\NotificationClient;
 use ArrowSphere\PublicApiClient\Partners\PartnersClient;
 use ArrowSphere\PublicApiClient\Support\SupportClient;
+use BadMethodCallException;
+use RuntimeException;
 
 /**
  * Class PublicApiClient
+ *
+ * Billing clients
+ *
+ * @method ErpExportsClient getErpExportsClient()
+ * @method PreferencesClient getPreferencesClient()
+ * @method StatementsClient getStatementsClient()
+ *
+ * Campaigns clients
+ * @method CampaignsClient getCampaignsClient()
+ *
+ * Cart clients
+ * @method CartClient getCartClient()
+ *
+ * Catalog clients
+ * @method AddonClient getAddonClient()
+ * @method CatalogClient getCatalogClient()
+ * @method ClassificationClient getClassificationClient()
+ * @method FamilyClient getFamilyClient()
+ * @method OfferClient getOfferClient()
+ * @method ProgramClient getProgramClient()
+ * @method ServiceClient getServiceClient()
+ *
+ * Consumption clients
+ * @method AnalyticsClient getAnalyticsClient()
+ * @method HealthCheckClient getHealthCheckClient()
+ *
+ * Customers clients
+ * @method CustomersClient getCustomersClient()
+ *
+ * General clients
+ * @method CheckDomainClient getCheckDomainClient()
+ * @method WhoamiClient getWhoamiClient()
+ *
+ * Licenses clients
+ * @method LicensesClient getLicensesClient()
+ *
+ * Notification clients
+ * @method NotificationClient getNotificationClient()
+ *
+ * Partners clients
+ * @method PartnersClient getPartnersClient()
+ *
+ * Support clients
+ * @method SupportClient getSupportClient()
  */
 class PublicApiClient extends AbstractClient
 {
     /**
-     * @return WhoamiClient
-     */
-    public function getWhoamiClient(): WhoamiClient
-    {
-        return (new WhoamiClient($this->client))
-            ->setUrl($this->url)
-            ->setApiKey($this->apiKey);
-    }
-
-    /**
-     * @return CheckDomainClient
-     */
-    public function getCheckDomainClient(): CheckDomainClient
-    {
-        return (new CheckDomainClient($this->client))
-            ->setUrl($this->url)
-            ->setApiKey($this->apiKey);
-    }
-
-    /**
-     * @return OfferClient
-     */
-    public function getOfferClient(): OfferClient
-    {
-        return (new OfferClient($this->client))
-            ->setUrl($this->url)
-            ->setApiKey($this->apiKey);
-    }
-
-    /**
-     * @return ProgramClient
-     */
-    public function getProgramClient(): ProgramClient
-    {
-        return (new ProgramClient($this->client))
-            ->setUrl($this->url)
-            ->setApiKey($this->apiKey);
-    }
-
-    /**
-     * @return AddonClient
-     */
-    public function getAddonClient(): AddonClient
-    {
-        return (new AddonClient($this->client))
-            ->setUrl($this->url)
-            ->setApiKey($this->apiKey);
-    }
-
-    /**
-     * @return ClassificationClient
-     */
-    public function getClassificationClient(): ClassificationClient
-    {
-        return (new ClassificationClient($this->client))
-            ->setUrl($this->url)
-            ->setApiKey($this->apiKey);
-    }
-
-    /**
-     * @return ServiceClient
+     * Generates a client based on the method name.
      *
-     * @deprecated use getFamilyClient() instead
+     * @param string $name
+     * @param array $arguments
+     *
+     * @return AbstractClient
      */
-    public function getServiceClient(): ServiceClient
+    public function __call(string $name, array $arguments)
     {
-        return (new ServiceClient($this->client))
-            ->setUrl($this->url)
-            ->setApiKey($this->apiKey);
+        if (! str_starts_with($name, 'get') || ! str_ends_with($name, 'Client')) {
+            throw new BadMethodCallException('Method not found');
+        }
+
+        $clientName = substr($name, 3);
+        $dirs = glob(__DIR__ . '/*', GLOB_ONLYDIR);
+        if ($dirs === false) {
+            throw new RuntimeException('Cannot parse the clients directory');
+        }
+
+        foreach ($dirs as $dir) {
+            if (file_exists($dir . '/' . $clientName . '.php')) {
+                $className = 'ArrowSphere\\PublicApiClient\\' . basename($dir) . '\\' . $clientName;
+
+                return $this->prepareClient($className);
+            }
+        }
+
+        throw new BadMethodCallException('Method not found');
     }
 
     /**
-     * @return FamilyClient
+     * @param string $className
+     *
+     * @return AbstractClient
      */
-    public function getFamilyClient(): FamilyClient
+    private function prepareClient(string $className): AbstractClient
     {
-        return (new FamilyClient($this->client))
-            ->setUrl($this->url)
-            ->setApiKey($this->apiKey);
-    }
+        $client = new $className($this->client);
 
-    /**
-     * @return LicensesClient
-     */
-    public function getLicensesClient(): LicensesClient
-    {
-        return (new LicensesClient($this->client))
-            ->setUrl($this->url)
-            ->setApiKey($this->apiKey);
-    }
+        if ($this->url !== null) {
+            $client->setUrl($this->url);
+        }
 
-    /**
-     * @return CustomersClient
-     */
-    public function getCustomersClient(): CustomersClient
-    {
-        return (new CustomersClient($this->client))
-            ->setUrl($this->url)
-            ->setApiKey($this->apiKey);
-    }
-
-    /**
-     * @return StatementsClient
-     */
-    public function getBillingStatementsClient(): StatementsClient
-    {
-        return (new StatementsClient($this->client))
-            ->setUrl($this->url)
-            ->setApiKey($this->apiKey);
-    }
-
-    /**
-     * @return ErpExportsClient
-     */
-    public function getErpExportsClient(): ErpExportsClient
-    {
-        return (new ErpExportsClient($this->client))
-            ->setUrl($this->url)
-            ->setApiKey($this->apiKey);
-    }
-
-    /**
-     * @return PreferencesClient
-     */
-    public function getBillingPreferencesClient(): PreferencesClient
-    {
-        return (new PreferencesClient($this->client))
-            ->setUrl($this->url)
-            ->setApiKey($this->apiKey);
-    }
-
-    /**
-     * @return CampaignsClient
-     */
-    public function getCampaignsClient(): CampaignsClient
-    {
-        return (new CampaignsClient($this->client))
-            ->setUrl($this->url)
-            ->setApiKey($this->apiKey);
-    }
-
-    /**
-     * @return AnalyticsClient
-     */
-    public function getAnalyticsClient(): AnalyticsClient
-    {
-        return (new AnalyticsClient($this->client))
-            ->setUrl($this->url)
-            ->setApiKey($this->apiKey);
-    }
-
-    /**
-     * @return HealthCheckClient
-     */
-    public function getHealthCheckClient(): HealthCheckClient
-    {
-        return (new HealthCheckClient($this->client))
-            ->setUrl($this->url)
-            ->setApiKey($this->apiKey);
-    }
-
-    /**
-     * @return CartClient
-     */
-    public function getCartClient(): CartClient
-    {
-        return (new CartClient($this->client))
-            ->setUrl($this->url)
-            ->setIdToken($this->idToken)
-            ->setDefaultHeaders(array_merge($this->defaultHeaders, [self::AUTHORIZATION => $this->idToken]));
-    }
-
-    /**
-     * @return NotificationClient
-     */
-    public function getNotificationClient(): NotificationClient
-    {
-        return (new NotificationClient($this->client))
-            ->setUrl($this->url)
-            ->setIdToken($this->idToken);
-    }
-
-    /**
-     * @return SupportClient
-     */
-    public function getSupportClient(): SupportClient
-    {
-        return (new SupportClient($this->client))
-            ->setUrl($this->url)
-            ->setApiKey($this->apiKey);
-    }
-
-    /**
-     * @return PartnersClient
-     */
-    public function getPartnersClient(): PartnersClient
-    {
-        $client = (new PartnersClient($this->client))
-            ->setUrl($this->url);
-
-        if (isset($this->idToken)) {
-            $client->setIdToken($this->idToken);
-        } elseif (isset($this->apiKey)) {
+        if ($this->apiKey !== null) {
             $client->setApiKey($this->apiKey);
         }
+
+        if ($this->accessToken !== null) {
+            $client->setAccessToken($this->accessToken);
+        }
+
+        $client->setDefaultHeaders($this->defaultHeaders);
 
         return $client;
     }

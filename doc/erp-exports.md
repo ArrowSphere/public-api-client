@@ -1,10 +1,10 @@
 # ERP Lines client
 
 ## General information
-ArrowSphere stores it's own version of the **ERP Lines**.
+ArrowSphere Cloud stores it's own version of the **ERP Lines**.
 
 **ERP Lines** as seen within the context of this client, are Billing Statement Lines 
-that have been associated to enough informations for them to be sent to each country's 
+that have been associated to enough information for them to be sent to each country's 
 ERPs that'll issue local invoices.
 
 These are the closest representation to Invoice Lines.
@@ -29,7 +29,7 @@ by this column set without the need of specifying it at every request.
 ### Initialization
 
 The "erp exports" client is simply called `ErpExportsClient`.
-You can get it through the main entry point `PublicApiClient` and its method `getErpExportsClient()`, or instanciate it directly:
+You can get it through the main entry point `PublicApiClient` and its method `getErpExportsClient()`, or instantiate it directly:
 
 ```php
 <?php
