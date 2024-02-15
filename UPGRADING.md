@@ -1,5 +1,47 @@
 # Upgrade guide
 
+## 0.10 to 1.0
+
+There is now some magic in PublicApiClient class to instantiate the clients. But now they should be named properly.
+The billing statements client had an incorrect name so it has been renamed:
+
+v0.10
+```php
+<?php
+
+$publicApiClient->getBillingStatementsClient();
+```
+
+v0.11
+```php
+<?php
+
+$publicApiClient->getStatementsClient();
+```
+
+The billing preferences client also had an incorrect name:
+
+v0.10
+```php
+<?php
+
+$publicApiClient->getBillingPreferencesClient();
+```
+
+v0.11
+```php
+<?php
+
+$publicApiClient->getPreferencesClient();
+```
+
+The support for idToken has been dropped (anyway it's the same Authorization header).
+It essentially means the `setIdToken()` method of the clients has been removed. You can now use `setAccessToken()`
+instead.
+
+The `setUserName()` method of the clients has been removed. Please don't use it, and pass directly proper headers if 
+you know what you're doing.
+
 ## 0.8 to 0.9
 
 ## Changes to the Billing client

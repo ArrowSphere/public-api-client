@@ -1,13 +1,13 @@
-# ArrowSphere public-api-client package
+# ArrowSphere Cloud public-api-client package
 
 [![Latest Stable Version](https://img.shields.io/packagist/v/arrowsphere/public-api-client)](https://packagist.org/packages/arrowsphere/public-api-client)
 [![Minimum PHP Version](https://img.shields.io/packagist/php-v/arrowsphere/public-api-client)](https://img.shields.io/packagist/php-v/arrowsphere/public-api-client)
 [![Build Status](https://img.shields.io/github/workflow/status/ArrowSphere/public-api-client/CI)](https://github.com/ArrowSphere/public-api-client/actions)
 
-This package provides a PHP client for ArrowSphere's public API.
-It should be the only way to make calls to ArrowSphere's API with PHP code.
+This package provides a PHP client for ArrowSphere Cloud's public API.
+It should be the only way to make calls to ArrowSphere Cloud's API with PHP code.
 
-To use this package, you need valid access to ArrowSphere, with a valid API key.
+To use this package, you need valid access to ArrowSphere Cloud, with a valid API key.
 
 ## Installation
 

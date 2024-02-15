@@ -110,7 +110,7 @@ It serve for register all comments a user posts for a related issue.
 ## _Usage_
 
 The support client is simply called `SupportClient`.
-You can get it through the main entry point `PublicApiClient` and its method `getSupportClient()`, or instanciate it directly.
+You can get it through the main entry point `PublicApiClient` and its method `getSupportClient()`, or instantiate it directly.
 
 ```php
 <?php

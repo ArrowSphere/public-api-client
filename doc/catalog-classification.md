@@ -15,7 +15,7 @@ A service is managed by the `Classification` entity.
 ## Usage
 
 The classification client is simply called `ClassificationClient`.
-You can get it through the main entry point `PublicApiClient` and its method `getClassificationClient()`, or instanciate it directly:
+You can get it through the main entry point `PublicApiClient` and its method `getClassificationClient()`, or instantiate it directly:
 
 ```php
 <?php

@@ -3,7 +3,7 @@
 ## General information
 
 A license is the entity which holds information about the customer's subscription.
-A license is identified in ArrowSphere by its _partner ref_, which is typically 'XSP' followed by a few digits (e.g XSP987654321).
+A license is identified in ArrowSphere Cloud by its _partner ref_, which is typically 'XSP' followed by a few digits (e.g XSP987654321).
 
 ## Entities
 
@@ -229,11 +229,11 @@ Please note that the `highlight` field is only available if the `DATA_HIGHLIGHT`
 ## Usage
 
 The license client is simply called `LicensesClient`.
-You can get it through the main entry point `PublicApiClient` and its method `getLicensesClient()`, or instanciate it directly.
+You can get it through the main entry point `PublicApiClient` and its method `getLicensesClient()`, or instantiate it directly.
 
 ## Term and periodicity
 
-The term and periodicity are two key-concepts to understand in ArrowSphere.
+The term and periodicity are two key-concepts to understand in ArrowSphere Cloud.
 These values represent time values, expressed as hours, using a basis of 24 hours a day, 30 days a month, 360 days a year.
 
 The term is the customer's commitment. He has to pay as long as the term value.

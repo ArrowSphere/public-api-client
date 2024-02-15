@@ -8,7 +8,7 @@ This endpoint performs vendor-specific checks to see if this domain name is avai
 ## Usage
 
 The "Check Domain" client is simply called `CheckDomainClient`.
-You can get it through the main entry point `PublicApiClient` and its method `getCheckDomainClient()`, or instanciate it directly:
+You can get it through the main entry point `PublicApiClient` and its method `getCheckDomainClient()`, or instantiate it directly:
 
 ```php
 <?php

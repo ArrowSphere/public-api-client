@@ -51,7 +51,7 @@ Available columns:
 ### Initialization
 
 The "billing preferences" client is simply called `PreferencesClient`.
-You can get it through the main entry point `PublicApiClient` and its method `getBillingPreferencesClient()`, or instanciate it directly:
+You can get it through the main entry point `PublicApiClient` and its method `getBillingPreferencesClient()`, or instantiate it directly:
 
 ```php
 <?php

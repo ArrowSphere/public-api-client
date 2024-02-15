@@ -16,9 +16,22 @@ use GuzzleHttp\Psr7\Response;
  */
 class CartClientTest extends AbstractClientTest
 {
-    use CartMockedDataTrait;
-
     protected const MOCKED_CLIENT_CLASS = CartClient::class;
+
+    private const ITEM_ID = '70993353-0db8-4d12-8880-d6eece73f93f';
+
+    /**
+     * @return array
+     */
+    public function generateMockedCartItem(): array
+    {
+        return [
+            'itemId'                  => self::ITEM_ID,
+            'offerName'               => 'Microsoft 365 standard',
+            'priceBandArrowsphereSku' => '031C9E47-4802-4248-838E-778FB1D2CC05',
+            'quantity'                => 5
+        ];
+    }
 
     /**
      * @throws GuzzleException
@@ -27,8 +40,6 @@ class CartClientTest extends AbstractClientTest
      */
     public function testListCartItems(): void
     {
-        $this->client->setIdToken($this->idToken);
-        $this->client->setDefaultHeaders($this->generateDefaultHeaders());
         $this->httpClient
             ->expects(self::once())
             ->method('request')
@@ -45,9 +56,7 @@ class CartClientTest extends AbstractClientTest
      */
     public function testPatchOneCartItem(): void
     {
-        $itemId = $this->itemId;
-        $this->client->setIdToken($this->idToken);
-        $this->client->setDefaultHeaders($this->generateDefaultHeaders());
+        $itemId = self::ITEM_ID;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
@@ -64,18 +73,16 @@ class CartClientTest extends AbstractClientTest
      */
     public function testAddCartItem(): void
     {
-        $paylaod = $this->generateMockedCartItem();
-        unset($paylaod['itemId']);
+        $payload = $this->generateMockedCartItem();
+        unset($payload['itemId']);
 
-        $this->client->setIdToken($this->idToken);
-        $this->client->setDefaultHeaders($this->generateDefaultHeaders());
         $this->httpClient
             ->expects(self::once())
             ->method('request')
             ->with('post', "https://www.test.com/cart")
             ->willReturn(new Response(200, [], json_encode($this->generateMockedCartItem())));
 
-        $this->client->AddCartItem($paylaod);
+        $this->client->AddCartItem($payload);
     }
 
     /**
@@ -85,9 +92,7 @@ class CartClientTest extends AbstractClientTest
      */
     public function testRemoveOneCartItem(): void
     {
-        $itemId = $this->itemId;
-        $this->client->setIdToken($this->idToken);
-        $this->client->setDefaultHeaders($this->generateDefaultHeaders());
+        $itemId = self::ITEM_ID;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
@@ -104,8 +109,6 @@ class CartClientTest extends AbstractClientTest
      */
     public function testEmptyCart(): void
     {
-        $this->client->setIdToken($this->idToken);
-        $this->client->setDefaultHeaders($this->generateDefaultHeaders());
         $this->httpClient
             ->expects(self::once())
             ->method('request')

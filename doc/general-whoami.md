@@ -30,7 +30,7 @@ The endpoint is linked to the `Whoami` entity.
 ## Usage
 
 The "who am I" client is simply called `WhoamiClient`.
-You can get it through the main entry point `PublicApiClient` and its method `getWhoamiClient()`, or instanciate it directly:
+You can get it through the main entry point `PublicApiClient` and its method `getWhoamiClient()`, or instantiate it directly:
 
 ```php
 <?php

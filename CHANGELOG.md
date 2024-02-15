@@ -5,6 +5,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added support of access tokens in all clients
+- Added magic getters in `PublicApiClient` to instantiate all clients without adding a new method each time
+- Fixed various typos in the documentation
+- Removed the specific header management from cart and notification clients (now doing this in a generic way)
+- `SupportClient::addAttachment()` now returns an `int` (the attachment id)
+- Removed the 4 support clients classes (`AttachmentClient`, `CommentClient`, `IssueClient` and `TopicClient`) and moved their code to `SupportClient`
+
 ## [0.10.14] - 2023-12-11
 
 - Fix Offer entity: default value for isAutoRenew and isManualProvisioning

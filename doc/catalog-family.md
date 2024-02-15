@@ -2,7 +2,7 @@
 
 ## General information
 
-A family is group of offers, used by ArrowSphere to avoid having too many
+A family is group of offers, used by ArrowSphere Cloud to avoid having too many
 offers all at once if a vendor has too many of them.
 
 The term "family" replaces the legacy term "service".
@@ -23,7 +23,7 @@ A family is managed by the `Family` entity.
 ## Usage
 
 The family client is simply called `FamilyClient`.
-You can get it through the main entry point `PublicApiClient` and its method `getFamilyClient()`, or instanciate it directly:
+You can get it through the main entry point `PublicApiClient` and its method `getFamilyClient()`, or instantiate it directly:
 
 ```php
 <?php

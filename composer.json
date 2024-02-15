@@ -27,7 +27,8 @@
     "php": ">=7.2.0",
     "ext-curl": "*",
     "ext-json": "*",
-    "guzzlehttp/guzzle": "^6.0 || ^7.0"
+    "guzzlehttp/guzzle": "^6.0 || ^7.0",
+    "symfony/polyfill-php80": "^1.29"
   },
   "require-dev": {
     "illuminate/validation": "^5.5 || ^6.0 || ^7.0",

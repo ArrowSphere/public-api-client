@@ -2,15 +2,27 @@
 
 namespace ArrowSphere\PublicApiClient\Support;
 
+use ArrowSphere\PublicApiClient\AbstractClient;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use Exception;
 use GuzzleHttp\Exception\GuzzleException;
 
-class SupportClient extends AbstractSupportClient
+class SupportClient extends AbstractClient
 {
     /**
+     * @var string The base path of the Support API
+     */
+    private const ROOT_PATH = '/support';
+
+    /**
+     * @var string The base path of the API
+     */
+    protected $basePath = self::ROOT_PATH;
+
+    /**
      * @param array $data
+     * @param array $parameters
      *
      * @return int
      *
@@ -18,13 +30,17 @@ class SupportClient extends AbstractSupportClient
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function createIssue(array $data): int
+    public function createIssue(array $data, array $parameters = []): int
     {
-        return $this->getIssueClient()->createIssue($data);
+        $this->path = '/issues';
+        $response = $this->post($data, $parameters);
+        $result = $this->getResponseData($response);
+
+        return $result['id'];
     }
 
     /**
-     * @param array $data
+     * @param array $parameters
      *
      * @return array|null
      *
@@ -32,13 +48,17 @@ class SupportClient extends AbstractSupportClient
      * @throws PublicApiClientException
      * @throws GuzzleException
      */
-    public function listIssues(array $data = []): ?array
+    public function listIssues(array $parameters = []): ?array
     {
-        return $this->getIssueClient()->listIssues($data);
+        $this->path = '/issues';
+        $response = $this->get($parameters);
+
+        return $this->getResponseData($response);
     }
 
     /**
      * @param int $issueId
+     * @param array $parameters
      *
      * @return array
      *
@@ -46,29 +66,54 @@ class SupportClient extends AbstractSupportClient
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function getIssue(int $issueId): array
+    public function getIssue(int $issueId, array $parameters = []): array
     {
-        return $this->getIssueClient()->getIssue($issueId);
+        $this->path = sprintf('/issues/%d', $issueId);
+        $response = $this->get($parameters);
+
+        return $this->getResponseData($response);
     }
 
     /**
      * @param int $issueId
      * @param array $data
-     *
-     * @return void
+     * @param array $parameters
      *
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function closeIssue(int $issueId, array $data): void
+    public function closeIssue(int $issueId, array $data, array $parameters = []): void
     {
-        $this->getIssueClient()->closeIssue($issueId, $data);
+        $this->path = sprintf('/issues/%d', $issueId);
+
+        $this->patch($data, $parameters);
     }
 
     /**
      * @param int $issueId
      * @param array $data
+     * @param array $parameters
+     *
+     * @return int
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function addAttachment(int $issueId, array $data, array $parameters = []): int
+    {
+        $this->path = sprintf('/issues/%d/attachments', $issueId);
+        $response = $this->post($data, $parameters);
+
+        $result = $this->getResponseData($response);
+
+        return $result['id'];
+    }
+
+    /**
+     * @param int $issueId
+     * @param array $parameters
      *
      * @return array
      *
@@ -76,28 +121,18 @@ class SupportClient extends AbstractSupportClient
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function addAttachment(int $issueId, array $data): array
+    public function listAttachments(int $issueId, array $parameters = []): array
     {
-        return $this->getAttachmentClient()->addAttachment($issueId, $data);
-    }
+        $this->path = sprintf('/issues/%d/attachments', $issueId);
+        $response = $this->get($parameters);
 
-    /**
-     * @param int $issueId
-     *
-     * @return array|null
-     *
-     * @throws GuzzleException
-     * @throws NotFoundException
-     * @throws PublicApiClientException
-     */
-    public function listAttachments(int $issueId): ?array
-    {
-        return $this->getAttachmentClient()->listAttachments($issueId);
+        return $this->getResponseData($response);
     }
 
     /**
      * @param int $issueId
      * @param int $attachmentId
+     * @param array $parameters
      *
      * @return array
      *
@@ -105,14 +140,17 @@ class SupportClient extends AbstractSupportClient
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function getAttachment(int $issueId, int $attachmentId): array
+    public function getAttachment(int $issueId, int $attachmentId, array $parameters = []): array
     {
-        return $this->getAttachmentClient()->getAttachment($issueId, $attachmentId);
+        $this->path = sprintf('/issues/%d/attachments/%d', $issueId, $attachmentId);
+        $response = $this->get($parameters);
+
+        return $this->getResponseData($response);
     }
 
     /**
      * @param int $issueId
-     * @param array $data
+     * @param array $parameters
      *
      * @return array|null
      *
@@ -120,9 +158,28 @@ class SupportClient extends AbstractSupportClient
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function listComments(int $issueId, array $data = []): ?array
+    public function listComments(int $issueId, array $parameters = []): ?array
     {
-        return $this->getCommentClient()->listComments($issueId, $data);
+        $response = $this->listCommentsWithPagination($issueId, $parameters);
+
+        return $this->getResponseData($response);
+    }
+
+    /**
+     * @param int $issueId
+     * @param array $parameters
+     *
+     * @return string
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    private function listCommentsWithPagination(int $issueId, array $parameters = []): string
+    {
+        $this->path = sprintf('/issues/%d/comments', $issueId);
+
+        return $this->get($parameters);
     }
 
     /**
@@ -136,12 +193,31 @@ class SupportClient extends AbstractSupportClient
      */
     public function listAllComments(int $issueId): array
     {
-        return $this->getCommentClient()->listAllComments($issueId);
+        $data = [];
+        $result = [];
+        $currentPage = 1;
+
+        do {
+            $response = $this->listCommentsWithPagination($issueId, $data);
+            $pagination = $this->getPagination($response);
+            $result[] = $this->getResponseData($response);
+
+            if (! isset($pagination['next'])) {
+                break;
+            }
+
+            $url = is_string(parse_url($pagination['next'], PHP_URL_QUERY)) ? parse_url($pagination['next'], PHP_URL_QUERY) : '';
+            parse_str($url, $data);
+            $currentPage++;
+        } while ($currentPage <= $pagination['total_page']);
+
+        return array_merge(...$result);
     }
 
     /**
      * @param int $issueId
      * @param array $data
+     * @param array $parameters
      *
      * @return int|null
      *
@@ -149,20 +225,30 @@ class SupportClient extends AbstractSupportClient
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function addComment(int $issueId, array $data): ?int
+    public function addComment(int $issueId, array $data, array $parameters = []): ?int
     {
-        return $this->getCommentClient()->addComment($issueId, $data);
+        $this->path = sprintf('/issues/%d/comments', $issueId);
+        $response = $this->post($data, $parameters);
+        $result = $this->getResponseData($response);
+
+        return $result['id'];
     }
 
     /**
+     * @param array $parameters
+     *
      * @return array
      *
+     * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
-     * @throws GuzzleException
      */
-    public function listTopics(): array
+    public function listTopics(array $parameters = []): array
     {
-        return $this->getTopicClient()->listTopics();
+        $this->path = '/topics';
+
+        $response = $this->get($parameters);
+
+        return $this->getResponseData($response);
     }
 }

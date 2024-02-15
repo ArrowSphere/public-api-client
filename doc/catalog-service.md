@@ -6,7 +6,7 @@ This client is deprecated, and the associated endpoints are deprecated. You shou
 
 ## General information
 
-A service is group of offers, used by ArrowSphere to avoid having too many
+A service is group of offers, used by ArrowSphere Cloud to avoid having too many
 offers all at once if a vendor has too many of them.
 
 ## Entity
@@ -14,7 +14,7 @@ offers all at once if a vendor has too many of them.
 A service is managed by the `Service` entity.
 
 | Field                         | Type       | Example                           | Description                                                   |
-| ----------------------------- | ---------- | --------------------------------- | ------------------------------------------------------------- |
+|-------------------------------|------------|-----------------------------------|---------------------------------------------------------------|
 | associatedSubscriptionProgram | `string`   | MSCSP                             | The program to which this service is linked                   |
 | classification                | `string`   | SAAS                              | The classification of the service                             |
 | description                   | `string`   | A text description                | A text describing what the service is                         |
@@ -26,7 +26,7 @@ A service is managed by the `Service` entity.
 ## Usage
 
 The service client is simply called `ServiceClient`.
-You can get it through the main entry point `PublicApiClient` and its method `getServiceClient()`, or instanciate it directly:
+You can get it through the main entry point `PublicApiClient` and its method `getServiceClient()`, or instantiate it directly:
 
 ```php
 <?php
