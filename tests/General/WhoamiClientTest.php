@@ -47,9 +47,10 @@ class WhoamiClientTest extends AbstractClientTest
                 'https://www.test.com/whoami',
                 [
                     'headers' => [
-                        'apiKey'    => '123456',
+                        'apiKey' => '123456',
                         'myHeader1' => 'myVal1',
                         'myHeader2' => 'myVal2',
+                        'User-Agent' => $this->userAgentHeader,
                     ],
                 ]
             )

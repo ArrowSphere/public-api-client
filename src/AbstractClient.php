@@ -2,6 +2,7 @@
 
 namespace ArrowSphere\PublicApiClient;
 
+use ArrowSphere\PublicApiClient\Common\ValueObject\UserAgentHeader;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use GuzzleHttp\Client;
@@ -354,6 +355,7 @@ abstract class AbstractClient
     {
         $baseHeaders = [
             self::API_KEY => $this->apiKey,
+            'User-Agent' => (string) new UserAgentHeader(),
         ];
 
         if ($this->accessToken !== null) {

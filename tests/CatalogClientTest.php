@@ -34,6 +34,7 @@ class CatalogClientTest extends AbstractClientTest
                     'headers' => [
                         'apiKey' => '123456',
                         'Content-Type' => 'application/json',
+                        'User-Agent' => $this->userAgentHeader,
                     ],
                     'body'    => json_encode(
                         [
