@@ -64,6 +64,7 @@ class PreferencesClientTest extends AbstractClientTest
                 'headers' => [
                     'apiKey' => '123456',
                     'Content-Type' => 'application/json',
+                    'User-Agent' => $this->userAgentHeader,
                 ],
             ])
             ->willReturn(new Response(200, [], $response));

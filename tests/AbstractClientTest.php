@@ -4,6 +4,7 @@ namespace ArrowSphere\PublicApiClient\Tests;
 
 use ArrowSphere\PublicApiClient\AbstractClient;
 use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Common\ValueObject\UserAgentHeader;
 use GuzzleHttp\Client;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -22,6 +23,11 @@ abstract class AbstractClientTest extends TestCase
      * @var AbstractClient
      */
     protected $client;
+
+    /**
+     * @var string
+     */
+    protected $userAgentHeader;
 
     protected const MOCKED_CLIENT_CLASS = null;
 
@@ -44,5 +50,7 @@ abstract class AbstractClientTest extends TestCase
         $this->client = new $class($this->httpClient);
         $this->client->setUrl('https://www.test.com');
         $this->client->setApiKey('123456');
+
+        $this->userAgentHeader = (string) new UserAgentHeader();
     }
 }
