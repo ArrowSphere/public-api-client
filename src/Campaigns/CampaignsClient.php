@@ -111,21 +111,25 @@ class CampaignsClient extends AbstractClient
     }
 
     /**
-     * Get a all active campaigns
+     * Get all active campaigns
      *
      * @param string $location
      * @param string|null $customerRef
+     * @param bool $includeAssets
      *
-     * @return Generator|CampaignV2[]
+     * @return Generator
      *
      * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function getActiveCampaigns(string $location, ?string $customerRef = null): Generator
-    {
-        $response = $this->getActiveCampaignsRaw($location, $customerRef);
+    public function getActiveCampaigns(
+        string $location,
+        ?string $customerRef = null,
+        bool $includeAssets = false
+    ): Generator {
+        $response = $this->getActiveCampaignsRaw($location, $customerRef, $includeAssets);
         $data = $this->decodeResponse($response);
         foreach ($data['data'] as $data) {
             yield new CampaignV2($data);
@@ -135,6 +139,7 @@ class CampaignsClient extends AbstractClient
     /**
      * @param string $location example : MCP, ARROWSPHERE
      * @param string|null $customerRef
+     * @param bool $includeAssets
      *
      * @return string
      *
@@ -142,13 +147,19 @@ class CampaignsClient extends AbstractClient
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function getActiveCampaignsRaw(string $location, ?string $customerRef = null): string
-    {
+    public function getActiveCampaignsRaw(
+        string $location,
+        ?string $customerRef = null,
+        bool $includeAssets = false
+    ): string {
         $params = ['location' => $location];
         if ($customerRef !== null) {
             $params['customer'] = $customerRef;
         }
-        $this->path = self::FIND_PATH_V2 . "/active?" . http_build_query($params);
+        if ($includeAssets) {
+            $params['includeAssets'] = 'true';
+        }
+        $this->path = self::FIND_PATH_V2 . '/active?' . http_build_query($params);
 
         return $this->get();
     }
