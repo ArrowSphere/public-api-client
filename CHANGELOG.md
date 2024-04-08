@@ -5,7 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Added a dedicated User-Agent header to the `PublicApiClient` requests 
+## [0.11.1] - 2024-04-08
+
+- Added a dedicated User-Agent header to the `PublicApiClient` requests
 - Added optional `includeAssets` bool parameter to `CampaignsClient::getCampaignV2()` and
   `CampaignsClient::getCampaignV2Raw()` to allow these methods to return campaigns asset's URLs.
 - Updated `CampaignV2` entity to add downloadable assets field
@@ -539,7 +541,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.0...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.1...HEAD
+[0.11.1]: https://github.com/ArrowSphere/public-api-client/compare/0.11.0...0.11.1
 [0.11.0]: https://github.com/ArrowSphere/public-api-client/compare/0.10.14...0.11.0
 [0.10.14]: https://github.com/ArrowSphere/public-api-client/compare/0.10.13...0.10.14
 [0.10.13]: https://github.com/ArrowSphere/public-api-client/compare/0.10.12...0.10.13
