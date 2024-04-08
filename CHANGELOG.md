@@ -6,6 +6,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 - Added a dedicated User-Agent header to the `PublicApiClient` requests 
+- Added optional `includeAssets` bool parameter to `CampaignsClient::getCampaignV2()` and
+  `CampaignsClient::getCampaignV2Raw()` to allow these methods to return campaigns asset's URLs.
+- Updated `CampaignV2` entity to add downloadable assets field
 
 ## [0.11.0] - 2024-03-28
 

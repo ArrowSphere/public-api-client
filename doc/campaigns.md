@@ -10,7 +10,7 @@ A campaign is the entity which is used to make communications.
 
 #### Campaign
 
-A campaign in its old format is managed by the `CampaignV` entity.
+A campaign in its old format is managed by the `Campaign` entity.
 
 | Field       | Type               | Example                                    | Description                                                                                |
 | ----------- | ------------------ | ------------------------------------------ | ------------------------------------------------------------------------------------------ |
@@ -32,20 +32,21 @@ A campaign in its old format is managed by the `CampaignV` entity.
 
 A campaign in its new format is managed by the `CampaignV2` entity.
 
-| Field       | Type               | Example                                        | Description                                                                                |
-| ----------- | ------------------ | ---------------------------------------------- | ------------------------------------------------------------------------------------------ |
-| banner      | `Banner`           | an instance of [Banner](#Banner)               | The campaign's banner.                                                                     |
-| category    | `string`           | BANNER                                         | The type of campaign. It could be BANNER or NOTIFICATION (the later is not supported yet). |
-| createdAt   | `string`           | 2021-06-25T16:00:00:00Z                        | The creation date of the campaign.                                                         |
-| deletedAt   | `string` or `null` | 2021-08-26T18:00:00:00Z                        | The campaign are soft deleted, so this value indicates when it has been deleted.           |
-| endDate     | `string` or `null` | 2021-08-01                                     | The ending date of the campaign.                                                           |
-| landingPage | `LandingPageV2`    | an instance of [LandingPageV2](#LandingPageV2) | The campaign's landing page.                                                               |
-| name        | `string`           | My Campaign                                    | The name of the campaign. The only value needed from the client when creating a campaign.  |
-| reference   | `string`           | c925ec6e-e029-4146-8400-2867c7761743           | This is the reference of the campaign. This string is unique.                              |
-| rules       | `Rules`            | an instance of [Rules](#Rules)                 | The campaign's various rules, like end customers or locations.                             |
-| startDate   | `string` or `null` | 2021-08-01                                     | The starting date of the campaign.                                                         |
-| updatedAt   | `string` or `null` | 2021-06-26T18:00:00:00Z                        | The date of the last time the campaign has been updated.                                   |
-| weight      | `int`              | 1                                              | The weight indicate the importance of the campaign.                                        |
+| Field              | Type               | Example                                          | Description                                                                               |
+|--------------------|--------------------|--------------------------------------------------|-------------------------------------------------------------------------------------------|
+| banner             | `Banner`           | an instance of [Banner](#Banner)                 | The campaign's banner.                                                                    |
+| category           | `string`           | BANNER                                           | The type of campaign. It could be BANNER or NOTIFICATION (the later is not supported yet).|
+| createdAt          | `string`           | 2021-06-25T16:00:00:00Z                          | The creation date of the campaign.                                                        |
+| deletedAt          | `string` or `null` | 2021-08-26T18:00:00:00Z                          | The campaign are soft deleted, so this value indicates when it has been deleted.          |
+| endDate            | `string` or `null` | 2021-08-01                                       | The ending date of the campaign.                                                          |
+| landingPage        | `LandingPageV2`    | an instance of [LandingPageV2](#LandingPageV2)   | The campaign's landing page.                                                              |
+| name               | `string`           | My Campaign                                      | The name of the campaign. The only value needed from the client when creating a campaign. |
+| reference          | `string`           | c925ec6e-e029-4146-8400-2867c7761743             | This is the reference of the campaign. This string is unique.                             |
+| rules              | `Rules`            | an instance of [Rules](#Rules)                   | The campaign's various rules, like end customers or locations.                            |
+| startDate          | `string` or `null` | 2021-08-01                                       | The starting date of the campaign.                                                        |
+| updatedAt          | `string` or `null` | 2021-06-26T18:00:00:00Z                          | The date of the last time the campaign has been updated.                                  |
+| weight             | `int`              | 1                                                | The weight indicate the importance of the campaign.                                       |
+| downloadUrlsAssets | `Asset[]`          | an array of [Asset](#Asset) instances            | The downloadable assets of the campaign.                                                  |
 
 
 #### Banner
@@ -53,8 +54,8 @@ A campaign in its new format is managed by the `CampaignV2` entity.
 This entity represents the banner(s) of the campaign.
 
 | Field               | Type               | Example                              | Description                                                             |
-| ------------------- | ------------------ | ------------------------------------ | ----------------------------------------------------------------------- |
-| backgroundImageUuid | `string`           | d8553daa-1d39-489e-89c0-3731c0d3ad0b | The uuid to use if the banner has a background image.                   |
+| ------------------- | ------------------ | ------------------------------------ |-------------------------------------------------------------------------|
+| backgroundImageUuid | `string`           | d8553daa-1d39-489e-89c0-3731c0d3ad0b | The asset's uuid to use if the banner has a background image.           |
 | backgroundColor     | `string` or `null` | #FFF                                 | The background color of the campaign's header.                          |
 | buttonPlacement     | `string`           | RIGHT                                | If the banner has a button, this defines its placement. Default: RIGHT. |
 | buttonText          | `string` or `null` | Click here                           | If the banner has a button, this is its text.                           |
@@ -62,6 +63,14 @@ This entity represents the banner(s) of the campaign.
 | textColor           | `string` or `null` | #119E0F                              | The banner's text color. Used for the button text and border too.       |
 | type                | `string`           | PICTURE                              | The type of banner: PICTURE or BACKGROUND_COLOR                         |
 
+#### Asset
+
+This entity represents an assets of the campaign.
+
+| Field   | Type               | Example                                     | Description       |
+|---------| ------------------ |---------------------------------------------|-------------------|
+| uuid    | `string`           | d8553daa-1d39-489e-89c0-3731c0d3ad0b        | The asset's uuid. |
+| url     | `string` or `null` | https://www.exemple.com/images/picture.png  | The asset's url.  |
 
 
 #### LandingPage and its sub-entities

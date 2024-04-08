@@ -3,6 +3,7 @@
 namespace ArrowSphere\PublicApiClient\Campaigns\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Campaigns\Entities\Asset\Asset;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class CampaignV2 extends AbstractEntity
@@ -20,6 +21,8 @@ class CampaignV2 extends AbstractEntity
     public const COLUMN_START_DATE = 'startDate';
     public const COLUMN_UPDATED_AT = 'updatedAt';
     public const COLUMN_WEIGHT = 'weight';
+    public const COLUMN_DOWNLOAD_URLS = 'downloadUrls';
+    public const KEY_ASSETS = 'assets';
 
     public const DEFAULT_VALUE_CATEGORY = 'BANNER';
     public const DEFAULT_VALUE_CREATED_AT = null;
@@ -97,6 +100,11 @@ class CampaignV2 extends AbstractEntity
     private $landingPage;
 
     /**
+     * @var Asset[]
+     */
+    private $downloadUrlsAssets;
+
+    /**
      * Statement constructor.
      *
      * @param array $data
@@ -120,6 +128,14 @@ class CampaignV2 extends AbstractEntity
         $this->startDate = $data[self::COLUMN_START_DATE] ?? self::DEFAULT_VALUE_START_DATE;
         $this->updatedAt = $data[self::COLUMN_UPDATED_AT] ?? self::DEFAULT_VALUE_UPDATED_AT;
         $this->weight = $data[self::COLUMN_WEIGHT] ?? self::DEFAULT_VALUE_WEIGHT;
+
+        if (isset($data[self::COLUMN_DOWNLOAD_URLS][self::KEY_ASSETS])) {
+            $this->downloadUrlsAssets = array_map(static function (array $asset) {
+                return new Asset($asset);
+            }, $data[self::COLUMN_DOWNLOAD_URLS][self::KEY_ASSETS]);
+        } else {
+            $this->downloadUrlsAssets = [];
+        }
     }
 
     /**
@@ -227,24 +243,33 @@ class CampaignV2 extends AbstractEntity
     }
 
     /**
+     * @return Asset[]
+     */
+    public function getDownloadUrlsAssets(): array
+    {
+        return $this->downloadUrlsAssets;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
     {
         return [
-            self::COLUMN_BANNER       => $this->getBanner(),
-            self::COLUMN_CATEGORY     => $this->getCategory(),
-            self::COLUMN_IS_ACTIVATED => $this->getIsActivated(),
-            self::COLUMN_CREATED_AT   => $this->getCreatedAt(),
-            self::COLUMN_DELETED_AT   => $this->getDeletedAt(),
-            self::COLUMN_END_DATE     => $this->getEndDate(),
-            self::COLUMN_LANDING_PAGE => $this->getLandingPage(),
-            self::COLUMN_NAME         => $this->getName(),
-            self::COLUMN_REFERENCE    => $this->getReference(),
-            self::COLUMN_RULES        => $this->getRules(),
-            self::COLUMN_START_DATE   => $this->getStartDate(),
-            self::COLUMN_UPDATED_AT   => $this->getUpdatedAt(),
-            self::COLUMN_WEIGHT       => $this->getWeight(),
+            self::COLUMN_BANNER         => $this->getBanner(),
+            self::COLUMN_CATEGORY       => $this->getCategory(),
+            self::COLUMN_IS_ACTIVATED   => $this->getIsActivated(),
+            self::COLUMN_CREATED_AT     => $this->getCreatedAt(),
+            self::COLUMN_DELETED_AT     => $this->getDeletedAt(),
+            self::COLUMN_END_DATE       => $this->getEndDate(),
+            self::COLUMN_LANDING_PAGE   => $this->getLandingPage(),
+            self::COLUMN_NAME           => $this->getName(),
+            self::COLUMN_REFERENCE      => $this->getReference(),
+            self::COLUMN_RULES          => $this->getRules(),
+            self::COLUMN_START_DATE     => $this->getStartDate(),
+            self::COLUMN_UPDATED_AT     => $this->getUpdatedAt(),
+            self::COLUMN_WEIGHT         => $this->getWeight(),
+            self::COLUMN_DOWNLOAD_URLS  => [self::KEY_ASSETS => $this->getDownloadUrlsAssets()],
         ];
     }
 }
