@@ -245,4 +245,21 @@ class CustomersClient extends AbstractClient
 
         return new Invitation($response['data']);
     }
+
+    /**
+     * @param string $program
+     * @param array $parameters
+     *
+     * @return string
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function postReconciliation(string $program, array $parameters = []): string
+    {
+        $this->path = '/customers/reconciliation';
+
+        return $this->post(['program' => $program], $parameters);
+    }
 }

@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added a method `postReconciliation` to `CustomersClient` to trigger the mass reconciliation process for end customers
+
 ## [0.11.1] - 2024-04-08
 
 - Added a dedicated User-Agent header to the `PublicApiClient` requests
