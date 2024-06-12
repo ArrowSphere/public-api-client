@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.2] - 2024-06-12
+
 - Added a method `postReconciliation` to `CustomersClient` to trigger the mass reconciliation process for end customers
 
 ## [0.11.1] - 2024-04-08
@@ -543,7 +545,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.1...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.2...HEAD
+[0.11.2]: https://github.com/ArrowSphere/public-api-client/compare/0.11.1...0.11.2
 [0.11.1]: https://github.com/ArrowSphere/public-api-client/compare/0.11.0...0.11.1
 [0.11.0]: https://github.com/ArrowSphere/public-api-client/compare/0.10.14...0.11.0
 [0.10.14]: https://github.com/ArrowSphere/public-api-client/compare/0.10.13...0.10.14
