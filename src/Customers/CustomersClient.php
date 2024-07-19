@@ -40,7 +40,7 @@ class CustomersClient extends AbstractClient
      *
      * @param array $parameters Optional parameters to add to the URL
      *
-     * @return Generator|Customer[]
+     * @return Generator<Customer>
      *
      * @throws EntityValidationException
      * @throws GuzzleException
@@ -85,7 +85,7 @@ class CustomersClient extends AbstractClient
      */
     public function getCustomersPage(array $parameters = []): CustomersResponse
     {
-        if (! isset($this->perPage)) {
+        if (empty($this->perPage)) {
             $this->setPerPage(100);
         }
 
@@ -149,7 +149,7 @@ class CustomersClient extends AbstractClient
 
         $rawResponse = $this->patch($payload, $parameters);
 
-        $response = $this->getResponseData($rawResponse);
+        $response = $this->getResponseData($rawResponse->__toString());
 
         return new Customer($response['customers'][0]);
     }
@@ -241,7 +241,7 @@ class CustomersClient extends AbstractClient
 
         $rawResponse = $this->post($payload, $parameters);
 
-        $response = $this->decodeResponse($rawResponse);
+        $response = $this->decodeResponse($rawResponse->__toString());
 
         return new Invitation($response['data']);
     }
@@ -260,7 +260,7 @@ class CustomersClient extends AbstractClient
     {
         $this->path = '/customers/reconciliation';
 
-        return $this->post(['program' => $program], $parameters);
+        return $this->post(['program' => $program], $parameters)->__toString();
     }
 
     /**
@@ -273,6 +273,7 @@ class CustomersClient extends AbstractClient
      * @return Gdap
      *
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function getGdap(string $customerReference, string $relationshipId, array $parameters = []): Gdap
     {
@@ -305,11 +306,12 @@ class CustomersClient extends AbstractClient
      * @param string $customerReference
      * @param array $parameters Optional parameters to add to the URL
      *
-     * @return Generator|Gdap[]
+     * @return Generator<Gdap>
      *
      * @throws EntityValidationException
      * @throws NotFoundException
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function getGdapList(string $customerReference, array $parameters = []): Generator
     {

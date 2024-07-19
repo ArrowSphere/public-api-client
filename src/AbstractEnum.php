@@ -12,15 +12,10 @@ abstract class AbstractEnum
      */
     private static $constCacheArray = [];
 
-    /**
-     * @return mixed
-     *
-     * @throws ReflectionException
-     */
-    private static function getConstants()
+    private static function getConstants(): array
     {
         $calledClass = static::class;
-        if (!array_key_exists($calledClass, self::$constCacheArray)) {
+        if (! array_key_exists($calledClass, self::$constCacheArray)) {
             $reflect = new ReflectionClass($calledClass);
             self::$constCacheArray[$calledClass] = $reflect->getConstants();
         }
@@ -33,8 +28,6 @@ abstract class AbstractEnum
      * @param bool $strict
      *
      * @return bool
-     *
-     * @throws ReflectionException
      */
     public static function isValidName(string $name, bool $strict = false) : bool
     {

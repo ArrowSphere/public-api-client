@@ -45,7 +45,7 @@ class PartnersClient extends AbstractClient
      *
      * @param array $parameters
      *
-     * @return Generator|OrganizationUnit[]
+     * @return Generator<OrganizationUnit>
      *
      * @throws EntityValidationException
      * @throws GuzzleException
@@ -90,7 +90,7 @@ class PartnersClient extends AbstractClient
      */
     public function getOrganizationUnitsPage(array $parameters = []): OrganizationUnitsResponse
     {
-        if (! isset($this->perPage)) {
+        if (empty($this->perPage)) {
             $this->setPerPage(100);
         }
 
@@ -123,7 +123,7 @@ class PartnersClient extends AbstractClient
 
         $rawResponse = $this->post($payload, $parameters);
 
-        $response = $this->getResponseData($rawResponse);
+        $response = $this->getResponseData($rawResponse->__toString());
 
         return new OrganizationUnit($response);
     }
@@ -163,7 +163,7 @@ class PartnersClient extends AbstractClient
 
         $rawResponse = $this->patch($payload, $parameters);
 
-        $response = $this->getResponseData($rawResponse);
+        $response = $this->getResponseData($rawResponse->__toString());
 
         return new OrganizationUnit($response);
     }

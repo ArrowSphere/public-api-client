@@ -21,6 +21,7 @@ use ArrowSphere\PublicApiClient\General\CheckDomainClient;
 use ArrowSphere\PublicApiClient\General\WhoamiClient;
 use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
 use ArrowSphere\PublicApiClient\Notification\NotificationClient;
+use ArrowSphere\PublicApiClient\Orders\OrdersClient;
 use ArrowSphere\PublicApiClient\Partners\PartnersClient;
 use ArrowSphere\PublicApiClient\Support\SupportClient;
 use BadMethodCallException;
@@ -72,6 +73,9 @@ use RuntimeException;
  *
  * Support clients
  * @method SupportClient getSupportClient()
+ *
+ * Orders clients
+ * @method OrdersClient getOrdersClient()
  */
 class PublicApiClient extends AbstractClient
 {
@@ -114,6 +118,10 @@ class PublicApiClient extends AbstractClient
     private function prepareClient(string $className): AbstractClient
     {
         $client = new $className($this->client);
+
+        if(! $client instanceof AbstractClient) {
+            throw new RuntimeException('Client must be an instance of AbstractClient');
+        }
 
         if ($this->url !== null) {
             $client->setUrl($this->url);

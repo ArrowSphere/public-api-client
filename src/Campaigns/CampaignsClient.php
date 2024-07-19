@@ -260,7 +260,7 @@ class CampaignsClient extends AbstractClient
      *
      * @param array $parameters Optional parameters to add to the URL
      *
-     * @return Generator|CampaignV2[]
+     * @return Generator<CampaignV2>
      *
      * @throws EntityValidationException
      * @throws GuzzleException

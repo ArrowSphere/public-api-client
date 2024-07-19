@@ -57,7 +57,7 @@ class NotificationClient extends AbstractNotificationClient
     {
         $this->path = '/' . urlencode($id) . '/' . self::READ;
 
-        return $this->patch([]);
+        return $this->patch([])->__toString();
     }
 
     /**
@@ -71,7 +71,7 @@ class NotificationClient extends AbstractNotificationClient
     {
         $this->path = '/' . self::READ;
 
-        return $this->patch([]);
+        return $this->patch([])->__toString();
     }
 
     /**
@@ -89,7 +89,7 @@ class NotificationClient extends AbstractNotificationClient
 
         $response = $this->post($payload);
 
-        return $this->getResponseData($response)['notification'][0];
+        return $this->getResponseData($response->__toString())['notification'][0];
     }
 
     /**

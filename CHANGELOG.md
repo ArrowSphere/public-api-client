@@ -4,6 +4,20 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+- Update minimum PHP version to 8.0
+- Update PhpStan & Psalm & PhpCsFixer to the latest version
+- Fix Psalm issues
+- Added new client `OrdersClients` to manage Orders
+- Added new method `getOrders` to get all orders
+- Added new method `getOrdersPage` to get orders per page
+- Added new method `createOrder` to create new order
+- Added new method `getOrder` to get order by ref
+- Added new method `updateOrder` to update order POnumber
+- Added new method `resubmitOrder` to resubmit order
+- Added new method `cancelOrder` to cancel an order
+- Added new method `validateOrder` to validate an order
+- Added new method `getOrderHistory` to get order history
+- Added new Entity `AbstractEntity` to build request payload as an object
 
 ## [0.11.3] - 2024-09-02
 

@@ -170,9 +170,9 @@ class Price extends AbstractEntity
             self::COLUMN_BUY_PRICE                  => $this->buyPrice,
             self::COLUMN_SELL_PRICE                 => $this->sellPrice,
             self::COLUMN_LIST_PRICE                 => $this->listPrice,
-            self::COLUMN_TOTAL_BUY_PRICE             => $this->totalBuyPrice ?? null,
-            self::COLUMN_TOTAL_SELL_PRICE            => $this->totalSellPrice ?? null,
-            self::COLUMN_TOTAL_LIST_PRICE            => $this->totalListPrice ?? null,
+            self::COLUMN_TOTAL_BUY_PRICE            => $this->totalBuyPrice,
+            self::COLUMN_TOTAL_SELL_PRICE           => $this->totalSellPrice,
+            self::COLUMN_TOTAL_LIST_PRICE           => $this->totalListPrice,
             self::COLUMN_CURRENCY                   => $this->currency,
         ];
     }

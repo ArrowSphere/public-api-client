@@ -65,7 +65,7 @@ class Offer extends AbstractEntity
     private $priceBand;
 
     /**
-     * @var array | null
+     * @var array|null
      */
     private $arrowSubCategories;
 
@@ -138,7 +138,7 @@ class Offer extends AbstractEntity
     }
 
     /**
-     * @return array | null
+     * @return array|null
      */
     public function getArrowSubCategories(): ?array
     {
