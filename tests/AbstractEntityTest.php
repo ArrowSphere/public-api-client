@@ -33,7 +33,7 @@ abstract class AbstractEntityTest extends TestCase
     {
         $className = static::CLASS_NAME;
         if ($className === null) {
-            self::fail('The const CLASS_NAME must be redefined in ' . get_class($this));
+            self::fail('The const CLASS_NAME must be redefined in ' . static::class);
         }
 
         $activeSeats = new $className($fields);

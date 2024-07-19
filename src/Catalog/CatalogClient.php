@@ -121,7 +121,7 @@ class CatalogClient extends AbstractClient
      * @param string $classification
      * @param string $program
      *
-     * @return Generator|Service[]
+     * @return Generator<Service>
      */
     public function getAllServices(string $classification, string $program): Generator
     {
@@ -133,14 +133,17 @@ class CatalogClient extends AbstractClient
             $this->setPage($currentPage);
             $publicApiResponses = json_decode($this->getServices($classification, $program), true);
 
-            if ($publicApiResponses['pagination']['total_page'] <= $currentPage) {
-                $lastPage = true;
-            }
+            if (is_array($publicApiResponses)) {
+                if ($publicApiResponses['pagination']['total_page'] <= $currentPage) {
+                    $lastPage = true;
+                }
 
-            $currentPage++;
+                $currentPage++;
 
-            foreach ($publicApiResponses['data'] as $data) {
-                yield new Service($data);
+                /** @var array $data */
+                foreach ($publicApiResponses['data'] as $data) {
+                    yield new Service($data);
+                }
             }
         }
     }

@@ -22,7 +22,7 @@ class UserAgentHeader implements Stringable
         $this->value = trim(
             sprintf(
                 self::FORMAT,
-                InstalledVersions::getPrettyVersion('arrowsphere/public-api-client'),
+                InstalledVersions::getPrettyVersion('arrowsphere/public-api-client') ?? '',
                 PHP_VERSION,
                 $_ENV['PUBLIC_API_CLIENT_USER_AGENT_TAG'] ?? ''
             )

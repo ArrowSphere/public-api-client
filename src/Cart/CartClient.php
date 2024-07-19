@@ -37,7 +37,7 @@ class CartClient extends AbstractCartClient
     {
         $this->path = '/' . urlencode($itemId);
 
-        return $this->patch($payload);
+        return $this->patch($payload)->__toString();
     }
 
     /**
@@ -54,7 +54,7 @@ class CartClient extends AbstractCartClient
         $this->path = '';
         $response = $this->post($payload);
 
-        return $this->getResponseData($response);
+        return $this->getResponseData($response->__toString());
     }
 
     /**

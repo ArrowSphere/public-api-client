@@ -1,0 +1,86 @@
+{
+  "status": 200,
+  "data": {
+    "orders": [
+      {
+        "reference": "XSPO1234",
+        "status": "In progress",
+        "dateStatus": "2017-05-15 09:39:05",
+        "dateCreation": "2017-05-15 09:39:05",
+        "order_reference": "O_ARWS-V7-2704f97d-656151",
+        "createdBy": "Admin",
+        "createdByImpersonator": "User",
+        "commitmentAmountTotal": 9714.6,
+        "partner": {
+          "companyName": "MyCompany",
+          "contact": {
+            "email": "email@provider.com",
+            "firstName": "/api/customers/XSP17727",
+            "lastName": "/api/customers/XSP17727"
+          }
+        },
+        "customer": {
+          "reference": "XSP17727",
+          "link": "/api/customers/XSP17727"
+        },
+        "ponumber": "123456",
+        "products": [
+          {
+            "sku": "Microsoft||MS-0ZH-VISIO||B4D4B7F4-4089-43B6-9C44-DE97B760FB11",
+            "name": "Dynamics 365 Commerce",
+            "classification": "SaaS",
+            "vendorName": "Microsoft",
+            "programName": "Microsoft Cloud Solution Provider (CSP)",
+            "program": {
+              "legacyCode": "Microsoft"
+            },
+            "identifiers": {
+              "vendor": {
+                "sku": "79C103C3-35E2-4E1F-81BB-AAE69800A3EF"
+              }
+            },
+            "quantity": 2,
+            "status": "Provisioned",
+            "dateStatus": "2017-05-15 09:39:05",
+            "detailedStatus": "Provisioned",
+            "isAddon": true,
+            "isTrial": true,
+            "arrowSubCategories": [
+              "nce"
+            ],
+            "prices": {
+              "buy": 11,
+              "sell": 11,
+              "currency": "EUR",
+              "periodicity": "per Month",
+              "term": "1 Year",
+              "periodicityCode": 720,
+              "termCode": 8640
+            },
+            "subscription": {
+              "reference": "XSPS7896",
+              "link": "/api/subscriptions/XSPS7896"
+            },
+            "license": {
+              "reference": "XSP87708",
+              "link": "/api/licenses/XSP87708"
+            }
+          }
+        ],
+        "extraInformation": {
+          "programs": {
+            "additionalProp1": {
+              "additionalProp1": "string"
+            },
+            "additionalProp2": {
+              "additionalProp1": "string"
+            },
+            "additionalProp3": {
+              "additionalProp1": "string"
+            }
+          }
+        }
+      }
+    ]
+  }
+}

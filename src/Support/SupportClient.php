@@ -34,7 +34,7 @@ class SupportClient extends AbstractClient
     {
         $this->path = '/issues';
         $response = $this->post($data, $parameters);
-        $result = $this->getResponseData($response);
+        $result = $this->getResponseData($response->__toString());
 
         return $result['id'];
     }
@@ -106,7 +106,7 @@ class SupportClient extends AbstractClient
         $this->path = sprintf('/issues/%d/attachments', $issueId);
         $response = $this->post($data, $parameters);
 
-        $result = $this->getResponseData($response);
+        $result = $this->getResponseData($response->__toString());
 
         return $result['id'];
     }
@@ -229,7 +229,7 @@ class SupportClient extends AbstractClient
     {
         $this->path = sprintf('/issues/%d/comments', $issueId);
         $response = $this->post($data, $parameters);
-        $result = $this->getResponseData($response);
+        $result = $this->getResponseData($response->__toString());
 
         return $result['id'];
     }

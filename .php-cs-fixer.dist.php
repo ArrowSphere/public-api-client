@@ -1,24 +1,23 @@
 <?php
 
-$config = PhpCsFixer\Config::create()
+$config = (new PhpCsFixer\Config())
     ->setRiskyAllowed(true)
     ->setRules([
         '@PSR2' => true,
         'array_syntax' => ['syntax' => 'short'],
         'binary_operator_spaces' => ['operators' => ['=>' => null]],
         'blank_line_after_opening_tag' => true,
-        'class_attributes_separation' => ['elements' => ['method']],
+        'class_attributes_separation' => ['elements' => ['method' => 'one']],
         'compact_nullable_typehint' => true,
         'concat_space' => ['spacing' => 'one'],
         'declare_equal_normalize' => ['space' => 'none'],
         'declare_strict_types' => false,
         'dir_constant' => true,
-        'final_static_access' => true,
+        'self_static_accessor' => true,
         'fully_qualified_strict_types' => true,
         'function_to_constant' => true,
         'function_typehint_space' => true,
         'header_comment' => false,
-        'is_null' => ['use_yoda_style' => false],
         'list_syntax' => ['syntax' => 'short'],
         'lowercase_cast' => true,
         'magic_method_casing' => true,
@@ -77,7 +76,7 @@ $config = PhpCsFixer\Config::create()
         // 'native_function_invocation' => true,
     ])
     ->setFinder(
-        PhpCsFixer\Finder::create()
+        (new PhpCsFixer\Finder())
             ->in(__DIR__.'/src')
             ->in(__DIR__.'/tests')
             ->name('*.php')

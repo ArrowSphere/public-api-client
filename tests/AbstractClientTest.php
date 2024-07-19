@@ -44,7 +44,7 @@ abstract class AbstractClientTest extends TestCase
         $class = static::MOCKED_CLIENT_CLASS;
 
         if ($class === null) {
-            self::fail('You should override const MOCKED_CLIENT_CLASS in your class ' . get_class($this));
+            self::fail('You should override const MOCKED_CLIENT_CLASS in your class ' . static::class);
         }
 
         $this->client = new $class($this->httpClient);

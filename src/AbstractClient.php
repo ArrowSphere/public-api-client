@@ -312,7 +312,7 @@ abstract class AbstractClient
     public function decodeResponse(string $rawResponse): array
     {
         $response = json_decode($rawResponse, true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
+        if (json_last_error() !== JSON_ERROR_NONE || ! is_array($response)) {
             throw new PublicApiClientException(sprintf(
                 'Error: Unable to decode JSON response. Raw response was: "%s"',
                 $rawResponse
@@ -323,13 +323,13 @@ abstract class AbstractClient
     }
 
     /**
-     * @param string|StreamInterface $response
+     * @param string $response
      *
      * @return array
      *
      * @throws PublicApiClientException
      */
-    protected function getResponseData($response): array
+    protected function getResponseData(string $response): array
     {
         return $this->decodeResponse($response)[self::DATA] ?? [];
     }
