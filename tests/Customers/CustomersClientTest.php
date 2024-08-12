@@ -5,6 +5,7 @@ namespace ArrowSphere\PublicApiClient\Tests\Customers;
 use ArrowSphere\PublicApiClient\Customers\CustomersClient;
 use ArrowSphere\PublicApiClient\Customers\Entities\Customer;
 use ArrowSphere\PublicApiClient\Customers\Entities\CustomersResponse;
+use ArrowSphere\PublicApiClient\Customers\Entities\Gdap;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
@@ -106,6 +107,7 @@ class CustomersClientTest extends AbstractClientTest
 
     /**
      * @throws PublicApiClientException
+     * @throws GuzzleException
      */
     public function testGetCustomers(): void
     {
@@ -604,5 +606,169 @@ JSON;
         self::assertSame('Bruce', $invitation->getContact()->getFirstName());
         self::assertSame('Wayne', $invitation->getContact()->getLastName());
         self::assertSame('ABC123', $invitation->getCompany()->getReference());
+    }
+
+    /**
+     * @return void
+     *
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     * @throws GuzzleException
+     */
+    public function testGetGdapListRaw(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/customers/XSP123456/relationships?abc=def&ghi=0')
+            ->willReturn(new Response(200, [], 'OK USA'));
+
+        $this->client->getGdapListRaw(
+            'XSP123456',
+            [
+                'abc' => 'def',
+                'ghi' => false,
+            ]
+        );
+    }
+
+    /**
+     * @return void
+     *
+     * @throws EntityValidationException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetGdapListWithInvalidResponse(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/customers/XSP123456/relationships?abc=def&ghi=0')
+            ->willReturn(new Response(200, [], '{'));
+
+        $this->expectException(PublicApiClientException::class);
+
+        $gdap = $this->client->getGdapList(
+            'XSP123456',
+            [
+                'abc' => 'def',
+                'ghi' => false,
+            ]
+        );
+        iterator_to_array($gdap);
+    }
+
+    /**
+     * @return void
+     *
+     * @throws EntityValidationException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetGdapList(): void
+    {
+        $expectedGdapList = [
+            [
+                'id'             => '123',
+                'displayName'    => 'Gdap test',
+                'status'         => 'Pending Approval',
+                'startDate'      => '2024-01-01',
+                'endDate'        => '2024-06-30',
+                'duration'       => 'P180T',
+                'durationInDays' => '180',
+                'autoExtend'     => 'P180T',
+                'approvalLink'   => 'https://www.approval-link.com',
+                'privileges'     => [
+                    [
+                        "name" => "Directory Readers",
+                        "description" => "Can read basic directory information. Commonly used to grant directory read access to applications and guests.",
+                    ], [
+                        "name" => "Directory Writers",
+                        "description" => "Can read and write basic directory information. For granting access to applications, not intended for users.",
+                    ],
+                ],
+                'securityGroups' => [
+                    [
+                        "name"   => "HelpdeskAgents",
+                        "status" => "active",
+                    ], [
+                        "name" => "AdminAgents",
+                    ],
+                ],
+            ], [
+                'id'             => '456',
+                'displayName'    => 'Gdap test 2',
+                'status'         => 'Validated',
+                'startDate'      => '2024-05-12',
+                'endDate'        => '2024-11-11',
+                'duration'       => 'P180T',
+                'durationInDays' => '180',
+                'autoExtend'     => 'P180T',
+                'approvalLink'   => 'https://www.some-other-approval-link.com',
+                'privileges'     => [
+                    [
+                        "name" => "Privileged Authentication Administrator",
+                        "description" => "Can access to view, set, and reset authentication method information for any user (admin or non-admin).",
+                    ],
+                ],
+                'securityGroups' => [
+                    [
+                        "name"   => "HelpdeskAgents",
+                    ], [
+                        "name" => "AdminAgents",
+                        "status" => "active",
+                    ],
+                ],
+            ],
+        ];
+
+        $gdapResult1 = json_encode([
+            'data' => [
+                'relationRecord' => [$expectedGdapList[0]],
+                'paginationToken' => 'A1B2C3D4',
+            ],
+        ]);
+
+        $gdapResult2 = json_encode([
+            'data' => [
+                'relationRecord' => [$expectedGdapList[1]],
+            ],
+        ]);
+
+        $this->httpClient
+            ->expects(self::exactly(2))
+            ->method('request')
+            ->withConsecutive(
+                [
+                    'get',
+                    'https://www.test.com/customers/XSP123456/relationships?abc=def&ghi=0'
+                ],
+                [
+                    'get',
+                    'https://www.test.com/customers/XSP123456/relationships?abc=def&ghi=0&paginationToken=A1B2C3D4'
+                ]
+            )
+            ->will(self::onConsecutiveCalls(
+                new Response(200, [], $gdapResult1),
+                new Response(200, [], $gdapResult2)
+            ));
+
+        $test = $this->client->getGdapList(
+            'XSP123456',
+            [
+                'abc' => 'def',
+                'ghi' => false,
+            ]
+        );
+
+        $gdapList = [];
+
+        /** @var Gdap $gdap */
+        foreach (iterator_to_array($test) as $gdap) {
+            $gdapList[] = $gdap->jsonSerialize();
+        }
+
+        self::assertSame($expectedGdapList, $gdapList);
     }
 }
