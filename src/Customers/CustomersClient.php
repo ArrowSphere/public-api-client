@@ -5,8 +5,8 @@ namespace ArrowSphere\PublicApiClient\Customers;
 use ArrowSphere\PublicApiClient\AbstractClient;
 use ArrowSphere\PublicApiClient\Customers\Entities\Customer;
 use ArrowSphere\PublicApiClient\Customers\Entities\CustomersResponse;
+use ArrowSphere\PublicApiClient\Customers\Entities\Gdap;
 use ArrowSphere\PublicApiClient\Customers\Entities\Invitation;
-use ArrowSphere\PublicApiClient\Entities\Pagination;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
@@ -261,5 +261,71 @@ class CustomersClient extends AbstractClient
         $this->path = '/customers/reconciliation';
 
         return $this->post(['program' => $program], $parameters);
+    }
+
+    /**
+     * Get Customer GDAP relationship by id
+     *
+     * @param string $customerReference
+     * @param string $relationshipId
+     * @param array $parameters
+     *
+     * @return Gdap
+     *
+     * @throws PublicApiClientException
+     */
+    public function getGdap(string $customerReference, string $relationshipId, array $parameters = []): Gdap
+    {
+        $this->path = '/customers/' . urlencode($customerReference) . '/relationships/' . urlencode($relationshipId);
+
+        $rawResponse = $this->get($parameters);
+        $response = $this->getResponseData($rawResponse);
+
+        return new Gdap($response);
+    }
+
+    /**
+     * @param string $customerReference
+     * @param array $parameters Optional parameters to add to the URL
+     *
+     * @return string
+     *
+     * @throws PublicApiClientException
+     * @throws NotFoundException
+     * @throws GuzzleException
+     */
+    public function getGdapListRaw(string $customerReference, array $parameters = []): string
+    {
+        $this->path = '/customers/' . urlencode($customerReference) . '/relationships';
+
+        return $this->get($parameters);
+    }
+
+    /**
+     * @param string $customerReference
+     * @param array $parameters Optional parameters to add to the URL
+     *
+     * @return Generator|Gdap[]
+     *
+     * @throws EntityValidationException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getGdapList(string $customerReference, array $parameters = []): Generator
+    {
+        do {
+            $rawResponse = $this->getGdapListRaw($customerReference, $parameters);
+            $response = $this->getResponseData($rawResponse);
+
+            if (empty($response['relationRecord'])) {
+                return;
+            }
+
+            foreach ($response['relationRecord'] as $relationship) {
+                yield new Gdap($relationship);
+            }
+
+            $parameters['paginationToken'] = $response['paginationToken'] ?? null;
+        } while (isset($parameters['paginationToken']));
     }
 }

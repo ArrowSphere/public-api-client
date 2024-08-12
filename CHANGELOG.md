@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added GDAP endpoints to the Customer client
+
 ## [0.11.2] - 2024-06-12
 
 - Added a method `postReconciliation` to `CustomersClient` to trigger the mass reconciliation process for end customers
