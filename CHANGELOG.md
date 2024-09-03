@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added new client `getQuotesClients` to manage Quotes 
+- Added new method `create` to create a quote
+s
 ## [0.11.4] - 2024-09-04
 
 - Update minimum PHP version to 8.0
