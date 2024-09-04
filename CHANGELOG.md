@@ -4,6 +4,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [0.11.4] - 2024-09-04
+
 - Update minimum PHP version to 8.0
 - Update PhpStan & Psalm & PhpCsFixer to the latest version
 - Fix Psalm issues
@@ -563,7 +566,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.3...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.4...HEAD
+[0.11.4]: https://github.com/ArrowSphere/public-api-client/compare/0.11.3...0.11.4
 [0.11.3]: https://github.com/ArrowSphere/public-api-client/compare/0.11.2...0.11.3
 [0.11.2]: https://github.com/ArrowSphere/public-api-client/compare/0.11.1...0.11.2
 [0.11.1]: https://github.com/ArrowSphere/public-api-client/compare/0.11.0...0.11.1
