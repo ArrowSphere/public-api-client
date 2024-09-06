@@ -5,9 +5,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
-- Added new client `getQuotesClients` to manage Quotes 
+## [0.11.5] - 2024-09-06
+
+- Added new client `getQuotesClients` to manage Quotes
 - Added new method `create` to create a quote
-s
+  s
+
 ## [0.11.4] - 2024-09-04
 
 - Update minimum PHP version to 8.0
@@ -569,7 +572,8 @@ s
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.4...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.5...HEAD
+[0.11.5]: https://github.com/ArrowSphere/public-api-client/compare/0.11.4...0.11.5
 [0.11.4]: https://github.com/ArrowSphere/public-api-client/compare/0.11.3...0.11.4
 [0.11.3]: https://github.com/ArrowSphere/public-api-client/compare/0.11.2...0.11.3
 [0.11.2]: https://github.com/ArrowSphere/public-api-client/compare/0.11.1...0.11.2
