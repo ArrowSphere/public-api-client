@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fixed `CreateQuote` items is optional
+
 ## [0.11.5] - 2024-09-06
 
 - Added new client `getQuotesClients` to manage Quotes

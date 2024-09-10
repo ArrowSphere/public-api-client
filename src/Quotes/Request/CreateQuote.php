@@ -19,8 +19,8 @@ class CreateQuote extends AbstractEntity
     #[Property(type: Customer::class)]
     protected ?Customer $customer = null;
 
-    #[Property(type: Item::class, isArray: true, required: true)]
-    protected array $items;
+    #[Property(type: Item::class, isArray: true)]
+    protected ?array $items;
 
     /**
      * @param array{
