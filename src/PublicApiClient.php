@@ -23,6 +23,7 @@ use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
 use ArrowSphere\PublicApiClient\Notification\NotificationClient;
 use ArrowSphere\PublicApiClient\Orders\OrdersClient;
 use ArrowSphere\PublicApiClient\Partners\PartnersClient;
+use ArrowSphere\PublicApiClient\Quotes\QuotesClient;
 use ArrowSphere\PublicApiClient\Support\SupportClient;
 use BadMethodCallException;
 use RuntimeException;
@@ -68,14 +69,17 @@ use RuntimeException;
  * Notification clients
  * @method NotificationClient getNotificationClient()
  *
+ * Orders clients
+ * @method OrdersClient getOrdersClient()
+ *
  * Partners clients
  * @method PartnersClient getPartnersClient()
  *
+ * Quotes clients
+ * @method QuotesClient getQuotesClient()
+ *
  * Support clients
  * @method SupportClient getSupportClient()
- *
- * Orders clients
- * @method OrdersClient getOrdersClient()
  */
 class PublicApiClient extends AbstractClient
 {
