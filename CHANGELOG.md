@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.8] - 2024-09-12
+
 - Fixed `CreateQuote` items initial value
 
 ## [0.11.7] - 2024-09-11
@@ -582,7 +584,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.7...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.8...HEAD
+[0.11.8]: https://github.com/ArrowSphere/public-api-client/compare/0.11.7...0.11.8
 [0.11.7]: https://github.com/ArrowSphere/public-api-client/compare/0.11.6...0.11.7
 [0.11.6]: https://github.com/ArrowSphere/public-api-client/compare/0.11.5...0.11.6
 [0.11.5]: https://github.com/ArrowSphere/public-api-client/compare/0.11.4...0.11.5
