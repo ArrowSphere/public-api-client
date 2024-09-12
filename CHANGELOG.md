@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fixed `CreateQuote` items initial value
+
 ## [0.11.7] - 2024-09-11
 
 - Fixed `PublicApiClient` adds missing method getQuotesClient

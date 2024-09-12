@@ -88,4 +88,33 @@ class QuotesClientTest extends AbstractClientTest
         self::assertEquals($createResponse['data']['reference'], $result->getReference());
         self::assertEquals($createResponse['data']['status'], $result->getStatus());
     }
+
+    /**
+     * @throws NotFoundException
+     * @throws GuzzleException
+     * @throws PublicApiClientException
+     */
+    public function testCreateFromPromotion(): void
+    {
+        $quotePayload = new CreateQuote([
+            'promotionCode' => 'Azerty123',
+            'customer' => [
+                'reference' => 'XSP4533'
+            ],
+        ]);
+
+        $createResponse = $this->createResponse();
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('post', 'https://www.test.com/quotes')
+            ->willReturn(new Response(200, [], json_encode($createResponse)));
+
+        $result = $this->client->create($quotePayload);
+
+        self::assertEquals($createResponse['data']['link'], $result->getLink());
+        self::assertEquals($createResponse['data']['reference'], $result->getReference());
+        self::assertEquals($createResponse['data']['status'], $result->getStatus());
+    }
 }

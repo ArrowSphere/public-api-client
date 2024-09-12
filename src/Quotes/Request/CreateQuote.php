@@ -20,7 +20,7 @@ class CreateQuote extends AbstractEntity
     protected ?Customer $customer = null;
 
     #[Property(type: Item::class, isArray: true)]
-    protected ?array $items;
+    protected ?array $items = [];
 
     /**
      * @param array{
