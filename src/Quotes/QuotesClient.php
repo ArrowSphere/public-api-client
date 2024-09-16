@@ -18,6 +18,8 @@ class QuotesClient extends AbstractClient
 
     /**
      * @param CreateQuote $quote
+     * @param array $parameters
+     * @param array $headers
      *
      * @return CreateQuoteResponse
      *
@@ -25,10 +27,10 @@ class QuotesClient extends AbstractClient
      * @throws GuzzleException
      * @throws PublicApiClientException
      */
-    public function create(CreateQuote $quote): CreateQuoteResponse
+    public function create(CreateQuote $quote, array $parameters = [], array $headers = []): CreateQuoteResponse
     {
         $this->path = '';
-        $response = $this->post($quote->jsonSerialize());
+        $response = $this->post($quote->jsonSerialize(), $parameters, $headers);
 
         return new CreateQuoteResponse($this->getResponseData($response->__toString()));
     }
