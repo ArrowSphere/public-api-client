@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fixed `QuotesClient::create` add `parameters` and `headers` as default params 
+
 ## [0.11.8] - 2024-09-12
 
 - Fixed `CreateQuote` items initial value
