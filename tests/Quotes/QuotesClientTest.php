@@ -40,7 +40,19 @@ class QuotesClientTest extends AbstractClientTest
                         'rateType' => 'discount',
                         'value' => 0.05
                       ],
-                      'value' => 0
+                      'value' => 10
+                    ],
+                  ]
+                ],
+                [
+                  'arrowSpherePriceBandSku' => 'MSCSP_CFQ7TTC0LH16-0001_FR_EUR_1_720_8640',
+                  'quantity' => 1,
+                  'prices' => [
+                    'customer' => [
+                      'rate' => [
+                        'rateType' => 'uplift',
+                        'value' => 0.25
+                      ]
                     ],
                   ]
                 ]
