@@ -13,6 +13,6 @@ class CustomerPrices extends AbstractEntity
     #[Property(type: Rate::class, required: true)]
     protected Rate $rate;
 
-    #[Property(type: 'float', required: true)]
-    protected float $value;
+    #[Property(type: 'float')]
+    protected ?float $value = null;
 }

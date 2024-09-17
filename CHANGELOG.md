@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Updated `CustomerPrices` value is optional
+
 ## [0.11.9] - 2024-09-16
 
 - Fixed `QuotesClient::create` add `parameters` and `headers` as default params
