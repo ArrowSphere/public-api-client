@@ -10,6 +10,7 @@ class Item extends AbstractEntity
     public const COLUMN_ARROW_SPHERE_PRICE_BAND_SKU = 'arrowSpherePriceBandSku';
     public const COLUMN_QUANTITY = 'quantity';
     public const COLUMN_PRICES = 'prices';
+    public const COLUMN_COTERMINOSITY_DATE = 'coterminosityDate';
 
     #[Property(required: true)]
     protected string $arrowSpherePriceBandSku;
@@ -19,4 +20,7 @@ class Item extends AbstractEntity
 
     #[Property(type: Prices::class)]
     protected ?Prices $prices = null;
+
+    #[Property()]
+    protected ?string $coterminosityDate = null;
 }
