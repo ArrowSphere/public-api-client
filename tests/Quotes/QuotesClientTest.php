@@ -46,6 +46,7 @@ class QuotesClientTest extends AbstractClientTest
                 ],
                 [
                   'arrowSpherePriceBandSku' => 'MSCSP_CFQ7TTC0LH16-0001_FR_EUR_1_720_8640',
+                  'coterminosityDate' => '2022-12-31',
                   'quantity' => 1,
                   'prices' => [
                     'customer' => [
