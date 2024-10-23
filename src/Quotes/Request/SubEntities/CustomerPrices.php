@@ -8,11 +8,11 @@ use ArrowSphere\PublicApiClient\Entities\Property;
 class CustomerPrices extends AbstractEntity
 {
     public const COLUMN_RATE = 'rate';
-    public const COLUMN_VALUE = 'value';
+    public const COLUMN_FIXED_PRICE = 'fixedPrice';
 
-    #[Property(type: Rate::class, required: true)]
-    protected Rate $rate;
+    #[Property(type: Rate::class)]
+    protected ?Rate $rate = null;
 
     #[Property(type: 'float')]
-    protected ?float $value = null;
+    protected ?float $fixedPrice = null;
 }

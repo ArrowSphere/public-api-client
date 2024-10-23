@@ -36,11 +36,7 @@ class QuotesClientTest extends AbstractClientTest
                   'quantity' => 2,
                   'prices' => [
                     'customer' => [
-                      'rate' => [
-                        'rateType' => 'discount',
-                        'value' => 0.05
-                      ],
-                      'value' => 10
+                      'fixedPrice' => 10
                     ],
                   ]
                 ],
@@ -53,6 +49,18 @@ class QuotesClientTest extends AbstractClientTest
                       'rate' => [
                         'rateType' => 'uplift',
                         'value' => 0.25
+                      ]
+                    ],
+                  ]
+                  ],
+                [
+                  'arrowSpherePriceBandSku' => 'MSCSP_CFQ7TTC0LCHC-0002_FR_EUR_1_8640_8640',
+                  'quantity' => 2,
+                  'prices' => [
+                    'arrow' => [
+                      'rate' => [
+                        'rateType' => 'discount',
+                        'value' => 0.1
                       ]
                     ],
                   ]

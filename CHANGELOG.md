@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Changed property `CustomerPrices.value` to `CustomerPrices.fixedPrice`
+- Updated property `CustomerPrices.customer` to be not mandatory
+- Add properties `Prices.arrow` and `Prices.partner`
+
 ## [0.11.11] - 2024-09-18
 
 - Added proprty `Item.coterminosityDate`
