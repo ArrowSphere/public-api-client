@@ -35,7 +35,7 @@ class CreateQuote extends AbstractEntity
      *                      rate:string,
      *                      value:float
      *                  },
-     *                  value:float
+     *                  fixedPrice:float
      *              }
      *          }
      *     }
