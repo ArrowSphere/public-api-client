@@ -37,7 +37,7 @@ class LicensesClientTest extends AbstractClientTest
             LicenseFindFieldEnum::LICENSE_PRICE_BUY_PRICE => [
                 LicensesClient::COMPARE_FIELD => LicenseFindFieldEnum::OFFER_PRICE_BAND_PRICES_BUY,
                 LicensesClient::COMPARE_OPERATOR => LicensesClient::OPERATOR_GT,
-            ]
+            ],
         ],
         LicensesClient::DATA_FILTERS   => [
             LicenseFindFieldEnum::LICENSE_VENDOR_CODE => [
@@ -990,17 +990,17 @@ JSON;
                     "predictions"=> [
                         [
                             "date"=> "2022-10-26",
-                            "amount"=> 521.0391398926142
+                            "amount"=> 521.0391398926142,
                         ],
                         [
                             "date" => "2022-10-27",
-                            "amount"=> 552.5630766601322
+                            "amount"=> 552.5630766601322,
                         ],
                         [
                             "date"=> "2022-10-28",
-                            "amount"=> 544.5792517089964
-                        ]
-                    ]
+                            "amount"=> 544.5792517089964,
+                        ],
+                    ],
                 ]]);
         $this->httpClient
             ->expects(self::once())
@@ -1111,5 +1111,42 @@ JSON;
         self::assertSame('role', $config->getScope());
         self::assertSame('purchase something', $config->getName());
         self::assertSame('enabled', $config->getState());
+    }
+
+    public function testGetAwsPayerAccountList(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'get',
+                'https://www.test.com/licenses/aws-payer-accounts/XSP1234',
+                [
+                    'headers' => [
+                        'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
+                        'User-Agent' => $this->userAgentHeader,
+                    ],
+                ]
+            )
+            ->willReturn(new Response(200, [], json_encode([
+                'status' => 200,
+                'data' => [
+                    'payerAccounts' => [
+                        [
+                            'type' => 'arrow',
+                            'friendlyName' => 'Payer Account 1',
+                            'licenseRef' => 'XSP100',
+                        ],
+                    ],
+                ],
+            ])));
+
+        $payerAccountList = $this->client->getAwsPayerAccountList('XSP1234');
+        self::assertCount(1, $payerAccountList);
+        $payerAccount = $payerAccountList[0];
+        self::assertSame('arrow', $payerAccount->getType());
+        self::assertSame('Payer Account 1', $payerAccount->getFriendlyName());
+        self::assertSame('XSP100', $payerAccount->getLicenseRef());
     }
 }
