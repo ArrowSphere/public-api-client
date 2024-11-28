@@ -9,6 +9,18 @@ A license is identified in ArrowSphere Cloud by its _partner ref_, which is typi
 
 ### License and its sub-entities
 
+
+#### AwsPayerAccount
+
+The AwsPayerAccount represent the AWS payer account for a specific endCustomerRef.
+
+| Field           | Type      | Example | Description                                       |
+|-----------------|-----------|---------|---------------------------------------------------|
+| type            | `string`  | "arrow" | License type can be (arrow, partner, endCustomer) |
+| friendlyName    | `string`  | "test"  | License friendly name                             |
+| licenseRef      | `string`  | "XSP"   | License reference                                 |
+
+
 #### License
 
 A license is managed by the `License` entity.
@@ -439,3 +451,23 @@ The `LicensesClient::getPredictions()` method returns a `Predictions` with Predi
 - `getUpdatedAt()`: returns the last date the prediction machine learning script was launched .
 - `getLicenseReference()`: returns the license reference .
 - `getPredictionResponse()`: returns an array of predictionResponse with the date and value .
+
+### getAwsPayerAccountList endpoint
+
+The "getAwsPayerAccountList" endpoint allows getting the list of AWS payer accounts for a specific endCustomerRef.
+it should return a list of AWS payer accounts ( 3 types available: arrow, partner, end customer) .
+
+```php
+<?php
+use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
+
+const URL = 'https://your-url-to-arrowsphere.example.com';
+const API_KEY = 'your API key in ArrowSphere';
+
+$client = (new LicensesClient())
+    ->setUrl(URL)
+    ->setApiKey(API_KEY);
+
+$awsPayerAccountList = $client->getAwsPayerAccountList('XSP1234');
+
+```

@@ -6,6 +6,7 @@ use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Licenses\Entities\FindResult;
+use ArrowSphere\PublicApiClient\Licenses\Entities\License\AwsPayerAccount;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\Config;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\Predictions;
 use Generator;
@@ -317,5 +318,24 @@ class LicensesClient extends AbstractLicensesClient
         $response = $this->decodeResponse($rawResponse);
 
         return new Config($response['data']);
+    }
+
+    /**
+     * @param string $endCustomerRef
+     *
+     * @return AwsPayerAccount[]
+     *
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     * @throws GuzzleException
+     */
+    public function getAwsPayerAccountList(string $endCustomerRef): array
+    {
+        $this->path = '/aws-payer-accounts/' . $endCustomerRef;
+
+        $rawResponse = $this->get();
+        $response = $this->decodeResponse($rawResponse);
+
+        return array_map(static fn ($item) => new AwsPayerAccount($item), $response['data']['payerAccounts'] ?? []);
     }
 }

@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added a new method `getAwsPayerAccountList` to get the list of AWS payer accounts
+
 ## [0.11.12] - 2024-10-23
 
 - Changed property `CustomerPrices.value` to `CustomerPrices.fixedPrice`
