@@ -44,6 +44,7 @@ A license is managed by the `License` entity.
 | lastUpdate              | `string`      | 2020-12-08T15:42:30.069Z                   | The last time the license's data was updated (for any reason)                                         |
 | marketplace             | `string`      | US                                         | The [marketplace](general-marketplace.md)                                                             |
 | message                 | `string`      |                                            | If an action is currently performed on the license, this message will indicate it                     |
+| nextRenewalDate         | `string`      | 2024-12-18T17:48:43.000Z                   | The next renewal date of the license if exist else it will be the end date of license                 |
 | offer                   | `string`      |                                            | The name of the offer                                                                                 |
 | parentLineId            | `int`         | null                                       | An internal reference indicating a parent license for this license                                    |
 | parentOrderRef          | `string`      | null                                       | An internal reference indicating a parent order                                                       |

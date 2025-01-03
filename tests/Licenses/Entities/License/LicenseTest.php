@@ -140,6 +140,7 @@ class LicenseTest extends AbstractEntityTest
     "vendor_billing_id": "ABC123",
     "vendor_subscription_id": "AABBCCDD-1111-2222-3333-ABCDEFABCDEF",
     "message": "",
+    "next_renewal_date": "2021-11-18T17:48:43.000Z",
     "periodicity": 720,
     "term": 8640,
     "isEnabled": true,

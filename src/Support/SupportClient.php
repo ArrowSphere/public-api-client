@@ -130,6 +130,24 @@ class SupportClient extends AbstractClient
     }
 
     /**
+     * @param int   $issueId
+     * @param array $parameters
+     *
+     * @return array
+     *
+     * @throws \ArrowSphere\PublicApiClient\Exception\NotFoundException
+     * @throws \ArrowSphere\PublicApiClient\Exception\PublicApiClientException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function listAttachmentsWithPagination(int $issueId, array $parameters = []): array
+    {
+        $this->path = sprintf('/issues/%d/attachments', $issueId);
+        $response = $this->get($parameters);
+
+        return $this->decodeResponse($response);
+    }
+
+    /**
      * @param int $issueId
      * @param int $attachmentId
      * @param array $parameters
