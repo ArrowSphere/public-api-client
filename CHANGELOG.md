@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.14] - 2025-01-20
+
 - Updated Github action cache dependency for the CI workflow
 
 ## [0.11.13] - 2024-12-02
@@ -608,7 +610,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.13...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.14...HEAD
+[0.11.14]: https://github.com/ArrowSphere/public-api-client/compare/0.11.13...0.11.14
 [0.11.13]: https://github.com/ArrowSphere/public-api-client/compare/0.11.12...0.11.13
 [0.11.12]: https://github.com/ArrowSphere/public-api-client/compare/0.11.11...0.11.12
 [0.11.11]: https://github.com/ArrowSphere/public-api-client/compare/0.11.10...0.11.11
