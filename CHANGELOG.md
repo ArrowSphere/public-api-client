@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Updated Github action cache dependency for the CI workflow
+
 ## [0.11.13] - 2024-12-02
 
 - Added a new method `getAwsPayerAccountList` to get the list of AWS payer accounts
