@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added  `nextRenewalDate` to the `License` entity
+- Added  `get listAttachmentsWithPagination` to the `Support` client
+
 ## [0.11.14] - 2025-01-20
 
 - Updated Github action cache dependency for the CI workflow

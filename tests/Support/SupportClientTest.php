@@ -347,6 +347,33 @@ JSON;
         self::assertSame(json_decode(self::TEST_ATTACHMENT, true), $attachment);
     }
 
+    public function testListAttachmentsWithPagination(): void
+    {
+        $response = '{"status": 200, "data": [' . self::TEST_ATTACHMENT . '], "pagination": {"per_page": 1, "current_page": 1, "total_page": 1, "total": 1}}';
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/support/issues/123/attachments')
+            ->willReturn(new Response(200, [], $response));
+
+        $attachments = $this->client->listAttachmentsWithPagination(123);
+
+        $data = $attachments['data'];
+        self::assertCount(1, $data);
+
+        $attachment = reset($data);
+
+        self::assertSame(json_decode(self::TEST_ATTACHMENT, true), $attachment);
+
+        $pagination = $attachments['pagination'];
+
+        self::assertEquals(1, $pagination['per_page']);
+        self::assertEquals(1, $pagination['current_page']);
+        self::assertEquals(1, $pagination['total_page']);
+        self::assertEquals(1, $pagination['total']);
+    }
+
     public function testGetAttachment(): void
     {
         $response = '{"status": 200, "data": ' . self::TEST_ATTACHMENT . '}';
