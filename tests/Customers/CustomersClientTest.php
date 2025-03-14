@@ -6,6 +6,8 @@ use ArrowSphere\PublicApiClient\Customers\CustomersClient;
 use ArrowSphere\PublicApiClient\Customers\Entities\Customer;
 use ArrowSphere\PublicApiClient\Customers\Entities\CustomersResponse;
 use ArrowSphere\PublicApiClient\Customers\Entities\Gdap;
+use ArrowSphere\PublicApiClient\Customers\Request\MigrationRequest;
+use ArrowSphere\PublicApiClient\Customers\Request\ProvisionRequest;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
@@ -321,7 +323,7 @@ JSON;
         ];
         $result = [
             'status' => 200,
-            'data' => $data
+            'data' => $data,
         ] + $pagination;
         $response = json_encode($result);
 
@@ -403,7 +405,7 @@ JSON;
             'TaxNumber'         => '',
             'WebsiteUrl'        => 'https://www.dccomics.com',
             'Zip'               => '12345',
-            'OrganizationUnit'  => null
+            'OrganizationUnit'  => null,
         ];
 
         $customer = new Customer($payload);
@@ -742,11 +744,11 @@ JSON;
             ->withConsecutive(
                 [
                     'get',
-                    'https://www.test.com/customers/XSP123456/relationships?abc=def&ghi=0'
+                    'https://www.test.com/customers/XSP123456/relationships?abc=def&ghi=0',
                 ],
                 [
                     'get',
-                    'https://www.test.com/customers/XSP123456/relationships?abc=def&ghi=0&paginationToken=A1B2C3D4'
+                    'https://www.test.com/customers/XSP123456/relationships?abc=def&ghi=0&paginationToken=A1B2C3D4',
                 ]
             )
             ->will(self::onConsecutiveCalls(
@@ -770,5 +772,141 @@ JSON;
         }
 
         self::assertSame($expectedGdapList, $gdapList);
+    }
+
+    public function testGetProvisionInvalid(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/customers/XSP123456/provision?program=MSCP')
+            ->willReturn(new Response(200, [], '{'));
+
+        $this->expectException(PublicApiClientException::class);
+
+        $res = $this->client->getProvision(
+            'XSP123456',
+            'MSCP'
+        );
+    }
+
+    public function testGetProvision(): void
+    {
+        $body = [
+            'status' => 200,
+            'data' => [
+                'status' => 'Fulfilled',
+                'message' => 'The company was provisioned successfully',
+                'attributes' => [
+                    [
+                        'name' => 'domain',
+                        'value' => 'mydomain.onmicrosoft.com',
+                    ],
+                ],
+            ],
+        ];
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/customers/XSP123456/provision?program=MSCP')
+            ->willReturn(new Response(200, [], json_encode($body)));
+
+        $res = $this->client->getProvision(
+            'XSP123456',
+            'MSCP'
+        );
+
+        self::assertSame('Fulfilled', $res->getStatus());
+        self::assertSame('The company was provisioned successfully', $res->getMessage());
+        self::assertCount(1, $res->getAttributes());
+        self::assertSame('domain', $res->getAttributes()[0]->getName());
+        self::assertSame('mydomain.onmicrosoft.com', $res->getAttributes()[0]->getValue());
+
+        self::assertSame($body['data'], $res->jsonSerialize());
+    }
+
+    public function testPostProvision(): void
+    {
+        $payload = [
+            'program' => 'MSCP',
+            'attributes' => [
+                [
+                    'name' => 'domain',
+                    'value' => 'mydomain.onmicrosoft.com',
+                ],
+            ],
+        ];
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('post', 'https://www.test.com/customers/XSP123456/provision', [
+                'headers' => [
+                    'apiKey' => '123456',
+                    'Content-Type' => 'application/json',
+                    'User-Agent' => $this->userAgentHeader,
+                ],
+                'body' => json_encode($payload),
+            ])
+            ->willReturn(new Response(202, []));
+
+        $res = $this->client->postProvision(
+            'XSP123456',
+            new ProvisionRequest($payload)
+        );
+
+        self::assertSame('', $res);
+    }
+
+    public function testPostMigration(): void
+    {
+        $payload = [
+            'program' => 'MSCP',
+            'attributes' => [
+                [
+                    'name' => 'domain',
+                    'value' => 'mydomain.onmicrosoft.com',
+                ],
+            ],
+        ];
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('post', 'https://www.test.com/customers/XSP123456/migration', [
+                'headers' => [
+                    'apiKey' => '123456',
+                    'Content-Type' => 'application/json',
+                    'User-Agent' => $this->userAgentHeader,
+                ],
+                'body' => json_encode($payload),
+            ])
+            ->willReturn(new Response(202, []));
+
+        $res = $this->client->postMigration(
+            'XSP123456',
+            new MigrationRequest($payload)
+        );
+
+        self::assertSame('', $res);
+    }
+
+    public function testCancelMigration(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('delete', 'https://www.test.com/customers/XSP123456/migration?program=MSCP', [
+                'headers' => [
+                    'apiKey' => '123456',
+                    'Content-Type' => 'application/json',
+                    'User-Agent' => $this->userAgentHeader,
+                ],
+            ])
+            ->willReturn(new Response(200, [], 'ok'));
+
+        $res = $this->client->cancelMigration('XSP123456', 'MSCP');
+
+        self::assertSame('ok', $res);
     }
 }

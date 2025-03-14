@@ -117,6 +117,8 @@ class LicenseFindFieldEnum extends AbstractEnum
 
     public const LICENSE_MESSAGE = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_MESSAGE;
 
+    public const LICENSE_NEXT_RENEWAL_DATE = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_NEXT_RENEWAL_DATE;
+
     public const LICENSE_PERIODICITY = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_PERIODICITY;
 
     public const LICENSE_TERM = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_TERM;
