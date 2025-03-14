@@ -20,6 +20,7 @@ use ArrowSphere\PublicApiClient\Customers\CustomersClient;
 use ArrowSphere\PublicApiClient\General\CheckDomainClient;
 use ArrowSphere\PublicApiClient\General\WhoamiClient;
 use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
+use ArrowSphere\PublicApiClient\Monitoring\MonitoringClient;
 use ArrowSphere\PublicApiClient\Notification\NotificationClient;
 use ArrowSphere\PublicApiClient\Orders\OrdersClient;
 use ArrowSphere\PublicApiClient\Partners\PartnersClient;
@@ -80,6 +81,9 @@ use RuntimeException;
  *
  * Support clients
  * @method SupportClient getSupportClient()
+ *
+ * Monitoring clients
+ * @method MonitoringClient getMonitoringClient()
  */
 class PublicApiClient extends AbstractClient
 {

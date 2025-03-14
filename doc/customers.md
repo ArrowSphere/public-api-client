@@ -71,6 +71,27 @@ The `Invitation` entity allows inviting customer contacts to the customer portal
 | contact.firstName | `string` | Bruce               | The first name of the invited contact                                    |
 | contact.lastName  | `string` | Wayne               | The last name of the invited contact                                     |
 
+
+### ProvisionResponse
+
+The `ProvisionResponse` entity allows get provision situation.
+
+| Field           | Type            | Example                                  | Description                                                        |
+|-----------------|-----------------|------------------------------------------|--------------------------------------------------------------------|
+| status          | `string`        | Fulfilled                                | status of provision                                                |
+| message         | `string`        | The company was provisioned successfully | provision message                                                  |
+| attributes      | `Attribute[]`   |                                          | Attributes used for provision (see [Attribute entity](#Attribute)) |
+
+
+### Attribute
+
+The `Attribute` entity allows get attribute used for provision.
+
+| Field      | Type         | Example            | Description     |
+|------------|--------------|--------------------|-----------------|
+| name       | `string`     | domainName         | Attribute name  |
+| value      | `string`     | test.microsoft.com | Attribute Value |
+
 ## Usage
 
 ### Initialization
@@ -175,4 +196,78 @@ $invitation = $client->createInvitation($contactId);
 
 echo "New invitation with keycode " . $invitation->getKeycode() . PHP_EOL;
 
+```
+
+### Get provision situation
+
+You can get provision situation by calling the `getProvision()` method.
+
+This method returns a `ProvisionResponse` entity.
+
+Example:
+
+```php
+
+$reference = 'XSP12345';
+
+$provision = $client->getProvision($reference, 'MSCP');
+
+echo "Provision status is: " . $provision->getStatus() . PHP_EOL;
+```
+
+### Start provision
+
+You can start provision by calling the `postProvision()` method.
+
+
+Example:
+
+```php
+
+$reference = 'XSP12345';
+$payload = [
+            'program' => 'MSCP',
+            'attributes' => [
+                [
+                    'name' => 'domain',
+                    'value' => 'mydomain.onmicrosoft.com',
+                ],
+            ],
+        ];
+        
+$client->postProvision($reference, new ProvisionRequest($payload));
+```
+
+### Start migration
+
+You can start migration by calling the `postMigration()` method.
+
+Example:
+
+```php
+$reference = 'XSP12345';
+$payload = [
+            'program' => 'MSCP',
+            'attributes' => [
+                [
+                    'name' => 'domain',
+                    'value' => 'mydomain.onmicrosoft.com',
+                ],
+            ],
+        ];
+        
+$client->postMigration($reference, new MigrationRequest($payload));
+```
+
+### Cancel migration
+
+You can cancel migration in progress by calling the `cancelMigration()` method.
+
+Example:
+
+```php
+$reference = 'XSP12345';
+$program => 'MSCP';
+        
+$client->cancelMigration($reference, $program);
 ```

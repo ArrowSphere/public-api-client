@@ -44,6 +44,8 @@ class License extends AbstractEntity
 
     public const COLUMN_MESSAGE = 'message';
 
+    public const COLUMN_NEXT_RENEWAL_DATE = 'next_renewal_date';
+
     public const COLUMN_OFFER = 'offer';
 
     public const COLUMN_PARENT_ORDER_REF = 'parent_order_ref';
@@ -195,6 +197,11 @@ class License extends AbstractEntity
      * @var string
      */
     private $message;
+
+    /**
+     * @var string|null
+     */
+    private $nextRenewalDate;
 
     /**
      * @var string|null
@@ -371,6 +378,7 @@ class License extends AbstractEntity
         $this->lastUpdate = $data[self::COLUMN_LAST_UPDATE];
         $this->marketplace = $data[self::COLUMN_MARKETPLACE];
         $this->message = $data[self::COLUMN_MESSAGE];
+        $this->nextRenewalDate = $data[self::COLUMN_NEXT_RENEWAL_DATE] ?? $data[self::COLUMN_END_DATE];
         $this->offer = $data[self::COLUMN_OFFER];
         $this->parentLineId = $data[self::COLUMN_PARENT_LINE_ID];
         $this->parentOrderRef = $data[self::COLUMN_PARENT_ORDER_REF];
@@ -532,6 +540,14 @@ class License extends AbstractEntity
     public function getMessage(): string
     {
         return $this->message;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getNextRenewalDate(): ?string
+    {
+        return $this->nextRenewalDate;
     }
 
     /**
@@ -785,6 +801,7 @@ class License extends AbstractEntity
             self::COLUMN_VENDOR_BILLING_ID => $this->vendorBillingId,
             self::COLUMN_VENDOR_SUBSCRIPTION_ID => $this->vendorSubscriptionId,
             self::COLUMN_MESSAGE => $this->message,
+            self::COLUMN_NEXT_RENEWAL_DATE => $this->nextRenewalDate,
             self::COLUMN_PERIODICITY => $this->periodicity,
             self::COLUMN_TERM => $this->term,
             self::COLUMN_IS_ENABLED => $this->isEnabled,

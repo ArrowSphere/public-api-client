@@ -5,6 +5,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added property `nextRenewalDate` to `License` entity
+- Added new method `postMigration` under `CustomersClient` to trigger the migration process for customer
+- Added new method `cancelMigration` under `CustomersClient` to cancel current migration process for customer
+- Added new method `postProvision` under `CustomersClient` to trigger the provision process for customer
+- Added new method `getProvision` under `CustomersClient` to get provision process situation for customer
+- Added new client `MonitoringClient` to manage monitoring endpoint
+- Added new method `createReport` under `MonitoringClient` to report a monitoring event
+
 ## [0.11.14] - 2025-01-20
 
 - Updated Github action cache dependency for the CI workflow

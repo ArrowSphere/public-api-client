@@ -7,6 +7,9 @@ use ArrowSphere\PublicApiClient\Customers\Entities\Customer;
 use ArrowSphere\PublicApiClient\Customers\Entities\CustomersResponse;
 use ArrowSphere\PublicApiClient\Customers\Entities\Gdap;
 use ArrowSphere\PublicApiClient\Customers\Entities\Invitation;
+use ArrowSphere\PublicApiClient\Customers\Entities\ProvisionResponse;
+use ArrowSphere\PublicApiClient\Customers\Request\MigrationRequest;
+use ArrowSphere\PublicApiClient\Customers\Request\ProvisionRequest;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
@@ -329,5 +332,63 @@ class CustomersClient extends AbstractClient
 
             $parameters['paginationToken'] = $response['paginationToken'] ?? null;
         } while (isset($parameters['paginationToken']));
+    }
+
+    /**
+     * @throws \ArrowSphere\PublicApiClient\Exception\NotFoundException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \ArrowSphere\PublicApiClient\Exception\PublicApiClientException
+     */
+    public function postMigration(string $customerReference, MigrationRequest $data, array $parameters = []): string
+    {
+        $this->path = '/customers/' . urlencode($customerReference) . '/migration';
+
+        return $this->post($data->jsonSerialize(), $parameters)->__toString();
+    }
+
+    /**
+     * @throws \ArrowSphere\PublicApiClient\Exception\NotFoundException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \ArrowSphere\PublicApiClient\Exception\PublicApiClientException
+     */
+    public function cancelMigration(string $customerReference, string $program, array $parameters = []): string
+    {
+        $this->path = '/customers/' . urlencode($customerReference) . '/migration';
+
+        return $this->delete(["program" => $program], $parameters);
+    }
+
+    public function postProvision(string $customerReference, ProvisionRequest $data, array $parameters = []): string
+    {
+        $this->path = '/customers/' . urlencode($customerReference) . '/provision';
+
+        return $this->post($data->jsonSerialize(), $parameters)->__toString();
+    }
+
+    /**
+     * @throws \ArrowSphere\PublicApiClient\Exception\NotFoundException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \ArrowSphere\PublicApiClient\Exception\PublicApiClientException
+     */
+    public function getProvisionRaw(string $customerReference, string $program): string
+    {
+        $this->path = '/customers/' . urlencode($customerReference) . '/provision';
+
+        return $this->get(['program' => $program]);
+    }
+
+    /**
+     * @throws \ArrowSphere\PublicApiClient\Exception\NotFoundException
+     * @throws \ArrowSphere\PublicApiClient\Exception\EntityValidationException
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     * @throws \ArrowSphere\PublicApiClient\Exception\PublicApiClientException
+     */
+    public function getProvision(string $customerReference, string $program): ProvisionResponse
+    {
+        $rawResponse = $this->getProvisionRaw($customerReference, $program);
+
+        $response = $this->decodeResponse($rawResponse);
+
+        return new ProvisionResponse($response['data']);
     }
 }
