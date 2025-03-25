@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.15] - 2025-03-25
+
 - Added property `nextRenewalDate` to `License` entity
 - Added new method `postMigration` under `CustomersClient` to trigger the migration process for customer
 - Added new method `cancelMigration` under `CustomersClient` to cancel current migration process for customer
@@ -618,7 +620,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.14...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.15...HEAD
+[0.11.15]: https://github.com/ArrowSphere/public-api-client/compare/0.11.14...0.11.15
 [0.11.14]: https://github.com/ArrowSphere/public-api-client/compare/0.11.13...0.11.14
 [0.11.13]: https://github.com/ArrowSphere/public-api-client/compare/0.11.12...0.11.13
 [0.11.12]: https://github.com/ArrowSphere/public-api-client/compare/0.11.11...0.11.12
