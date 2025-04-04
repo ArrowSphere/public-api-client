@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added new client `getSubscriptionClients` to validate subscription
+
 ## [0.11.15] - 2025-03-25
 
 - Added property `nextRenewalDate` to `License` entity
