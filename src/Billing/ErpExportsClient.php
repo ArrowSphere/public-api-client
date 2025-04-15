@@ -355,17 +355,17 @@ class ErpExportsClient extends AbstractBillingClient
             $rawResponse = $this->createErpExportSyncRaw($parameters);
             $response = $this->decodeResponse($rawResponse);
 
-            if (! isset($response['pagination']['perPage'])) {
+            if (! isset($response['pagination']['totalPages'])) {
                 throw new PublicApiClientException(sprintf('Error: Pagination not found in response. Raw response was: "%s"', $rawResponse));
             }
 
-            if ($response['pagination']['perPage'] < count($response['data']['values'])) {
+            if ($response['pagination']['totalPages'] <= $currentPage) {
                 $lastPage = true;
             }
 
             $currentPage++;
 
-            if (! isset($response['data']['values']) || ! isset($response['data']['headers'])) {
+            if (! isset($response['data']['values'], $response['data']['headers'])) {
                 throw new PublicApiClientException(sprintf('Error: Data not found in response. Raw response was: "%s"', $rawResponse));
             }
 

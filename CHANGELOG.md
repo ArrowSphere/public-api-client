@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fixed bug in `ErpExportsClient::createErpExportSync()` which did not browse pages correctly
+
 ## [0.11.16] - 2025-04-04
 
 - Added new client `getSubscriptionClients` to validate subscription
