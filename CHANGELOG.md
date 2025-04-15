@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.17] - 2025-04-15
+
 - Fixed bug in `ErpExportsClient::createErpExportSync()` which did not browse pages correctly
 
 ## [0.11.16] - 2025-04-04
@@ -626,7 +628,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.16...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.17...HEAD
+[0.11.17]: https://github.com/ArrowSphere/public-api-client/compare/0.11.16...0.11.17
 [0.11.16]: https://github.com/ArrowSphere/public-api-client/compare/0.11.15...0.11.16
 [0.11.15]: https://github.com/ArrowSphere/public-api-client/compare/0.11.14...0.11.15
 [0.11.14]: https://github.com/ArrowSphere/public-api-client/compare/0.11.13...0.11.14
