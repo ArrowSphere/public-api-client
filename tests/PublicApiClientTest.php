@@ -4,6 +4,7 @@ namespace ArrowSphere\PublicApiClient\Tests;
 
 use ArrowSphere\PublicApiClient\General\WhoamiClient;
 use ArrowSphere\PublicApiClient\PublicApiClient;
+use ArrowSphere\PublicApiClient\Subscription\SubscriptionClient;
 use PHPUnit\Framework\TestCase;
 use Throwable;
 
@@ -16,6 +17,12 @@ class PublicApiClientTest extends TestCase
                 'className' => 'WhoamiClient',
                 'result' => [
                     'instance' => WhoamiClient::class,
+                ],
+            ],
+            'subscription' => [
+                'className' => 'SubscriptionClient',
+                'result' => [
+                    'instance' => SubscriptionClient::class,
                 ],
             ],
             'nonexistent' => [
