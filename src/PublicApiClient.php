@@ -25,6 +25,7 @@ use ArrowSphere\PublicApiClient\Notification\NotificationClient;
 use ArrowSphere\PublicApiClient\Orders\OrdersClient;
 use ArrowSphere\PublicApiClient\Partners\PartnersClient;
 use ArrowSphere\PublicApiClient\Quotes\QuotesClient;
+use ArrowSphere\PublicApiClient\Subscription\SubscriptionClient;
 use ArrowSphere\PublicApiClient\Support\SupportClient;
 use BadMethodCallException;
 use RuntimeException;
@@ -84,6 +85,9 @@ use RuntimeException;
  *
  * Monitoring clients
  * @method MonitoringClient getMonitoringClient()
+ *
+ * Subscription clients
+ * @method SubscriptionClient getSubscriptionClient()
  */
 class PublicApiClient extends AbstractClient
 {

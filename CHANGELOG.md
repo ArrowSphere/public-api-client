@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fixed missing reference to `getSubscriptionClient` method in `PublicApiClient` class
+
 ## [0.11.17] - 2025-04-15
 
 - Fixed bug in `ErpExportsClient::createErpExportSync()` which did not browse pages correctly
