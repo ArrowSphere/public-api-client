@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added new method `postExportCustomers` under `CustomersClient` to initiate the export of customers
+
 ## [0.11.18] - 2025-06-12
 
 - Fixed missing reference to `getSubscriptionClient` method in `PublicApiClient` class
