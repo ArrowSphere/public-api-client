@@ -9,6 +9,7 @@ use ArrowSphere\PublicApiClient\Customers\Entities\Gdap;
 use ArrowSphere\PublicApiClient\Customers\Entities\Invitation;
 use ArrowSphere\PublicApiClient\Customers\Entities\ProvisionResponse;
 use ArrowSphere\PublicApiClient\Customers\Request\MigrationRequest;
+use ArrowSphere\PublicApiClient\Customers\Request\ExportCustomersRequest;
 use ArrowSphere\PublicApiClient\Customers\Request\ProvisionRequest;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
@@ -391,4 +392,22 @@ class CustomersClient extends AbstractClient
 
         return new ProvisionResponse($response['data']);
     }
+
+    /**
+     * @param ExportCustomersRequest $data
+     * @param array $parameters
+     *
+     * @return string
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function postExportCustomers(ExportCustomersRequest $data, array $parameters = []): string
+    {
+        $this->path = '/customers/initiate-export';
+
+        return $this->post($data->jsonSerialize(), $parameters)->__toString();
+    }
+
 }
