@@ -6,8 +6,10 @@ use ArrowSphere\PublicApiClient\Customers\CustomersClient;
 use ArrowSphere\PublicApiClient\Customers\Entities\Customer;
 use ArrowSphere\PublicApiClient\Customers\Entities\CustomersResponse;
 use ArrowSphere\PublicApiClient\Customers\Entities\Gdap;
+use ArrowSphere\PublicApiClient\Customers\Request\ExportCustomersRequest;
 use ArrowSphere\PublicApiClient\Customers\Request\MigrationRequest;
 use ArrowSphere\PublicApiClient\Customers\Request\ProvisionRequest;
+use ArrowSphere\PublicApiClient\Customers\Request\SubEntities\CustomerFilters;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
@@ -906,6 +908,34 @@ JSON;
             ->willReturn(new Response(200, [], 'ok'));
 
         $res = $this->client->cancelMigration('XSP123456', 'MSCP');
+
+        self::assertSame('ok', $res);
+    }
+
+    public function testExportCustomersCompany(): void
+    {
+        $payload = [
+            'filters' => [
+                CustomerFilters::COLUMN_COMPANY_NAME => 'Wayne industries',
+                CustomerFilters::COLUMN_COUNTRY_NAME => 'Fran',
+            ],
+        ];
+        $customerFilters = new ExportCustomersRequest($payload);
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('post', 'https://www.test.com/customers/initiate-export', [
+                'headers' => [
+                    'apiKey' => '123456',
+                    'Content-Type' => 'application/json',
+                    'User-Agent' => $this->userAgentHeader,
+                ],
+                'body' => json_encode($customerFilters->jsonSerialize()),
+            ])
+            ->willReturn(new Response(200, [], 'ok'));
+
+        $res = $this->client->postExportCustomers($customerFilters);
 
         self::assertSame('ok', $res);
     }
