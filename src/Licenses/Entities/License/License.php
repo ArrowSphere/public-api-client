@@ -184,7 +184,7 @@ class License extends AbstractEntity
     private $isEnabled;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $lastUpdate;
 
@@ -519,9 +519,9 @@ class License extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getLastUpdate(): string
+    public function getLastUpdate(): ?string
     {
         return $this->lastUpdate;
     }
