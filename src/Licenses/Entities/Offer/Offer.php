@@ -50,7 +50,7 @@ class Offer extends AbstractEntity
     private $isEnabled;
 
     /**
-     * @var string
+     * @var string|null
      */
     private $lastUpdate;
 
@@ -114,9 +114,9 @@ class Offer extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getLastUpdate(): string
+    public function getLastUpdate(): ?string
     {
         return $this->lastUpdate;
     }

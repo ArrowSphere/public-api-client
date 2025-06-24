@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Changed `License` entity to allows `null` for the `lastUpdate` property
+- Changed `Offer` entity to allows `null` for the `lastUpdate` property
+
 ## [0.11.19] - 2025-06-19
 
 - Added new method `postExportCustomers` under `CustomersClient` to initiate the export of customers
