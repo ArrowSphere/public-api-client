@@ -8,7 +8,7 @@ use ArrowSphere\PublicApiClient\Entities\Property;
 class Customer extends AbstractEntity
 {
     public const COLUMN_REFERENCE = 'reference';
-    public const COLUMN_PO_NUMBER = 'poNumber';
+    public const COLUMN_PO_NUMBER = 'ponumber';
 
     #[Property(required: true)]
     protected string $reference;
