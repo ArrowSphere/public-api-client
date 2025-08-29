@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Renamed `poNumber` to `ponumber` to match Public API naming
+
 ## [0.11.20] - 2025-06-24
 
 - Changed `License` entity to allows `null` for the `lastUpdate` property
