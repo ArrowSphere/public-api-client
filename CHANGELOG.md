@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.21] - 2025-09-01
+
 - Renamed `poNumber` to `ponumber` to match Public API naming
 
 ## [0.11.20] - 2025-06-24
@@ -643,7 +645,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.20...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.21...HEAD
+[0.11.21]: https://github.com/ArrowSphere/public-api-client/compare/0.11.20...0.11.21
 [0.11.20]: https://github.com/ArrowSphere/public-api-client/compare/0.11.19...0.11.20
 [0.11.19]: https://github.com/ArrowSphere/public-api-client/compare/0.11.18...0.11.19
 [0.11.18]: https://github.com/ArrowSphere/public-api-client/compare/0.11.17...0.11.18
