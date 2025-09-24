@@ -14,7 +14,10 @@ class CreateOrder extends AbstractEntity
     public const COLUMN_EXTRA_INFORMATION = 'extraInformation';
     public const COLUMN_CUSTOMER = 'customer';
     public const COLUMN_PRODUCTS = 'products';
+    public const COLUMN_SCENARIO = 'scenario';
 
+    #[Property()]
+    protected ?string $scenario = null;
     #[Property()]
     protected ?string $scheduledDate = null;
     #[Property(type: ExtraInformation::class)]
@@ -28,6 +31,7 @@ class CreateOrder extends AbstractEntity
 
     /**
      * @param array{
+     *     scenario?: string,
      *     scheduledDate?: string,
      *     extraInformation?: array{programs: array<string,string>},
      *     customer: array{reference: string, poNumber?: string},

@@ -134,6 +134,7 @@ class OrdersClientTest extends AbstractClientTest
                     'arrowSpherePriceBandSku' => 'testArrowsSku',
                 ],
             ],
+            'scenario' => 'default',
         ];
 
         $order = new CreateOrder($payload);

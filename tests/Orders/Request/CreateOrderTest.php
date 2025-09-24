@@ -155,4 +155,26 @@ class CreateOrderTest extends TestCase
         self::expectException(EntitiesException::class);
         new CreateOrder($payload);
     }
+
+    public function testWithScenario(): void
+    {
+        $payload = [
+            'customer' => [
+                'reference' => 'test',
+                'poNumber'  => 'test',
+            ],
+            'products' => [
+                [
+                    'quantity'                => 2,
+                    'friendlyName'            => 'test',
+                    'arrowSpherePriceBandSku' => 'testArrowsSku',
+                ],
+            ],
+            'scenario' => 'default',
+        ];
+
+        $order = new CreateOrder($payload);
+
+        self::assertEquals('default', $order->jsonSerialize()['scenario']);
+    }
 }
