@@ -21,9 +21,11 @@ class ProvisionRequest extends AbstractEntity
      * @param array{
      *     program: string,
      *     attributes: array{
-     *      name: string,
-     *      value: string
-     *      }
+     *       array{
+     *         name: string,
+     *         value: string
+     *       }
+     *     }
      * } $data
      *
      * @throws \ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException
