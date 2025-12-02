@@ -8,6 +8,7 @@ use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Licenses\Entities\FindResult;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\AwsPayerAccount;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\Config;
+use ArrowSphere\PublicApiClient\Licenses\Entities\License\Credentials;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\Predictions;
 use Generator;
 use GuzzleHttp\Exception\GuzzleException;
@@ -31,6 +32,11 @@ class LicensesClient extends AbstractLicensesClient
      * @var string The path of the Predictions endpoint
      */
     private const PREDICTION_PATH = '/predictions/daily';
+
+    /**
+     * @var string The path of the Credentials endpoint
+     */
+    private const CREDENTIALS_PATH = '/credentials';
 
     /**
      * @var string The key for keyword search query parameter (to search one string in all available search fields)
@@ -337,5 +343,41 @@ class LicensesClient extends AbstractLicensesClient
         $response = $this->decodeResponse($rawResponse);
 
         return array_map(static fn ($item) => new AwsPayerAccount($item), $response['data']['payerAccounts'] ?? []);
+    }
+
+    /**
+     * @param string $reference
+     * @param array $parameters
+     *
+     * @return string
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getCredentialsRaw(string $reference, array $parameters = []): string
+    {
+        $this->path = '/' . $reference . self::CREDENTIALS_PATH;
+
+        return $this->get($parameters);
+    }
+
+    /**
+     * @param string $reference
+     * @param array $parameters
+     *
+     * @return Credentials
+     *
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getCredentials(string $reference, array $parameters = []): Credentials
+    {
+        $rawResponse = $this->getCredentialsRaw($reference, $parameters);
+        $response = $this->decodeResponse($rawResponse);
+
+        return new Credentials($response['data']);
     }
 }

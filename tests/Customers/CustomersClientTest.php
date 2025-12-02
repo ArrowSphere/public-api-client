@@ -939,4 +939,62 @@ JSON;
 
         self::assertSame('ok', $res);
     }
+
+    public function testGetMicrosoftAgreementValidationStatusWhenValidated(): void
+    {
+        $response = json_encode([
+            'status' => 200,
+            'data' => [
+                'isMcaValidated' => true,
+            ],
+        ]);
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/customers/checkMicrosoftCustomerAgreement?customerReference=XSP123456789')
+            ->willReturn(new Response(200, [], $response));
+
+        $isMcaValidated = $this->client->getMicrosoftAgreementValidationStatus(['customerReference' => 'XSP123456789']);
+
+        self::assertTrue($isMcaValidated);
+    }
+
+    public function testGetMicrosoftAgreementValidationStatusWhenNotValidated(): void
+    {
+        $response = json_encode([
+            'status' => 200,
+            'data' => [
+                'isMcaValidated' => false,
+            ],
+        ]);
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/customers/checkMicrosoftCustomerAgreement?customerReference=XSP123456789')
+            ->willReturn(new Response(200, [], $response));
+
+        $isMcaValidated = $this->client->getMicrosoftAgreementValidationStatus(['customerReference' => 'XSP123456789']);
+
+        self::assertFalse($isMcaValidated);
+    }
+
+    public function testGetMicrosoftAgreementValidationStatusWithMissingField(): void
+    {
+        $response = json_encode([
+            'status' => 200,
+            'data' => [],
+        ]);
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/customers/checkMicrosoftCustomerAgreement?customerReference=XSP123456789')
+            ->willReturn(new Response(200, [], $response));
+
+        $isMcaValidated = $this->client->getMicrosoftAgreementValidationStatus(['customerReference' => 'XSP123456789']);
+
+        self::assertFalse($isMcaValidated);
+    }
 }

@@ -6,6 +6,7 @@ use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\Config;
+use ArrowSphere\PublicApiClient\Licenses\Entities\License\Credentials;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\Predictions;
 use ArrowSphere\PublicApiClient\Licenses\Entities\LicenseOfferFindResult;
 use ArrowSphere\PublicApiClient\Licenses\Enum\LicenseFindFieldEnum;
@@ -1148,5 +1149,114 @@ JSON;
         self::assertSame('arrow', $payerAccount->getType());
         self::assertSame('Payer Account 1', $payerAccount->getFriendlyName());
         self::assertSame('XSP100', $payerAccount->getLicenseRef());
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetCredentialsRaw(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'get',
+                'https://www.test.com/licenses/XSP1234/credentials',
+                [
+                    'headers' => [
+                        'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
+                        'User-Agent' => $this->userAgentHeader,
+                    ],
+                ]
+            )
+            ->willReturn(new Response(200, [], 'OK USA'));
+
+        $this->client->getCredentialsRaw('XSP1234');
+    }
+
+    /**
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetCredentials(): void
+    {
+        $response = <<<JSON
+{
+  "status": 200,
+  "data": {
+    "username": "admin@example.com",
+    "passwordResetUrl": "https://example.com/reset-password",
+    "url": "https://example.com/login"
+  }
+}
+JSON;
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'get',
+                'https://www.test.com/licenses/XSP1234/credentials',
+                [
+                    'headers' => [
+                        'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
+                        'User-Agent' => $this->userAgentHeader,
+                    ],
+                ]
+            )
+            ->willReturn(new Response(200, [], $response));
+
+        $credentials = $this->client->getCredentials('XSP1234');
+
+        self::assertInstanceOf(Credentials::class, $credentials);
+        self::assertSame('admin@example.com', $credentials->getUsername());
+    }
+
+    /**
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetCredentialsWithNullValues(): void
+    {
+        $response = <<<JSON
+{
+  "status": 200,
+  "data": {
+    "username": "user@test.com",
+    "passwordResetUrl": null,
+    "url": null
+  }
+}
+JSON;
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'get',
+                'https://www.test.com/licenses/XSP9999/credentials',
+                [
+                    'headers' => [
+                        'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
+                        'User-Agent' => $this->userAgentHeader,
+                    ],
+                ]
+            )
+            ->willReturn(new Response(200, [], $response));
+
+        $credentials = $this->client->getCredentials('XSP9999');
+
+        self::assertInstanceOf(Credentials::class, $credentials);
+        self::assertSame('user@test.com', $credentials->getUsername());
+        self::assertNull($credentials->getUrl());
     }
 }
