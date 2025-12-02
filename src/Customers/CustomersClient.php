@@ -409,4 +409,23 @@ class CustomersClient extends AbstractClient
 
         return $this->post($data->jsonSerialize(), $parameters)->__toString();
     }
+
+    /**
+     * @param array $parameters
+     *
+     * @return bool
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getMicrosoftAgreementValidationStatus(array $parameters = []): bool
+    {
+        $this->path = '/customers/checkMicrosoftCustomerAgreement';
+
+        $rawResponse = $this->get($parameters);
+        $response = $this->getResponseData($rawResponse);
+
+        return $response['isMcaValidated'] ?? false;
+    }
 }

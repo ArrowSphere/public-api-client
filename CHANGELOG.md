@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added new method `getMicrosoftAgreementValidationStatus` in CustomersClient to retrieve MCA status.
+- Added new method `getCredentials` in Licenses to handle credential requests.
+
 ## [0.11.22] - 2025-09-26
 
 - Added Scenario to CreateOrder Entity
