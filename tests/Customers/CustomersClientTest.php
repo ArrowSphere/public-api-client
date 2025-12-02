@@ -939,4 +939,62 @@ JSON;
 
         self::assertSame('ok', $res);
     }
+
+    public function testGetMcaStatusWhenValidated(): void
+    {
+        $response = json_encode([
+            'status' => 200,
+            'data' => [
+                'isMcaValidated' => true,
+            ],
+        ]);
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/customers/XSP123456789/checkMicrosoftCustomerAgreement')
+            ->willReturn(new Response(200, [], $response));
+
+        $isMcaValidated = $this->client->getMcaStatus('XSP123456789');
+
+        self::assertTrue($isMcaValidated);
+    }
+
+    public function testGetMcaStatusWhenNotValidated(): void
+    {
+        $response = json_encode([
+            'status' => 200,
+            'data' => [
+                'isMcaValidated' => false,
+            ],
+        ]);
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/customers/XSP123456789/checkMicrosoftCustomerAgreement')
+            ->willReturn(new Response(200, [], $response));
+
+        $isMcaValidated = $this->client->getMcaStatus('XSP123456789');
+
+        self::assertFalse($isMcaValidated);
+    }
+
+    public function testGetMcaStatusWithMissingField(): void
+    {
+        $response = json_encode([
+            'status' => 200,
+            'data' => [],
+        ]);
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('get', 'https://www.test.com/customers/XSP123456789/checkMicrosoftCustomerAgreement')
+            ->willReturn(new Response(200, [], $response));
+
+        $isMcaValidated = $this->client->getMcaStatus('XSP123456789');
+
+        self::assertFalse($isMcaValidated);
+    }
 }

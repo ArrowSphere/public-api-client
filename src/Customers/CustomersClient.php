@@ -409,4 +409,26 @@ class CustomersClient extends AbstractClient
 
         return $this->post($data->jsonSerialize(), $parameters)->__toString();
     }
+
+    /**
+     * @param string $customerReference
+     * @param array $parameters
+     *
+     * @return bool
+     *
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getMcaStatus(string $customerReference, array $parameters = []): bool
+    {
+        $this->path = sprintf(
+            '/customers/%s/checkMicrosoftCustomerAgreement',
+            $customerReference
+        );
+
+        $rawResponse = $this->get($parameters);
+        $response = $this->getResponseData($rawResponse);
+
+        return $response['isMcaValidated'] ?? false;
+    }
 }
