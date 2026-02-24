@@ -200,5 +200,7 @@ class LicenseFindFieldEnum extends AbstractEnum
     public const OFFER_ARROW_SUB_CATEGORIES = LicenseOfferFindResult::COLUMN_OFFER . '.' . Offer::COLUMN_ARROW_SUB_CATEGORIES;
 
     public const LICENSE_SECURITY = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_SECURITY;
+
+    public const LICENSE_ATTRIBUTES = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_ATTRIBUTES;
     public const LICENSE_SECURITY_ACTIVE_FRAUD_EVENTS = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_SECURITY . '.' . Security::COLUMN_ACTIVE_FRAUD_EVENTS;
 }

@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+-Added property `attributes` to `License` entity
+
 ## [0.11.23] - 2025-12-18
 
 - Added new method `getMicrosoftAgreementValidationStatus` in CustomersClient to retrieve MCA status.
