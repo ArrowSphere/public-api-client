@@ -138,7 +138,8 @@ class LicenseOfferFindResultTest extends AbstractEntityTest
         "warnings": null,
         "security": {
             "activeFraudEvents": null
-        }
+        },
+        "attributes": []
     }
 }
 JSON

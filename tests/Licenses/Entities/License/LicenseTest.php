@@ -82,6 +82,10 @@ class LicenseTest extends AbstractEntityTest
                     'security'               => [
                         'activeFraudEvents' => null,
                     ],
+                    'attributes'             => [
+                        'attribute1' => 'value1',
+                        'attribute2' => 'value2',
+                    ],
                 ],
                 'expected' => <<<JSON
 {
@@ -153,6 +157,10 @@ class LicenseTest extends AbstractEntityTest
     ],
     "security": {
         "activeFraudEvents": null
+    },
+    "attributes": {
+        "attribute1": "value1",
+        "attribute2": "value2"
     }
 }
 JSON

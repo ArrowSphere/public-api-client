@@ -96,6 +96,8 @@ class License extends AbstractEntity
 
     public const COLUMN_SECURITY = 'security';
 
+    public const COLUMN_ATTRIBUTES = 'attributes';
+
     public const COLUMN_CUSTOMER_VENDOR_REFERENCE = 'customerVendorReference';
 
     protected const VALIDATION_RULES = [
@@ -339,6 +341,11 @@ class License extends AbstractEntity
     private $security;
 
     /**
+     * @var array<string,string>
+     */
+    private $attributes;
+
+    /**
      * License constructor.
      *
      * @param array $data
@@ -404,6 +411,7 @@ class License extends AbstractEntity
         $this->vendorName = $data[self::COLUMN_VENDOR_NAME];
         $this->vendorSubscriptionId = $data[self::COLUMN_VENDOR_SUBSCRIPTION_ID];
         $this->security = new Security($data[self::COLUMN_SECURITY] ?? []);
+        $this->attributes = $data[self::COLUMN_ATTRIBUTES] ?? [];
     }
 
     /**
@@ -759,6 +767,14 @@ class License extends AbstractEntity
     }
 
     /**
+     * @return array<string,string>
+     */
+    public function getAttributes(): array
+    {
+        return $this->attributes;
+    }
+
+    /**
      * @return array
      */
     public function jsonSerialize(): array
@@ -808,6 +824,7 @@ class License extends AbstractEntity
             self::COLUMN_LAST_UPDATE => $this->lastUpdate,
             self::COLUMN_WARNINGS => $this->jsonSerializeWarnings(),
             self::COLUMN_SECURITY => $this->security,
+            self::COLUMN_ATTRIBUTES => $this->attributes,
         ];
     }
 

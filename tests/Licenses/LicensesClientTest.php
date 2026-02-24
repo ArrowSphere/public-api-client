@@ -262,6 +262,10 @@ JSON;
                         'security'               => [
                             'activeFraudEvents' => 30,
                         ],
+                        'attributes'               => [
+                            'renewalPolicy' => 'renew',
+                            'brand' => 'Adobe VIP',
+                        ],
                     ],
                 ];
             }

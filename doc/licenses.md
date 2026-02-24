@@ -25,51 +25,52 @@ The AwsPayerAccount represent the AWS payer account for a specific endCustomerRe
 
 A license is managed by the `License` entity.
 
-| Field                   | Type          | Example                                    | Description                                                                                           |
-|-------------------------|---------------|--------------------------------------------|-------------------------------------------------------------------------------------------------------|
-| acceptEula              | `bool`        | false                                      |                                                                                                       |
-| activeSeats             | `ActiveSeats` | an instance of [ActiveSeats](#ActiveSeats) | The [active seats](#ActiveSeats)                                                                      |
-| autoRenew               | `bool`        | true                                       | True if the license is renewed automatically upon expiration                                          |
-| baseSeat                | `int`         | 6                                          | The number of seats at the time of the license purchase                                               |
-| category                | `string`      | BaseProduct                                | Indicates if the offer is a BaseProduct or an Addon                                                   |
-| classification          | `string`      | SaaS                                       | The [classification](catalog-classification.md)                                                       |
-| configs                 | `Config[]`    | an array of [Configs](#Config)             | The list of applicable [configs](#Config) for this license                                            |
-| customerName            | `string`      | My customer                                | The name of the end-customer                                                                          |
-| customerRef             | `string`      | XSP123456789                               | The reference of the end-customer                                                                     |
-| customerVendorReference | `string`      | ABCDABCD-1234-5678-9876-ABCDEFABCDEF       | The customer Vendor reference (tenant ID for Microsoft)                                               |
-| endDate                 | `string`      | 2021-11-18T17:48:43.000Z                   | The end date of the license                                                                           |
-| friendlyName            | `string`      | XSP12345                                   | MS-0B-O365-ENTERPRIS                                                                                  |
-| id                      | `int`         | 123456                                     | The license identifier (an internal identifier)                                                       |
-| isEnabled               | `bool`        | true                                       | True if the license is active                                                                         |
-| lastUpdate              | `string`      | 2020-12-08T15:42:30.069Z                   | The last time the license's data was updated (for any reason)                                         |
-| marketplace             | `string`      | US                                         | The [marketplace](general-marketplace.md)                                                             |
-| message                 | `string`      |                                            | If an action is currently performed on the license, this message will indicate it                     |
-| nextRenewalDate         | `string`      | 2024-12-18T17:48:43.000Z                   | The next renewal date of the license if exist else it will be the end date of license                 |
-| offer                   | `string`      |                                            | The name of the offer                                                                                 |
-| parentLineId            | `int`         | null                                       | An internal reference indicating a parent license for this license                                    |
-| parentOrderRef          | `string`      | null                                       | An internal reference indicating a parent order                                                       |
-| partnerRef              | `string`      | XSP987654321                               | The ArrowSphere identifier of the license, to be used as an identifier in other ArrowSphere endpoints |
-| price                   | `Price`       | an instance of [Price](#Price)             | The [price](#Price)                                                                                   |
-| periodicity             | `int`         | 720                                        | The license's billing cycle (See [Term ans periodicity](#term-and-periodicity)                        |
-| resellerName            | `string`      | My reseller                                | The name of the reseller                                                                              |
-| resellerRef             | `string`      | XSP12345                                   | The reference of the reseller                                                                         |
-| seat                    | `int`         | 6                                          | The number of available seats                                                                         |
-| serviceRef              | `string`      | MS-0B-O365-ENTERPRIS                       | The family identifier for this SKU (See [services](catalog-service.md))                               |
-| sku                     | `string`      | ABCDABCD-1234-5678-9876-ABCDEFABCDEF       | The SKU of the license                                                                                |
-| startDate               | `string`      | 2020-11-18T17:48:43.000Z                   | The start date of the license                                                                         |
-| statusCode              | `int`         | 86                                         | An internal code indicating the status of the license                                                 |
-| statusLabel             | `float`       | activation_ok                              | An internal label indicating the status of the license                                                |
-| subscriptionId          | `string`      | 12345678-AAAA-CCCC-FFFF-987654321012       | Another internal identifier for the license                                                           |
-| subsidiaryName          | `string`      | Arrow ECS Denmark                          | The arrow company that manages the license                                                            |
-| term                    | `int`         | 8640                                       | The license's term (See [Term ans periodicity](#term-and-periodicity)                                 |
-| trial                   | `bool`        | false                                      | True if the license is a trial                                                                        |
-| type                    | `string`      | recurring                                  |                                                                                                       |
-| uom                     | `string`      | LICENSE                                    | The unit of measure, is the unit of what is billed for this offer                                     |
-| vendorBillingId         | `string`      | ABC123                                     | The vendor billing id of the license                                                                  |
-| vendorCode              | `string`      | Microsoft                                  | The vendor code of the offer                                                                          |
-| vendorName              | `string`      | Microsoft                                  | The vendor of the offer                                                                               |
-| vendorSubscriptionId    | `string`      | AABBCCDD-1111-2222-3333-ABCDEFABCDEF       | An external identifier for the license                                                                |
-| warnings                | `Warning[]`   | an array of [Warnings](#Warning)           | The list of [warnings](#Warning) for this license                                                     |
+| Field                   | Type                    | Example                                    | Description                                                                                           |
+|-------------------------|-------------------------|--------------------------------------------|-------------------------------------------------------------------------------------------------------|
+| acceptEula              | `bool`                  | false                                      |                                                                                                       |
+| activeSeats             | `ActiveSeats`           | an instance of [ActiveSeats](#ActiveSeats) | The [active seats](#ActiveSeats)                                                                      |
+| autoRenew               | `bool`                  | true                                       | True if the license is renewed automatically upon expiration                                          |
+| baseSeat                | `int`                   | 6                                          | The number of seats at the time of the license purchase                                               |
+| category                | `string`                | BaseProduct                                | Indicates if the offer is a BaseProduct or an Addon                                                   |
+| classification          | `string`                | SaaS                                       | The [classification](catalog-classification.md)                                                       |
+| configs                 | `Config[]`              | an array of [Configs](#Config)             | The list of applicable [configs](#Config) for this license                                            |
+| customerName            | `string`                | My customer                                | The name of the end-customer                                                                          |
+| customerRef             | `string`                | XSP123456789                               | The reference of the end-customer                                                                     |
+| customerVendorReference | `string`                | ABCDABCD-1234-5678-9876-ABCDEFABCDEF       | The customer Vendor reference (tenant ID for Microsoft)                                               |
+| endDate                 | `string`                | 2021-11-18T17:48:43.000Z                   | The end date of the license                                                                           |
+| friendlyName            | `string`                | XSP12345                                   | MS-0B-O365-ENTERPRIS                                                                                  |
+| id                      | `int`                   | 123456                                     | The license identifier (an internal identifier)                                                       |
+| isEnabled               | `bool`                  | true                                       | True if the license is active                                                                         |
+| lastUpdate              | `string`                | 2020-12-08T15:42:30.069Z                   | The last time the license's data was updated (for any reason)                                         |
+| marketplace             | `string`                | US                                         | The [marketplace](general-marketplace.md)                                                             |
+| message                 | `string`                |                                            | If an action is currently performed on the license, this message will indicate it                     |
+| nextRenewalDate         | `string`                | 2024-12-18T17:48:43.000Z                   | The next renewal date of the license if exist else it will be the end date of license                 |
+| offer                   | `string`                |                                            | The name of the offer                                                                                 |
+| parentLineId            | `int`                   | null                                       | An internal reference indicating a parent license for this license                                    |
+| parentOrderRef          | `string`                | null                                       | An internal reference indicating a parent order                                                       |
+| partnerRef              | `string`                | XSP987654321                               | The ArrowSphere identifier of the license, to be used as an identifier in other ArrowSphere endpoints |
+| price                   | `Price`                 | an instance of [Price](#Price)             | The [price](#Price)                                                                                   |
+| periodicity             | `int`                   | 720                                        | The license's billing cycle (See [Term ans periodicity](#term-and-periodicity)                        |
+| resellerName            | `string`                | My reseller                                | The name of the reseller                                                                              |
+| resellerRef             | `string`                | XSP12345                                   | The reference of the reseller                                                                         |
+| seat                    | `int`                   | 6                                          | The number of available seats                                                                         |
+| serviceRef              | `string`                | MS-0B-O365-ENTERPRIS                       | The family identifier for this SKU (See [services](catalog-service.md))                               |
+| sku                     | `string`                | ABCDABCD-1234-5678-9876-ABCDEFABCDEF       | The SKU of the license                                                                                |
+| startDate               | `string`                | 2020-11-18T17:48:43.000Z                   | The start date of the license                                                                         |
+| statusCode              | `int`                   | 86                                         | An internal code indicating the status of the license                                                 |
+| statusLabel             | `float`                 | activation_ok                              | An internal label indicating the status of the license                                                |
+| subscriptionId          | `string`                | 12345678-AAAA-CCCC-FFFF-987654321012       | Another internal identifier for the license                                                           |
+| subsidiaryName          | `string`                | Arrow ECS Denmark                          | The arrow company that manages the license                                                            |
+| term                    | `int`                   | 8640                                       | The license's term (See [Term ans periodicity](#term-and-periodicity)                                 |
+| trial                   | `bool`                  | false                                      | True if the license is a trial                                                                        |
+| type                    | `string`                | recurring                                  |                                                                                                       |
+| uom                     | `string`                | LICENSE                                    | The unit of measure, is the unit of what is billed for this offer                                     |
+| vendorBillingId         | `string`                | ABC123                                     | The vendor billing id of the license                                                                  |
+| vendorCode              | `string`                | Microsoft                                  | The vendor code of the offer                                                                          |
+| vendorName              | `string`                | Microsoft                                  | The vendor of the offer                                                                               |
+| vendorSubscriptionId    | `string`                | AABBCCDD-1111-2222-3333-ABCDEFABCDEF       | An external identifier for the license                                                                |
+| warnings                | `Warning[]`             | an array of [Warnings](#Warning)           | The list of [warnings](#Warning) for this license                                                     |
+| attributes              | `array<string, string>` | an array of string with string index       | The list of dynamic attributes where we can find additional license data like renewalPolicy           |
 
 #### ActiveSeats
 
