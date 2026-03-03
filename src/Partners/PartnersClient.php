@@ -192,4 +192,20 @@ class PartnersClient extends AbstractClient
 
         return new OrganizationUnit($response);
     }
+
+    /**
+     * @param array $parameters Optional parameters to add to the URL
+     *
+     * @return string
+     *
+     * @throws PublicApiClientException
+     * @throws NotFoundException
+     * @throws GuzzleException
+     */
+    public function getContactsRaw(array $parameters = []): string
+    {
+        $this->path = '/contacts';
+
+        return $this->get($parameters);
+    }
 }

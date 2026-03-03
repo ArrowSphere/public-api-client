@@ -5,9 +5,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added new method `getContactsRaw` under `PartnersClient`
+
 ## [0.11.24] - 2026-02-24
 
--Added property `attributes` to `License` entity
+- Added property `attributes` to `License` entity
 
 ## [0.11.23] - 2025-12-18
 
