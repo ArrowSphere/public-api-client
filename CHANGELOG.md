@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.25] - 2026-03-04
+
 - Added new method `getContactsRaw` under `PartnersClient`
 
 ## [0.11.24] - 2026-02-24
@@ -661,7 +663,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.24...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.25...HEAD
+[0.11.25]: https://github.com/ArrowSphere/public-api-client/compare/0.11.24...0.11.25
 [0.11.24]: https://github.com/ArrowSphere/public-api-client/compare/0.11.23...0.11.24
 [0.11.23]: https://github.com/ArrowSphere/public-api-client/compare/0.11.22...0.11.23
 [0.11.22]: https://github.com/ArrowSphere/public-api-client/compare/0.11.21...0.11.22
