@@ -5,6 +5,7 @@ namespace ArrowSphere\PublicApiClient\Orders\Request;
 use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
 use ArrowSphere\PublicApiClient\Entities\Property;
 use ArrowSphere\PublicApiClient\Orders\Request\SubEntities\Customer;
+use ArrowSphere\PublicApiClient\Orders\Request\SubEntities\CustomField;
 use ArrowSphere\PublicApiClient\Orders\Request\SubEntities\ExtraInformation;
 use ArrowSphere\PublicApiClient\Orders\Request\SubEntities\Product;
 
@@ -15,9 +16,12 @@ class CreateOrder extends AbstractEntity
     public const COLUMN_CUSTOMER = 'customer';
     public const COLUMN_PRODUCTS = 'products';
     public const COLUMN_SCENARIO = 'scenario';
+    public const COLUMN_CUSTOM_FIELDS = 'customFields';
 
     #[Property()]
     protected ?string $scenario = null;
+    #[Property(type: CustomField::class, isArray: true)]
+    protected ?array $customFields = null;
     #[Property()]
     protected ?string $scheduledDate = null;
     #[Property(type: ExtraInformation::class)]
@@ -35,6 +39,7 @@ class CreateOrder extends AbstractEntity
      *     scheduledDate?: string,
      *     extraInformation?: array{programs: array<string,string>},
      *     customer: array{reference: string, poNumber?: string},
+     *     customFields?: array{label: string, value: string},
      *     products: array{
      *          arrowSpherePriceBandSku:string,
      *          quantity:int,

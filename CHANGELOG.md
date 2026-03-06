@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added `customFields` to `CreateOrder` entity to allow passing custom fields when creating an order
+
 ## [0.11.25] - 2026-03-04
 
 - Added new method `getContactsRaw` under `PartnersClient`
