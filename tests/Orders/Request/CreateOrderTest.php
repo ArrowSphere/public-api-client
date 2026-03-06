@@ -177,4 +177,47 @@ class CreateOrderTest extends TestCase
 
         self::assertEquals('default', $order->jsonSerialize()['scenario']);
     }
+
+    public function testCreateOrderWithCustomFields(): void
+    {
+        $payload = [
+            'customer' => [
+                'reference' => 'test',
+                'poNumber'  => 'test',
+            ],
+            'products' => [
+                [
+                    'quantity'                => 2,
+                    'friendlyName'            => 'test',
+                    'arrowSpherePriceBandSku' => 'testArrowsSku',
+                ],
+            ],
+            'customFields' => [
+                [
+                    'label' => 'Department',
+                    'value' => 'IT',
+                ],
+                [
+                    'label' => 'Project Code',
+                    'value' => 'PRJ-2026-001',
+                ],
+                [
+                    'label' => 'Cost Center',
+                    'value' => 'CC-1234',
+                ],
+            ],
+        ];
+
+        $order = new CreateOrder($payload);
+
+        self::assertArrayHasKey('customFields', $order->jsonSerialize());
+        self::assertIsArray($order->jsonSerialize()['customFields']);
+        self::assertCount(3, $order->jsonSerialize()['customFields']);
+        self::assertEquals('Department', $order->jsonSerialize()['customFields'][0]['label']);
+        self::assertEquals('IT', $order->jsonSerialize()['customFields'][0]['value']);
+        self::assertEquals('Project Code', $order->jsonSerialize()['customFields'][1]['label']);
+        self::assertEquals('PRJ-2026-001', $order->jsonSerialize()['customFields'][1]['value']);
+        self::assertEquals('Cost Center', $order->jsonSerialize()['customFields'][2]['label']);
+        self::assertEquals('CC-1234', $order->jsonSerialize()['customFields'][2]['value']);
+    }
 }
