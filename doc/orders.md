@@ -32,12 +32,13 @@ OrdersFilters is designed to simplify search process of orders
 
 To simplify order creating process we design objects structure where dev can simply set the needed attribute
 
-| Field                | Type                 | Example                                       | Description                     |
-|----------------------|----------------------|-----------------------------------------------|---------------------------------|
-| scheduledDate        | `?string`            | 2024-12-01                                    | Schedule a date for new order   |
-| extraInformation     | `ExtraInformation[]` | List of [ExtraInformation](#ExtraInformation) | Define list of Eavs for order   |
-| customer             | `Customer`           | [Customer](#Customer)                         | Define end Customer for order   |
-| products             | `Product[]`          | List of product [Product](#Product)           | Define List of product of order |
+| Field            | Type                 | Example                                         | Description                         |
+|------------------|----------------------|-------------------------------------------------|-------------------------------------|
+| scheduledDate    | `?string`            | 2024-12-01                                      | Schedule a date for new order       |
+| extraInformation | `ExtraInformation[]` | List of [ExtraInformation](#ExtraInformation)   | Define list of Eavs for order       |
+| customer         | `Customer`           | [Customer](#Customer)                           | Define end Customer for order       |
+| products         | `Product[]`          | List of product [Product](#Product)             | Define List of product of order     |
+| customFields     | `CustomField[]`      | List of customField [CustomField](#CustomField) | Define List of customField of order |
 
 #### Customer
 
@@ -70,6 +71,12 @@ To simplify order creating process we design objects structure where dev can sim
 | arrowSpherePriceBandSku      | `string`     | testArrowsSku           | ArrowSphere unique priceBand SKU you want to buy                                                                                                                                                                                                                |
 | quantity                     | `int`        | 133                     | Quantity to purchase                                                                                                                                                                                                                                            |
 | subscription                 | `Reference`  | [Reference](#Reference) | Reference of subscription related to the product                                                                                                                                                                                                                |
+
+#### CustomField
+| Field | Type     | Example | Description        |
+|-------|----------|---------|--------------------|
+| label | `string` | test    | Custom field label |
+| value | `string` | test    | Custom field value |
 
 #### Price
 
