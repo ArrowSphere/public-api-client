@@ -80,6 +80,10 @@ echo "Hello " . $whoami->getCompanyName();
 
 - [Notification](doc/notification.md)
 
+### Reports clients
+
+- [Reports](doc/reports.md)
+
 ### Support clients
 
 - [Support](doc/support.md)
