@@ -28,7 +28,6 @@ Each order created from the report validation is managed by the `ValidateReportO
 |-----------|----------|------------------------------|--------------------------------------|
 | reference | `string` | XSPO123                     | The reference of the created order   |
 | link      | `string` | api/orderSoftware/XSPO1234  | The API link to the created order    |
-| status    | `string` | In progress                  | The current status of the order      |
 
 ## Usage
 
@@ -59,7 +58,6 @@ $result = $client->validateReport('XSPR12345');
 foreach ($result->getOrders() as $order) {
     echo $order->getReference() . PHP_EOL;
     echo $order->getLink() . PHP_EOL;
-    echo $order->getStatus() . PHP_EOL;
 }
 ```
 
@@ -71,6 +69,5 @@ Each `ValidateReportOrder` entity has the following getters:
 
 - `getReference()` - The order reference (e.g. "XSPO123")
 - `getLink()` - The API link to the order
-- `getStatus()` - The current status of the order
 
 A raw version of this method is also available as `validateReportRaw()`, which returns the raw JSON response as a string.
