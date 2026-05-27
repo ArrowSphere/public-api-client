@@ -20,19 +20,11 @@ class ValidateReportOrder extends AbstractEntity
      */
     public const COLUMN_LINK = 'link';
 
-    /**
-     * @var string
-     */
-    public const COLUMN_STATUS = 'status';
-
     #[Property(required: true)]
     protected string $reference;
 
     #[Property(required: true)]
     protected string $link;
-
-    #[Property(required: true)]
-    protected string $status;
 
     /**
      * @param array $data
@@ -58,13 +50,5 @@ class ValidateReportOrder extends AbstractEntity
     public function getLink(): string
     {
         return $this->link;
-    }
-
-    /**
-     * @return string
-     */
-    public function getStatus(): string
-    {
-        return $this->status;
     }
 }

@@ -70,8 +70,7 @@ class ReportsClientTest extends AbstractClientTest
     "orders": [
       {
         "reference": "XSPO123",
-        "link": "api/orderSoftware/XSPO1234",
-        "status": "In progress"
+        "link": "api/orderSoftware/XSPO1234"
       }
     ]
   }
@@ -95,7 +94,6 @@ JSON;
         $order = $orders[0];
         self::assertEquals('XSPO123', $order->getReference());
         self::assertEquals('api/orderSoftware/XSPO1234', $order->getLink());
-        self::assertEquals('In progress', $order->getStatus());
     }
 
     /**
@@ -112,13 +110,11 @@ JSON;
     "orders": [
       {
         "reference": "XSPO001",
-        "link": "api/orderSoftware/XSPO001",
-        "status": "In progress"
+        "link": "api/orderSoftware/XSPO001"
       },
       {
         "reference": "XSPO002",
-        "link": "api/orderSoftware/XSPO002",
-        "status": "Completed"
+        "link": "api/orderSoftware/XSPO002"
       }
     ]
   }
@@ -140,9 +136,6 @@ JSON;
         self::assertCount(2, $orders);
 
         self::assertEquals('XSPO001', $orders[0]->getReference());
-        self::assertEquals('In progress', $orders[0]->getStatus());
-
         self::assertEquals('XSPO002', $orders[1]->getReference());
-        self::assertEquals('Completed', $orders[1]->getStatus());
     }
 }

@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fixed `ValidateReportOrder` entity: removed non-existing field "status"
+ 
 ## [0.11.27] - 2026-05-21
 
 - Added `ReportsClient` with `validateReport()` method to validate reports via `PATCH /reports/{reportReference}`
