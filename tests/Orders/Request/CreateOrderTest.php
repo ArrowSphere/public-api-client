@@ -178,6 +178,38 @@ class CreateOrderTest extends TestCase
         self::assertEquals('default', $order->jsonSerialize()['scenario']);
     }
 
+    public function testCreateOrderWithBundleFields(): void
+    {
+        $payload = [
+            'customer' => [
+                'reference' => 'test',
+                'poNumber'  => 'test',
+            ],
+            'products' => [
+                [
+                    'quantity'                => 1,
+                    'arrowSpherePriceBandSku' => 'MSCSP_CFQ7TTC0HC36-0001_FR_EUR_1_720_8640',
+                    'bundleArrowSphereSku'    => 'XSP17788_MEL_RECURRING-BUNDLE',
+                    'bundleUuid'              => '6a582f0c-36ba-44db-b5c6-07ed783016f6',
+                ],
+                [
+                    'quantity'                => 1,
+                    'arrowSpherePriceBandSku' => 'XSP17727_ARWS-PRIV_SAAS-0001_FR_EUR_1_RECURRING_UPFRONT_720_8640',
+                    'bundleArrowSphereSku'    => 'XSP17788_MEL_RECURRING-BUNDLE',
+                    'bundleUuid'              => '6a582f0c-36ba-44db-b5c6-07ed783016f6',
+                ],
+            ],
+        ];
+
+        $order = new CreateOrder($payload);
+        $serialized = $order->jsonSerialize();
+
+        self::assertEquals('XSP17788_MEL_RECURRING-BUNDLE', $serialized['products'][0]['bundleArrowSphereSku']);
+        self::assertEquals('6a582f0c-36ba-44db-b5c6-07ed783016f6', $serialized['products'][0]['bundleUuid']);
+        self::assertEquals('XSP17788_MEL_RECURRING-BUNDLE', $serialized['products'][1]['bundleArrowSphereSku']);
+        self::assertEquals('6a582f0c-36ba-44db-b5c6-07ed783016f6', $serialized['products'][1]['bundleUuid']);
+    }
+
     public function testCreateOrderWithCustomFields(): void
     {
         $payload = [

@@ -25,6 +25,8 @@ class Product extends AbstractEntity
     public const COLUMN_COTERMINOSITY_DATE = 'coterminosityDate';
     public const COLUMN_COTERMINOSITY_SUBSCRIPTION_REF = 'coterminositySubscriptionRef';
     public const COLUMN_SKU = 'sku';
+    public const COLUMN_BUNDLE_ARROW_SPHERE_SKU = 'bundleArrowSphereSku';
+    public const COLUMN_BUNDLE_UUID = 'bundleUuid';
 
     #[Property(required: true)]
     protected string $arrowSpherePriceBandSku;
@@ -79,4 +81,10 @@ class Product extends AbstractEntity
 
     #[Property()]
     protected ?string $sku = null;
+
+    #[Property()]
+    protected ?string $bundleArrowSphereSku = null;
+
+    #[Property()]
+    protected ?string $bundleUuid = null;
 }

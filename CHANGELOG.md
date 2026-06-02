@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added `bundleArrowSphereSku` and `bundleUuid` fields to `Product` order request entity
+
 ## [0.11.28] - 2026-05-27
 
 - Fixed `ValidateReportOrder` entity: removed non-existing field "status"
