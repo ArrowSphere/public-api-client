@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.29] - 2026-06-04
+
 - Added `bundleArrowSphereSku` and `bundleUuid` fields to `Product` order request entity
 
 ## [0.11.28] - 2026-05-27
@@ -677,7 +679,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.28...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.29...HEAD
+[0.11.29]: https://github.com/ArrowSphere/public-api-client/compare/0.11.28...0.11.29
 [0.11.28]: https://github.com/ArrowSphere/public-api-client/compare/0.11.27...0.11.28
 [0.11.27]: https://github.com/ArrowSphere/public-api-client/compare/0.11.26...0.11.27
 [0.11.26]: https://github.com/ArrowSphere/public-api-client/compare/0.11.25...0.11.26
