@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.30] - 2026-07-01
+
 - Added `quoteRef` to `CreateOrder` entity to allow creating an order from a quote
 
 ## [0.11.29] - 2026-06-04
@@ -681,7 +683,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.29...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.30...HEAD
+[0.11.30]: https://github.com/ArrowSphere/public-api-client/compare/0.11.29...0.11.30
 [0.11.29]: https://github.com/ArrowSphere/public-api-client/compare/0.11.28...0.11.29
 [0.11.28]: https://github.com/ArrowSphere/public-api-client/compare/0.11.27...0.11.28
 [0.11.27]: https://github.com/ArrowSphere/public-api-client/compare/0.11.26...0.11.27
