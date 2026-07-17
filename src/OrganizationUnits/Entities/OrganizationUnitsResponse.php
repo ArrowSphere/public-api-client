@@ -1,6 +1,6 @@
 <?php
 
-namespace ArrowSphere\PublicApiClient\Partners\Entities;
+namespace ArrowSphere\PublicApiClient\OrganizationUnits\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
 use ArrowSphere\PublicApiClient\Entities\Pagination;

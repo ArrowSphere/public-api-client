@@ -87,10 +87,10 @@ The `ProvisionResponse` entity allows get provision situation.
 
 The `Attribute` entity allows get attribute used for provision.
 
-| Field      | Type         | Example            | Description     |
-|------------|--------------|--------------------|-----------------|
-| name       | `string`     | domainName         | Attribute name  |
-| value      | `string`     | test.microsoft.com | Attribute Value |
+| Field      | Type               | Example            | Description     |
+|------------|--------------------|--------------------|-----------------|
+| name       | `string`           | domainName         | Attribute name  |
+| value      | `string` or `null` | test.microsoft.com | Attribute value |
 
 ## Usage
 

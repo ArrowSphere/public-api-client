@@ -1,5 +1,88 @@
 # Upgrade guide
 
+## 0.11 to 0.12
+
+### OrganizationUnit entities moved to new namespace
+
+The `OrganizationUnit` and `OrganizationUnitsResponse` entities have been moved from the `Partners` namespace to the new `OrganizationUnits` namespace.
+
+v0.11:
+```php
+<?php
+
+use ArrowSphere\PublicApiClient\Partners\Entities\OrganizationUnit;
+use ArrowSphere\PublicApiClient\Partners\Entities\OrganizationUnitsResponse;
+```
+
+v0.12:
+```php
+<?php
+
+use ArrowSphere\PublicApiClient\OrganizationUnits\Entities\OrganizationUnit;
+use ArrowSphere\PublicApiClient\OrganizationUnits\Entities\OrganizationUnitsResponse;
+```
+
+### OrganizationUnitsClient replaces PartnersClient for organization unit operations
+
+Organization unit CRUD operations have been moved from `PartnersClient` to the new `OrganizationUnitsClient`.
+
+v0.11:
+```php
+<?php
+
+$organizationUnits = $publicApiClient->getPartnersClient()->getOrganizationUnits();
+```
+
+v0.12:
+```php
+<?php
+
+$organizationUnits = $publicApiClient->getOrganizationUnitsClient()->getOrganizationUnits();
+```
+
+### Attribute entity: COLUMN_SCHEDULED_NAME renamed to COLUMN_NAME
+
+The `COLUMN_SCHEDULED_NAME` constant on the `Attribute` entity has been renamed to `COLUMN_NAME`.
+
+v0.11:
+```php
+<?php
+
+use ArrowSphere\PublicApiClient\Customers\Entities\Attribute;
+
+$name = $attribute->getData()[Attribute::COLUMN_SCHEDULED_NAME];
+```
+
+v0.12:
+```php
+<?php
+
+use ArrowSphere\PublicApiClient\Customers\Entities\Attribute;
+
+$name = $attribute->getName(); // or $attribute->getData()[Attribute::COLUMN_NAME]
+```
+
+### Attribute entity: value property is now nullable
+
+The `value` property of the `Attribute` entity is now `?string` (nullable). Code that assumes `getValue()` always returns a `string` must be updated to handle `null`.
+
+v0.11:
+```php
+<?php
+
+$value = $attribute->getValue(); // always string
+```
+
+v0.12:
+```php
+<?php
+
+$value = $attribute->getValue(); // may be null
+if ($value !== null) {
+    // use $value
+}
+```
+
 ## 0.10 to 1.0
 
 There is now some magic in PublicApiClient class to instantiate the clients. But now they should be named properly.

@@ -4,7 +4,7 @@ namespace ArrowSphere\PublicApiClient\Customers\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
-use ArrowSphere\PublicApiClient\Partners\Entities\OrganizationUnit;
+use ArrowSphere\PublicApiClient\OrganizationUnits\Entities\OrganizationUnit;
 
 /**
  * Class Customer

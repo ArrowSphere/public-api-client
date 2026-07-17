@@ -5,6 +5,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added new `OrganizationUnitsClient` with methods `getOrganizationUnitsRaw()`, `getOrganizationUnits()`, `getOrganizationUnitsPage()`, `getOrganizationUnit()`, `createOrganizationUnit()`, `updateOrganizationUnit()`, and `deleteOrganizationUnit()`
+- Moved `OrganizationUnit` and `OrganizationUnitsResponse` entities from `ArrowSphere\PublicApiClient\Partners\Entities` to `ArrowSphere\PublicApiClient\OrganizationUnits\Entities`
+- Changed `Customer` entity to use `OrganizationUnits\Entities\OrganizationUnit` instead of `Partners\Entities\OrganizationUnit`
+- Changed `Attribute` entity: renamed constant `COLUMN_SCHEDULED_NAME` to `COLUMN_NAME` and made `value` property nullable (`?string`)
+
 ## [0.11.30] - 2026-07-01
 
 - Added `quoteRef` to `CreateOrder` entity to allow creating an order from a quote
