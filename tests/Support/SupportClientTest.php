@@ -108,7 +108,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('post', 'https://www.test.com/support/issues?abc=def&ghi=0')
+            ->with('POST', 'https://www.test.com/support/issues?abc=def&ghi=0')
             ->willReturn(new Response(201, [], $response));
 
         $issueId = $this->client->createIssue([], [
@@ -124,7 +124,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/support/issues?abc=def&ghi=0')
+            ->with('GET', 'https://www.test.com/support/issues?abc=def&ghi=0')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
@@ -147,7 +147,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/support/issues?abc=def&ghi=0')
+            ->with('GET', 'https://www.test.com/support/issues?abc=def&ghi=0')
             ->willReturn(new Response(200, [], $response));
 
         $issues = $this->client->listIssues([
@@ -169,7 +169,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/support/issues/123?abc=def&ghi=0')
+            ->with('GET', 'https://www.test.com/support/issues/123?abc=def&ghi=0')
             ->willReturn(new Response(200, [], $response));
 
         $issue = $this->client->getIssue(123, [
@@ -199,7 +199,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('patch', 'https://www.test.com/support/issues/123?abc=def&ghi=0')
+            ->with('PATCH', 'https://www.test.com/support/issues/123?abc=def&ghi=0')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->closeIssue(123, $payload, [
@@ -215,7 +215,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/support/topics?abc=def&ghi=0')
+            ->with('GET', 'https://www.test.com/support/topics?abc=def&ghi=0')
             ->willReturn(new Response(200, [], $response));
 
         $topics = $this->client->listTopics([
@@ -237,7 +237,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/support/issues/123/comments?abc=def&ghi=0')
+            ->with('GET', 'https://www.test.com/support/issues/123/comments?abc=def&ghi=0')
             ->willReturn(new Response(200, [], $response));
 
         $comments = $this->client->listComments(123, [
@@ -259,7 +259,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/support/issues/123/comments')
+            ->with('GET', 'https://www.test.com/support/issues/123/comments')
             ->willReturn(new Response(200, [], $response));
 
         $comments = $this->client->listAllComments(123);
@@ -287,7 +287,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('post', 'https://www.test.com/support/issues/123/comments?abc=def&ghi=0')
+            ->with('POST', 'https://www.test.com/support/issues/123/comments?abc=def&ghi=0')
             ->willReturn(new Response(201, [], $response));
 
         $commentId = $this->client->addComment(123, $payload, [
@@ -314,7 +314,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('post', 'https://www.test.com/support/issues/123/attachments?abc=def&ghi=0')
+            ->with('POST', 'https://www.test.com/support/issues/123/attachments?abc=def&ghi=0')
             ->willReturn(new Response(201, [], $response));
 
         $attachmentId = $this->client->addAttachment(123, $payload, [
@@ -332,7 +332,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/support/issues/123/attachments?abc=def&ghi=0')
+            ->with('GET', 'https://www.test.com/support/issues/123/attachments?abc=def&ghi=0')
             ->willReturn(new Response(200, [], $response));
 
         $attachments = $this->client->listAttachments(123, [
@@ -354,7 +354,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/support/issues/123/attachments/12345?abc=def&ghi=0')
+            ->with('GET', 'https://www.test.com/support/issues/123/attachments/12345?abc=def&ghi=0')
             ->willReturn(new Response(200, [], $response));
 
         $attachment = $this->client->getAttachment(123, 12345, [

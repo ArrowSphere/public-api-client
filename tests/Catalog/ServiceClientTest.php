@@ -27,7 +27,7 @@ class ServiceClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products')
+            ->with('GET', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getServicesRaw('SAAS', 'microsoft');
@@ -44,7 +44,7 @@ class ServiceClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products?per_page=100')
+            ->with('GET', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products?per_page=100')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
@@ -71,9 +71,9 @@ class ServiceClientTest extends AbstractClientTest
             ->expects(self::exactly(3))
             ->method('request')
             ->withConsecutive(
-                ['get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products?per_page=100'],
-                ['get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products?page=2&per_page=100'],
-                ['get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products?page=3&per_page=100']
+                ['GET', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products?per_page=100'],
+                ['GET', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products?page=2&per_page=100'],
+                ['GET', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products?page=3&per_page=100']
             )
             ->willReturn(new Response(200, [], $response));
 
@@ -231,7 +231,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products?per_page=100')
+            ->with('GET', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products?per_page=100')
             ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getServices('SAAS', 'microsoft');
@@ -270,7 +270,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS')
+            ->with('GET', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getServiceRaw('SAAS', 'microsoft', 'MS-0B-O365-ENTERPRIS');
@@ -287,7 +287,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS')
+            ->with('GET', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
@@ -372,7 +372,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS')
+            ->with('GET', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS')
             ->willReturn(new Response(200, [], $response));
 
         $service = $this->client->getService('SAAS', 'microsoft', 'MS-0B-O365-ENTERPRIS');

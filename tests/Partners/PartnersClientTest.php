@@ -28,7 +28,7 @@ class PartnersClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/partners/contacts')
+            ->with('GET', 'https://www.test.com/partners/contacts')
             ->willReturn(new Response(200, [], 'OK'));
 
         $this->client->getContactsRaw();
@@ -46,7 +46,7 @@ class PartnersClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/partners/contacts?vendor=microsoft')
+            ->with('GET', 'https://www.test.com/partners/contacts?vendor=microsoft')
             ->willReturn(new Response(200, [], 'OK'));
 
         $this->client->getContactsRaw(['vendor' => 'microsoft']);

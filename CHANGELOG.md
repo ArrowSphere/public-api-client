@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Changed the HTTP invocation with Guzzle to always pass uppercase methods, as lowercase trigger a deprecation error in Guzzle 7.11+
+
 ## [0.11.30] - 2026-07-01
 
 - Added `quoteRef` to `CreateOrder` entity to allow creating an order from a quote

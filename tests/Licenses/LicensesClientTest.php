@@ -98,7 +98,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'post',
+                'POST',
                 'https://www.test.com/licenses/v2/find?abc=def&ghi=0&page=2&per_page=15',
                 [
                     'headers' => [
@@ -185,7 +185,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'post',
+                'POST',
                 'https://www.test.com/licenses/v2/find',
                 [
                     'headers' => [
@@ -336,12 +336,12 @@ JSON;
             ]));
             if ($i === 1) {
                 $urls[] = [
-                    'post',
+                    'POST',
                     'https://www.test.com/licenses/v2/find?per_page=' . $perPage,
                 ];
             } else {
                 $urls[] = [
-                    'post',
+                    'POST',
                     'https://www.test.com/licenses/v2/find?page=' . $i . '&per_page=' . $perPage,
                 ];
             }
@@ -382,7 +382,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'post',
+                'POST',
                 'https://www.test.com/licenses/v2/find?abc=def&ghi=0&page=2&per_page=15',
                 [
                     'headers' => [
@@ -625,7 +625,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'post',
+                'POST',
                 'https://www.test.com/licenses/v2/find?abc=def&ghi=0&per_page=15',
                 [
                     'headers' => [
@@ -795,7 +795,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'post',
+                'POST',
                 'https://www.test.com/licenses/v2/find?abc=def&ghi=0&per_page=15',
                 [
                     'headers' => [
@@ -853,7 +853,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'get',
+                'GET',
                 'https://www.test.com/licenses/XSP1234/configs',
                 [
                     'headers' => [
@@ -874,7 +874,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'get',
+                'GET',
                 'https://www.test.com/licenses/XSP1234/predictions/daily',
                 [
                     'headers' => [
@@ -924,7 +924,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'get',
+                'GET',
                 'https://www.test.com/licenses/XSP1234/configs',
                 [
                     'headers' => [
@@ -968,7 +968,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'get',
+                'GET',
                 'https://www.test.com/licenses/XSP1234/predictions/daily',
                 [
                     'headers' => [
@@ -1011,7 +1011,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'get',
+                'GET',
                 'https://www.test.com/licenses/XSP1234/predictions/daily',
                 [
                     'headers' => [
@@ -1050,7 +1050,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'post',
+                'POST',
                 'https://www.test.com/licenses/XSP1234/configs',
                 [
                     'headers' => [
@@ -1097,7 +1097,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'post',
+                'POST',
                 'https://www.test.com/licenses/XSP1234/configs',
                 [
                     'headers' => [
@@ -1124,7 +1124,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'get',
+                'GET',
                 'https://www.test.com/licenses/aws-payer-accounts/XSP1234',
                 [
                     'headers' => [
@@ -1166,7 +1166,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'get',
+                'GET',
                 'https://www.test.com/licenses/XSP1234/credentials',
                 [
                     'headers' => [
@@ -1204,7 +1204,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'get',
+                'GET',
                 'https://www.test.com/licenses/XSP1234/credentials',
                 [
                     'headers' => [
@@ -1245,7 +1245,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'get',
+                'GET',
                 'https://www.test.com/licenses/XSP9999/credentials',
                 [
                     'headers' => [

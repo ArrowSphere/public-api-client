@@ -43,7 +43,7 @@ class CartClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/cart')
+            ->with('GET', 'https://www.test.com/cart')
             ->willReturn(new Response(200, [], json_encode($this->generateMockedCartItem())));
 
         $this->client->listCartItems();
@@ -60,7 +60,7 @@ class CartClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('patch', "https://www.test.com/cart/$itemId")
+            ->with('PATCH', "https://www.test.com/cart/$itemId")
             ->willReturn(new Response(200, [], json_encode($this->generateMockedCartItem())));
 
         $this->client->patchUpdateOneCartItem($itemId, $this->generateMockedCartItem());
@@ -79,7 +79,7 @@ class CartClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('post', "https://www.test.com/cart")
+            ->with('POST', "https://www.test.com/cart")
             ->willReturn(new Response(200, [], json_encode($this->generateMockedCartItem())));
 
         $this->client->AddCartItem($payload);
@@ -96,7 +96,7 @@ class CartClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('delete', "https://www.test.com/cart/$itemId")
+            ->with('DELETE', "https://www.test.com/cart/$itemId")
             ->willReturn(new Response(200, []));
 
         $this->client->removeOneCartItem($itemId);
@@ -112,7 +112,7 @@ class CartClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('delete', "https://www.test.com/cart")
+            ->with('DELETE', "https://www.test.com/cart")
             ->willReturn(new Response(200, []));
 
         $this->client->emptyCart();

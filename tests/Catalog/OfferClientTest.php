@@ -44,7 +44,7 @@ class OfferClientTest extends AbstractClientTest
             ->expects(self::once())
             ->method('request')
             ->with(
-                'post',
+                'POST',
                 'https://www.test.com/catalog/find?abc=def&ghi=0&page=2&per_page=15',
                 [
                     'headers' => [
@@ -109,7 +109,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'post',
+                'POST',
                 'https://www.test.com/catalog/find',
                 [
                     'headers' => [
@@ -281,12 +281,12 @@ JSON;
             ]));
             if ($i === 1) {
                 $urls[] = [
-                    'post',
+                    'POST',
                     'https://www.test.com/catalog/find?per_page=' . $perPage,
                 ];
             } else {
                 $urls[] = [
-                    'post',
+                    'POST',
                     'https://www.test.com/catalog/find?page=' . $i . '&per_page=' . $perPage,
                 ];
             }
@@ -337,7 +337,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'post',
+                'POST',
                 'https://www.test.com/catalog/find?abc=def&ghi=0&page=2&per_page=15',
                 [
                     'headers' => [
@@ -488,7 +488,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'post',
+                'POST',
                 'https://www.test.com/catalog/find?abc=def&ghi=0&per_page=15',
                 [
                     'headers' => [
@@ -625,7 +625,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/details/myType/myVendor/mySku')
+            ->with('GET', 'https://www.test.com/catalog/details/myType/myVendor/mySku')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getOfferDetailsRaw('myType', 'myVendor', 'mySku');
@@ -639,7 +639,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/details/myType/myVendor/mySku?enabled=0&test=1')
+            ->with('GET', 'https://www.test.com/catalog/details/myType/myVendor/mySku?enabled=0&test=1')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getOfferDetailsRaw('myType', 'myVendor', 'mySku', [
@@ -761,7 +761,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/details/SAAS/microsoft/031C9E47-4802-4248-838E-778FB1D2CC05')
+            ->with('GET', 'https://www.test.com/catalog/details/SAAS/microsoft/031C9E47-4802-4248-838E-778FB1D2CC05')
             ->willReturn(new Response(200, [], $response));
 
         $offer = $this->client->getOfferDetails('SAAS', 'microsoft', '031C9E47-4802-4248-838E-778FB1D2CC05');
@@ -824,7 +824,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers')
+            ->with('GET', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getOffersRaw('SAAS', 'microsoft', 'MS-1A-M365-ENT');
@@ -841,7 +841,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers?per_page=100')
+            ->with('GET', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-1A-M365-ENT/offers?per_page=100')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
@@ -869,15 +869,15 @@ JSON;
             ->method('request')
             ->withConsecutive(
                 [
-                    'get',
+                    'GET',
                     'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS/offers?per_page=100',
                 ],
                 [
-                    'get',
+                    'GET',
                     'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS/offers?page=2&per_page=100',
                 ],
                 [
-                    'get',
+                    'GET',
                     'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS/offers?page=3&per_page=100',
                 ]
             )
@@ -1033,7 +1033,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS/offers?per_page=100')
+            ->with('GET', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS/offers?per_page=100')
             ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getOffers('SAAS', 'microsoft', 'MS-0B-O365-ENTERPRIS');
@@ -1182,7 +1182,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS/offers/CAFF2897-D629-404A-A241-6B360E979609')
+            ->with('GET', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS/offers/CAFF2897-D629-404A-A241-6B360E979609')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getOfferRaw('SAAS', 'microsoft', 'MS-0B-O365-ENTERPRIS', 'CAFF2897-D629-404A-A241-6B360E979609');
@@ -1199,7 +1199,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS/offers/CAFF2897-D629-404A-A241-6B360E979609')
+            ->with('GET', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS/offers/CAFF2897-D629-404A-A241-6B360E979609')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
@@ -1281,7 +1281,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS/offers/CAFF2897-D629-404A-A241-6B360E979609')
+            ->with('GET', 'https://www.test.com/catalog/categories/SAAS/programs/microsoft/products/MS-0B-O365-ENTERPRIS/offers/CAFF2897-D629-404A-A241-6B360E979609')
             ->willReturn(new Response(200, [], $response));
 
         $offer = $this->client->getOffer('SAAS', 'microsoft', 'MS-0B-O365-ENTERPRIS', 'CAFF2897-D629-404A-A241-6B360E979609');

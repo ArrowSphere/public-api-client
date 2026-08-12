@@ -46,7 +46,7 @@ class NotificationClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/notification')
+            ->with('GET', 'https://www.test.com/notification')
             ->willReturn(new Response(200, [], json_encode($this->generateMockedNotification())));
 
         $this->client->listNotifications();
@@ -63,7 +63,7 @@ class NotificationClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('patch', "https://www.test.com/notification/$id/read")
+            ->with('PATCH', "https://www.test.com/notification/$id/read")
             ->willReturn(new Response(204, []));
 
         $this->client->readOneNotification($id);
@@ -79,7 +79,7 @@ class NotificationClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('patch', "https://www.test.com/notification/read")
+            ->with('PATCH', "https://www.test.com/notification/read")
             ->willReturn(new Response(204, []));
 
         $this->client->readAllNotifications();
@@ -96,7 +96,7 @@ class NotificationClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('delete', "https://www.test.com/notification/$id")
+            ->with('DELETE', "https://www.test.com/notification/$id")
             ->willReturn(new Response(204, []));
 
         $this->client->deleteOneNotification($id);
@@ -112,7 +112,7 @@ class NotificationClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('delete', "https://www.test.com/notification/")
+            ->with('DELETE', "https://www.test.com/notification/")
             ->willReturn(new Response(204, []));
 
         $this->client->deleteAllNotifications();

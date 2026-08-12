@@ -60,7 +60,7 @@ class PreferencesClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/billing/preferences/2020-04', [
+            ->with('GET', 'https://www.test.com/billing/preferences/2020-04', [
                 'headers' => [
                     'apiKey' => '123456',
                     'Content-Type' => 'application/json',
@@ -123,7 +123,7 @@ class PreferencesClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('post', 'https://www.test.com/billing/preferences/2020-04', [
+            ->with('POST', 'https://www.test.com/billing/preferences/2020-04', [
                 'headers' => [
                     'apiKey' => '123456',
                     'Content-Type' => 'application/json',

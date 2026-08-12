@@ -43,7 +43,7 @@ class MonitoringClientTest extends AbstractClientTest
             ->expects(self::once())
             ->method('request')
             ->with(
-                'post',
+                'POST',
                 'https://www.test.com/monitoring/report',
                 [
                     'headers' => [

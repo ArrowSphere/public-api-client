@@ -28,7 +28,7 @@ class CheckDomainClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/vendors/foo/checkDomain/bar?abc=def&ghi=0')
+            ->with('GET', 'https://www.test.com/vendors/foo/checkDomain/bar?abc=def&ghi=0')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->checkDomainRaw('foo', 'bar', [
@@ -48,7 +48,7 @@ class CheckDomainClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/vendors/foo/checkDomain/bar?abc=def&ghi=0')
+            ->with('GET', 'https://www.test.com/vendors/foo/checkDomain/bar?abc=def&ghi=0')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
@@ -78,7 +78,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/vendors/foo/checkDomain/bar?abc=def&ghi=0')
+            ->with('GET', 'https://www.test.com/vendors/foo/checkDomain/bar?abc=def&ghi=0')
             ->willReturn(new Response(200, [], $response));
 
         self::assertTrue($this->client->checkDomain('foo', 'bar', [
@@ -107,7 +107,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/vendors/foo/checkDomain/bar?abc=def&ghi=0')
+            ->with('GET', 'https://www.test.com/vendors/foo/checkDomain/bar?abc=def&ghi=0')
             ->willReturn(new Response(200, [], $response));
 
         self::assertFalse($this->client->checkDomain('foo', 'bar', [

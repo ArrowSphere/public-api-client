@@ -44,7 +44,7 @@ class OrdersClientTest extends AbstractClientTest
     {
         $this->httpClient->expects(self::once())
             ->method('request')
-            ->with('patch', 'https://www.test.com/orders/XSPO1234/validate', new IsAnything())->willReturn(new Response(200, [], 'ok'));
+            ->with('PATCH', 'https://www.test.com/orders/XSPO1234/validate', new IsAnything())->willReturn(new Response(200, [], 'ok'));
         $this->client->validateOrder('XSPO1234');
     }
 
@@ -52,7 +52,7 @@ class OrdersClientTest extends AbstractClientTest
     {
         $this->httpClient->expects(self::once())
             ->method('request')
-            ->with('patch', 'https://www.test.com/orders/XSPO1234/cancel', new IsAnything())->willReturn(new Response(200, [], 'ok'));
+            ->with('PATCH', 'https://www.test.com/orders/XSPO1234/cancel', new IsAnything())->willReturn(new Response(200, [], 'ok'));
         $this->client->cancelOrder('XSPO1234');
     }
 
@@ -60,7 +60,7 @@ class OrdersClientTest extends AbstractClientTest
     {
         $this->httpClient->expects(self::once())
             ->method('request')
-            ->with('patch', 'https://www.test.com/orders/XSPO1234/resubmit', new IsAnything())->willReturn(new Response(200, [], 'ok'));
+            ->with('PATCH', 'https://www.test.com/orders/XSPO1234/resubmit', new IsAnything())->willReturn(new Response(200, [], 'ok'));
         $this->client->resubmitOrder('XSPO1234');
     }
 
@@ -68,7 +68,7 @@ class OrdersClientTest extends AbstractClientTest
     {
         $this->httpClient->expects(self::once())
             ->method('request')
-            ->with('patch', 'https://www.test.com/orders/XSPO1234', new IsAnything())->willReturn(new Response(200, [], 'ok'));
+            ->with('PATCH', 'https://www.test.com/orders/XSPO1234', new IsAnything())->willReturn(new Response(200, [], 'ok'));
         $this->client->updateOrder('XSPO1234', '123');
     }
 
@@ -140,7 +140,7 @@ class OrdersClientTest extends AbstractClientTest
         $order = new CreateOrder($payload);
 
         $this->httpClient->expects(self::once())->method('request')
-            ->with('post', 'https://www.test.com/orders', new IsAnything())
+            ->with('POST', 'https://www.test.com/orders', new IsAnything())
             ->willReturn(new Response(200, [], json_encode($expected)));
 
         self::assertEquals('XSPO123', $this->client->createOrder($order));
