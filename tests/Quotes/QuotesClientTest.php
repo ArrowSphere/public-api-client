@@ -100,7 +100,7 @@ class QuotesClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('post', 'https://www.test.com/quotes')
+            ->with('POST', 'https://www.test.com/quotes')
             ->willReturn(new Response(200, [], json_encode($createResponse)));
 
         $result = $this->client->create($quotePayload);
@@ -129,7 +129,7 @@ class QuotesClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('post', 'https://www.test.com/quotes')
+            ->with('POST', 'https://www.test.com/quotes')
             ->willReturn(new Response(200, [], json_encode($createResponse)));
 
         $result = $this->client->create($quotePayload);

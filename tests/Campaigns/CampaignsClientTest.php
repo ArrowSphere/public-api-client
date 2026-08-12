@@ -43,7 +43,7 @@ class CampaignsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/campaigns?abc=def&ghi=0&per_page=10')
+            ->with('GET', 'https://www.test.com/campaigns?abc=def&ghi=0&per_page=10')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getCampaignsRaw([
@@ -65,7 +65,7 @@ class CampaignsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/campaigns?abc=def&ghi=0&per_page=100')
+            ->with('GET', 'https://www.test.com/campaigns?abc=def&ghi=0&per_page=100')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
@@ -95,9 +95,9 @@ class CampaignsClientTest extends AbstractClientTest
             ->expects(self::exactly(3))
             ->method('request')
             ->withConsecutive(
-                ['get', 'https://www.test.com/campaigns?abc=def&ghi=0&per_page=100'],
-                ['get', 'https://www.test.com/campaigns?abc=def&ghi=0&page=2&per_page=100'],
-                ['get', 'https://www.test.com/campaigns?abc=def&ghi=0&page=3&per_page=100']
+                ['GET', 'https://www.test.com/campaigns?abc=def&ghi=0&per_page=100'],
+                ['GET', 'https://www.test.com/campaigns?abc=def&ghi=0&page=2&per_page=100'],
+                ['GET', 'https://www.test.com/campaigns?abc=def&ghi=0&page=3&per_page=100']
             )
             ->willReturn(new Response(200, [], $response));
 
@@ -217,7 +217,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/campaigns?abc=def&ghi=0&per_page=100')
+            ->with('GET', 'https://www.test.com/campaigns?abc=def&ghi=0&per_page=100')
             ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getCampaigns([
@@ -408,7 +408,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'post',
+                'POST',
                 'https://www.test.com/campaigns',
                 [
                     'headers' => [
@@ -435,7 +435,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/campaigns/v2/' . self::CAMPAIGN_REFERENCE)
+            ->with('GET', 'https://www.test.com/campaigns/v2/' . self::CAMPAIGN_REFERENCE)
             ->willReturn(new Response(200, [], 'OK USA'))
         ;
 
@@ -497,7 +497,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/campaigns/v2/' . self::CAMPAIGN_REFERENCE)
+            ->with('GET', 'https://www.test.com/campaigns/v2/' . self::CAMPAIGN_REFERENCE)
             ->willReturn(new Response(200, [], $expected))
         ;
 
@@ -567,7 +567,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/campaigns/v2/active?location=' . self::LOCATION_MCP . '&customer=' . self::CUSTOMER_REF)
+            ->with('GET', 'https://www.test.com/campaigns/v2/active?location=' . self::LOCATION_MCP . '&customer=' . self::CUSTOMER_REF)
             ->willReturn(new Response(200, [], 'OK USA'))
         ;
 
@@ -584,7 +584,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE . '/assets')
+            ->with('GET', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE . '/assets')
             ->willReturn(new Response(200, [], 'OK USA'))
         ;
 
@@ -617,7 +617,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE . '/assets')
+            ->with('GET', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE . '/assets')
             ->willReturn(new Response(200, [], $expected))
         ;
 
@@ -639,7 +639,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE . '/assets/upload')
+            ->with('GET', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE . '/assets/upload')
             ->willReturn(new Response(200, [], 'OK USA'))
         ;
 
@@ -681,7 +681,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE . '/assets/upload')
+            ->with('GET', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE . '/assets/upload')
             ->willReturn(new Response(200, [], $expected))
         ;
 
@@ -816,7 +816,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'put',
+                'PUT',
                 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE,
                 [
                     'headers' => [
@@ -843,7 +843,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('delete', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE)
+            ->with('DELETE', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE)
             ->willReturn(new Response(204, [], null));
 
         $this->client->deleteCampaign(self::CAMPAIGN_REFERENCE);
@@ -910,7 +910,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('post', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE . '/duplicate')
+            ->with('POST', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE . '/duplicate')
             ->willReturn(new Response(200, [], $expected));
 
         $this->client->duplicateCampaign(self::CAMPAIGN_REFERENCE);
@@ -926,7 +926,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('delete', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE . '/assets/' . self::ASSET_REFERENCE)
+            ->with('DELETE', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE . '/assets/' . self::ASSET_REFERENCE)
             ->willReturn(new Response(204, [], null));
 
         $this->client->deleteAsset(self::CAMPAIGN_REFERENCE, self::ASSET_REFERENCE);

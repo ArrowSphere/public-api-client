@@ -25,7 +25,7 @@ class ReportsClientTest extends AbstractClientTest
             ->expects(self::once())
             ->method('request')
             ->with(
-                'patch',
+                'PATCH',
                 'https://www.test.com/reports/XSPR123',
                 self::callback(static function (array $options) {
                     return $options['body'] === '[]';
@@ -47,7 +47,7 @@ class ReportsClientTest extends AbstractClientTest
             ->expects(self::once())
             ->method('request')
             ->with(
-                'patch',
+                'PATCH',
                 'https://www.test.com/reports/XSPR123'
             )
             ->willReturn(new Response(200, [], '{'));
@@ -81,7 +81,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'patch',
+                'PATCH',
                 'https://www.test.com/reports/XSPR123'
             )
             ->willReturn(new Response(200, [], $response));
@@ -125,7 +125,7 @@ JSON;
             ->expects(self::once())
             ->method('request')
             ->with(
-                'patch',
+                'PATCH',
                 'https://www.test.com/reports/XSPR456'
             )
             ->willReturn(new Response(200, [], $response));

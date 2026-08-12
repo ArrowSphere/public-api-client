@@ -26,7 +26,7 @@ class WhoamiClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/whoami')
+            ->with('GET', 'https://www.test.com/whoami')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getWhoamiRaw();
@@ -43,7 +43,7 @@ class WhoamiClientTest extends AbstractClientTest
         $this->httpClient
             ->method('request')
             ->with(
-                'get',
+                'GET',
                 'https://www.test.com/whoami',
                 [
                     'headers' => [
@@ -97,7 +97,7 @@ JSON;
 
         $this->httpClient->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/whoami')
+            ->with('GET', 'https://www.test.com/whoami')
             ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getWhoami();

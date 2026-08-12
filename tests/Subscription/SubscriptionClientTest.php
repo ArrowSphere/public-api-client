@@ -34,7 +34,7 @@ class SubscriptionClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('post', 'https://www.test.com/subscriptions/XSPS123/validate', [
+            ->with('POST', 'https://www.test.com/subscriptions/XSPS123/validate', [
                 'headers' => [
                     'apiKey' => '123456',
                     'Content-Type' => 'application/json',

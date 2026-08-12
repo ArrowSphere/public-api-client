@@ -29,7 +29,7 @@ class ErpExportsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/billing/erp/exports/columns')
+            ->with('GET', 'https://www.test.com/billing/erp/exports/columns')
             ->willReturn(new Response(200, [], 'OK'));
 
         $response = $this->client->getErpExportsColumnsRaw();
@@ -59,7 +59,7 @@ class ErpExportsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/billing/erp/exports/columns')
+            ->with('GET', 'https://www.test.com/billing/erp/exports/columns')
             ->willReturn(new Response(200, [], $response));
 
         $exportColumns = $this->client->getErpExportsColumns();
@@ -78,7 +78,7 @@ class ErpExportsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/billing/erp/exports/types')
+            ->with('GET', 'https://www.test.com/billing/erp/exports/types')
             ->willReturn(new Response(200, [], 'OK'));
 
         $response = $this->client->getErpExportsTypesRaw();
@@ -108,7 +108,7 @@ class ErpExportsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/billing/erp/exports/types')
+            ->with('GET', 'https://www.test.com/billing/erp/exports/types')
             ->willReturn(new Response(200, [], $response));
 
         $exportTypes = $this->client->getErpExportsTypes();
@@ -127,7 +127,7 @@ class ErpExportsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/billing/erp/exports/types/1')
+            ->with('GET', 'https://www.test.com/billing/erp/exports/types/1')
             ->willReturn(new Response(200, [], 'OK'));
 
         $response = $this->client->getErpExportsTypeRaw('1');
@@ -158,7 +158,7 @@ class ErpExportsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/billing/erp/exports/types/1')
+            ->with('GET', 'https://www.test.com/billing/erp/exports/types/1')
             ->willReturn(new Response(200, [], $response));
 
         $exportType = $this->client->getErpExportsType('1');
@@ -177,7 +177,7 @@ class ErpExportsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('delete', 'https://www.test.com/billing/erp/exports/types/1')
+            ->with('DELETE', 'https://www.test.com/billing/erp/exports/types/1')
             ->willReturn(new Response(200, [], 'OK'));
 
         $response = $this->client->deleteErpExportsType('1');
@@ -203,7 +203,7 @@ class ErpExportsClientTest extends AbstractClientTest
             ->expects(self::once())
             ->method('request')
             ->with(
-                'post',
+                'POST',
                 'https://www.test.com/billing/erp/exports/async',
                 [
                     'body'    => '{"exportTypeReference":"DJ284LDZ-standard","outputFormat":{"date":"DD-MM-YYYY","file":"csv"},"filters":{"issueDate":{"from":"2020-02-21","to":"2020-02-21"},"validationDate":{"from":"2020-02-21","to":"2020-02-21"},"subscriptionDate":{"from":"2020-02-21","to":"2020-02-21"},"createdAt":{"from":"2020-02-21","to":"2020-02-21"},"reportPeriod":{"from":"2021-06","to":"2021-06"},"classifications":["IAAS"],"vendors":["Microsoft"],"programs":["MSCSP"],"marketplaces":["PT"],"sequences":["MIM22-123-456"],"references":["L1-MIM-0123456689abcdef"],"resellerXspRefs":["XSP1337"],"resellerCompanyTags":["TIER2"],"customerXspRefs":["XSP1337"],"vendorSubscriptionIds":["0fcbbdfc-3092-446f-aab7-cbb2c42d13cf"],"friendlyNames":["End Customer subscription friendly name"],"arrowSku":"MS-AZR-0145P"}}',

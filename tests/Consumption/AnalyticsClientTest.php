@@ -27,7 +27,7 @@ class AnalyticsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/consumption/analytics/monthly?month=2020-05')
+            ->with('GET', 'https://www.test.com/consumption/analytics/monthly?month=2020-05')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getMonthlyRaw('2020-05');
@@ -73,7 +73,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/consumption/analytics/monthly?month=2020-10&classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR')
+            ->with('GET', 'https://www.test.com/consumption/analytics/monthly?month=2020-10&classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR')
             ->willReturn(new Response(200, [], $response));
 
         $items = $this->client->getMonthly(
@@ -132,7 +132,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/consumption/analytics/monthly?month=2020-10&classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR')
+            ->with('GET', 'https://www.test.com/consumption/analytics/monthly?month=2020-10&classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR')
             ->willReturn(new Response(200, [], $response));
 
         $items = $this->client->getMonthly(

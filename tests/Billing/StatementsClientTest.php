@@ -34,7 +34,7 @@ class StatementsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/billing/statements/42')
+            ->with('GET', 'https://www.test.com/billing/statements/42')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $response = $this->client->getStatementRaw('42');
@@ -87,7 +87,7 @@ class StatementsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/billing/statements/42')
+            ->with('GET', 'https://www.test.com/billing/statements/42')
             ->willReturn(new Response(200, [], $response));
 
         $statement = $this->client->getStatement('42');
@@ -121,7 +121,7 @@ class StatementsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/billing/statements?reportPeriod=2021-04')
+            ->with('GET', 'https://www.test.com/billing/statements?reportPeriod=2021-04')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getStatementsRaw([StatementsClient::REPORT_PERIOD => '2021-04']);
@@ -138,7 +138,7 @@ class StatementsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/billing/statements?reportPeriod%5B%5D=2021-04&reportPeriod%5B%5D=2021-05&perPage=100')
+            ->with('GET', 'https://www.test.com/billing/statements?reportPeriod%5B%5D=2021-04&reportPeriod%5B%5D=2021-05&perPage=100')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
@@ -167,9 +167,9 @@ class StatementsClientTest extends AbstractClientTest
             ->expects(self::exactly(3))
             ->method('request')
             ->withConsecutive(
-                ['get', 'https://www.test.com/billing/statements?reportPeriod=2021-04&perPage=1000'],
-                ['get', 'https://www.test.com/billing/statements?reportPeriod=2021-04&page=2&perPage=1000'],
-                ['get', 'https://www.test.com/billing/statements?reportPeriod=2021-04&page=3&perPage=1000']
+                ['GET', 'https://www.test.com/billing/statements?reportPeriod=2021-04&perPage=1000'],
+                ['GET', 'https://www.test.com/billing/statements?reportPeriod=2021-04&page=2&perPage=1000'],
+                ['GET', 'https://www.test.com/billing/statements?reportPeriod=2021-04&page=3&perPage=1000']
             )
             ->willReturn(new Response(200, [], $response));
 
@@ -290,7 +290,7 @@ class StatementsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/billing/statements?reportPeriod=2021-04&perPage=1000')
+            ->with('GET', 'https://www.test.com/billing/statements?reportPeriod=2021-04&perPage=1000')
             ->willReturn(new Response(200, [], $response));
 
         $statements = $this->client->getStatements([StatementsClient::REPORT_PERIOD => '2021-04']);
@@ -354,7 +354,7 @@ class StatementsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/billing/statements/H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef/lines')
+            ->with('GET', 'https://www.test.com/billing/statements/H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef/lines')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $response = $this->client->getStatementLinesRaw('H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef');
@@ -372,7 +372,7 @@ class StatementsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/billing/statements/H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef/lines?perPage=1000')
+            ->with('GET', 'https://www.test.com/billing/statements/H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef/lines?perPage=1000')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
@@ -400,9 +400,9 @@ class StatementsClientTest extends AbstractClientTest
             ->expects(self::exactly(3))
             ->method('request')
             ->withConsecutive(
-                ['get', 'https://www.test.com/billing/statements/H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef/lines?perPage=1000'],
-                ['get', 'https://www.test.com/billing/statements/H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef/lines?page=2&perPage=1000'],
-                ['get', 'https://www.test.com/billing/statements/H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef/lines?page=3&perPage=1000']
+                ['GET', 'https://www.test.com/billing/statements/H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef/lines?perPage=1000'],
+                ['GET', 'https://www.test.com/billing/statements/H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef/lines?page=2&perPage=1000'],
+                ['GET', 'https://www.test.com/billing/statements/H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef/lines?page=3&perPage=1000']
             )
             ->willReturn(new Response(200, [], $response));
 
@@ -546,7 +546,7 @@ class StatementsClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/billing/statements/H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef/lines?perPage=1000')
+            ->with('GET', 'https://www.test.com/billing/statements/H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef/lines?perPage=1000')
             ->willReturn(new Response(200, [], $response));
 
         $lines = $this->client->getStatementLines('H1-AAA-deadbeefdeadbeefdeadbeefdeadbeef');
@@ -607,7 +607,7 @@ class StatementsClientTest extends AbstractClientTest
             ->expects(self::once())
             ->method('request')
             ->with(
-                'post',
+                'POST',
                 'https://www.test.com/billing/exports',
                 [
                     'body'    => '{"statementRef":"STATEMENT_REF_EXAMPLE","reportPeriod":"2021-04","customerXspRef":["XSP12345","XSP23456"],"tier":[2,3],"format":"xlsx"}',

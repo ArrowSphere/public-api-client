@@ -264,7 +264,7 @@ abstract class AbstractClient
     protected function get(array $parameters = [], array $headers = []): string
     {
         $response = $this->client->request(
-            'get',
+            'GET',
             $this->generateUrl($parameters),
             [
                 self::HEADERS => $this->prepareHeaders($headers),
@@ -385,7 +385,7 @@ abstract class AbstractClient
     protected function post(array $payload, array $parameters = [], array $headers = []): StreamInterface
     {
         $response = $this->client->request(
-            'post',
+            'POST',
             $this->generateUrl($parameters),
             [
                 self::HEADERS => $this->prepareHeaders($headers),
@@ -412,7 +412,7 @@ abstract class AbstractClient
     protected function patch(array $payload, array $parameters = [], array $headers = []): StreamInterface
     {
         $response = $this->client->request(
-            'patch',
+            'PATCH',
             $this->generateUrl($parameters),
             [
                 self::HEADERS => $this->prepareHeaders($headers),
@@ -439,7 +439,7 @@ abstract class AbstractClient
     protected function put(string $payload = '', array $parameters = [], array $headers = []): StreamInterface
     {
         $response = $this->client->request(
-            'put',
+            'PUT',
             $this->generateUrl($parameters),
             [
                 self::HEADERS => $this->prepareHeaders($headers),
@@ -510,7 +510,7 @@ abstract class AbstractClient
     protected function delete(array $parameters = [], array $headers = []): string
     {
         $response = $this->client->request(
-            'delete',
+            'DELETE',
             $this->generateUrl($parameters),
             [
                 self::HEADERS => $this->prepareHeaders($headers),

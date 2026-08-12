@@ -36,7 +36,7 @@ class CustomersClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/customers?abc=def&ghi=0')
+            ->with('GET', 'https://www.test.com/customers?abc=def&ghi=0')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getCustomersRaw([
@@ -56,7 +56,7 @@ class CustomersClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/customers?abc=def&ghi=0&per_page=100')
+            ->with('GET', 'https://www.test.com/customers?abc=def&ghi=0&per_page=100')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
@@ -88,15 +88,15 @@ class CustomersClientTest extends AbstractClientTest
             ->method('request')
             ->withConsecutive(
                 [
-                    'get',
+                    'GET',
                     'https://www.test.com/customers?abc=def&ghi=0&per_page=100',
                 ],
                 [
-                    'get',
+                    'GET',
                     'https://www.test.com/customers?abc=def&ghi=0&page=2&per_page=100',
                 ],
                 [
-                    'get',
+                    'GET',
                     'https://www.test.com/customers?abc=def&ghi=0&page=3&per_page=100',
                 ]
             )
@@ -188,7 +188,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/customers?abc=def&ghi=0&per_page=100')
+            ->with('GET', 'https://www.test.com/customers?abc=def&ghi=0&per_page=100')
             ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getCustomers([
@@ -332,7 +332,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/customers?abc=def&ghi=0&per_page=100')
+            ->with('GET', 'https://www.test.com/customers?abc=def&ghi=0&per_page=100')
             ->willReturn(new Response(200, [], $response));
 
         $test = $this->client->getCustomersPage([
@@ -424,7 +424,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('post', 'https://www.test.com/customers?abc=def&ghi=0', [
+            ->with('POST', 'https://www.test.com/customers?abc=def&ghi=0', [
                 'headers' => [
                     'apiKey' => '123456',
                     'Content-Type' => 'application/json',
@@ -454,7 +454,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/customers/invitations/ABCD12345?abc=def&ghi=0')
+            ->with('GET', 'https://www.test.com/customers/invitations/ABCD12345?abc=def&ghi=0')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getInvitationRaw(
@@ -479,7 +479,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/customers/invitations/ABCD12345?abc=def&ghi=0')
+            ->with('GET', 'https://www.test.com/customers/invitations/ABCD12345?abc=def&ghi=0')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
@@ -526,7 +526,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/customers/invitations/ABCD12345?abc=def&ghi=0')
+            ->with('GET', 'https://www.test.com/customers/invitations/ABCD12345?abc=def&ghi=0')
             ->willReturn(new Response(200, [], $response));
 
         $invitation = $this->client->getInvitation(
@@ -587,7 +587,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('post', 'https://www.test.com/customers/invitations?abc=def&ghi=0', [
+            ->with('POST', 'https://www.test.com/customers/invitations?abc=def&ghi=0', [
                 'headers' => [
                     'apiKey' => '123456',
                     'Content-Type' => 'application/json',
@@ -624,7 +624,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/customers/XSP123456/relationships?abc=def&ghi=0')
+            ->with('GET', 'https://www.test.com/customers/XSP123456/relationships?abc=def&ghi=0')
             ->willReturn(new Response(200, [], 'OK USA'));
 
         $this->client->getGdapListRaw(
@@ -648,7 +648,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/customers/XSP123456/relationships?abc=def&ghi=0')
+            ->with('GET', 'https://www.test.com/customers/XSP123456/relationships?abc=def&ghi=0')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
@@ -745,11 +745,11 @@ JSON;
             ->method('request')
             ->withConsecutive(
                 [
-                    'get',
+                    'GET',
                     'https://www.test.com/customers/XSP123456/relationships?abc=def&ghi=0',
                 ],
                 [
-                    'get',
+                    'GET',
                     'https://www.test.com/customers/XSP123456/relationships?abc=def&ghi=0&paginationToken=A1B2C3D4',
                 ]
             )
@@ -781,7 +781,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/customers/XSP123456/provision?program=MSCP')
+            ->with('GET', 'https://www.test.com/customers/XSP123456/provision?program=MSCP')
             ->willReturn(new Response(200, [], '{'));
 
         $this->expectException(PublicApiClientException::class);
@@ -810,7 +810,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/customers/XSP123456/provision?program=MSCP')
+            ->with('GET', 'https://www.test.com/customers/XSP123456/provision?program=MSCP')
             ->willReturn(new Response(200, [], json_encode($body)));
 
         $res = $this->client->getProvision(
@@ -842,7 +842,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('post', 'https://www.test.com/customers/XSP123456/provision', [
+            ->with('POST', 'https://www.test.com/customers/XSP123456/provision', [
                 'headers' => [
                     'apiKey' => '123456',
                     'Content-Type' => 'application/json',
@@ -875,7 +875,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('post', 'https://www.test.com/customers/XSP123456/migration', [
+            ->with('POST', 'https://www.test.com/customers/XSP123456/migration', [
                 'headers' => [
                     'apiKey' => '123456',
                     'Content-Type' => 'application/json',
@@ -898,7 +898,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('delete', 'https://www.test.com/customers/XSP123456/migration?program=MSCP', [
+            ->with('DELETE', 'https://www.test.com/customers/XSP123456/migration?program=MSCP', [
                 'headers' => [
                     'apiKey' => '123456',
                     'Content-Type' => 'application/json',
@@ -925,7 +925,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('post', 'https://www.test.com/customers/initiate-export', [
+            ->with('POST', 'https://www.test.com/customers/initiate-export', [
                 'headers' => [
                     'apiKey' => '123456',
                     'Content-Type' => 'application/json',
@@ -952,7 +952,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/customers/checkMicrosoftCustomerAgreement?customerReference=XSP123456789')
+            ->with('GET', 'https://www.test.com/customers/checkMicrosoftCustomerAgreement?customerReference=XSP123456789')
             ->willReturn(new Response(200, [], $response));
 
         $isMcaValidated = $this->client->getMicrosoftAgreementValidationStatus(['customerReference' => 'XSP123456789']);
@@ -972,7 +972,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/customers/checkMicrosoftCustomerAgreement?customerReference=XSP123456789')
+            ->with('GET', 'https://www.test.com/customers/checkMicrosoftCustomerAgreement?customerReference=XSP123456789')
             ->willReturn(new Response(200, [], $response));
 
         $isMcaValidated = $this->client->getMicrosoftAgreementValidationStatus(['customerReference' => 'XSP123456789']);
@@ -990,7 +990,7 @@ JSON;
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('get', 'https://www.test.com/customers/checkMicrosoftCustomerAgreement?customerReference=XSP123456789')
+            ->with('GET', 'https://www.test.com/customers/checkMicrosoftCustomerAgreement?customerReference=XSP123456789')
             ->willReturn(new Response(200, [], $response));
 
         $isMcaValidated = $this->client->getMicrosoftAgreementValidationStatus(['customerReference' => 'XSP123456789']);
