@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added new method `changeCustomer()` under `CartClient`
+- Added `$queryParams` parameter to `listCartItems()` under `CartClient`
+
 ## [0.11.32] - 2026-09-24
 
 - Added `ContactsClient` under `Contacts` namespace with `getContactsRaw()` and `getVendorContacts()` methods to expose Adobe vendor contact details of an end customer. `getVendorContacts()` throws an `InvalidArgumentException` when the `vendor` parameter is missing or empty

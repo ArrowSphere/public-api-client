@@ -43,10 +43,10 @@ class CartClientTest extends AbstractClientTest
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('GET', 'https://www.test.com/cart')
+            ->with('GET', 'https://www.test.com/cart?withprice=true')
             ->willReturn(new Response(200, [], json_encode($this->generateMockedCartItem())));
 
-        $this->client->listCartItems();
+        $this->client->listCartItems(['withprice' => 'true']);
     }
 
     /**
@@ -64,6 +64,30 @@ class CartClientTest extends AbstractClientTest
             ->willReturn(new Response(200, [], json_encode($this->generateMockedCartItem())));
 
         $this->client->patchUpdateOneCartItem($itemId, $this->generateMockedCartItem());
+    }
+
+    /**
+     * @throws NotFoundException
+     * @throws GuzzleException
+     * @throws PublicApiClientException
+     */
+    public function testChangeCustomer(): void
+    {
+        $customerRef = 'C0123456';
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'POST',
+                'https://www.test.com/cart/changeCustomer',
+                self::callback(static function (array $options) use ($customerRef): bool {
+                    return ($options['body'] ?? null) === json_encode(['customerRef' => $customerRef]);
+                })
+            )
+            ->willReturn(new Response(200, [], json_encode($this->generateMockedCartItem())));
+
+        $this->client->changeCustomer($customerRef);
     }
 
     /**

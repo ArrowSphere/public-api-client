@@ -9,18 +9,38 @@ use GuzzleHttp\Exception\GuzzleException;
 class CartClient extends AbstractCartClient
 {
     /**
+     * @param array $queryParams
+     *
      * @return array
      *
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
-    public function listCartItems(): array
+    public function listCartItems(array $queryParams = []): array
     {
         $this->path = '';
-        $response = $this->get();
+        $response = $this->get($queryParams);
 
         return $this->getResponseData($response);
+    }
+
+    /**
+     * @param string $customerRef
+     * @param array $queryParams
+     *
+     * @return array
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function changeCustomer(string $customerRef, array $queryParams = []): array
+    {
+        $this->path = '/changeCustomer';
+        $response = $this->post(['customerRef' => $customerRef], $queryParams);
+
+        return $this->getResponseData($response->__toString());
     }
 
     /**
