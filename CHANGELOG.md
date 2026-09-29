@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.34] - 2026-09-29
+
 - Added optional `$customerPoNumber` parameter to `validateReport()` and `validateReportRaw()` under `ReportsClient`, sent as `customerPoNumber` in the request body
 
 ## [0.11.33] - 2026-09-28
@@ -701,7 +703,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.33...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.34...HEAD
+[0.11.34]: https://github.com/ArrowSphere/public-api-client/compare/0.11.33...0.11.34
 [0.11.33]: https://github.com/ArrowSphere/public-api-client/compare/0.11.32...0.11.33
 [0.11.32]: https://github.com/ArrowSphere/public-api-client/compare/0.11.31...0.11.32
 [0.11.31]: https://github.com/ArrowSphere/public-api-client/compare/0.11.30...0.11.31
