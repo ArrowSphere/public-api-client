@@ -37,6 +37,26 @@ class ReportsClientTest extends AbstractClientTest
     }
 
     /**
+     * @throws PublicApiClientException
+     */
+    public function testValidateReportRawWithCustomerPoNumber(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'PATCH',
+                'https://www.test.com/reports/XSPR123',
+                self::callback(static function (array $options) {
+                    return $options['body'] === '{"customerPoNumber":"PO-123"}';
+                })
+            )
+            ->willReturn(new Response(200, [], 'OK'));
+
+        $this->client->validateReportRaw('XSPR123', 'PO-123');
+    }
+
+    /**
      * @depends testValidateReportRaw
      *
      * @throws PublicApiClientException
