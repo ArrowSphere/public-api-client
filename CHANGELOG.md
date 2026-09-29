@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added optional `$customerPoNumber` parameter to `validateReport()` and `validateReportRaw()` under `ReportsClient`, sent as `customerPoNumber` in the request body
+
 ## [0.11.33] - 2026-09-28
 
 - Added new method `changeCustomer()` under `CartClient`
