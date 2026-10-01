@@ -2,6 +2,7 @@
 
 namespace ArrowSphere\PublicApiClient\Licenses;
 
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
@@ -10,6 +11,7 @@ use ArrowSphere\PublicApiClient\Licenses\Entities\License\AwsPayerAccount;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\Config;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\Credentials;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\Predictions;
+use ArrowSphere\PublicApiClient\Licenses\Entities\LicenseMapping;
 use Generator;
 use GuzzleHttp\Exception\GuzzleException;
 
@@ -37,6 +39,11 @@ class LicensesClient extends AbstractLicensesClient
      * @var string The path of the Credentials endpoint
      */
     private const CREDENTIALS_PATH = '/credentials';
+
+    /**
+     * @var string The path of the License mapping endpoint
+     */
+    private const LICENSE_MAPPING_PATH = '/license-mapping';
 
     /**
      * @var string The key for keyword search query parameter (to search one string in all available search fields)
@@ -379,5 +386,40 @@ class LicensesClient extends AbstractLicensesClient
         $response = $this->decodeResponse($rawResponse);
 
         return new Credentials($response['data']);
+    }
+
+    /**
+     * @param array $parameters Optional parameters to add to the URL
+     *
+     * @return string
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getLicenseMappingRaw(array $parameters = []): string
+    {
+        $this->path = self::LICENSE_MAPPING_PATH;
+
+        return $this->get($parameters);
+    }
+
+    /**
+     * Get the mapping of the license dynamic attributes (field path => field type).
+     *
+     * @param array $parameters Optional parameters to add to the URL
+     *
+     * @return LicenseMapping
+     *
+     * @throws EntitiesException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function getLicenseMapping(array $parameters = []): LicenseMapping
+    {
+        $rawResponse = $this->getLicenseMappingRaw($parameters);
+
+        return new LicenseMapping($this->getResponseData($rawResponse));
     }
 }

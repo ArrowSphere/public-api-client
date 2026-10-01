@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added new methods `getLicenseMappingRaw()` and `getLicenseMapping()` under `LicensesClient`
+- Added `LicenseMapping` entity and `LicenseMappingTypeEnum` enum under `Licenses` namespace
+
 ## [0.11.34] - 2026-09-29
 
 - Added optional `$customerPoNumber` parameter to `validateReport()` and `validateReportRaw()` under `ReportsClient`, sent as `customerPoNumber` in the request body

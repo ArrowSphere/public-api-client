@@ -2,14 +2,17 @@
 
 namespace ArrowSphere\PublicApiClient\Tests\Licenses;
 
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\Config;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\Credentials;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\Predictions;
+use ArrowSphere\PublicApiClient\Licenses\Entities\LicenseMapping;
 use ArrowSphere\PublicApiClient\Licenses\Entities\LicenseOfferFindResult;
 use ArrowSphere\PublicApiClient\Licenses\Enum\LicenseFindFieldEnum;
+use ArrowSphere\PublicApiClient\Licenses\Enum\LicenseMappingTypeEnum;
 use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
 use GuzzleHttp\Exception\GuzzleException;
@@ -1262,5 +1265,135 @@ JSON;
         self::assertInstanceOf(Credentials::class, $credentials);
         self::assertSame('user@test.com', $credentials->getUsername());
         self::assertNull($credentials->getUrl());
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetLicenseMappingRaw(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'GET',
+                'https://www.test.com/licenses/license-mapping',
+                [
+                    'headers' => [
+                        'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
+                        'User-Agent' => $this->userAgentHeader,
+                    ],
+                ]
+            )
+            ->willReturn(new Response(200, [], 'OK USA'));
+
+        $this->client->getLicenseMappingRaw();
+    }
+
+    /**
+     * @depends testGetLicenseMappingRaw
+     *
+     * @throws EntitiesException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetLicenseMappingWithInvalidResponse(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('GET', 'https://www.test.com/licenses/license-mapping')
+            ->willReturn(new Response(200, [], '{'));
+
+        $this->expectException(PublicApiClientException::class);
+        $this->client->getLicenseMapping();
+    }
+
+    /**
+     * @depends testGetLicenseMappingRaw
+     *
+     * @throws EntitiesException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetLicenseMapping(): void
+    {
+        $response = <<<JSON
+{
+  "status": 200,
+  "data": {
+    "licenseMapping": {
+      "license.attributes.renewalPolicy": "text",
+      "license.attributes.seatsLimit": "number",
+      "license.attributes.isManaged": "boolean",
+      "license.attributes.renewalDate": "date"
+    }
+  }
+}
+JSON;
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'GET',
+                'https://www.test.com/licenses/license-mapping',
+                [
+                    'headers' => [
+                        'apiKey' => '123456',
+                        'Content-Type' => 'application/json',
+                        'User-Agent' => $this->userAgentHeader,
+                    ],
+                ]
+            )
+            ->willReturn(new Response(200, [], $response));
+
+        $licenseMapping = $this->client->getLicenseMapping();
+
+        self::assertInstanceOf(LicenseMapping::class, $licenseMapping);
+        self::assertSame([
+            'license.attributes.renewalPolicy' => LicenseMappingTypeEnum::TEXT,
+            'license.attributes.seatsLimit' => LicenseMappingTypeEnum::NUMBER,
+            'license.attributes.isManaged' => LicenseMappingTypeEnum::BOOLEAN,
+            'license.attributes.renewalDate' => LicenseMappingTypeEnum::DATE,
+        ], $licenseMapping->getLicenseMapping());
+        self::assertSame(LicenseMappingTypeEnum::NUMBER, $licenseMapping->getType('license.attributes.seatsLimit'));
+        self::assertNull($licenseMapping->getType('license.attributes.unknown'));
+    }
+
+    /**
+     * @depends testGetLicenseMappingRaw
+     *
+     * @throws EntitiesException
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetLicenseMappingWithEmptyMapping(): void
+    {
+        $response = <<<JSON
+{
+  "status": 200,
+  "data": {
+    "licenseMapping": {}
+  }
+}
+JSON;
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('GET', 'https://www.test.com/licenses/license-mapping')
+            ->willReturn(new Response(200, [], $response));
+
+        $licenseMapping = $this->client->getLicenseMapping();
+
+        self::assertSame([], $licenseMapping->getLicenseMapping());
+        self::assertNull($licenseMapping->getType('license.attributes.renewalPolicy'));
     }
 }

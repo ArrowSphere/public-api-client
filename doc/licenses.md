@@ -240,6 +240,14 @@ This entity should be used to display search results or to make a listing of lic
 
 Please note that the `highlight` field is only available if the `DATA_HIGHLIGHT` option is set to `true` while searching.
 
+#### LicenseMapping
+
+This entity represents the mapping of the license dynamic attributes (see the `attributes` field of the [License](#License) entity), returned by the [getLicenseMapping endpoint](#getlicensemapping-endpoint).
+
+| Field          | Type                    | Example                                        | Description                                                                                                       |
+|----------------|-------------------------|------------------------------------------------|-------------------------------------------------------------------------------------------------------------------|
+| licenseMapping | `array<string, string>` | ['license.attributes.renewalPolicy' => 'text'] | The dynamic attributes, indexed by field path, with their type as value (see `LicenseMappingTypeEnum` constants) |
+
 ## Usage
 
 The license client is simply called `LicensesClient`.
@@ -473,3 +481,40 @@ $client = (new LicensesClient())
 $awsPayerAccountList = $client->getAwsPayerAccountList('XSP1234');
 
 ```
+
+### getLicenseMapping endpoint
+
+The "getLicenseMapping" endpoint returns the mapping of the license dynamic attributes, i.e. the type of each field available under `license.attributes`.
+It allows to know which dynamic attributes exist and how to search, filter or display them (for instance with the [Find endpoint](#find-endpoint)).
+
+The known types are listed as constants in `LicenseMappingTypeEnum`: `TEXT`, `NUMBER`, `BOOLEAN` and `DATE`. Other types may be returned by the API.
+If the dynamic attributes mapping is disabled on the API side, the mapping is empty.
+
+```php
+<?php
+
+use ArrowSphere\PublicApiClient\Licenses\Enum\LicenseMappingTypeEnum;
+use ArrowSphere\PublicApiClient\Licenses\LicensesClient;
+
+const URL = 'https://your-url-to-arrowsphere.example.com';
+const API_KEY = 'your API key in ArrowSphere';
+
+$client = (new LicensesClient())
+    ->setUrl(URL)
+    ->setApiKey(API_KEY);
+
+$licenseMapping = $client->getLicenseMapping();
+
+foreach ($licenseMapping->getLicenseMapping() as $field => $type) {
+    echo $field . ' is of type ' . $type . PHP_EOL;
+}
+
+if ($licenseMapping->getType('license.attributes.renewalDate') === LicenseMappingTypeEnum::DATE) {
+    echo 'renewalDate is a date' . PHP_EOL;
+}
+```
+
+The `LicensesClient::getLicenseMapping()` method returns a `LicenseMapping` entity.
+
+- `getLicenseMapping()`: returns the mapping as an array indexed by field path, with the field type as value
+- `getType(string $field)`: returns the type of the given field, or `null` if the field is not part of the mapping
