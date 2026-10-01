@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.35] - 2026-10-01
+
 - Added new methods `getLicenseMappingRaw()` and `getLicenseMapping()` under `LicensesClient`
 - Added `LicenseMapping` entity and `LicenseMappingTypeEnum` enum under `Licenses` namespace
 
@@ -706,7 +708,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.34...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.35...HEAD
+[0.11.35]: https://github.com/ArrowSphere/public-api-client/compare/0.11.34...0.11.35
 [0.11.34]: https://github.com/ArrowSphere/public-api-client/compare/0.11.33...0.11.34
 [0.11.33]: https://github.com/ArrowSphere/public-api-client/compare/0.11.32...0.11.33
 [0.11.32]: https://github.com/ArrowSphere/public-api-client/compare/0.11.31...0.11.32
