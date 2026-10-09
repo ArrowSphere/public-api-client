@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added a CI job that publishes the test coverage to Coveralls
+
 - Fixed the build status badge in the README and added static analysis, PHPStan, downloads and license badges
 - Added the MIT `LICENSE` file
 

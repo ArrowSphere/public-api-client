@@ -71,3 +71,31 @@ jobs:
 
       - name: Run tests
         run: vendor/bin/phpunit
+
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-24.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: pcov
+          php-version: '8.3'
+          extensions: curl, json
+          tools: composer:v2
+
+      - name: Install latest dependencies
+        run: composer update ${{ env.COMPOSER_FLAGS }} --prefer-dist
+
+      - name: Run tests with coverage
+        run: vendor/bin/phpunit --coverage-clover coverage.xml
+
+      - name: Upload coverage to Coveralls
+        uses: coverallsapp/github-action@v2
+        with:
+          file: coverage.xml
+          format: clover
