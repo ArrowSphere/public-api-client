@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.36] - 2026-10-09
+
 - Updated PHPStan to 2.3 at level 9 (the former `max`), installed through composer in CI and in the Makefile instead of a Docker image, and fixed the four findings it reported
 - Updated PHP-CS-Fixer to 3.95, installed through composer in CI and in the Makefile instead of a Docker image
 - Removed Psalm from the CI, the Makefile and the repository, PHPStan being the single static analyser
@@ -722,7 +724,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.35...HEAD
+[unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.36...HEAD
+[0.11.36]: https://github.com/ArrowSphere/public-api-client/compare/0.11.35...0.11.36
 [0.11.35]: https://github.com/ArrowSphere/public-api-client/compare/0.11.34...0.11.35
 [0.11.34]: https://github.com/ArrowSphere/public-api-client/compare/0.11.33...0.11.34
 [0.11.33]: https://github.com/ArrowSphere/public-api-client/compare/0.11.32...0.11.33
