@@ -47,13 +47,12 @@ jobs:
         run: git push origin release/${{ github.event.inputs.version }}
 
       - name: Create pull request
-        id: create-pull-request
-        uses: thomaseizinger/create-pull-request@1.0.0
         env:
-          GITHUB_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}
-        with:
-          head: release/${{ github.event.inputs.version }}
-          base: master
-          title: Release version ${{ github.event.inputs.version }}
-          body: |
-            Automatic pull request for release version ${{ github.event.inputs.version }}
+          GH_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}
+        run: |
+          gh pr create \
+            --head release/${{ github.event.inputs.version }} \
+            --base master \
+            --title "Release version ${{ github.event.inputs.version }}" \
+            --body "Automatic pull request for release version ${{ github.event.inputs.version }}"
+          gh pr merge release/${{ github.event.inputs.version }} --auto --rebase
