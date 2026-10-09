@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\License;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class Credentials
@@ -15,12 +14,6 @@ class Credentials extends AbstractEntity
     public const COLUMN_PASSWORD_RESET_URL = 'passwordResetUrl';
 
     public const COLUMN_URL = 'url';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_USERNAME           => 'nullable|string',
-        self::COLUMN_PASSWORD_RESET_URL => 'nullable|string',
-        self::COLUMN_URL                => 'nullable|string',
-    ];
 
     /**
      * @var string|null
@@ -41,8 +34,6 @@ class Credentials extends AbstractEntity
      * Credentials constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

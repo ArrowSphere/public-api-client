@@ -3,9 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Consumption\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
-use ArrowSphere\PublicApiClient\General\Enum\ClassificationEnum;
-use ReflectionException;
 
 class MonthlyAnalyticsItem extends AbstractEntity
 {
@@ -21,23 +18,6 @@ class MonthlyAnalyticsItem extends AbstractEntity
     public const COLUMN_LISTPRICE = 'listBuyPrice';
     public const COLUMN_CURRENCY = 'currency';
     public const COLUMN_MONTH = 'month';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_VENDOR                                           => 'string|required',
-        self::COLUMN_MARKETPLACE                                      => 'string|required',
-        self::COLUMN_CLASSIFICATION                                   => 'string|required',
-        self::COLUMN_TAG                                              => 'string|nullable|present',
-        self::COLUMN_USDPRICE . '.' . self::COLUMN_RESELLERPRICE      => 'numeric|required',
-        self::COLUMN_USDPRICE . '.' . self::COLUMN_ARROWPRICE         => 'numeric',
-        self::COLUMN_USDPRICE . '.' . self::COLUMN_ENDCUSTOMERPRICE   => 'numeric|nullable',
-        self::COLUMN_USDPRICE . '.' . self::COLUMN_LISTPRICE          => 'numeric|required',
-        self::COLUMN_USDPRICE . '.' . self::COLUMN_CURRENCY           => 'string|required',
-        self::COLUMN_LOCALPRICE . '.' . self::COLUMN_RESELLERPRICE    => 'numeric|required',
-        self::COLUMN_LOCALPRICE . '.' . self::COLUMN_ARROWPRICE       => 'numeric',
-        self::COLUMN_LOCALPRICE . '.' . self::COLUMN_ENDCUSTOMERPRICE => 'numeric|required',
-        self::COLUMN_LOCALPRICE . '.' . self::COLUMN_LISTPRICE        => 'numeric|required',
-        self::COLUMN_LOCALPRICE . '.' . self::COLUMN_CURRENCY         => 'string|required',
-    ];
 
     /**
      * @var string
@@ -78,16 +58,10 @@ class MonthlyAnalyticsItem extends AbstractEntity
      * MonthlyAnalyticsItem constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException|ReflectionException
      */
     public function __construct(array $data)
     {
         parent::__construct($data);
-
-        if (! ClassificationEnum::isValidName($data[self::COLUMN_CLASSIFICATION])) {
-            throw new EntityValidationException('Classification: ' . $data[self::COLUMN_CLASSIFICATION] . ' not supported');
-        }
 
         $this->tag = $data[self::COLUMN_TAG];
         $this->classification = $data[self::COLUMN_CLASSIFICATION];

@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Licenses\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\License;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\Offer;
 
@@ -17,11 +16,6 @@ class LicenseOfferFindResult extends AbstractEntity
     public const COLUMN_LICENSE = 'license';
 
     public const COLUMN_OFFER = 'offer';
-
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLUMN_LICENSE   => 'required',
-        self::COLUMN_HIGHLIGHT => 'array',
-    ];
 
     /**
      * @var array
@@ -42,8 +36,6 @@ class LicenseOfferFindResult extends AbstractEntity
      * LicenseOfferFindResult constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

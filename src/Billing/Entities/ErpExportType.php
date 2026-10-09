@@ -3,18 +3,12 @@
 namespace ArrowSphere\PublicApiClient\Billing\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class ErpExportType extends AbstractEntity
 {
     public const COLUMN_NAME = 'name';
 
     public const COLUMN_COLUMNS = 'columns';
-
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLUMN_NAME => 'string|required',
-        self::COLUMN_COLUMNS => 'array|required',
-    ];
 
     /**
      * @var string
@@ -31,7 +25,6 @@ class ErpExportType extends AbstractEntity
      *
      * @param array $data
      *
-     * @throws EntityValidationException
      * @throws \ReflectionException
      */
     public function __construct(array $data)

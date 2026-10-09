@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Campaigns\Entities\LandingPage;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class LandingPageFooterV2 extends AbstractEntity
 {
@@ -61,7 +60,6 @@ class LandingPageFooterV2 extends AbstractEntity
      *
      * @param array $data
      *
-     * @throws EntityValidationException
      * @throws \ReflectionException
      */
     public function __construct(array $data)

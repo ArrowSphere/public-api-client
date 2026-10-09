@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Partners\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * @deprecated This entity is obsolete. Please use OrganizationUnitClient.
@@ -45,8 +44,6 @@ class OrganizationUnit extends AbstractEntity
      * Customer constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

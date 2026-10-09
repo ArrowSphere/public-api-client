@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\General\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class Whoami
@@ -41,25 +40,6 @@ class Whoami extends AbstractEntity
     public const COLUMN_BILLING_ID = 'billingId';
 
     public const COLUMN_INTERNAL_REFERENCE = 'internalReference';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_COMPANY_NAME       => 'required',
-        self::COLUMN_ADDRESS_LINE_1     => 'present',
-        self::COLUMN_ADDRESS_LINE_2     => 'present',
-        self::COLUMN_ZIP                => 'present',
-        self::COLUMN_CITY               => 'present',
-        self::COLUMN_COUNTRY_CODE       => 'required',
-        self::COLUMN_STATE              => 'present',
-        self::COLUMN_RECEPTION_PHONE    => 'present',
-        self::COLUMN_WEBSITE_URL        => 'present',
-        self::COLUMN_EMAIL_CONTACT      => 'present',
-        self::COLUMN_HEADCOUNT          => 'present',
-        self::COLUMN_TAX_NUMBER         => 'present',
-        self::COLUMN_REFERENCE          => 'present',
-        self::COLUMN_REF                => 'present',
-        self::COLUMN_BILLING_ID         => 'present',
-        self::COLUMN_INTERNAL_REFERENCE => 'present',
-    ];
 
     /**
      * @var string
@@ -145,8 +125,6 @@ class Whoami extends AbstractEntity
      * Whoami constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

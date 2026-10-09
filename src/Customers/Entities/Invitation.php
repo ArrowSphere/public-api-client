@@ -5,7 +5,6 @@ namespace ArrowSphere\PublicApiClient\Customers\Entities;
 use ArrowSphere\PublicApiClient\AbstractEntity;
 use ArrowSphere\PublicApiClient\Customers\Entities\Invitation\Company as InvitationCompany;
 use ArrowSphere\PublicApiClient\Customers\Entities\Invitation\Contact as InvitationContact;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class Invitation
@@ -56,8 +55,6 @@ class Invitation extends AbstractEntity
 
     /**
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

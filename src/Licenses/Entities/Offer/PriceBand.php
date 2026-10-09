@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\Offer;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\ActionFlags;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\Billing;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\Identifiers;
@@ -30,17 +29,6 @@ class PriceBand extends AbstractEntity
     public const COLUMN_SALE_CONSTRAINTS = 'saleConstraints';
 
     public const COLUMN_IDENTIFIERS = 'identifiers';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_ACTION_FLAGS     => 'required|array',
-        self::COLUMN_BILLING          => 'required|array',
-        self::COLUMN_CURRENCY         => 'required',
-        self::COLUMN_IS_ENABLED       => 'required|boolean',
-        self::COLUMN_MARKETPLACE      => 'required',
-        self::COLUMN_PRICES           => 'required|array',
-        self::COLUMN_SALE_CONSTRAINTS => 'required|array',
-        self::COLUMN_IDENTIFIERS      => 'required|array',
-    ];
 
     /**
      * @var bool
@@ -86,8 +74,6 @@ class PriceBand extends AbstractEntity
      * PriceBand constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

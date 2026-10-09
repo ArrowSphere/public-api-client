@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Campaigns\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class Banner extends AbstractEntity
 {
@@ -63,7 +62,6 @@ class Banner extends AbstractEntity
      *
      * @param array $data
      *
-     * @throws EntityValidationException
      * @throws \ReflectionException
      */
     public function __construct(array $data)

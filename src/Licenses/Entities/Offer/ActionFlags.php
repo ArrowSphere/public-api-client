@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\Offer;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class ActionFlags
@@ -15,12 +14,6 @@ class ActionFlags extends AbstractEntity
     public const COLUMN_MANUAL_PROVISIONING = 'isManualProvisioning';
 
     public const COLUMN_RENEWAL_SKU = 'renewalSku';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_IS_AUTO_RENEW       => 'required|boolean',
-        self::COLUMN_MANUAL_PROVISIONING => 'required|boolean',
-        self::COLUMN_RENEWAL_SKU         => 'boolean',
-    ];
 
     /**
      * @var bool
@@ -41,8 +34,6 @@ class ActionFlags extends AbstractEntity
      * ActionFlags constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Billing\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class Preferences extends AbstractEntity
 {
@@ -11,12 +10,6 @@ class Preferences extends AbstractEntity
     public const KEY_VALIDITY = 'validity';
     public const KEY_USABLE = 'usable';
     public const KEY_STATUS = 'status';
-
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::KEY_PREFERENCES => 'array|present',
-        self::KEY_VALIDITY . '.' . self::KEY_USABLE => 'boolean|required',
-        self::KEY_VALIDITY . '.' . self::KEY_STATUS => 'string|required',
-    ];
 
     /**
      * @var Preference[]
@@ -38,7 +31,6 @@ class Preferences extends AbstractEntity
      *
      * @param array $data
      *
-     * @throws EntityValidationException
      * @throws \ReflectionException
      */
     public function __construct(array $data)

@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Customers\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class Contact
@@ -17,13 +16,6 @@ class Contact extends AbstractEntity
     public const COLUMN_LAST_NAME = 'LastName';
 
     public const COLUMN_PHONE = 'Phone';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_EMAIL      => 'required',
-        self::COLUMN_FIRST_NAME => 'required',
-        self::COLUMN_LAST_NAME  => 'required',
-        self::COLUMN_PHONE      => 'present',
-    ];
 
     /**
      * @var string
@@ -49,8 +41,6 @@ class Contact extends AbstractEntity
      * Contact constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

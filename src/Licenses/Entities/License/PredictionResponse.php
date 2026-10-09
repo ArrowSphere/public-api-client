@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\License;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class PredictionResponse
@@ -23,17 +22,10 @@ class PredictionResponse extends AbstractEntity
      */
     private $date;
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_DATE => 'present',
-        self::COLUMN_AMOUNT => 'present',
-    ];
-
     /**
      * PredictionResponse constructor
      *
      * @param array $data
-     *
-     * @throws  EntityValidationException
      */
     public function __construct(array $data)
     {

@@ -3,17 +3,11 @@
 namespace ArrowSphere\PublicApiClient\Billing\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class Identity extends AbstractEntity
 {
     public const COLUMN_REFERENCE = 'reference';
     public const COLUMN_NAME = 'name';
-
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLUMN_REFERENCE => 'string|required',
-        self::COLUMN_NAME => 'string|required',
-    ];
 
     /**
      * @var string
@@ -30,7 +24,6 @@ class Identity extends AbstractEntity
      *
      * @param array $data
      *
-     * @throws EntityValidationException
      * @throws \ReflectionException
      */
     public function __construct(array $data)

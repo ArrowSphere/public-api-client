@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Billing\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class Statement extends AbstractEntity
 {
@@ -23,25 +22,6 @@ class Statement extends AbstractEntity
     public const COLUMN_PRICES = 'prices';
     public const COLUMN_DESCRIPTION = 'description';
     public const COLUMN_STATUS = 'status';
-
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLUMN_REFERENCE => 'string|required',
-        self::COLUMN_SEQUENCE => 'string|present|nullable',
-        self::COLUMN_BILLING_GROUP => 'string|required',
-        self::COLUMN_BILLING_STRATEGY => 'string|nullable',
-        self::COLUMN_VENDOR_NAME => 'string|present|nullable',
-        self::COLUMN_PROGRAM_CODE => 'string|present|nullable',
-        self::COLUMN_CLASSIFICATION => 'string|present|nullable',
-        self::COLUMN_REPORT_PERIOD => 'string|required',
-        self::COLUMN_MARKETPLACE => 'string|required',
-        self::COLUMN_ISSUE_DATE => 'string|present|nullable',
-        self::COLUMN_FROM => 'array|required',
-        self::COLUMN_TO => 'array|required',
-        self::COLUMN_CURRENCY => 'string|required',
-        self::COLUMN_PRICES => 'array|required',
-        self::COLUMN_DESCRIPTION => 'string|present|nullable',
-        self::COLUMN_STATUS => 'array|nullable',
-    ];
 
     /**
      * @var string
@@ -128,7 +108,6 @@ class Statement extends AbstractEntity
      *
      * @param array $data
      *
-     * @throws EntityValidationException
      * @throws \ReflectionException
      */
     public function __construct(array $data)

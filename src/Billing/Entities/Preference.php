@@ -3,10 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Billing\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Billing\Enum\PreferenceGroupByColumnsEnum;
-use ArrowSphere\PublicApiClient\Billing\Enum\PreferenceOverridesEnum;
-use ArrowSphere\PublicApiClient\Billing\Enum\PreferenceTypeEnum;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class Preference extends AbstractEntity
 {
@@ -17,17 +13,6 @@ class Preference extends AbstractEntity
     public const KEY_COLUMNS = 'columns';
     public const KEY_FILTERS = 'filters';
     public const KEY_OVERRIDES = 'overrides';
-
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::KEY_NAME => 'string|required',
-        self::KEY_PRIORITY => 'numeric|required',
-        self::KEY_IDENTIFIER => 'string|required',
-        self::KEY_PARAMETERS => 'array|present',
-        self::KEY_PARAMETERS . '.' . self::KEY_COLUMNS => 'array|required_if:' . self::KEY_IDENTIFIER . ',' . PreferenceTypeEnum::GROUP_BY,
-        self::KEY_FILTERS => 'array|present',
-        self::KEY_OVERRIDES => 'array|required',
-        self::KEY_OVERRIDES . '.' . PreferenceOverridesEnum::ARS_SKU => 'string|required'
-    ];
 
     /**
      * @var string
@@ -63,27 +48,10 @@ class Preference extends AbstractEntity
      * Preferences constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
-     * @throws \ReflectionException
      */
     public function __construct(array $data)
     {
         parent::__construct($data);
-
-        if (self::$enableValidation) {
-            if (! PreferenceTypeEnum::isValidValue($data[self::KEY_IDENTIFIER])) {
-                throw new EntityValidationException('Identifier: ' . $data[self::KEY_IDENTIFIER] . ' not supported');
-            }
-
-            if ($data[self::KEY_IDENTIFIER] === PreferenceTypeEnum::GROUP_BY) {
-                $values = PreferenceGroupByColumnsEnum::invalidValues($data[self::KEY_PARAMETERS][self::KEY_COLUMNS]);
-
-                if (! empty($values)) {
-                    throw new EntityValidationException('GroupBy Columns: ' . implode(' ', $values) . ' not supported');
-                }
-            }
-        }
 
         $this->name = $data[self::KEY_NAME];
         $this->priority = $data[self::KEY_PRIORITY];

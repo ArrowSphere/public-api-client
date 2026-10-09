@@ -3,15 +3,10 @@
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\License;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class Security extends AbstractEntity
 {
     public const COLUMN_ACTIVE_FRAUD_EVENTS = 'activeFraudEvents';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_ACTIVE_FRAUD_EVENTS  => 'numeric|nullable',
-    ];
 
     /**
      * @var int|null
@@ -22,8 +17,6 @@ class Security extends AbstractEntity
      * Security constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

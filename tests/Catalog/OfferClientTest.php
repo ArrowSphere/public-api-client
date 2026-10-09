@@ -7,7 +7,6 @@ use ArrowSphere\PublicApiClient\Catalog\Entities\Offer;
 use ArrowSphere\PublicApiClient\Catalog\Entities\OfferFindResult;
 use ArrowSphere\PublicApiClient\Catalog\Entities\PriceBand;
 use ArrowSphere\PublicApiClient\Catalog\OfferClient;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
@@ -260,7 +259,6 @@ JSON;
      * @param int $total
      * @param array $pages
      *
-     * @throws EntityValidationException
      * @throws PublicApiClientException
      * @throws GuzzleException
      */
@@ -317,7 +315,6 @@ JSON;
      * @depends testFindRaw
      *
      * @throws PublicApiClientException
-     * @throws EntityValidationException
      */
     public function testFindWithInvalidResponse(): void
     {
@@ -360,7 +357,6 @@ JSON;
     /**
      * @depends testFindRaw
      *
-     * @throws EntityValidationException
      * @throws PublicApiClientException
      */
     public function testFind(): void

@@ -3,13 +3,11 @@
 namespace ArrowSphere\PublicApiClient\Tests\Catalog\Entities;
 
 use ArrowSphere\PublicApiClient\Catalog\Entities\Service;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use PHPUnit\Framework\TestCase;
 
 class ServiceTest extends TestCase
 {
     /**
-     * @throws EntityValidationException
      */
     public function testServiceSerialisation(): void
     {

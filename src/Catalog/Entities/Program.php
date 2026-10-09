@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Catalog\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class Program
@@ -19,14 +18,6 @@ class Program extends AbstractEntity
     public const COLUMN_NAME = 'name';
 
     public const COLUMN_REFERENCE = 'reference';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_ASSOCIATED_SUBSCRIPTION_PROGRAM => 'required',
-        self::COLUMN_CLASSIFICATION                  => 'required',
-        self::COLUMN_LOGO                            => 'present',
-        self::COLUMN_NAME                            => 'required',
-        self::COLUMN_REFERENCE                       => 'required',
-    ];
 
     /**
      * @var string
@@ -57,8 +48,6 @@ class Program extends AbstractEntity
      * Program constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

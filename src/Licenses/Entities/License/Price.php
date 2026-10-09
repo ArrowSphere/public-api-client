@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\License;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class Price
@@ -66,21 +65,11 @@ class Price extends AbstractEntity
      */
     private $currency;
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_PRICE_BAND_ARROWSPHERE_SKU => 'present',
-        self::COLUMN_BUY_PRICE                  => 'present|numeric',
-        self::COLUMN_SELL_PRICE                 => 'present|numeric',
-        self::COLUMN_LIST_PRICE                 => 'present|numeric',
-        self::COLUMN_CURRENCY                   => 'present',
-    ];
-
     /**
      * Price constructor.
      *
      * @param array $data
      * @param int $qty
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data, int $qty = 1)
     {

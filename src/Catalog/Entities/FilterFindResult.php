@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Catalog\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class FilterFindResult
@@ -24,19 +23,10 @@ class FilterFindResult extends AbstractEntity
      */
     private $values;
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_NAME                => 'present',
-        self::COLUMN_VALUES              => 'present|array',
-        self::COLUMN_VALUES . '.*.value' => 'present',
-        self::COLUMN_VALUES . '.*.count' => 'required|numeric',
-    ];
-
     /**
      * FilterFindResult constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

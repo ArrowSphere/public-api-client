@@ -10,7 +10,6 @@ use ArrowSphere\PublicApiClient\Campaigns\Entities\Campaign;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\CampaignV2;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\LandingPage\LandingPageFeatureV2;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\LandingPage\LandingPageMarketingFeature;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
@@ -55,7 +54,6 @@ class CampaignsClientTest extends AbstractClientTest
     /**
      * @depends testGetCampaignsRaw
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -77,7 +75,6 @@ class CampaignsClientTest extends AbstractClientTest
     }
 
     /**
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException

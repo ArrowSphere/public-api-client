@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\License;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class Warning
@@ -13,11 +12,6 @@ class Warning extends AbstractEntity
     public const COLUMN_KEY = 'key';
 
     public const COLUMN_MESSAGE = 'message';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_KEY  => 'required|string',
-        self::COLUMN_MESSAGE => 'required|string',
-    ];
 
     /**
      * @var string
@@ -33,8 +27,6 @@ class Warning extends AbstractEntity
      * Warning constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

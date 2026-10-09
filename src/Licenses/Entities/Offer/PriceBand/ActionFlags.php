@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class ActionFlags
@@ -19,14 +18,6 @@ class ActionFlags extends AbstractEntity
     public const COLUMN_CAN_DECREASE_SEATS = 'canDecreaseSeats';
 
     public const COLUMN_CAN_INCREASE_SEATS = 'canIncreaseSeats';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_CAN_BE_CANCELLED   => 'required|boolean',
-        self::COLUMN_CAN_BE_REACTIVATED => 'required|boolean',
-        self::COLUMN_CAN_BE_SUSPENDED   => 'required|boolean',
-        self::COLUMN_CAN_DECREASE_SEATS => 'required|boolean',
-        self::COLUMN_CAN_INCREASE_SEATS => 'required|boolean',
-    ];
 
     /**
      * @var bool
@@ -57,8 +48,6 @@ class ActionFlags extends AbstractEntity
      * ActionFlags constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

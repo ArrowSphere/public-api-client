@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Catalog\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class PriceBand
@@ -31,19 +30,6 @@ class PriceBand extends AbstractEntity
     public const COLUMN_PERIOD_AS_HOURS = 'period_as_hours';
 
     public const COLUMN_TERM_AS_HOURS = 'term_as_hours';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_MIN_QUANTITY         => 'required',
-        self::COLUMN_MAX_QUANTITY         => 'present',
-        self::COLUMN_RECURRING_BUY_PRICE  => 'required',
-        self::COLUMN_RECURRING_SELL_PRICE => 'required',
-        self::COLUMN_TERM                 => 'required',
-        self::COLUMN_UNIT_TYPE            => 'required',
-        self::COLUMN_RECURRING_TIME_UNIT  => 'required',
-        self::COLUMN_CURRENCY             => 'required',
-        self::COLUMN_PERIOD_AS_HOURS      => 'required|numeric',
-        self::COLUMN_TERM_AS_HOURS        => 'required|numeric',
-    ];
 
     /**
      * @var int
@@ -104,8 +90,6 @@ class PriceBand extends AbstractEntity
      * PriceBand constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

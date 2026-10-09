@@ -2,7 +2,6 @@
 
 namespace ArrowSphere\PublicApiClient\Tests\Subscription;
 
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Subscription\SubscriptionClient;
@@ -22,7 +21,6 @@ class SubscriptionClientTest extends AbstractClientTest
     /**
      * @return void
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException

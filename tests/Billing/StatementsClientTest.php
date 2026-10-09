@@ -8,7 +8,6 @@ use ArrowSphere\PublicApiClient\Billing\Entities\Statement;
 use ArrowSphere\PublicApiClient\Billing\Entities\StatementLine;
 use ArrowSphere\PublicApiClient\Billing\Entities\StatementStatus;
 use ArrowSphere\PublicApiClient\Billing\StatementsClient;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
@@ -148,7 +147,6 @@ class StatementsClientTest extends AbstractClientTest
     }
 
     /**
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws PublicApiClientException
      */
@@ -381,7 +379,6 @@ class StatementsClientTest extends AbstractClientTest
     }
 
     /**
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws PublicApiClientException
      */

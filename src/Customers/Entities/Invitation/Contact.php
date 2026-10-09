@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Customers\Entities\Invitation;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class Contact
@@ -40,8 +39,6 @@ class Contact extends AbstractEntity
 
     /**
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

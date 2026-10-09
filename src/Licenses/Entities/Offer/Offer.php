@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\Offer;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class Offer
@@ -23,16 +22,6 @@ class Offer extends AbstractEntity
     public const COLUMN_PRICE_BAND = 'priceBand';
 
     public const COLUMN_ARROW_SUB_CATEGORIES = 'arrowSubCategories';
-
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLUMN_ACTION_FLAGS           => 'required|array',
-        self::COLUMN_CLASSIFICATION         => 'required|string',
-        self::COLUMN_IS_ENABLED             => 'required|boolean',
-        self::COLUMN_LAST_UPDATE            => 'required|string',
-        self::COLUMN_NAME                   => 'required|string',
-        self::COLUMN_PRICE_BAND             => 'required|array',
-        self::COLUMN_ARROW_SUB_CATEGORIES   => 'required'
-    ];
 
     /**
      * @var ActionFlags
@@ -73,8 +62,6 @@ class Offer extends AbstractEntity
      * Offer constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

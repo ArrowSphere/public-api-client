@@ -17,7 +17,6 @@ class OrdersClient extends AbstractClient
      *
      * @return Generator<Order>
      *
-     * @throws \ArrowSphere\PublicApiClient\Exception\EntityValidationException
      * @throws \ArrowSphere\PublicApiClient\Exception\NotFoundException
      * @throws \ArrowSphere\PublicApiClient\Exception\PublicApiClientException|\GuzzleHttp\Exception\GuzzleException
      */
@@ -78,7 +77,6 @@ class OrdersClient extends AbstractClient
 
     /**
      * @throws \ArrowSphere\PublicApiClient\Exception\NotFoundException
-     * @throws \ArrowSphere\PublicApiClient\Exception\EntityValidationException
      * @throws \ArrowSphere\PublicApiClient\Exception\PublicApiClientException|\GuzzleHttp\Exception\GuzzleException
      */
     public function createOrder(CreateOrder $order): string
@@ -148,7 +146,6 @@ class OrdersClient extends AbstractClient
     /**
      * @return OrderHistory[]
      *
-     * @throws \ArrowSphere\PublicApiClient\Exception\EntityValidationException
      * @throws \ArrowSphere\PublicApiClient\Exception\NotFoundException
      * @throws \ArrowSphere\PublicApiClient\Exception\PublicApiClientException|\GuzzleHttp\Exception\GuzzleException
      */

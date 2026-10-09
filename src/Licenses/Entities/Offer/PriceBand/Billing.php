@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class Billing
@@ -15,12 +14,6 @@ class Billing extends AbstractEntity
     public const COLUMN_TERM = 'term';
 
     public const COLUMN_TYPE = 'type';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_CYCLE => 'required|numeric',
-        self::COLUMN_TERM  => 'required|numeric',
-        self::COLUMN_TYPE  => 'required|string',
-    ];
 
     /**
      * @var int
@@ -41,8 +34,6 @@ class Billing extends AbstractEntity
      * Billing constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

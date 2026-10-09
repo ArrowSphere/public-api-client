@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Campaigns\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class Campaign extends AbstractEntity
 {
@@ -97,8 +96,6 @@ class Campaign extends AbstractEntity
      * Statement constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

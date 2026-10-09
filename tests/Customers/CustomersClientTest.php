@@ -10,7 +10,6 @@ use ArrowSphere\PublicApiClient\Customers\Request\ExportCustomersRequest;
 use ArrowSphere\PublicApiClient\Customers\Request\MigrationRequest;
 use ArrowSphere\PublicApiClient\Customers\Request\ProvisionRequest;
 use ArrowSphere\PublicApiClient\Customers\Request\SubEntities\CustomerFilters;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
@@ -68,7 +67,6 @@ class CustomersClientTest extends AbstractClientTest
     }
 
     /**
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws PublicApiClientException
      */
@@ -250,7 +248,6 @@ JSON;
     /**
      * @return void
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -376,7 +373,6 @@ JSON;
     /**
      * @throws NotFoundException
      * @throws PublicApiClientException
-     * @throws EntityValidationException
      * @throws GuzzleException
      */
     public function testCreateCustomer(): void
@@ -469,7 +465,6 @@ JSON;
     /**
      * @return void
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -495,7 +490,6 @@ JSON;
     /**
      * @return void
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -551,7 +545,6 @@ JSON;
     /**
      * @return void
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -639,7 +632,6 @@ JSON;
     /**
      * @return void
      *
-     * @throws EntityValidationException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -666,7 +658,6 @@ JSON;
     /**
      * @return void
      *
-     * @throws EntityValidationException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */

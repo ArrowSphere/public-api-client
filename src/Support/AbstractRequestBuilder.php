@@ -2,8 +2,6 @@
 
 namespace ArrowSphere\PublicApiClient\Support;
 
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
-
 abstract class AbstractRequestBuilder
 {
     /**
@@ -12,7 +10,6 @@ abstract class AbstractRequestBuilder
     protected $data;
 
     /**
-     * @throws EntityValidationException
      */
     public function build(): array
     {
@@ -22,7 +19,6 @@ abstract class AbstractRequestBuilder
     }
 
     /**
-     * @throws EntityValidationException
      */
     abstract protected function validate(): void;
 }

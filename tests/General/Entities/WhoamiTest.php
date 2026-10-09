@@ -2,14 +2,12 @@
 
 namespace ArrowSphere\PublicApiClient\Tests\General\Entities;
 
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\General\Entities\Whoami;
 use PHPUnit\Framework\TestCase;
 
 class WhoamiTest extends TestCase
 {
     /**
-     * @throws EntityValidationException
      */
     public function testWhoamiSerialisation(): void
     {

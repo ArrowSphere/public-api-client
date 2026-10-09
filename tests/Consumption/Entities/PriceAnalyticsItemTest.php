@@ -3,13 +3,11 @@
 namespace ArrowSphere\PublicApiClient\Tests\Consumption\Entities;
 
 use ArrowSphere\PublicApiClient\Consumption\Entities\PriceAnalyticsItem;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use PHPUnit\Framework\TestCase;
 
 class PriceAnalyticsItemTest extends TestCase
 {
     /**
-     * @throws EntityValidationException
      */
     public function testHealthCheckItemSerialisation(): void
     {

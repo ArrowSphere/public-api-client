@@ -4,7 +4,6 @@ namespace ArrowSphere\PublicApiClient\Catalog\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
 use ArrowSphere\PublicApiClient\Catalog\OfferClient;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use Generator;
 
@@ -65,8 +64,6 @@ class FindResult extends AbstractEntity
      * @param OfferClient $client
      * @param array $postData
      * @param array $parameters
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data, OfferClient $client, array $postData, array $parameters)
     {
@@ -104,7 +101,6 @@ class FindResult extends AbstractEntity
     /**
      * @return Generator|OfferFindResult[]
      *
-     * @throws EntityValidationException
      * @throws PublicApiClientException
      */
     public function getOffers(): Generator

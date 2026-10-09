@@ -6,7 +6,17 @@ moves them under the heading of the new version, and refuses a patch release whi
 
 ## Unreleased
 
-## 0.10 to 1.0
+The entity validation has been removed. Entities no longer check the data they receive, neither through the
+`illuminate/validation` rules (which only ran when `AbstractEntity::$enableValidation` was set to `true` and the
+package was installed) nor through the hand-written checks of a few entities on enum values (colors, classifications,
+billing statement states, billing periodicities, rate types and preference identifiers). An unknown value coming from
+the API is now passed through as is: handle it on your side if it matters to you.
+
+As a consequence, the `EntityValidationException` class and the `AbstractEntity::$enableValidation` property are
+removed. Remove any `catch` block, `instanceof` check or `@throws` annotation referring to this exception, and any
+assignment to this property.
+
+## 0.10 to 0.11
 
 There is now some magic in PublicApiClient class to instantiate the clients. But now they should be named properly.
 The billing statements client had an incorrect name so it has been renamed:
