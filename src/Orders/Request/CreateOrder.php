@@ -68,7 +68,7 @@ class CreateOrder extends AbstractEntity
      *          }
      *     } $data
      *
-     * @throws \ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException
+     * @throws EntitiesException
      */
     public function __construct(array $data)
     {

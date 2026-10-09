@@ -27,7 +27,7 @@ static-phpstan-update-baseline:
 	$(MAKE) static-phpstan PHPSTAN_PARAMS="--generate-baseline"
 
 static-codestyle-fix:
-	docker run --rm -it -v ${PWD}:/app -w /app oskarstark/php-cs-fixer-ga:2.16.4 --diff-format udiff $(CS_PARAMS)
+	vendor/bin/php-cs-fixer fix --diff $(CS_PARAMS)
 
 static-codestyle-check:
 	$(MAKE) static-codestyle-fix CS_PARAMS="--dry-run"

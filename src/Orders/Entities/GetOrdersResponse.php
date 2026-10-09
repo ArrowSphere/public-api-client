@@ -11,7 +11,7 @@ class GetOrdersResponse extends AbstractEntity
     public const ORDERS = 'orders';
 
     /**
-     * @var \ArrowSphere\PublicApiClient\Orders\Entities\Order[]
+     * @var Order[]
      */
     private array $orders;
 
@@ -43,7 +43,7 @@ class GetOrdersResponse extends AbstractEntity
     }
 
     /**
-     * @return \ArrowSphere\PublicApiClient\Orders\Entities\Order[]
+     * @return Order[]
      */
     public function getOrders(): array
     {

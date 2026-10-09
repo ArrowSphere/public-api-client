@@ -20,7 +20,7 @@ class ProvisionResponse extends AbstractEntity
     private string $message;
 
     /**
-     * @var \ArrowSphere\PublicApiClient\Customers\Entities\Attribute[]
+     * @var Attribute[]
      */
     private array $attributes;
 

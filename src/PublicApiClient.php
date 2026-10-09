@@ -143,7 +143,7 @@ class PublicApiClient extends AbstractClient
     {
         $client = new $className($this->client);
 
-        if(! $client instanceof AbstractClient) {
+        if (! $client instanceof AbstractClient) {
             throw new RuntimeException('Client must be an instance of AbstractClient');
         }
 

@@ -77,7 +77,7 @@ class Order extends AbstractEntity
     protected ?string $poNumber;
 
     /**
-     * @var \ArrowSphere\PublicApiClient\Orders\Entities\OrdersProduct[]
+     * @var OrdersProduct[]
      */
     protected array $products;
 
@@ -169,7 +169,7 @@ class Order extends AbstractEntity
     }
 
     /**
-     * @return \ArrowSphere\PublicApiClient\Orders\Entities\OrdersProduct[]
+     * @return OrdersProduct[]
      */
     public function getProducts(): array
     {
