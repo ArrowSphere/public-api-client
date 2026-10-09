@@ -5,6 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Updated Psalm to 6.19, downloaded as a phar in CI and in the Makefile instead of a Docker image, with unused code and `#[Override]` checks disabled and an updated baseline
 - Removed the redundant `symfony/polyfill-php80` dependency, the package already requires PHP 8.0
 - Added the Coveralls coverage badge to the README
 - Added a CI job that publishes the test coverage to Coveralls

@@ -206,7 +206,8 @@ class SupportClient extends AbstractClient
                 break;
             }
 
-            $url = is_string(parse_url($pagination['next'], PHP_URL_QUERY)) ? parse_url($pagination['next'], PHP_URL_QUERY) : '';
+            $query = parse_url($pagination['next'], PHP_URL_QUERY);
+            $url = is_string($query) ? $query : '';
             parse_str($url, $data);
             $currentPage++;
         } while ($currentPage <= $pagination['total_page']);

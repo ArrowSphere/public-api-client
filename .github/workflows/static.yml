@@ -56,19 +56,20 @@ jobs:
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
         with:
-          php-version: '8.1'
+          php-version: '8.3'
           extensions: mbstring, intl
           tools: composer:v2
 
       - name: Checkout code
         uses: actions/checkout@v7
 
-      - name: Download dependencies
-        run: |
-          composer require --dev --no-update psalm/phar:5.25.0
-          composer update --no-interaction --prefer-dist
+      - name: Install latest dependencies
+        run: composer update --ansi --no-interaction --no-progress --prefer-dist
+
+      - name: Download Psalm
+        run: curl -sSL -o psalm.phar https://github.com/vimeo/psalm/releases/download/6.19.2/psalm.phar
 
       - name: Psalm
         run: |
-          ./vendor/bin/psalm.phar --version
-          ./vendor/bin/psalm.phar --output-format=github --no-progress --show-info=false --stats
+          php psalm.phar --version
+          php psalm.phar --output-format=github --no-progress --show-info=false --stats

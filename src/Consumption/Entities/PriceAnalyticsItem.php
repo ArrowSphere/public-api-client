@@ -115,9 +115,9 @@ class PriceAnalyticsItem extends AbstractEntity
     public function add(PriceAnalyticsItem $item) : void
     {
         $this->resellerBuyPrice += $item->getResellerBuyPrice();
-        $this->arrowBuyPrice += $item->getArrowBuyPrice() ?? 0;
+        $this->arrowBuyPrice += $item->getArrowBuyPrice() ?? 0.0;
         $this->listBuyPrice += $item->getListBuyPrice();
-        $this->endCustomerBuyPrice += $item->getEndCustomerBuyPrice() ?? 0;
+        $this->endCustomerBuyPrice += $item->getEndCustomerBuyPrice() ?? 0.0;
 
         $this->currency = $item->getCurrency();
     }

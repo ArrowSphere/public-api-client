@@ -1,99 +1,90 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<files psalm-version="dev-master@c9ff1eee634ff82484ecd76941d420a0c5546b72">
+<files psalm-version="6.19.2@fa716e443b23e6fa35bf58907e67ca692ec3c00a">
   <file src="src/AbstractClient.php">
-    <ImplicitToStringCast occurrences="2">
-      <code>string</code>
-      <code>string</code>
+    <ImplicitToStringCast>
+      <code><![CDATA[string]]></code>
+      <code><![CDATA[string]]></code>
     </ImplicitToStringCast>
   </file>
   <file src="src/Billing/StatementsClient.php">
-    <MismatchingDocblockReturnType occurrences="2">
-      <code>Generator|StatementLine[]</code>
-      <code>Generator|Statement[]</code>
+    <MismatchingDocblockReturnType>
+      <code><![CDATA[Generator|StatementLine[]]]></code>
+      <code><![CDATA[Generator|Statement[]]]></code>
     </MismatchingDocblockReturnType>
   </file>
   <file src="src/Campaigns/CampaignsClient.php">
-    <ImplicitToStringCast occurrences="3">
-      <code>string</code>
-      <code>string</code>
-      <code>string</code>
+    <ImplicitToStringCast>
+      <code><![CDATA[string]]></code>
+      <code><![CDATA[string]]></code>
+      <code><![CDATA[string]]></code>
     </ImplicitToStringCast>
-    <MismatchingDocblockReturnType occurrences="1">
-      <code>Generator|Campaign[]</code>
-    </MismatchingDocblockReturnType>
   </file>
   <file src="src/Catalog/AddonClient.php">
-    <MismatchingDocblockReturnType occurrences="1">
-      <code>Generator|Offer[]</code>
+    <MismatchingDocblockReturnType>
+      <code><![CDATA[Generator|Offer[]]]></code>
     </MismatchingDocblockReturnType>
   </file>
   <file src="src/Catalog/CatalogClient.php">
-    <ImplicitToStringCast occurrences="1">
-      <code>string</code>
+    <ImplicitToStringCast>
+      <code><![CDATA[string]]></code>
     </ImplicitToStringCast>
-    <MismatchingDocblockReturnType occurrences="1">
-      <code>Generator|Service[]</code>
-    </MismatchingDocblockReturnType>
   </file>
   <file src="src/Catalog/ClassificationClient.php">
-    <MismatchingDocblockReturnType occurrences="1">
-      <code>Generator|Classification[]</code>
+    <MismatchingDocblockReturnType>
+      <code><![CDATA[Generator|Classification[]]]></code>
     </MismatchingDocblockReturnType>
   </file>
   <file src="src/Catalog/Entities/FindResult.php">
-    <MismatchingDocblockReturnType occurrences="2">
-      <code>Generator|OfferFindResult[]</code>
-      <code>Generator|OfferFindResult[]</code>
+    <MismatchingDocblockReturnType>
+      <code><![CDATA[Generator|OfferFindResult[]]]></code>
+      <code><![CDATA[Generator|OfferFindResult[]]]></code>
     </MismatchingDocblockReturnType>
   </file>
   <file src="src/Catalog/FamilyClient.php">
-    <MismatchingDocblockReturnType occurrences="1">
-      <code>Generator|Family[]</code>
+    <MismatchingDocblockReturnType>
+      <code><![CDATA[Generator|Family[]]]></code>
     </MismatchingDocblockReturnType>
   </file>
   <file src="src/Catalog/OfferClient.php">
-    <ImplicitToStringCast occurrences="1">
-      <code>string</code>
+    <ImplicitToStringCast>
+      <code><![CDATA[string]]></code>
     </ImplicitToStringCast>
-    <MismatchingDocblockReturnType occurrences="1">
-      <code>Generator|Offer[]</code>
+    <MismatchingDocblockReturnType>
+      <code><![CDATA[Generator|Offer[]]]></code>
     </MismatchingDocblockReturnType>
   </file>
   <file src="src/Catalog/ProgramClient.php">
-    <MismatchingDocblockReturnType occurrences="1">
-      <code>Generator|Program[]</code>
+    <MismatchingDocblockReturnType>
+      <code><![CDATA[Generator|Program[]]]></code>
     </MismatchingDocblockReturnType>
   </file>
   <file src="src/Catalog/ServiceClient.php">
-    <MismatchingDocblockReturnType occurrences="1">
-      <code>Generator|Service[]</code>
+    <MismatchingDocblockReturnType>
+      <code><![CDATA[Generator|Service[]]]></code>
     </MismatchingDocblockReturnType>
   </file>
   <file src="src/Customers/CustomersClient.php">
-    <ImplicitToStringCast occurrences="1">
-      <code>$rawResponse</code>
+    <ImplicitToStringCast>
+      <code><![CDATA[$rawResponse]]></code>
     </ImplicitToStringCast>
-    <MismatchingDocblockReturnType occurrences="1">
-      <code>Generator|Customer[]</code>
-    </MismatchingDocblockReturnType>
   </file>
   <file src="src/Licenses/Entities/FindResult.php">
-    <MismatchingDocblockReturnType occurrences="2">
-      <code>Generator|LicenseOfferFindResult[]</code>
-      <code>Generator|LicenseOfferFindResult[]</code>
+    <MismatchingDocblockReturnType>
+      <code><![CDATA[Generator|LicenseOfferFindResult[]]]></code>
+      <code><![CDATA[Generator|LicenseOfferFindResult[]]]></code>
     </MismatchingDocblockReturnType>
   </file>
   <file src="src/Licenses/Entities/LicenseOfferFindResult.php">
-    <PossiblyNullReference occurrences="1">
-      <code>jsonSerialize</code>
+    <PossiblyNullReference>
+      <code><![CDATA[jsonSerialize]]></code>
     </PossiblyNullReference>
   </file>
   <file src="src/Licenses/LicensesClient.php">
-    <ImplicitToStringCast occurrences="1">
-      <code>string</code>
+    <ImplicitToStringCast>
+      <code><![CDATA[string]]></code>
     </ImplicitToStringCast>
-    <MismatchingDocblockReturnType occurrences="1">
-      <code>Generator|Config[]</code>
+    <MismatchingDocblockReturnType>
+      <code><![CDATA[Generator|Config[]]]></code>
     </MismatchingDocblockReturnType>
   </file>
 </files>

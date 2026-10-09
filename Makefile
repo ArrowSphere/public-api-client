@@ -23,8 +23,14 @@ coverage-show:
 
 static: static-phpstan static-psalm static-codestyle-check
 
-static-psalm:
-	docker run --rm -it -e REQUIRE_DEV=true -e CHECK_PLATFORM_REQUIREMENTS=false -v ${PWD}:/app -w /app vimeo/psalm-github-actions $(PSALM_PARAMS)
+PSALM_VERSION = 6.19.2
+
+build/psalm.phar:
+	mkdir -p build
+	curl -sSL -o build/psalm.phar https://github.com/vimeo/psalm/releases/download/$(PSALM_VERSION)/psalm.phar
+
+static-psalm: build/psalm.phar
+	php build/psalm.phar $(PSALM_PARAMS)
 
 static-psalm-generate-baseline:
 	$(MAKE) static-psalm PSALM_PARAMS="--set-baseline=psalm.baseline.xml"
