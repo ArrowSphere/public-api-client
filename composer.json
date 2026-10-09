@@ -1,18 +1,13 @@
 {
   "name": "arrowsphere/public-api-client",
-  "type": "library",
   "description": "The official PHP client for ArrowSphere's public API",
+  "license": "MIT",
+  "type": "library",
   "keywords": [
     "arrowsphere",
     "rest",
     "api"
   ],
-  "license": "MIT",
-  "homepage": "https://www.arrow.com/ecs/na/solutions/cloud/arrowsphere/",
-  "support": {
-    "issues": "https://github.com/ArrowSphere/public-api-client/issues",
-    "source": "https://github.com/ArrowSphere/public-api-client"
-  },
   "authors": [
     {
       "name": "Pierre Feyssaguet",
@@ -23,6 +18,11 @@
       "email": "kalvarisky.william@gmail.com"
     }
   ],
+  "homepage": "https://www.arrow.com/ecs/na/solutions/cloud/arrowsphere/",
+  "support": {
+    "issues": "https://github.com/ArrowSphere/public-api-client/issues",
+    "source": "https://github.com/ArrowSphere/public-api-client"
+  },
   "require": {
     "php": ">=8.0",
     "ext-curl": "*",
@@ -34,6 +34,8 @@
     "kint-php/kint": "^5.1",
     "phpunit/phpunit": "^8.5.14 || ^9.3"
   },
+  "minimum-stability": "dev",
+  "prefer-stable": true,
   "autoload": {
     "psr-4": {
       "ArrowSphere\\PublicApiClient\\": "src"
@@ -46,7 +48,5 @@
   },
   "config": {
     "sort-packages": true
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+  }
 }

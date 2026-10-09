@@ -9,14 +9,21 @@ on:
 jobs:
   composer-normalize:
     name: Composer Normalize
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
 
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: none
+          php-version: '8.3'
+          tools: composer:v2, composer-normalize:2.54.0
+
       - name: Composer normalize
-        uses: docker://ergebnis/composer-normalize-action
+        run: composer-normalize --dry-run --diff --no-check-lock
 
 #  roave-bc-check:
 #    name: Roave BC Check
