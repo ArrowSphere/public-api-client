@@ -25,10 +25,10 @@ make coverage
 
 ### Static analysis and code style
 
-PHPStan, Psalm, and php-cs-fixer run via Docker (requires Docker daemon).
+PHPStan and php-cs-fixer run via Docker (requires Docker daemon).
 
 ```bash
-# Run all static checks (phpstan + psalm + cs-fixer dry-run)
+# Run all static checks (phpstan + cs-fixer dry-run)
 make static
 
 # Code style: check only (dry-run)
@@ -40,12 +40,8 @@ make static-codestyle-fix
 # PHPStan only (max level, paths: src/)
 make static-phpstan
 
-# Psalm only (level 3)
-make static-psalm
-
 # Regenerate baselines after intentional suppressions
 make static-phpstan-update-baseline
-make static-psalm-update-baseline
 ```
 
 ---
