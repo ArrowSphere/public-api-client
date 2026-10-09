@@ -1,11 +1,17 @@
 name: Release
+run-name: Release (${{ inputs.bump }})
 
 on:
   workflow_dispatch:
     inputs:
-      version:
-        description: The version you want to release
-        required: true
+      bump:
+        description: Which part of the version to increment
+        type: choice
+        options:
+          - patch
+          - minor
+          - major
+        default: patch
 
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
@@ -18,14 +24,31 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Compute the new version
+        id: version
+        env:
+          BUMP: ${{ inputs.bump }}
+        run: |
+          LATEST=$(git tag --list '[0-9]*.[0-9]*.[0-9]*' --sort=-v:refname | head -n 1)
+          IFS=. read -r MAJOR MINOR PATCH <<< "${LATEST:-0.0.0}"
+          case "$BUMP" in
+            major) VERSION="$((MAJOR + 1)).0.0" ;;
+            minor) VERSION="$MAJOR.$((MINOR + 1)).0" ;;
+            patch) VERSION="$MAJOR.$MINOR.$((PATCH + 1))" ;;
+          esac
+          echo "Releasing $VERSION (previous version: $LATEST)" >> "$GITHUB_STEP_SUMMARY"
+          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
 
       - name: Create release branch
-        run: git checkout -b release/${{ github.event.inputs.version }}
+        run: git checkout -b release/${{ steps.version.outputs.version }}
 
       - name: Update changelog
         uses: thomaseizinger/keep-a-changelog-new-release@3.1.0
         with:
-          tag: ${{ github.event.inputs.version }}
+          tag: ${{ steps.version.outputs.version }}
 
       # In order to make a commit, we need to initialize a user.
       # You may choose to write something less generic here if you want, it doesn't matter functionality wise.
@@ -40,19 +63,19 @@ jobs:
           curl -fsSL https://dprint.dev/install.sh | sh
           /home/runner/.dprint/bin/dprint -c .github/workflows/.dprintrc.json fmt CHANGELOG.md
           git add CHANGELOG.md
-          git commit --message "Release ${{ github.event.inputs.version }}"
+          git commit --message "Release ${{ steps.version.outputs.version }}"
           echo "LAST_COMMIT=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
       - name: Push new branch
-        run: git push origin release/${{ github.event.inputs.version }}
+        run: git push origin release/${{ steps.version.outputs.version }}
 
       - name: Create pull request
         env:
           GH_TOKEN: ${{ secrets.REPO_SCOPED_TOKEN }}
         run: |
           gh pr create \
-            --head release/${{ github.event.inputs.version }} \
+            --head release/${{ steps.version.outputs.version }} \
             --base master \
-            --title "Release version ${{ github.event.inputs.version }}" \
-            --body "Automatic pull request for release version ${{ github.event.inputs.version }}"
-          gh pr merge release/${{ github.event.inputs.version }} --auto --rebase
+            --title "Release version ${{ steps.version.outputs.version }}" \
+            --body "Automatic pull request for release version ${{ steps.version.outputs.version }}"
+          gh pr merge release/${{ steps.version.outputs.version }} --auto --rebase
