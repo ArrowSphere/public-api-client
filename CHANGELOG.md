@@ -5,6 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added PHP 8.4 and 8.5 to the CI test matrix
 - Updated the GitHub Actions workflows: `actions/checkout` v7, `actions/cache` v6, `changelog-enforcer` v3, `keep-a-changelog-new-release` 3.1.0, `GITHUB_OUTPUT` instead of `set-output`, releases created with the GitHub CLI
 
 - The Release workflow now enables auto-merge on the release pull request it creates
