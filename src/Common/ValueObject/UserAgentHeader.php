@@ -24,6 +24,7 @@ class UserAgentHeader implements Stringable
                 self::FORMAT,
                 InstalledVersions::getPrettyVersion('arrowsphere/public-api-client') ?? '',
                 PHP_VERSION,
+                // @phpstan-ignore argument.type (PHPStan types $_ENV values as mixed while Psalm types them as string)
                 $_ENV['PUBLIC_API_CLIENT_USER_AGENT_TAG'] ?? ''
             )
         );

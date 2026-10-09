@@ -4,6 +4,7 @@ namespace ArrowSphere\PublicApiClient\Catalog;
 
 use ArrowSphere\PublicApiClient\AbstractClient;
 use ArrowSphere\PublicApiClient\Entities\Service;
+use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use Generator;
 
 /**
@@ -122,6 +123,8 @@ class CatalogClient extends AbstractClient
      * @param string $program
      *
      * @return Generator<Service>
+     *
+     * @throws PublicApiClientException
      */
     public function getAllServices(string $classification, string $program): Generator
     {
@@ -131,19 +134,18 @@ class CatalogClient extends AbstractClient
 
         while (! $lastPage) {
             $this->setPage($currentPage);
-            $publicApiResponses = json_decode($this->getServices($classification, $program), true);
+            $response = $this->getServices($classification, $program);
+            $pagination = $this->getPagination($response);
 
-            if (is_array($publicApiResponses)) {
-                if ($publicApiResponses['pagination']['total_page'] <= $currentPage) {
-                    $lastPage = true;
-                }
+            if ($pagination['total_page'] <= $currentPage) {
+                $lastPage = true;
+            }
 
-                $currentPage++;
+            $currentPage++;
 
-                /** @var array $data */
-                foreach ($publicApiResponses['data'] as $data) {
-                    yield new Service($data);
-                }
+            /** @var array $data */
+            foreach ($this->getResponseData($response) as $data) {
+                yield new Service($data);
             }
         }
     }
