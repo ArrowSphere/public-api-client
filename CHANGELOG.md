@@ -5,16 +5,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added the Coveralls coverage badge to the README
 - Added a CI job that publishes the test coverage to Coveralls
-
 - Fixed the build status badge in the README and added static analysis, PHPStan, downloads and license badges
 - Added the MIT `LICENSE` file
-
 - Added PHP 8.4 and 8.5 to the CI test matrix
 - Updated the GitHub Actions workflows: `actions/checkout` v7, `actions/cache` v6, `changelog-enforcer` v3, `keep-a-changelog-new-release` 3.1.0, `GITHUB_OUTPUT` instead of `set-output`, releases created with the GitHub CLI
-
 - The Release workflow now enables auto-merge on the release pull request it creates
-
 - Pinned the CI jobs that install PHP via setup-php to the `ubuntu-24.04` runner image
 
 ## [0.11.35] - 2026-10-01
