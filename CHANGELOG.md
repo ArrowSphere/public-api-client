@@ -5,6 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Removed Psalm from the CI, the Makefile and the repository, PHPStan being the single static analyser
 - Replaced the archived composer-normalize GitHub action by composer-normalize 2.54 run in dry-run mode, and normalized composer.json accordingly
 - Removed the redundant `symfony/polyfill-php80` dependency, the package already requires PHP 8.0
 - Added the Coveralls coverage badge to the README
