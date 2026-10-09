@@ -5,6 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Updated PHPStan to 2.3 at level 9 (the former `max`), installed through composer in CI and in the Makefile instead of a Docker image, and fixed the four findings it reported
 - Updated PHP-CS-Fixer to 3.95, installed through composer in CI and in the Makefile instead of a Docker image
 - Removed Psalm from the CI, the Makefile and the repository, PHPStan being the single static analyser
 - Replaced the archived composer-normalize GitHub action by composer-normalize 2.54 run in dry-run mode, and normalized composer.json accordingly

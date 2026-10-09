@@ -106,7 +106,7 @@ class Gdap extends AbstractEntity
      */
     public function jsonSerialize(): array
     {
-        return array_filter([
+        return [
             self::COLUMN_ID               => $this->id,
             self::COLUMN_DISPLAY_NAME     => $this->displayName,
             self::COLUMN_STATUS           => $this->status,
@@ -118,9 +118,7 @@ class Gdap extends AbstractEntity
             self::COLUMN_APPROVAL_LINK    => $this->approvalLink,
             self::COLUMN_PRIVILEGES       => $this->privileges,
             self::COLUMN_SECURITY_GROUPS  => $this->securityGroups,
-        ], static function ($val) {
-            return $val !== null;
-        });
+        ];
     }
 
     /**

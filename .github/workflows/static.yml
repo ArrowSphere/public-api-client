@@ -23,18 +23,25 @@ jobs:
 
   phpstan:
     name: PHPStan
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
 
-      - name: PHPStan
-        uses: docker://oskarstark/phpstan-ga:1.8.0
-        env:
-          REQUIRE_DEV: true
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
         with:
-          args: analyze --no-progress
+          coverage: none
+          php-version: '8.3'
+          extensions: curl, json
+          tools: composer:v2
+
+      - name: Install latest dependencies
+        run: composer update --ansi --no-interaction --no-progress --prefer-dist
+
+      - name: PHPStan
+        run: vendor/bin/phpstan analyse --no-progress
 
   php-cs-fixer:
     name: PHP-CS-Fixer

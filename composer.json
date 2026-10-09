@@ -33,6 +33,7 @@
     "illuminate/validation": "^5.5 || ^6.0 || ^7.0",
     "kint-php/kint": "^5.1",
     "php-cs-fixer/shim": "^3.95",
+    "phpstan/phpstan": "^2.3",
     "phpunit/phpunit": "^8.5.14 || ^9.3"
   },
   "minimum-stability": "dev",
