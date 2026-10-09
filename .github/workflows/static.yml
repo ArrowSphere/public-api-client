@@ -38,13 +38,22 @@ jobs:
 
   php-cs-fixer:
     name: PHP-CS-Fixer
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v7
 
-      - name: PHP-CS-Fixer
-        uses: docker://oskarstark/php-cs-fixer-ga:3.26.0
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
         with:
-          args: --dry-run --diff
+          coverage: none
+          php-version: '8.0'
+          extensions: curl, json
+          tools: composer:v2
+
+      - name: Install latest dependencies
+        run: composer update --ansi --no-interaction --no-progress --prefer-dist
+
+      - name: PHP-CS-Fixer
+        run: vendor/bin/php-cs-fixer fix --dry-run --diff --show-progress=none

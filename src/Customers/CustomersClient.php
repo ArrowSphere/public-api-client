@@ -336,9 +336,9 @@ class CustomersClient extends AbstractClient
     }
 
     /**
-     * @throws \ArrowSphere\PublicApiClient\Exception\NotFoundException
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \ArrowSphere\PublicApiClient\Exception\PublicApiClientException
+     * @throws NotFoundException
+     * @throws GuzzleException
+     * @throws PublicApiClientException
      */
     public function postMigration(string $customerReference, MigrationRequest $data, array $parameters = []): string
     {
@@ -348,9 +348,9 @@ class CustomersClient extends AbstractClient
     }
 
     /**
-     * @throws \ArrowSphere\PublicApiClient\Exception\NotFoundException
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \ArrowSphere\PublicApiClient\Exception\PublicApiClientException
+     * @throws NotFoundException
+     * @throws GuzzleException
+     * @throws PublicApiClientException
      */
     public function cancelMigration(string $customerReference, string $program, array $parameters = []): string
     {
@@ -367,9 +367,9 @@ class CustomersClient extends AbstractClient
     }
 
     /**
-     * @throws \ArrowSphere\PublicApiClient\Exception\NotFoundException
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \ArrowSphere\PublicApiClient\Exception\PublicApiClientException
+     * @throws NotFoundException
+     * @throws GuzzleException
+     * @throws PublicApiClientException
      */
     public function getProvisionRaw(string $customerReference, string $program): string
     {
@@ -379,10 +379,10 @@ class CustomersClient extends AbstractClient
     }
 
     /**
-     * @throws \ArrowSphere\PublicApiClient\Exception\NotFoundException
-     * @throws \ArrowSphere\PublicApiClient\Exception\EntityValidationException
-     * @throws \GuzzleHttp\Exception\GuzzleException
-     * @throws \ArrowSphere\PublicApiClient\Exception\PublicApiClientException
+     * @throws NotFoundException
+     * @throws EntityValidationException
+     * @throws GuzzleException
+     * @throws PublicApiClientException
      */
     public function getProvision(string $customerReference, string $program): ProvisionResponse
     {
