@@ -5,6 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added a `serializeNull` option to the `Property` attribute of the attribute-based entities, to serialize a field even when it is null instead of omitting it
 - Updated the documentation: fixed the examples calling missing methods or classes, documented the client methods that were missing, added the Quotes page, linked every page from the README and flagged the deprecated clients
 - Added tests for the client methods that were never executed by the test suite, and restored the `createPreferences()` test
 - The Release workflow now prepares the changelog with its own script instead of an external action, moves the Unreleased section of UPGRADING.md under the new version, and refuses a patch release when this section documents breaking changes

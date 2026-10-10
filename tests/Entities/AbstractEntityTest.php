@@ -5,6 +5,7 @@ namespace ArrowSphere\PublicApiClient\Tests\Entities;
 use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Tests\Entities\Fixtures\SampleChild;
 use ArrowSphere\PublicApiClient\Tests\Entities\Fixtures\SampleEntity;
+use ArrowSphere\PublicApiClient\Tests\Entities\Fixtures\SerializeNullEntity;
 use ArrowSphere\PublicApiClient\Tests\Entities\Fixtures\TwoRequiredFieldsEntity;
 use ArrowSphere\PublicApiClient\Tests\Entities\Fixtures\UnknownTypeEntity;
 use DateTimeImmutable;
@@ -109,5 +110,27 @@ class AbstractEntityTest extends TestCase
         self::assertSame($entity, $entity->setLabel('Updated'));
         self::assertSame('Updated', $entity->getLabel());
         self::assertNull($entity->unknownMethod());
+    }
+
+    /**
+     * @return array<string, array{array, array}>
+     */
+    public static function serializeNullProvider(): array
+    {
+        return [
+            'missing'   => [['reference' => 'XSP12345'], ['reference' => 'XSP12345', 'headcount' => null]],
+            'null'      => [['reference' => 'XSP12345', 'headcount' => null], ['reference' => 'XSP12345', 'headcount' => null]],
+            'with data' => [['reference' => 'XSP12345', 'headcount' => '50'], ['reference' => 'XSP12345', 'headcount' => '50']],
+        ];
+    }
+
+    /**
+     * @dataProvider serializeNullProvider
+     *
+     * @throws EntitiesException
+     */
+    public function testSerializesANullFieldWhenAsked(array $data, array $expected): void
+    {
+        self::assertSame($expected, (new SerializeNullEntity($data))->jsonSerialize());
     }
 }

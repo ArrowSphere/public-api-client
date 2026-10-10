@@ -133,7 +133,7 @@ abstract class AbstractEntity implements JsonSerializable
 
             $property->setAccessible(true);
 
-            if ($attribute->required !== false || $property->getValue($this) !== null) {
+            if ($attribute->required || $attribute->serializeNull || $property->getValue($this) !== null) {
                 $fields[$name] = $property->getValue($this);
                 if ($fields[$name] instanceof JsonSerializable) {
                     $fields[$name] = $fields[$name]->jsonSerialize();
