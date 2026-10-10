@@ -3,6 +3,7 @@
 namespace ArrowSphere\PublicApiClient\Catalog;
 
 use ArrowSphere\PublicApiClient\Catalog\Entities\Family;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
@@ -45,6 +46,7 @@ class FamilyClient extends AbstractCatalogClient
      *
      * @return Generator|Family[]
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
@@ -107,6 +109,7 @@ class FamilyClient extends AbstractCatalogClient
      *
      * @return Family
      *
+     * @throws EntitiesException
      * @throws NotFoundException
      * @throws PublicApiClientException
      * @throws GuzzleException

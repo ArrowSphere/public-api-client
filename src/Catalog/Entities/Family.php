@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Catalog\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class Family
@@ -22,63 +22,41 @@ class Family extends AbstractEntity
 
     public const COLUMN_VENDOR_CODE = 'vendorCode';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_CLASSIFICATION => 'required',
-        self::COLUMN_MARKETPLACE    => 'required',
-        self::COLUMN_NAME           => 'required',
-        self::COLUMN_REFERENCE      => 'required',
-        self::COLUMN_VENDOR         => 'required',
-        self::COLUMN_VENDOR_CODE    => 'required',
-    ];
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_CLASSIFICATION, required: true)]
+    protected string $classification;
 
     /**
      * @var string
      */
-    private $classification;
+    #[Property(name: self::COLUMN_MARKETPLACE, required: true)]
+    protected string $marketplace;
 
     /**
      * @var string
      */
-    private $marketplace;
+    #[Property(name: self::COLUMN_NAME, required: true)]
+    protected string $name;
 
     /**
      * @var string
      */
-    private $name;
+    #[Property(name: self::COLUMN_REFERENCE, required: true)]
+    protected string $reference;
 
     /**
      * @var string
      */
-    private $reference;
+    #[Property(name: self::COLUMN_VENDOR, required: true)]
+    protected string $vendor;
 
     /**
      * @var string
      */
-    private $vendor;
-
-    /**
-     * @var string
-     */
-    private $vendorCode;
-
-    /**
-     * Family constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->classification = $data[self::COLUMN_CLASSIFICATION];
-        $this->marketplace = $data[self::COLUMN_MARKETPLACE];
-        $this->name = $data[self::COLUMN_NAME];
-        $this->reference = $data[self::COLUMN_REFERENCE];
-        $this->vendor = $data[self::COLUMN_VENDOR];
-        $this->vendorCode = $data[self::COLUMN_VENDOR_CODE];
-    }
+    #[Property(name: self::COLUMN_VENDOR_CODE, required: true)]
+    protected string $vendorCode;
 
     /**
      * @return string
@@ -126,20 +104,5 @@ class Family extends AbstractEntity
     public function getVendorCode(): string
     {
         return $this->vendorCode;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_CLASSIFICATION => $this->classification,
-            self::COLUMN_MARKETPLACE    => $this->marketplace,
-            self::COLUMN_NAME           => $this->name,
-            self::COLUMN_REFERENCE      => $this->reference,
-            self::COLUMN_VENDOR         => $this->vendor,
-            self::COLUMN_VENDOR_CODE    => $this->vendorCode,
-        ];
     }
 }

@@ -23,4 +23,18 @@ class ProgramTest extends TestCase
 
         self::assertEquals('{"associatedSubscriptionProgram":"MSCSP","category":"SAAS","logo":"\/index.php\/site\/img\/type\/vendor\/ref\/3","name":"Microsoft","reference":"microsoft"}', json_encode($program));
     }
+
+    public function testProgramWithoutLogo(): void
+    {
+        $program = new Program([
+            "reference"                     => "microsoft",
+            "name"                          => "Microsoft",
+            "associatedSubscriptionProgram" => "MSCSP",
+            "logo"                          => null,
+            "category"                      => "SAAS"
+        ]);
+
+        self::assertNull($program->getLogo());
+        self::assertEquals('{"associatedSubscriptionProgram":"MSCSP","category":"SAAS","logo":null,"name":"Microsoft","reference":"microsoft"}', json_encode($program));
+    }
 }

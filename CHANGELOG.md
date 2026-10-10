@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Migrated the `Program`, `Family`, `PriceBand` and `FilterFindResult` catalog entities to the attribute-based entity system, without changing their getters nor their serialization
+- Fixed `Program::getLogo()` and `FilterFindResult::getName()`, which threw a `TypeError` when the API returned a null value
 - Added a `serializeNull` option to the `Property` attribute of the attribute-based entities, to serialize a field even when it is null instead of omitting it
 - Updated the documentation: fixed the examples calling missing methods or classes, documented the client methods that were missing, added the Quotes page, linked every page from the README and flagged the deprecated clients
 - Added tests for the client methods that were never executed by the test suite, and restored the `createPreferences()` test

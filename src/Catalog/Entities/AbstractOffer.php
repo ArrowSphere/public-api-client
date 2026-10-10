@@ -3,6 +3,7 @@
 namespace ArrowSphere\PublicApiClient\Catalog\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 abstract class AbstractOffer extends AbstractEntity
@@ -178,6 +179,7 @@ abstract class AbstractOffer extends AbstractEntity
      *
      * @param array $data
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
      */
     public function __construct(array $data)
