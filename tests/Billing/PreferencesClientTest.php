@@ -66,6 +66,7 @@ class PreferencesClientTest extends AbstractClientTest
                     'Content-Type' => 'application/json',
                     'User-Agent' => $this->userAgentHeader,
                 ],
+                'http_errors' => false,
             ])
             ->willReturn(new Response(200, [], $response));
 
@@ -128,6 +129,7 @@ class PreferencesClientTest extends AbstractClientTest
                     'apiKey' => '123456',
                     'Content-Type' => 'application/json',
                 ],
+                'http_errors' => false,
                 'body'    => '[' . json_encode($payload) . ']',
             ])
             ->willReturn(new Response(204, [], $response));

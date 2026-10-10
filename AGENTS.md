@@ -133,7 +133,8 @@ public function doSomething(string $bar): string
 
 ### Exceptions
 
-- `PublicApiClientException` — base; thrown on HTTP 4xx/5xx or JSON decode failure.
+- `PublicApiClientException` — base; thrown on HTTP 4xx/5xx or JSON decode failure. On an HTTP error, `getCode()`
+  returns the status code and `getResponse()` the response (Guzzle's `http_errors` option is disabled on every request).
 - `NotFoundException` — thrown specifically on HTTP 404.
 - `EntityValidationException` — thrown when legacy entity validation fails.
 

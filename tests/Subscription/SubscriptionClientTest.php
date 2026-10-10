@@ -40,6 +40,7 @@ class SubscriptionClientTest extends AbstractClientTest
                     'Content-Type' => 'application/json',
                     'User-Agent' => $this->userAgentHeader,
                 ],
+                'http_errors' => false,
                 'body'    => json_encode($payload),
             ])
             ->willReturn(new Response(200, []));

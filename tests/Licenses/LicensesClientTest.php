@@ -109,6 +109,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent'   => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                     'body'    => json_encode($this->postData),
                 ]
             )
@@ -196,6 +197,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent'   => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                     'body'    => $expected,
                 ]
             )
@@ -393,6 +395,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent'   => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                     'body'    => json_encode($this->postData),
                 ]
             )
@@ -636,6 +639,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent'   => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                     'body'    => json_encode($this->postData),
                 ]
             )
@@ -806,6 +810,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent'   => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                     'body'    => json_encode($this->postData),
                 ]
             )
@@ -864,6 +869,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                 ]
             )
             ->willReturn(new Response(200, [], 'OK USA'));
@@ -885,6 +891,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                 ]
             )
             ->willReturn(new Response(200, [], 'OK USA'));
@@ -935,6 +942,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                 ]
             )
             ->willReturn(new Response(200, [], $response));
@@ -979,6 +987,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                 ]
             )
             ->willReturn(new Response(200, [], 'OK USA'));
@@ -1022,6 +1031,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                 ]
             )
             ->willReturn(new Response(200, [], $response));
@@ -1061,6 +1071,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent'   => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                     'body'    => json_encode($postData),
                 ]
             )
@@ -1108,6 +1119,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                     'body'    => json_encode($postData),
                 ]
             )
@@ -1135,6 +1147,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                 ]
             )
             ->willReturn(new Response(200, [], json_encode([
@@ -1177,6 +1190,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                 ]
             )
             ->willReturn(new Response(200, [], 'OK USA'));
@@ -1215,6 +1229,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                 ]
             )
             ->willReturn(new Response(200, [], $response));
@@ -1256,6 +1271,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                 ]
             )
             ->willReturn(new Response(200, [], $response));
@@ -1286,6 +1302,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                 ]
             )
             ->willReturn(new Response(200, [], 'OK USA'));
@@ -1349,6 +1366,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                 ]
             )
             ->willReturn(new Response(200, [], $response));

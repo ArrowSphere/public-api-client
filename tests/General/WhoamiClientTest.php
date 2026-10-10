@@ -52,6 +52,7 @@ class WhoamiClientTest extends AbstractClientTest
                         'myHeader2' => 'myVal2',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                 ]
             )
             ->willReturn(new Response(200, [], '{'));

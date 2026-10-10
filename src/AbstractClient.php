@@ -46,6 +46,11 @@ abstract class AbstractClient
     protected const HEADERS = 'headers';
 
     /**
+     * @var string Guzzle option to throw exceptions on HTTP error responses, disabled to handle them in getResponse()
+     */
+    private const HTTP_ERRORS = 'http_errors';
+
+    /**
      * @var string
      */
     protected const STATUS = 'status';
@@ -267,7 +272,8 @@ abstract class AbstractClient
             'GET',
             $this->generateUrl($parameters),
             [
-                self::HEADERS => $this->prepareHeaders($headers),
+                self::HEADERS     => $this->prepareHeaders($headers),
+                self::HTTP_ERRORS => false,
             ]
         );
 
@@ -286,15 +292,26 @@ abstract class AbstractClient
     {
         $statusCode = $response->getStatusCode();
         if ($statusCode === 404) {
-            throw new NotFoundException(sprintf('Resource not found on URL %s', $this->getUrl()));
+            throw new NotFoundException(
+                sprintf('Resource not found on URL %s', $this->getUrl()),
+                $statusCode,
+                null,
+                $response
+            );
         }
 
         if ($statusCode >= 400 && $statusCode <= 599) {
-            throw new PublicApiClientException(sprintf(
-                'Error: status code: %s. URL: %s',
+            $body = (string) $response->getBody();
+            if ($response->getBody()->isSeekable()) {
+                $response->getBody()->rewind();
+            }
+
+            throw new PublicApiClientException(
+                sprintf('Error: status code: %s. URL: %s. Response body: %s', $statusCode, $this->getUrl(), $body),
                 $statusCode,
-                $this->getUrl()
-            ));
+                null,
+                $response
+            );
         }
 
         return $response->getBody();
@@ -388,8 +405,9 @@ abstract class AbstractClient
             'POST',
             $this->generateUrl($parameters),
             [
-                self::HEADERS => $this->prepareHeaders($headers),
-                self::BODY    => json_encode($payload),
+                self::HEADERS     => $this->prepareHeaders($headers),
+                self::HTTP_ERRORS => false,
+                self::BODY        => json_encode($payload),
             ]
         );
 
@@ -415,8 +433,9 @@ abstract class AbstractClient
             'PATCH',
             $this->generateUrl($parameters),
             [
-                self::HEADERS => $this->prepareHeaders($headers),
-                self::BODY    => json_encode($payload),
+                self::HEADERS     => $this->prepareHeaders($headers),
+                self::HTTP_ERRORS => false,
+                self::BODY        => json_encode($payload),
             ]
         );
 
@@ -442,8 +461,9 @@ abstract class AbstractClient
             'PUT',
             $this->generateUrl($parameters),
             [
-                self::HEADERS => $this->prepareHeaders($headers),
-                self::BODY    => $payload,
+                self::HEADERS     => $this->prepareHeaders($headers),
+                self::HTTP_ERRORS => false,
+                self::BODY        => $payload,
             ]
         );
 
@@ -513,7 +533,8 @@ abstract class AbstractClient
             'DELETE',
             $this->generateUrl($parameters),
             [
-                self::HEADERS => $this->prepareHeaders($headers),
+                self::HEADERS     => $this->prepareHeaders($headers),
+                self::HTTP_ERRORS => false,
             ]
         );
 

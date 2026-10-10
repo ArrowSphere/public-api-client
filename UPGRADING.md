@@ -6,6 +6,38 @@ moves them under the heading of the new version, and refuses a patch release whi
 
 ## Unreleased
 
+### HTTP error responses
+
+The clients now throw their own exceptions on HTTP error responses, as their documentation stated:
+`NotFoundException` on a 404 response, and `PublicApiClientException` on any other 4xx or 5xx response. Until now,
+Guzzle's `ClientException` and `ServerException` were thrown instead. The HTTP status code is available with
+`getCode()` and the response with `getResponse()`. Network errors (connection failure, timeout) still raise Guzzle
+exceptions.
+
+Before
+```php
+<?php
+
+try {
+    $customer = $customersClient->getCustomer('XSP12345');
+} catch (\GuzzleHttp\Exception\ClientException $exception) {
+    $statusCode = $exception->getResponse()->getStatusCode();
+    $body = (string) $exception->getResponse()->getBody();
+}
+```
+
+After
+```php
+<?php
+
+try {
+    $customer = $customersClient->getCustomer('XSP12345');
+} catch (\ArrowSphere\PublicApiClient\Exception\PublicApiClientException $exception) {
+    $statusCode = $exception->getCode();
+    $body = (string) $exception->getResponse()?->getBody();
+}
+```
+
 ## 0.10 to 1.0
 
 There is now some magic in PublicApiClient class to instantiate the clients. But now they should be named properly.
