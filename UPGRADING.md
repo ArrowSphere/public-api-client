@@ -1,5 +1,11 @@
 # Upgrade guide
 
+Breaking changes are documented under `## Unreleased` until they are released. The release workflow then
+moves them under the heading of the new version, and refuses a patch release while this section is not empty
+(or anything but a major release from 1.0 on).
+
+## Unreleased
+
 ## 0.10 to 1.0
 
 There is now some magic in PublicApiClient class to instantiate the clients. But now they should be named properly.

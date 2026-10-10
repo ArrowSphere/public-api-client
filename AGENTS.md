@@ -178,3 +178,7 @@ Entry wording conventions observed in this repo:
 - **Fixed**: start with `Fixed …` — bug fixes; include the class/method name.
 - **Deprecated**: start with `Deprecated …`; state the replacement in the same sentence.
 - **Removed**: start with `Removed …`; note the replacement if one exists.
+
+A change that breaks backward compatibility must also be described, with a migration example, under
+`## Unreleased` at the top of `UPGRADING.md`. The release workflow moves that section under the new
+version and refuses a patch release while it is not empty.
