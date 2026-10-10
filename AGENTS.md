@@ -129,6 +129,9 @@ public function doSomething(string $bar): string
 - PHP 8 `#[Property]` attribute on typed properties.
 - Reflection-based auto-hydration from the input array.
 - Getters are either explicit methods or provided by `__call()` (`getFoo()` / `setFoo()`).
+- `#[Property(serializeNull: true)]` keeps a field in the serialization as `null` when it is null or missing,
+  like the legacy entities do for their "present" fields. Optional fields without it can be null too, but are
+  omitted from the serialization in that case.
 - ALWAYS USE NEWER STYLE FOR NEW ENTITIES; legacy style is only for existing entities that haven't been migrated yet.
 
 ### Exceptions
