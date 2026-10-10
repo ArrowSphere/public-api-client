@@ -5,6 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fixed the handling of HTTP error responses: the clients now throw `NotFoundException` and `PublicApiClientException` instead of Guzzle exceptions, with the status code in `getCode()`, the response in `getResponse()` and the Guzzle exception in `getPrevious()`. See UPGRADING.md
 - Prepared the shared classes for PHPStan's max level: an entity field declared as a list now throws an `EntitiesException` when it receives another type, `getResponseData()` and `getPagination()` throw a `PublicApiClientException` when the field of the response is not an array, and `Pagination::getPerPage()` returns `null` when the response has no `per_page` instead of failing
 - Deprecated the legacy `AbstractEntity`, its validation rules and its `$enableValidation` flag, which no entity of the library uses anymore: they will be removed in version 1.0, with the `illuminate/validation` dependency; custom entities should extend `Entities\AbstractEntity`
 
