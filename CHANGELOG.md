@@ -5,6 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added tests for the attribute-based entity base class
 - The Release workflow now asks which part of the version to increment (patch, minor or major) and computes the new version from the latest tag
 
 ## [0.11.36] - 2026-10-09
