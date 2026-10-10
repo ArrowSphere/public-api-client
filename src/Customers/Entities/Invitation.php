@@ -2,10 +2,10 @@
 
 namespace ArrowSphere\PublicApiClient\Customers\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
 use ArrowSphere\PublicApiClient\Customers\Entities\Invitation\Company as InvitationCompany;
 use ArrowSphere\PublicApiClient\Customers\Entities\Invitation\Contact as InvitationContact;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class Invitation
@@ -27,49 +27,38 @@ class Invitation extends AbstractEntity
     /**
      * @var string
      */
-    private $code;
+    #[Property(name: self::COLUMN_CODE, required: true)]
+    protected string $code;
 
     /**
      * @var string
      */
-    private $createdAt;
+    #[Property(name: self::COLUMN_CREATED_AT, required: true)]
+    protected string $createdAt;
 
     /**
      * @var string
      */
-    private $updatedAt;
+    #[Property(name: self::COLUMN_UPDATED_AT, required: true)]
+    protected string $updatedAt;
 
     /**
      * @var InvitationContact
      */
-    private $contact;
+    #[Property(name: self::COLUMN_CONTACT, type: InvitationContact::class, required: true)]
+    protected InvitationContact $contact;
 
     /**
      * @var InvitationCompany
      */
-    private $company;
+    #[Property(name: self::COLUMN_COMPANY, type: InvitationCompany::class, required: true)]
+    protected InvitationCompany $company;
 
     /**
      * @var string
      */
-    private $policy;
-
-    /**
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->code = $data[self::COLUMN_CODE];
-        $this->createdAt = $data[self::COLUMN_CREATED_AT];
-        $this->updatedAt = $data[self::COLUMN_UPDATED_AT];
-        $this->contact = new InvitationContact($data[self::COLUMN_CONTACT]);
-        $this->company = new InvitationCompany($data[self::COLUMN_COMPANY]);
-        $this->policy = $data[self::COLUMN_POLICY];
-    }
+    #[Property(name: self::COLUMN_POLICY, required: true)]
+    protected string $policy;
 
     /**
      * @return string
@@ -189,20 +178,5 @@ class Invitation extends AbstractEntity
         $this->policy = $policy;
 
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_CODE => $this->code,
-            self::COLUMN_CREATED_AT => $this->createdAt,
-            self::COLUMN_UPDATED_AT => $this->updatedAt,
-            self::COLUMN_CONTACT => $this->contact->jsonSerialize(),
-            self::COLUMN_COMPANY => $this->company->jsonSerialize(),
-            self::COLUMN_POLICY => $this->policy,
-        ];
     }
 }

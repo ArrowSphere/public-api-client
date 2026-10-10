@@ -49,6 +49,40 @@ class InvitationTest extends AbstractEntityTest
 }
 JSON
             ],
+            'without username' => [
+                'fields' => [
+                    'code' => 'ABCD12345',
+                    'createdAt' => '2021-12-25 23:59:51',
+                    'updatedAt' => '2022-01-01 12:23:34',
+                    'company' => [
+                        'reference' => 'ABC123',
+                    ],
+                    'contact' => [
+                        'username' => null,
+                        'email' => 'noreply@example.com',
+                        'firstName' => 'Bruce',
+                        'lastName' => 'Wayne',
+                    ],
+                    'policy' => 'admin',
+                ],
+                'expected' => <<<JSON
+{
+    "code": "ABCD12345",
+    "createdAt": "2021-12-25 23:59:51",
+    "updatedAt": "2022-01-01 12:23:34",
+    "contact": {
+        "username": null,
+        "email": "noreply@example.com",
+        "firstName": "Bruce",
+        "lastName": "Wayne"
+    },
+    "company": {
+        "reference": "ABC123"
+    },
+    "policy": "admin"
+}
+JSON
+            ],
         ];
     }
 }
