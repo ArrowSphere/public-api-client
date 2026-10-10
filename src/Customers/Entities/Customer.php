@@ -3,6 +3,7 @@
 namespace ArrowSphere\PublicApiClient\Customers\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Partners\Entities\OrganizationUnit;
 
@@ -175,6 +176,7 @@ class Customer extends AbstractEntity
      *
      * @param array $data
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
      */
     public function __construct(array $data)

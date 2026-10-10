@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Customers\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class Contact
@@ -18,62 +18,29 @@ class Contact extends AbstractEntity
 
     public const COLUMN_PHONE = 'Phone';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_EMAIL      => 'required',
-        self::COLUMN_FIRST_NAME => 'required',
-        self::COLUMN_LAST_NAME  => 'required',
-        self::COLUMN_PHONE      => 'present',
-    ];
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_EMAIL, required: true)]
+    protected string $email;
 
     /**
      * @var string
      */
-    private $email;
+    #[Property(name: self::COLUMN_FIRST_NAME, required: true)]
+    protected string $firstName;
 
     /**
      * @var string
      */
-    private $firstName;
+    #[Property(name: self::COLUMN_LAST_NAME, required: true)]
+    protected string $lastName;
 
     /**
      * @var string
      */
-    private $lastName;
-
-    /**
-     * @var string
-     */
-    private $phone;
-
-    /**
-     * Contact constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->email = $data[self::COLUMN_EMAIL];
-        $this->firstName = $data[self::COLUMN_FIRST_NAME];
-        $this->lastName = $data[self::COLUMN_LAST_NAME];
-        $this->phone = $data[self::COLUMN_PHONE];
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_EMAIL      => $this->email,
-            self::COLUMN_FIRST_NAME => $this->firstName,
-            self::COLUMN_LAST_NAME  => $this->lastName,
-            self::COLUMN_PHONE      => $this->phone,
-        ];
-    }
+    #[Property(name: self::COLUMN_PHONE, required: true)]
+    protected string $phone;
 
     /**
      * @return string

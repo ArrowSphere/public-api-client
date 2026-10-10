@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Customers\Entities\Invitation;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class Company
@@ -12,26 +12,11 @@ class Company extends AbstractEntity
 {
     public const COLLUMN_REFERENCE = 'reference';
 
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLLUMN_REFERENCE => 'required',
-    ];
-
     /**
      * @var string
      */
-    private $reference;
-
-    /**
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->reference = $data[self::COLLUMN_REFERENCE];
-    }
+    #[Property(name: self::COLLUMN_REFERENCE, required: true)]
+    protected string $reference;
 
     /**
      * @return string
@@ -51,15 +36,5 @@ class Company extends AbstractEntity
         $this->reference = $reference;
 
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLLUMN_REFERENCE => $this->reference,
-        ];
     }
 }
