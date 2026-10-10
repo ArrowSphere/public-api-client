@@ -36,6 +36,7 @@ class CatalogClientTest extends AbstractClientTest
                         'Content-Type' => 'application/json',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                     'body'    => json_encode(
                         [
                             'keywords'  => 'office 365',

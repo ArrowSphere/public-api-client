@@ -52,6 +52,7 @@ class OfferClientTest extends AbstractClientTest
                         'Content-Type' => 'application/json',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                     'body'    => json_encode($postData),
                 ]
             )
@@ -117,6 +118,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                     'body'    => $expected,
                 ]
             )
@@ -345,6 +347,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                     'body'    => json_encode($postData),
                 ]
             )
@@ -496,6 +499,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                     'body'    => json_encode($postData),
                 ]
             )

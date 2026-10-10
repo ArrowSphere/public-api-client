@@ -51,6 +51,7 @@ class MonitoringClientTest extends AbstractClientTest
                         'Content-Type' => 'application/json',
                         'User-Agent'   => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                     'body'    => json_encode([$report->jsonSerialize()], JSON_THROW_ON_ERROR),
                 ]
             )

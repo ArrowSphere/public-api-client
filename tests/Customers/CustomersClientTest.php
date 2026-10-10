@@ -430,6 +430,7 @@ JSON;
                     'Content-Type' => 'application/json',
                     'User-Agent' => $this->userAgentHeader,
                 ],
+                'http_errors' => false,
                 'body'    => json_encode($payload),
             ])
             ->willReturn(new Response(200, [], $response));
@@ -593,6 +594,7 @@ JSON;
                     'Content-Type' => 'application/json',
                     'User-Agent' => $this->userAgentHeader,
                 ],
+                'http_errors' => false,
                 'body'    => json_encode($payload),
             ])
             ->willReturn(new Response(200, [], $response));
@@ -848,6 +850,7 @@ JSON;
                     'Content-Type' => 'application/json',
                     'User-Agent' => $this->userAgentHeader,
                 ],
+                'http_errors' => false,
                 'body' => json_encode($payload),
             ])
             ->willReturn(new Response(202, []));
@@ -881,6 +884,7 @@ JSON;
                     'Content-Type' => 'application/json',
                     'User-Agent' => $this->userAgentHeader,
                 ],
+                'http_errors' => false,
                 'body' => json_encode($payload),
             ])
             ->willReturn(new Response(202, []));
@@ -904,6 +908,7 @@ JSON;
                     'Content-Type' => 'application/json',
                     'User-Agent' => $this->userAgentHeader,
                 ],
+                'http_errors' => false,
             ])
             ->willReturn(new Response(200, [], 'ok'));
 
@@ -931,6 +936,7 @@ JSON;
                     'Content-Type' => 'application/json',
                     'User-Agent' => $this->userAgentHeader,
                 ],
+                'http_errors' => false,
                 'body' => json_encode($customerFilters->jsonSerialize()),
             ])
             ->willReturn(new Response(200, [], 'ok'));

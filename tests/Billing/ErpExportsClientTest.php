@@ -212,6 +212,7 @@ class ErpExportsClientTest extends AbstractClientTest
                         'Content-Type' => 'application/json',
                         'User-Agent'   => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                 ]
             )
             ->willReturn(new Response(200, [], $response));

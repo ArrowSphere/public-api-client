@@ -416,6 +416,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                     'body'    => json_encode($payload),
                 ]
             )
@@ -824,6 +825,7 @@ JSON;
                         'Content-Type' => 'application/json',
                         'User-Agent' => $this->userAgentHeader,
                     ],
+                    'http_errors' => false,
                     'body'    => $payload,
                 ]
             )
