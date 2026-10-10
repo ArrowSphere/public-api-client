@@ -117,4 +117,72 @@ class NotificationClientTest extends AbstractClientTest
 
         $this->client->deleteAllNotifications();
     }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetOneNotification(): void
+    {
+        $id = self::NOTIFICATION_ID;
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('GET', "https://www.test.com/notification/$id")
+            ->willReturn(new Response(200, [], json_encode([
+                'status' => 200,
+                'data'   => ['notifications' => [$this->generateMockedNotification()]],
+            ])));
+
+        self::assertSame($this->generateMockedNotification(), $this->client->getOneNotification($id));
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testCreateNotification(): void
+    {
+        $payload = [
+            'userName' => 'beatrice kido',
+            'subject'  => 'Order fulfilled - [XSP656567]',
+            'content'  => 'Your order has been fulfilled with success',
+        ];
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'POST',
+                'https://www.test.com/notification',
+                self::callback(static function (array $options) use ($payload): bool {
+                    return $options['body'] === json_encode($payload);
+                })
+            )
+            ->willReturn(new Response(201, [], json_encode([
+                'status' => 201,
+                'data'   => ['notification' => [$this->generateMockedNotification()]],
+            ])));
+
+        self::assertSame($this->generateMockedNotification(), $this->client->createNotification($payload));
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testCountNotifications(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('GET', 'https://www.test.com/notification/count?hasBeenRead=0')
+            ->willReturn(new Response(200, [], json_encode(['status' => 200, 'data' => ['total' => '3']])));
+
+        self::assertSame('3', $this->client->countNotifications(['hasBeenRead' => 0]));
+    }
 }

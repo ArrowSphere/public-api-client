@@ -931,4 +931,208 @@ JSON;
 
         $this->client->deleteAsset(self::CAMPAIGN_REFERENCE, self::ASSET_REFERENCE);
     }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetCampaignRaw(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('GET', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE)
+            ->willReturn(new Response(200, [], 'OK'));
+
+        self::assertSame('OK', $this->client->getCampaignRaw(self::CAMPAIGN_REFERENCE));
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetCampaign(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('GET', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE)
+            ->willReturn(new Response(200, [], json_encode(['status' => 200, 'data' => $this->getCampaignData()])));
+
+        $campaign = $this->client->getCampaign(self::CAMPAIGN_REFERENCE);
+
+        self::assertInstanceOf(Campaign::class, $campaign);
+        self::assertSame(self::CAMPAIGN_REFERENCE, $campaign->getReference());
+        self::assertSame('My campaign', $campaign->getName());
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetCampaignReturnsNullWithoutData(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('GET', 'https://www.test.com/campaigns/' . self::CAMPAIGN_REFERENCE)
+            ->willReturn(new Response(200, [], json_encode(['status' => 200, 'data' => null])));
+
+        self::assertNull($this->client->getCampaign(self::CAMPAIGN_REFERENCE));
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetActiveCampaigns(): void
+    {
+        $response = <<<JSON
+{
+    "status": 200,
+    "data": [
+        {
+            "reference": "aaa-aaa-aaaa-aaa",
+            "name": "My campaign",
+            "category": "BANNER",
+            "createdAt": "2021-06-25T16:00:00Z",
+            "rules": {
+                "locations": [],
+                "roles": [],
+                "marketplaces": [],
+                "subscriptions": [],
+                "resellers": [],
+                "endCustomers": []
+            },
+            "weight": 1,
+            "banner": {
+                "backgroundImageUuid": "bbbb-bbb-bbbb-bbb-bb"
+            },
+            "landingPage": {
+                "header": {
+                    "backgroundImageUuid": "eee-eee-eeee-eee-ee",
+                    "vendorLogoUuid": "fff-fff-fffff-fff-ff"
+                },
+                "body": {
+                    "backgroundImageUuid": "ggg-ggg-gggg-ggg-gg",
+                    "buttonText": null,
+                    "contactEmail": null
+                },
+                "footer": {
+                    "marketingFeature": {
+                        "items": []
+                    }
+                }
+            }
+        }
+    ]
+}
+JSON;
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('GET', 'https://www.test.com/campaigns/v2/active?location=' . self::LOCATION_MCP . '&customer=' . self::CUSTOMER_REF . '&includeAssets=true')
+            ->willReturn(new Response(200, [], $response));
+
+        $campaigns = iterator_to_array($this->client->getActiveCampaigns(self::LOCATION_MCP, self::CUSTOMER_REF, true));
+
+        self::assertCount(1, $campaigns);
+        self::assertInstanceOf(CampaignV2::class, $campaigns[0]);
+        self::assertSame(self::CAMPAIGN_REFERENCE, $campaigns[0]->getReference());
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetActiveCampaignRawV2(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('GET', 'https://www.test.com/campaigns/active?location=' . self::LOCATION_MCP . '&customer=' . self::CUSTOMER_REF)
+            ->willReturn(new Response(200, [], 'OK'));
+
+        self::assertSame('OK', $this->client->getActiveCampaignRawV2(self::LOCATION_MCP, self::CUSTOMER_REF));
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetActiveCampaignV2(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('GET', 'https://www.test.com/campaigns/active?location=' . self::LOCATION_MCP)
+            ->willReturn(new Response(200, [], json_encode(['status' => 200, 'data' => $this->getCampaignData()])));
+
+        $campaign = $this->client->getActiveCampaignV2(self::LOCATION_MCP);
+
+        self::assertInstanceOf(Campaign::class, $campaign);
+        self::assertSame(self::CAMPAIGN_REFERENCE, $campaign->getReference());
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetActiveCampaignV2ReturnsNullWithoutData(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('GET', 'https://www.test.com/campaigns/active?location=' . self::LOCATION_MCP)
+            ->willReturn(new Response(200, [], json_encode(['status' => 200, 'data' => null])));
+
+        self::assertNull($this->client->getActiveCampaignV2(self::LOCATION_MCP));
+    }
+
+    /**
+     * Returns the data of a campaign, in the format expected by the Campaign entity.
+     *
+     * @return array
+     */
+    private function getCampaignData(): array
+    {
+        return [
+            'reference'   => self::CAMPAIGN_REFERENCE,
+            'name'        => 'My campaign',
+            'category'    => 'BANNER',
+            'isActivated' => false,
+            'createdAt'   => '2021-06-25T16:00:00Z',
+            'rules'       => [
+                'locations'     => [],
+                'roles'         => [],
+                'marketplaces'  => [],
+                'subscriptions' => [],
+                'resellers'     => [],
+                'endCustomers'  => [],
+            ],
+            'weight'      => 1,
+            'banners'     => [
+                [
+                    'backgroundImageUuid' => 'bbbb-bbb-bbbb-bbb-bb',
+                ],
+            ],
+            'landingPage' => [
+                'header' => [
+                    'backgroundImageUuid' => 'eee-eee-eeee-eee-ee',
+                    'vendorLogoUuid'      => 'fff-fff-fffff-fff-ff',
+                ],
+                'body'   => [
+                    'backgroundImageUuid' => 'ggg-ggg-gggg-ggg-gg',
+                ],
+            ],
+        ];
+    }
 }

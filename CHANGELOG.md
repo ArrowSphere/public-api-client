@@ -5,6 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added tests for the client methods that were never executed by the test suite, and restored the `createPreferences()` test
 - The Release workflow now prepares the changelog with its own script instead of an external action, moves the Unreleased section of UPGRADING.md under the new version, and refuses a patch release when this section documents breaking changes
 - Added tests for the attribute-based entity base class
 - The Release workflow now asks which part of the version to increment (patch, minor or major) and computes the new version from the latest tag
