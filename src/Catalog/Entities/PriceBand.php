@@ -2,8 +2,9 @@
 
 namespace ArrowSphere\PublicApiClient\Catalog\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class PriceBand
@@ -32,96 +33,87 @@ class PriceBand extends AbstractEntity
 
     public const COLUMN_TERM_AS_HOURS = 'term_as_hours';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_MIN_QUANTITY         => 'required',
-        self::COLUMN_MAX_QUANTITY         => 'present',
-        self::COLUMN_RECURRING_BUY_PRICE  => 'required',
-        self::COLUMN_RECURRING_SELL_PRICE => 'required',
-        self::COLUMN_TERM                 => 'required',
-        self::COLUMN_UNIT_TYPE            => 'required',
-        self::COLUMN_RECURRING_TIME_UNIT  => 'required',
-        self::COLUMN_CURRENCY             => 'required',
-        self::COLUMN_PERIOD_AS_HOURS      => 'required|numeric',
-        self::COLUMN_TERM_AS_HOURS        => 'required|numeric',
-    ];
-
     /**
      * @var int
      */
-    private $minQuantity;
+    #[Property(name: self::COLUMN_MIN_QUANTITY, type: 'int', required: true)]
+    protected int $minQuantity;
 
     /**
      * @var int|null
      */
-    private $maxQuantity;
+    #[Property(name: self::COLUMN_MAX_QUANTITY, type: 'int', serializeNull: true)]
+    protected ?int $maxQuantity = null;
 
     /**
      * @var float
      */
-    private $recurringBuyPrice;
+    #[Property(name: self::COLUMN_RECURRING_BUY_PRICE, type: 'float', required: true)]
+    protected float $recurringBuyPrice;
 
     /**
      * @var float
      */
-    private $recurringSellPrice;
+    #[Property(name: self::COLUMN_RECURRING_SELL_PRICE, type: 'float', required: true)]
+    protected float $recurringSellPrice;
 
     /**
      * @var float|null
      */
-    private $arrowPrice;
+    #[Property(name: self::COLUMN_ARROW_PRICE, type: 'float', serializeNull: true)]
+    protected ?float $arrowPrice = null;
 
     /**
      * @var string
      */
-    private $term;
+    #[Property(name: self::COLUMN_TERM, required: true)]
+    protected string $term;
 
     /**
      * @var string
      */
-    private $unitType;
+    #[Property(name: self::COLUMN_UNIT_TYPE, required: true)]
+    protected string $unitType;
 
     /**
      * @var string
      */
-    private $recurringTimeUnit;
+    #[Property(name: self::COLUMN_RECURRING_TIME_UNIT, required: true)]
+    protected string $recurringTimeUnit;
 
     /**
      * @var string
      */
-    private $currency;
+    #[Property(name: self::COLUMN_CURRENCY, required: true)]
+    protected string $currency;
 
     /**
      * @var int
      */
-    private $periodAsHours;
+    #[Property(name: self::COLUMN_PERIOD_AS_HOURS, type: 'int', required: true)]
+    protected int $periodAsHours;
 
     /**
      * @var int
      */
-    private $termAsHours;
+    #[Property(name: self::COLUMN_TERM_AS_HOURS, type: 'int', required: true)]
+    protected int $termAsHours;
 
     /**
      * PriceBand constructor.
      *
      * @param array $data
      *
-     * @throws EntityValidationException
+     * @throws EntitiesException
      */
     public function __construct(array $data)
     {
-        parent::__construct($data);
+        // The API returns "Infinity" when there is no maximum quantity
+        if (($data[self::COLUMN_MAX_QUANTITY] ?? null) === 'Infinity') {
+            $data[self::COLUMN_MAX_QUANTITY] = null;
+        }
 
-        $this->minQuantity = $data[self::COLUMN_MIN_QUANTITY];
-        $this->maxQuantity = $data[self::COLUMN_MAX_QUANTITY] === 'Infinity' ? null : $data[self::COLUMN_MAX_QUANTITY];
-        $this->recurringBuyPrice = $data[self::COLUMN_RECURRING_BUY_PRICE];
-        $this->recurringSellPrice = $data[self::COLUMN_RECURRING_SELL_PRICE];
-        $this->arrowPrice = $data[self::COLUMN_ARROW_PRICE] ?? null;
-        $this->term = $data[self::COLUMN_TERM];
-        $this->unitType = $data[self::COLUMN_UNIT_TYPE];
-        $this->recurringTimeUnit = $data[self::COLUMN_RECURRING_TIME_UNIT];
-        $this->currency = $data[self::COLUMN_CURRENCY];
-        $this->periodAsHours = $data[self::COLUMN_PERIOD_AS_HOURS];
-        $this->termAsHours = $data[self::COLUMN_TERM_AS_HOURS];
+        parent::__construct($data);
     }
 
     /**
@@ -210,22 +202,5 @@ class PriceBand extends AbstractEntity
     public function getTermAsHours(): int
     {
         return $this->termAsHours;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_MIN_QUANTITY         => $this->getMinQuantity(),
-            self::COLUMN_MAX_QUANTITY         => $this->getMaxQuantity(),
-            self::COLUMN_RECURRING_BUY_PRICE  => $this->getRecurringBuyPrice(),
-            self::COLUMN_RECURRING_SELL_PRICE => $this->getRecurringSellPrice(),
-            self::COLUMN_ARROW_PRICE          => $this->getArrowPrice(),
-            self::COLUMN_TERM                 => $this->getTerm(),
-            self::COLUMN_UNIT_TYPE            => $this->getUnitType(),
-            self::COLUMN_RECURRING_TIME_UNIT  => $this->getRecurringTimeUnit(),
-            self::COLUMN_CURRENCY             => $this->getCurrency(),
-            self::COLUMN_PERIOD_AS_HOURS      => $this->getPeriodAsHours(),
-            self::COLUMN_TERM_AS_HOURS        => $this->getTermAsHours(),
-        ];
     }
 }
