@@ -997,4 +997,150 @@ JSON;
 
         self::assertFalse($isMcaValidated);
     }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetCustomer(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('GET', 'https://www.test.com/customers/XSP12345')
+            ->willReturn(new Response(200, [], json_encode([
+                'status' => 200,
+                'data'   => ['customers' => [$this->getCustomerData()]],
+            ])));
+
+        $customer = $this->client->getCustomer('XSP12345');
+
+        self::assertSame('XSP12345', $customer->getReference());
+        self::assertSame('Wayne industries', $customer->getCompanyName());
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testUpdateCustomer(): void
+    {
+        $updatedData = array_merge($this->getCustomerData(), ['CompanyName' => 'Wayne enterprises']);
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'PATCH',
+                'https://www.test.com/customers/XSP12345',
+                self::callback(static function (array $options): bool {
+                    $payload = json_decode($options['body'], true);
+
+                    return $payload['CompanyName'] === 'Wayne enterprises'
+                        && ! array_key_exists('Reference', $payload)
+                        && ! array_key_exists('DeletedAt', $payload);
+                })
+            )
+            ->willReturn(new Response(200, [], json_encode([
+                'status' => 200,
+                'data'   => ['customers' => [$updatedData]],
+            ])));
+
+        $customer = $this->client->updateCustomer(new Customer($updatedData));
+
+        self::assertSame('Wayne enterprises', $customer->getCompanyName());
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testPostReconciliation(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'POST',
+                'https://www.test.com/customers/reconciliation',
+                self::callback(static function (array $options): bool {
+                    return $options['body'] === json_encode(['program' => 'MSCP']);
+                })
+            )
+            ->willReturn(new Response(200, [], 'OK'));
+
+        self::assertSame('OK', $this->client->postReconciliation('MSCP'));
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testGetGdap(): void
+    {
+        $gdap = [
+            'id'             => '123',
+            'displayName'    => 'Gdap test',
+            'status'         => 'Pending Approval',
+            'startDate'      => '2024-01-01',
+            'endDate'        => '2024-06-30',
+            'duration'       => 'P180T',
+            'durationInDays' => '180',
+            'autoExtend'     => 'P180T',
+            'approvalLink'   => 'https://www.approval-link.com',
+            'privileges'     => [],
+            'securityGroups' => [],
+        ];
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('GET', 'https://www.test.com/customers/XSP12345/relationships/123')
+            ->willReturn(new Response(200, [], json_encode(['status' => 200, 'data' => $gdap])));
+
+        $result = $this->client->getGdap('XSP12345', '123');
+
+        self::assertSame('123', $result->getId());
+        self::assertSame('Gdap test', $result->getDisplayName());
+        self::assertSame($gdap, $result->jsonSerialize());
+    }
+
+    /**
+     * Returns the data of a customer, in the format expected by the Customer entity.
+     *
+     * @return array
+     */
+    private function getCustomerData(): array
+    {
+        return [
+            'AddressLine1'      => '1007 Mountain Drive',
+            'AddressLine2'      => 'Wayne Manor',
+            'BillingId'         => '123',
+            'City'              => 'Gotham City',
+            'CompanyName'       => 'Wayne industries',
+            'Contact'           => [
+                'Email'     => 'test@example.com',
+                'FirstName' => 'Bruce',
+                'LastName'  => 'Wayne',
+                'Phone'     => '1-800-555-1234',
+            ],
+            'CountryCode'       => 'US',
+            'Details'           => [],
+            'DeletedAt'         => null,
+            'EmailContact'      => 'nobody@example.com',
+            'Headcount'         => null,
+            'InternalReference' => '',
+            'ReceptionPhone'    => '1-800-555-1111',
+            'Ref'               => 'COMPANY12345',
+            'Reference'         => 'XSP12345',
+            'State'             => 'NJ',
+            'TaxNumber'         => '',
+            'WebsiteUrl'        => 'https://www.dccomics.com',
+            'Zip'               => '12345',
+        ];
+    }
 }

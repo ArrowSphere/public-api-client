@@ -260,4 +260,181 @@ class ErpExportsClientTest extends AbstractClientTest
         $requestRef = $this->client->createErpExportsAsync($parameters);
         self::assertSame('1234567890', $requestRef);
     }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testCreateErpExportsType(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'PUT',
+                'https://www.test.com/billing/erp/exports/types',
+                self::callback(static function (array $options): bool {
+                    return $options['body'] === json_encode([
+                        ErpExportsClient::TYPE_NAME    => 'My export',
+                        ErpExportsClient::TYPE_COLUMNS => ['Vendor Name', 'Quantity'],
+                    ]);
+                })
+            )
+            ->willReturn(new Response(200, [], json_encode(['status' => 200, 'data' => ['reference' => 'EXPORT-TYPE-1']])));
+
+        $reference = $this->client->createErpExportsType([
+            ErpExportsClient::TYPE_NAME    => 'My export',
+            ErpExportsClient::TYPE_COLUMNS => ['Vendor Name', 'Quantity'],
+            'description'                  => '',
+        ]);
+
+        self::assertSame('EXPORT-TYPE-1', $reference);
+    }
+
+    /**
+     * @return array<string, array{array, string}>
+     */
+    public static function invalidExportTypeProvider(): array
+    {
+        return [
+            'list instead of named parameters' => [['My export'], 'Error: Invalid parameters value'],
+            'missing name'                     => [[ErpExportsClient::TYPE_COLUMNS => ['Quantity']], 'Error: name parameter not found'],
+            'missing columns'                  => [[ErpExportsClient::TYPE_NAME => 'My export'], 'Error: columns parameter not found'],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidExportTypeProvider
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     */
+    public function testCreateErpExportsTypeRejectsInvalidParameters(array $parameters, string $message): void
+    {
+        $this->httpClient->expects(self::never())->method('request');
+
+        $this->expectException(PublicApiClientException::class);
+        $this->expectExceptionMessage($message);
+
+        $this->client->createErpExportsType($parameters);
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testCreateErpExportSyncRaw(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with(
+                'POST',
+                'https://www.test.com/billing/erp/exports/sync',
+                self::callback(static function (array $options): bool {
+                    return $options['body'] === json_encode([ErpExportsClient::EXPORT_TYPE_REFERENCE => 'EXPORT-TYPE-1']);
+                })
+            )
+            ->willReturn(new Response(200, [], 'OK'));
+
+        self::assertSame('OK', $this->client->createErpExportSyncRaw([
+            ErpExportsClient::EXPORT_TYPE_REFERENCE => 'EXPORT-TYPE-1',
+            ErpExportsClient::EXPORT_FILTERS        => [],
+        ]));
+    }
+
+    /**
+     * @return array<string, array{array, string}>
+     */
+    public static function invalidExportSyncProvider(): array
+    {
+        return [
+            'list instead of named parameters' => [['EXPORT-TYPE-1'], 'Error: Invalid parameters value'],
+            'invalid date format'              => [
+                [ErpExportsClient::EXPORT_OUTPUT_FORMAT => [ErpExportsClient::EXPORT_OUTPUT_FORMAT_DATE => 'YYYY']],
+                'Error: Invalid output format date value',
+            ],
+        ];
+    }
+
+    /**
+     * @dataProvider invalidExportSyncProvider
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     */
+    public function testCreateErpExportSyncRawRejectsInvalidParameters(array $parameters, string $message): void
+    {
+        $this->httpClient->expects(self::never())->method('request');
+
+        $this->expectException(PublicApiClientException::class);
+        $this->expectExceptionMessage($message);
+
+        $this->client->createErpExportSyncRaw($parameters);
+    }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    public function testCreateErpExportSyncReadsEveryPage(): void
+    {
+        $pages = [
+            'https://www.test.com/billing/erp/exports/sync' => [
+                'data'       => ['headers' => ['Vendor', 'Quantity'], 'values' => [['Microsoft', 2]]],
+                'pagination' => ['totalPages' => 2],
+            ],
+            'https://www.test.com/billing/erp/exports/sync?page=2' => [
+                'data'       => ['headers' => ['Vendor', 'Quantity'], 'values' => [['Adobe', 5]]],
+                'pagination' => ['totalPages' => 2],
+            ],
+        ];
+
+        $this->httpClient
+            ->expects(self::exactly(2))
+            ->method('request')
+            ->willReturnCallback(static function (string $method, string $url) use ($pages): Response {
+                return new Response(200, [], json_encode($pages[$url]));
+            });
+
+        $lines = iterator_to_array($this->client->createErpExportSync([ErpExportsClient::EXPORT_TYPE_REFERENCE => 'EXPORT-TYPE-1']), false);
+
+        self::assertSame([
+            ['Vendor' => 'Microsoft', 'Quantity' => 2],
+            ['Vendor' => 'Adobe', 'Quantity' => 5],
+        ], $lines);
+    }
+
+    /**
+     * @return array<string, array{array, string}>
+     */
+    public static function incompleteExportSyncResponseProvider(): array
+    {
+        return [
+            'missing pagination' => [['data' => ['headers' => [], 'values' => []]], 'Error: Pagination not found in response'],
+            'missing data'       => [['pagination' => ['totalPages' => 1]], 'Error: Data not found in response'],
+        ];
+    }
+
+    /**
+     * @dataProvider incompleteExportSyncResponseProvider
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     */
+    public function testCreateErpExportSyncRejectsAnIncompleteResponse(array $response, string $message): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->willReturn(new Response(200, [], json_encode($response)));
+
+        $this->expectException(PublicApiClientException::class);
+        $this->expectExceptionMessage($message);
+
+        iterator_to_array($this->client->createErpExportSync([ErpExportsClient::EXPORT_TYPE_REFERENCE => 'EXPORT-TYPE-1']));
+    }
 }

@@ -88,52 +88,43 @@ class PreferencesClientTest extends AbstractClientTest
     }
 
     /**
+     * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
-     * @throws EntityValidationException
-     * @throws GuzzleException
      */
-    /*public function testCreatePreferences(): void//TODO check with dev why this tests not working
+    public function testCreatePreferences(): void
     {
         $payload = [
-            'name' => 'rule42',
-            'priority' => 1,
+            'name'       => 'rule42',
+            'priority'   => 1,
             'identifier' => 'GroupBy',
             'parameters' => [
                 'columns' => [
                     'ResourceGroup',
                 ],
             ],
-            'filters' => [],
-            'overrides' => [
+            'filters'    => [],
+            'overrides'  => [
                 'ArsSku' => 'foobar',
             ],
         ];
 
         $preference = new Preference($payload);
-        $period = '2020-04';
-
-        $response = json_encode([
-            'status' => 0,
-            'data' => []
-        ]);
-
-        $payload['filters'] = (object)[];
 
         $this->httpClient
             ->expects(self::once())
             ->method('request')
-            ->with('POST', 'https://www.test.com/billing/preferences/2020-04', [
-                'headers' => [
-                    'apiKey' => '123456',
-                    'Content-Type' => 'application/json',
-                ],
-                'body'    => '[' . json_encode($payload) . ']',
-            ])
-            ->willReturn(new Response(204, [], $response));
+            ->with(
+                'POST',
+                'https://www.test.com/billing/preferences/2020-04',
+                self::callback(static function (array $options) use ($preference): bool {
+                    return $options['body'] === json_encode([$preference->jsonSerialize()]);
+                })
+            )
+            ->willReturn(new Response(204, [], ''));
 
-        $this->client->createPreferences($period, [$preference]);
-    }*/
+        $this->client->createPreferences('2020-04', [$preference]);
+    }
 
     /**
      * @throws NotFoundException
