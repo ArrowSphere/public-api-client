@@ -9,3 +9,8 @@ To add a new client, write a new class extending ```AbstractClient```, and:
 - create any function you want to call your endpoints, using method ```get()``` or ```post()``` from AbstractClient
 
 The url of your API is not defined in this project but by the program using the package with the ```setUrl()``` method.
+
+## Before opening a pull request
+
+- add a line describing your change under ```## [Unreleased]``` in ```CHANGELOG.md```, this is enforced by the CI
+- if your change breaks backward compatibility, describe how to migrate under ```## Unreleased``` in ```UPGRADING.md```

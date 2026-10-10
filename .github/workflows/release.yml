@@ -27,28 +27,20 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Compute the new version
+      - name: Install PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          coverage: none
+          php-version: '8.3'
+
+      - name: Prepare the release
         id: version
         env:
           BUMP: ${{ inputs.bump }}
-        run: |
-          LATEST=$(git tag --list '[0-9]*.[0-9]*.[0-9]*' --sort=-v:refname | head -n 1)
-          IFS=. read -r MAJOR MINOR PATCH <<< "${LATEST:-0.0.0}"
-          case "$BUMP" in
-            major) VERSION="$((MAJOR + 1)).0.0" ;;
-            minor) VERSION="$MAJOR.$((MINOR + 1)).0" ;;
-            patch) VERSION="$MAJOR.$MINOR.$((PATCH + 1))" ;;
-          esac
-          echo "Releasing $VERSION (previous version: $LATEST)" >> "$GITHUB_STEP_SUMMARY"
-          echo "version=$VERSION" >> "$GITHUB_OUTPUT"
+        run: php .github/scripts/prepare-release.php "$BUMP"
 
       - name: Create release branch
         run: git checkout -b release/${{ steps.version.outputs.version }}
-
-      - name: Update changelog
-        uses: thomaseizinger/keep-a-changelog-new-release@3.1.0
-        with:
-          tag: ${{ steps.version.outputs.version }}
 
       # In order to make a commit, we need to initialize a user.
       # You may choose to write something less generic here if you want, it doesn't matter functionality wise.
@@ -62,7 +54,7 @@ jobs:
         run: |
           curl -fsSL https://dprint.dev/install.sh | sh
           /home/runner/.dprint/bin/dprint -c .github/workflows/.dprintrc.json fmt CHANGELOG.md
-          git add CHANGELOG.md
+          git add CHANGELOG.md UPGRADING.md
           git commit --message "Release ${{ steps.version.outputs.version }}"
           echo "LAST_COMMIT=$(git rev-parse HEAD)" >> $GITHUB_ENV
 
