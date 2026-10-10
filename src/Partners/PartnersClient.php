@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Partners;
 
 use ArrowSphere\PublicApiClient\AbstractClient;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Partners\Entities\OrganizationUnit;
@@ -52,7 +51,6 @@ class PartnersClient extends AbstractClient
      *
      * @return Generator<OrganizationUnit>
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -90,7 +88,6 @@ class PartnersClient extends AbstractClient
      *
      * @return OrganizationUnitsResponse
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -192,7 +189,6 @@ class PartnersClient extends AbstractClient
      *
      * @return OrganizationUnit
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException

@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Catalog\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 abstract class AbstractOffer extends AbstractEntity
 {
@@ -44,29 +43,6 @@ abstract class AbstractOffer extends AbstractEntity
     public const COLUMN_WEIGHT_FORCED = 'weight_forced';
 
     public const COLUMN_WEIGHT_TOP_SALES = 'weight_top_sales';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_CATEGORY          => 'present|array',
-        self::COLUMN_CUSTOMER_CATEGORY => 'present',
-        self::COLUMN_HAS_ADDONS        => 'required',
-        self::COLUMN_IS_ADDON          => 'required',
-        self::COLUMN_IS_TRIAL          => 'required',
-        self::COLUMN_KEYWORDS          => 'present|array',
-        self::COLUMN_ADDONS            => 'array',
-        self::COLUMN_PREREQUISITES     => 'array',
-        self::COLUMN_MARKETPLACE       => 'required',
-        self::COLUMN_NAME              => 'required',
-        'prices'                       => 'required|array',
-        self::COLUMN_SERVICE_NAME      => 'present',
-        self::COLUMN_SERVICE_REF       => 'required',
-        self::COLUMN_SKU               => 'required',
-        self::COLUMN_THUMBNAIL         => 'present',
-        self::COLUMN_TYPE              => 'required',
-        self::COLUMN_VENDOR            => 'required',
-        self::COLUMN_VENDOR_CODE       => 'required',
-        self::COLUMN_WEIGHT_FORCED     => 'required|numeric',
-        self::COLUMN_WEIGHT_TOP_SALES  => 'required|numeric',
-    ];
 
     /**
      * @var string[]|null
@@ -177,8 +153,6 @@ abstract class AbstractOffer extends AbstractEntity
      * AbstractOffer constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

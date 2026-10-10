@@ -5,7 +5,6 @@ namespace ArrowSphere\PublicApiClient\Billing;
 use ArrowSphere\PublicApiClient\Billing\Entities\ErpExportType;
 use ArrowSphere\PublicApiClient\Billing\Enum\FormatDateEnum;
 use ArrowSphere\PublicApiClient\Billing\Enum\FormatEnum;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use Generator;
@@ -214,7 +213,6 @@ class ErpExportsClient extends AbstractBillingClient
      *
      * @return ErpExportType|null
      *
-     * @throws EntityValidationException
      * @throws NotFoundException
      * @throws PublicApiClientException|ReflectionException
      */

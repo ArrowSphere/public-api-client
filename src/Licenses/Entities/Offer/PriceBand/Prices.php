@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class Prices
@@ -15,12 +14,6 @@ class Prices extends AbstractEntity
     public const COLUMN_SELL = 'sell';
 
     public const COLUMN_PUBLIC = 'public';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_BUY    => 'required|numeric',
-        self::COLUMN_SELL   => 'required|numeric',
-        self::COLUMN_PUBLIC => 'required|numeric',
-    ];
 
     /**
      * @var float
@@ -41,8 +34,6 @@ class Prices extends AbstractEntity
      * Prices constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

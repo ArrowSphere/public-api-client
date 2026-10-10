@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\License;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class Config
@@ -15,12 +14,6 @@ class Config extends AbstractEntity
     public const COLUMN_SCOPE = 'scope';
 
     public const COLUMN_STATE = 'state';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_NAME  => 'required|string',
-        self::COLUMN_SCOPE => 'required|string',
-        self::COLUMN_STATE => 'required|string',
-    ];
 
     /**
      * @var string
@@ -41,8 +34,6 @@ class Config extends AbstractEntity
      * Config constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

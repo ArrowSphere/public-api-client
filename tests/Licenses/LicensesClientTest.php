@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Tests\Licenses;
 
 use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\Config;
@@ -317,7 +316,6 @@ JSON;
      * @param int $total
      * @param array $pages
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -376,7 +374,6 @@ JSON;
      * @depends testFindRaw
      *
      * @throws PublicApiClientException
-     * @throws EntityValidationException
      * @throws GuzzleException
      */
     public function testFindWithInvalidResponse(): void
@@ -408,7 +405,6 @@ JSON;
     /**
      * @depends testFindRaw
      *
-     * @throws EntityValidationException
      * @throws PublicApiClientException
      * @throws GuzzleException
      */
@@ -721,7 +717,6 @@ JSON;
     /**
      * @depends testFind
      *
-     * @throws EntityValidationException
      * @throws PublicApiClientException
      * @throws GuzzleException
      */
@@ -893,7 +888,6 @@ JSON;
     }
 
     /**
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -1070,7 +1064,6 @@ JSON;
     }
 
     /**
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -1185,7 +1178,6 @@ JSON;
     }
 
     /**
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -1226,7 +1218,6 @@ JSON;
     }
 
     /**
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException

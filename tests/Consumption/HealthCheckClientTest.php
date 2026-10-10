@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Tests\Consumption;
 
 use ArrowSphere\PublicApiClient\Consumption\HealthCheckClient;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
@@ -37,7 +36,6 @@ class HealthCheckClientTest extends AbstractClientTest
     /**
      * @depends testGetItemRaw
      *
-     * @throws EntityValidationException
      * @throws NotFoundException
      * @throws PublicApiClientException
      * @throws ReflectionException
@@ -77,81 +75,5 @@ JSON;
         self::assertEquals('FR', $items[0]->getMarketPlace());
         self::assertEquals('OK', $items[0]->getMessage());
         self::assertEquals('Microsoft', $items[0]->getVendor());
-    }
-
-    /**
-     * @throws EntityValidationException
-     * @throws NotFoundException
-     * @throws PublicApiClientException|ReflectionException
-     */
-    public function testGetItemWithBadColor(): void
-    {
-        $this->expectException(EntityValidationException::class);
-        $response = <<<JSON
-{
-    "status": 200,
-    "data": {
-        "details": [
-            {
-                "vendor": "Microsoft",
-                "marketplace": "FR",
-                "classification": "SAAS",
-                "color": "blue",
-                "message": "OK"
-            }
-        ]
-    }
-}
-JSON;
-
-        $this->httpClient
-            ->expects(self::once())
-            ->method('request')
-            ->with('GET', 'https://www.test.com/consumption/healthcheck?classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR')
-            ->willReturn(new Response(200, [], $response));
-
-        $this->client->getItem(
-            ['SAAS'],
-            ['Microsoft'],
-            ['FR']
-        );
-    }
-
-    /**
-     * @throws EntityValidationException
-     * @throws NotFoundException
-     * @throws PublicApiClientException|ReflectionException
-     */
-    public function testGetItemWithBadAttribute(): void
-    {
-        $this->expectException(EntityValidationException::class);
-        $this->expectExceptionMessage('classification is required');
-        $response = <<<JSON
-{
-    "status": 200,
-    "data": {
-        "details": [
-            {
-                "vendor": "Microsoft",
-                "marketplace": "FR",
-                "color": "red",
-                "message": "OK"
-            }
-        ]
-    }
-}
-JSON;
-
-        $this->httpClient
-            ->expects(self::once())
-            ->method('request')
-            ->with('GET', 'https://www.test.com/consumption/healthcheck?classification%5B%5D=SAAS&vendor%5B%5D=Microsoft&marketplace%5B%5D=FR')
-            ->willReturn(new Response(200, [], $response));
-
-        $this->client->getItem(
-            ['SAAS'],
-            ['Microsoft'],
-            ['FR']
-        );
     }
 }

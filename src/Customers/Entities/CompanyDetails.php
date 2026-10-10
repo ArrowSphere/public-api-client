@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Customers\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class CompanyDetails
@@ -21,10 +20,6 @@ class CompanyDetails extends AbstractEntity
     public const COLUMN_ORACLE_ONLINE_KEY = 'OracleOnlineKey';
 
     public const COLUMN_TENANT_ID = 'TenantId';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_MIGRATION => 'boolean',
-    ];
 
     /**
      * @var string|null
@@ -60,8 +55,6 @@ class CompanyDetails extends AbstractEntity
      * CompanyDetails constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

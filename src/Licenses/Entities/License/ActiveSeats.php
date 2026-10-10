@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\License;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class ActiveSeats
@@ -28,8 +27,6 @@ class ActiveSeats extends AbstractEntity
      * ActiveSeats constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

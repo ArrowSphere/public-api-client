@@ -11,7 +11,6 @@ use ArrowSphere\PublicApiClient\Customers\Entities\ProvisionResponse;
 use ArrowSphere\PublicApiClient\Customers\Request\ExportCustomersRequest;
 use ArrowSphere\PublicApiClient\Customers\Request\MigrationRequest;
 use ArrowSphere\PublicApiClient\Customers\Request\ProvisionRequest;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use Generator;
@@ -46,7 +45,6 @@ class CustomersClient extends AbstractClient
      *
      * @return Generator<Customer>
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -82,7 +80,6 @@ class CustomersClient extends AbstractClient
      *
      * @return CustomersResponse
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -136,7 +133,6 @@ class CustomersClient extends AbstractClient
      *
      * @return Customer
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -166,7 +162,6 @@ class CustomersClient extends AbstractClient
      *
      * @return Customer
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -208,7 +203,6 @@ class CustomersClient extends AbstractClient
      *
      * @return Invitation
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -229,7 +223,6 @@ class CustomersClient extends AbstractClient
      *
      * @return Invitation
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -312,7 +305,6 @@ class CustomersClient extends AbstractClient
      *
      * @return Generator<Gdap>
      *
-     * @throws EntityValidationException
      * @throws NotFoundException
      * @throws PublicApiClientException
      * @throws GuzzleException
@@ -380,7 +372,6 @@ class CustomersClient extends AbstractClient
 
     /**
      * @throws NotFoundException
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws PublicApiClientException
      */

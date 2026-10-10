@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\Identifiers;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class SaleConstraints
@@ -17,16 +16,10 @@ class Arrowsphere extends AbstractEntity
      */
     private $sku;
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_SKU => 'present|string'
-    ];
-
     /**
      * Arrowsphere constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

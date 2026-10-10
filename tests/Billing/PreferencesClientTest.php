@@ -5,7 +5,6 @@ namespace ArrowSphere\PublicApiClient\Tests\Billing;
 use ArrowSphere\PublicApiClient\Billing\Entities\Preference;
 use ArrowSphere\PublicApiClient\Billing\Entities\Preferences;
 use ArrowSphere\PublicApiClient\Billing\PreferencesClient;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Tests\AbstractClientTest;
@@ -24,7 +23,6 @@ class PreferencesClientTest extends AbstractClientTest
     /**
      * @throws NotFoundException
      * @throws PublicApiClientException
-     * @throws EntityValidationException
      * @throws GuzzleException
      */
     public function testGetPreferences(): void
@@ -90,7 +88,6 @@ class PreferencesClientTest extends AbstractClientTest
     /**
      * @throws NotFoundException
      * @throws PublicApiClientException
-     * @throws EntityValidationException
      * @throws GuzzleException
      */
     /*public function testCreatePreferences(): void//TODO check with dev why this tests not working
@@ -134,42 +131,4 @@ class PreferencesClientTest extends AbstractClientTest
 
         $this->client->createPreferences($period, [$preference]);
     }*/
-
-    /**
-     * @throws NotFoundException
-     * @throws PublicApiClientException
-     * @throws EntityValidationException
-     * @throws GuzzleException
-     */
-    public function testCreateInvalidPreferences(): void
-    {
-        $payload = [
-            'identifier' => 'GroupBy',
-            'parameters' => [], // columns is required
-        ];
-
-        $this->expectException(EntityValidationException::class);
-        $preference = new Preference($payload);
-    }
-
-    /**
-     * @throws NotFoundException
-     * @throws PublicApiClientException
-     * @throws EntityValidationException
-     * @throws GuzzleException
-     */
-    public function testCreateInvalidColumnsPreferences(): void
-    {
-        $payload = [
-            'identifier' => 'GroupBy',
-            'parameters' => [
-                'columns' => [
-                    'FooBar', // FooBar does not exist
-                ],
-            ],
-        ];
-
-        $this->expectException(EntityValidationException::class);
-        $preference = new Preference($payload);
-    }
 }

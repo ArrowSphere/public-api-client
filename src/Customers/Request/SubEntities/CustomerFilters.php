@@ -4,7 +4,6 @@ namespace ArrowSphere\PublicApiClient\Customers\Request\SubEntities;
 
 use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
 use ArrowSphere\PublicApiClient\Entities\Property;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class Customer
@@ -32,8 +31,6 @@ class CustomerFilters extends AbstractEntity
     public const COLUMN_CREATION_DATE = 'Since';
 
     public const COLUMN_ZIP = 'Zip';
-
-    protected const VALIDATION_RULES = [];
 
     #[Property()]
     protected ?string $billingId;
@@ -72,8 +69,6 @@ class CustomerFilters extends AbstractEntity
      * Customer constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

@@ -6,7 +6,6 @@ use ArrowSphere\PublicApiClient\Billing\Entities\Statement;
 use ArrowSphere\PublicApiClient\Billing\Entities\StatementLine;
 use ArrowSphere\PublicApiClient\Billing\Enum\FormatEnum;
 use ArrowSphere\PublicApiClient\Billing\Enum\TierEnum;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use Generator;
@@ -123,7 +122,6 @@ class StatementsClient extends AbstractBillingClient
      *
      * @return Statement|null
      *
-     * @throws EntityValidationException
      * @throws NotFoundException
      * @throws PublicApiClientException|ReflectionException
      */
@@ -163,7 +161,6 @@ class StatementsClient extends AbstractBillingClient
      *
      * @return Generator|Statement[]
      *
-     * @throws EntityValidationException
      * @throws NotFoundException
      * @throws PublicApiClientException
      * @throws ReflectionException
@@ -233,7 +230,6 @@ class StatementsClient extends AbstractBillingClient
      *
      * @return Generator|StatementLine[]
      *
-     * @throws EntityValidationException
      * @throws NotFoundException
      * @throws PublicApiClientException
      * @throws ReflectionException

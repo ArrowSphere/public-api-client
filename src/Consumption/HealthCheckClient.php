@@ -4,7 +4,6 @@ namespace ArrowSphere\PublicApiClient\Consumption;
 
 use ArrowSphere\PublicApiClient\Consumption\Entities\HealthCheckItem;
 use ArrowSphere\PublicApiClient\Consumption\Enum\ConstantEnum;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 
@@ -20,7 +19,6 @@ class HealthCheckClient extends AbstractConsumptionClient
      *
      * @return HealthCheckItem[]
      *
-     * @throws EntityValidationException
      * @throws NotFoundException
      * @throws PublicApiClientException|\ReflectionException
      */

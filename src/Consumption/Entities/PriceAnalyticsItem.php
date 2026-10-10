@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Consumption\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class PriceAnalyticsItem extends AbstractEntity
 {
@@ -12,14 +11,6 @@ class PriceAnalyticsItem extends AbstractEntity
     public const COLUMN_CURRENCY = 'currency';
     public const COLUMN_ENDCUSTOMERPRICE = 'endCustomerBuyPrice';
     public const COLUMN_LISTPRICE = 'listBuyPrice';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_RESELLERPRICE    => 'numeric|required',
-        self::COLUMN_ARROWPRICE       => 'numeric',
-        self::COLUMN_ENDCUSTOMERPRICE => 'numeric|nullable',
-        self::COLUMN_LISTPRICE        => 'numeric|required',
-        self::COLUMN_CURRENCY         => 'string|required',
-    ];
 
     /**
      * @var float
@@ -50,8 +41,6 @@ class PriceAnalyticsItem extends AbstractEntity
      * PriceAnalyticsItem constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

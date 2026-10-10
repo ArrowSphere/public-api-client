@@ -4,7 +4,6 @@ namespace ArrowSphere\PublicApiClient\Catalog;
 
 use ArrowSphere\PublicApiClient\Catalog\Entities\FindResult;
 use ArrowSphere\PublicApiClient\Catalog\Entities\Offer;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use Generator;
@@ -160,7 +159,6 @@ class OfferClient extends AbstractCatalogClient
      *
      * @return FindResult
      *
-     * @throws EntityValidationException
      * @throws PublicApiClientException
      * @throws GuzzleException
      */

@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Licenses;
 
 use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Licenses\Entities\FindResult;
@@ -207,7 +206,6 @@ class LicensesClient extends AbstractLicensesClient
      *
      * @return FindResult
      *
-     * @throws EntityValidationException
      * @throws PublicApiClientException
      * @throws GuzzleException
      */
@@ -259,7 +257,6 @@ class LicensesClient extends AbstractLicensesClient
      *
      * @return Predictions
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -277,7 +274,6 @@ class LicensesClient extends AbstractLicensesClient
      *
      * @return Generator|Config[]
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -320,7 +316,6 @@ class LicensesClient extends AbstractLicensesClient
      *
      * @return Config
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -375,7 +370,6 @@ class LicensesClient extends AbstractLicensesClient
      *
      * @return Credentials
      *
-     * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException

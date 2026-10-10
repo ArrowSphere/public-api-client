@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\General;
 
 use ArrowSphere\PublicApiClient\AbstractClient;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\General\Entities\Whoami;
@@ -26,7 +25,6 @@ class WhoamiClient extends AbstractClient
     /**
      * @return Whoami
      *
-     * @throws EntityValidationException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */

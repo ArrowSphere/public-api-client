@@ -3,8 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Billing\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Billing\Enum\BillingPeriodicityEnum;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class StatementLine extends AbstractEntity
 {
@@ -33,34 +31,6 @@ class StatementLine extends AbstractEntity
     public const COLUMN_CURRENCY = 'currency';
     public const COLUMN_PRICES = 'prices';
     public const COLUMN_DESCRIPTION = 'description';
-
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLUMN_REFERENCE => 'string|required',
-        self::COLUMN_VENDOR_END_CUSTOMER_SUBSCRIPTION_ID => 'string|present|nullable',
-        self::COLUMN_VENDOR_NAME => 'string|present|nullable',
-        self::COLUMN_PROGRAM_CODE => 'string|present|nullable',
-        self::COLUMN_CLASSIFICATION => 'string|present|nullable',
-        self::COLUMN_VENDOR_PRODUCT_NAME => 'string|present|nullable',
-        self::COLUMN_VENDOR_SKU => 'string|present|nullable',
-        self::COLUMN_ARROW_SKU => 'string|required',
-        self::COLUMN_ORDER_ID => 'string|present|nullable',
-        self::COLUMN_RESELLER_ORDER_ID => 'string|present|nullable',
-        self::COLUMN_BILLING_PERIOD_START => 'string|present|nullable',
-        self::COLUMN_BILLING_PERIOD_END => 'string|present|nullable',
-        self::COLUMN_USAGE_START_DATE => 'string|required',
-        self::COLUMN_USAGE_END_DATE => 'string|required',
-        self::COLUMN_SUBSCRIPTION_START_DATE => 'string|present|nullable',
-        self::COLUMN_SUBSCRIPTION_END_DATE => 'string|present|nullable',
-        self::COLUMN_BILLING_PERIODICITY => 'string|present|nullable',
-        self::COLUMN_QUANTITY => 'numeric|present|nullable',
-        self::COLUMN_SUBSCRIPTION_FRIENDLY_NAME => 'string|present|nullable',
-        self::COLUMN_ARS_SUBSCRIPTION_ID => 'string|present|nullable',
-        self::COLUMN_OFFER_NAME => 'string|present|nullable',
-        self::COLUMN_RATES => 'array|required',
-        self::COLUMN_CURRENCY => 'string|required',
-        self::COLUMN_PRICES => 'array|required',
-        self::COLUMN_DESCRIPTION => 'string|present|nullable',
-    ];
 
     /**
      * @var string
@@ -191,17 +161,10 @@ class StatementLine extends AbstractEntity
      * Statement constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
-     * @throws \ReflectionException
      */
     public function __construct(array $data)
     {
         parent::__construct($data);
-
-        if (self::$enableValidation && ! BillingPeriodicityEnum::isValidValue($data[self::COLUMN_BILLING_PERIODICITY])) {
-            throw new EntityValidationException('Billing periodicity: ' . $data[self::COLUMN_BILLING_PERIODICITY] . ' not supported');
-        }
 
         $this->reference = $data[self::COLUMN_REFERENCE];
         $this->vendorEndCustomerSubscriptionId = $data[self::COLUMN_VENDOR_END_CUSTOMER_SUBSCRIPTION_ID];

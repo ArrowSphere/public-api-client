@@ -13,11 +13,6 @@ class Attribute extends AbstractEntity
 
     protected string $value;
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_SCHEDULED_NAME => 'required|string',
-        self::COLUMN_VALUE          => 'required|string',
-    ];
-
     public function __construct(array $data)
     {
         parent::__construct($data);

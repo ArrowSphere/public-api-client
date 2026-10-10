@@ -4,7 +4,6 @@ namespace ArrowSphere\PublicApiClient\Tests\Catalog\Entities;
 
 use ArrowSphere\PublicApiClient\Catalog\Entities\FindResult;
 use ArrowSphere\PublicApiClient\Catalog\OfferClient;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -13,7 +12,6 @@ use PHPUnit\Framework\TestCase;
 class FindResultTest extends TestCase
 {
     /**
-     * @throws EntityValidationException
      */
     public function testSerialisation(): void
     {

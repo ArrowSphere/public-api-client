@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\License;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class License
@@ -99,26 +98,6 @@ class License extends AbstractEntity
     public const COLUMN_ATTRIBUTES = 'attributes';
 
     public const COLUMN_CUSTOMER_VENDOR_REFERENCE = 'customerVendorReference';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_ACCEPT_EULA     => 'present|boolean',
-        self::COLUMN_AUTO_RENEW      => 'present|boolean',
-        self::COLUMN_BASE_SEAT       => 'present|numeric',
-        self::COLUMN_CLOUD_TYPE      => 'required',
-        self::COLUMN_ID              => 'required|numeric',
-        self::COLUMN_OFFER           => 'required',
-        self::COLUMN_PARTNER_REF     => 'required',
-        self::COLUMN_PRICE           => 'required|array',
-        self::COLUMN_SEAT            => 'present|numeric',
-        self::COLUMN_SKU             => 'required',
-        self::COLUMN_STATUS_CODE     => 'required|numeric',
-        self::COLUMN_STATUS_LABEL    => 'required',
-        self::COLUMN_SUBSCRIPTION_ID => 'required',
-        self::COLUMN_SUBSIDIARY_NAME => 'required',
-        self::COLUMN_TRIAL           => 'present|boolean',
-        self::COLUMN_VENDOR_NAME     => 'required',
-        self::COLUMN_VENDOR_CODE     => 'required',
-    ];
 
     /**
      * @var bool
@@ -349,8 +328,6 @@ class License extends AbstractEntity
      * License constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

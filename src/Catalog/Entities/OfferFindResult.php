@@ -2,8 +2,6 @@
 
 namespace ArrowSphere\PublicApiClient\Catalog\Entities;
 
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
-
 /**
  * Class OfferFindResult
  */
@@ -12,11 +10,6 @@ class OfferFindResult extends AbstractOffer
     public const COLUMN_HIGHLIGHT = 'highlight';
 
     public const COLUMN_ID = 'id';
-
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLUMN_HIGHLIGHT => 'array',
-        self::COLUMN_ID        => 'required',
-    ];
 
     /**
      * @var array
@@ -32,8 +25,6 @@ class OfferFindResult extends AbstractOffer
      * OfferFindResult constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

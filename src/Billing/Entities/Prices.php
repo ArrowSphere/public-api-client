@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Billing\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class Prices extends AbstractEntity
 {
@@ -13,15 +12,6 @@ class Prices extends AbstractEntity
     public const COLUMN_BUY_TOTAL = 'buyTotal';
     public const COLUMN_SELL_UNIT = 'sellUnit';
     public const COLUMN_SELL_TOTAL = 'sellTotal';
-
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLUMN_LIST_UNIT => 'numeric|nullable',
-        self::COLUMN_LIST_TOTAL => 'numeric|nullable',
-        self::COLUMN_BUY_UNIT => 'numeric|nullable',
-        self::COLUMN_BUY_TOTAL => 'numeric|required',
-        self::COLUMN_SELL_UNIT => 'numeric|nullable',
-        self::COLUMN_SELL_TOTAL => 'numeric|required',
-    ];
 
     /**
      * @var float|null
@@ -58,7 +48,6 @@ class Prices extends AbstractEntity
      *
      * @param array $data
      *
-     * @throws EntityValidationException
      * @throws \ReflectionException
      */
     public function __construct(array $data)

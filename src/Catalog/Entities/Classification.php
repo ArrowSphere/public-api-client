@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Catalog\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class Classification
@@ -11,10 +10,6 @@ use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 class Classification extends AbstractEntity
 {
     public const COLUMN_NAME = 'name';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_NAME => 'required',
-    ];
 
     /**
      * @var string
@@ -25,8 +20,6 @@ class Classification extends AbstractEntity
      * Classification constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

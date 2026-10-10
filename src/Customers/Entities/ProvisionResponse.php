@@ -10,12 +10,6 @@ class ProvisionResponse extends AbstractEntity
     public const COLUMN_MESSAGE = 'message';
     public const COLUMN_ATTRIBUTES = 'attributes';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_STATUS     => 'required|string',
-        self::COLUMN_MESSAGE    => 'required|string',
-        self::COLUMN_ATTRIBUTES => 'required|array',
-    ];
-
     private string $status;
     private string $message;
 

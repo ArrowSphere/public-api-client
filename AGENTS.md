@@ -122,8 +122,6 @@ public function doSomething(string $bar): string
 - Constructor receives `array $data`.
 - Field name constants: `COLUMN_FOO = 'foo'` on the entity class.
 - Getters read from `$this->data[static::COLUMN_FOO]`.
-- Validation via `illuminate/validation` is **disabled by default** (`$enableValidation =
-  false`); it is enabled only in tests via `setUp()`.
 
 **Newer** (`src/Entities/AbstractEntity.php`):
 - PHP 8 `#[Property]` attribute on constructor parameters.
@@ -135,7 +133,6 @@ public function doSomething(string $bar): string
 
 - `PublicApiClientException` — base; thrown on HTTP 4xx/5xx or JSON decode failure.
 - `NotFoundException` — thrown specifically on HTTP 404.
-- `EntityValidationException` — thrown when legacy entity validation fails.
 
 ---
 
@@ -152,8 +149,6 @@ public function doSomething(string $bar): string
 - **Use `self::`** for all assertions and mock expectations (`self::assertEquals`,
   `self::once()`, etc.) — never `$this->assert*`.
 - JSON fixtures go as **heredoc strings** directly inside the test method body.
-- Do not change `AbstractEntity::$enableValidation`; it is set to `true` in
-  `AbstractClientTest::setUp()`.
 
 ---
 

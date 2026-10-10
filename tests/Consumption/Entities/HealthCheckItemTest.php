@@ -3,14 +3,11 @@
 namespace ArrowSphere\PublicApiClient\Tests\Consumption\Entities;
 
 use ArrowSphere\PublicApiClient\Consumption\Entities\HealthCheckItem;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use PHPUnit\Framework\TestCase;
-use ReflectionException;
 
 class HealthCheckItemTest extends TestCase
 {
     /**
-     * @throws EntityValidationException|ReflectionException
      */
     public function testHealthCheckItemSerialisation(): void
     {

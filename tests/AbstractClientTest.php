@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Tests;
 
 use ArrowSphere\PublicApiClient\AbstractClient;
-use ArrowSphere\PublicApiClient\AbstractEntity;
 use ArrowSphere\PublicApiClient\Common\ValueObject\UserAgentHeader;
 use GuzzleHttp\Client;
 use PHPUnit\Framework\MockObject\MockObject;
@@ -36,9 +35,6 @@ abstract class AbstractClientTest extends TestCase
      */
     public function setUp(): void
     {
-        // For the tests we want the validation to happen
-        AbstractEntity::$enableValidation = true;
-
         $this->httpClient = $this->createMock(Client::class);
 
         $class = static::MOCKED_CLIENT_CLASS;

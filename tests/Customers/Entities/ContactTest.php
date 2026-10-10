@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Tests\Customers\Entities;
 
 use ArrowSphere\PublicApiClient\Customers\Entities\Contact;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -12,7 +11,6 @@ use PHPUnit\Framework\TestCase;
 class ContactTest extends TestCase
 {
     /**
-     * @throws EntityValidationException
      */
     public function testSerialize(): void
     {

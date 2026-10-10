@@ -10,12 +10,6 @@ class AwsPayerAccount extends AbstractEntity
     public const COLUMN_FRIENDLY_NAME = 'friendlyName';
     public const COLUMN_LICENSE_REF = 'licenseRef';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_TYPE => 'required|string',
-        self::COLUMN_FRIENDLY_NAME => 'required|string',
-        self::COLUMN_LICENSE_REF => 'required|string',
-    ];
-
     protected string $type;
 
     protected string $friendlyName;

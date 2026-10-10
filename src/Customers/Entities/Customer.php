@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Customers\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Partners\Entities\OrganizationUnit;
 
 /**
@@ -50,25 +49,6 @@ class Customer extends AbstractEntity
     public const COLUMN_ZIP = 'Zip';
 
     public const COLUMN_ORGANIZATION_UNIT = 'OrganizationUnit';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_ADDRESS_LINE_1     => 'required',
-        self::COLUMN_ADDRESS_LINE_2     => 'present',
-        self::COLUMN_BILLING_ID         => 'present',
-        self::COLUMN_CITY               => 'required',
-        self::COLUMN_COMPANY_NAME       => 'required',
-        self::COLUMN_CONTACT            => 'required|array',
-        self::COLUMN_COUNTRY_CODE       => 'required',
-        self::COLUMN_DETAILS            => 'present|array',
-        self::COLUMN_EMAIL_CONTACT      => 'present',
-        self::COLUMN_HEADCOUNT          => 'present',
-        self::COLUMN_INTERNAL_REFERENCE => 'present',
-        self::COLUMN_RECEPTION_PHONE    => 'present',
-        self::COLUMN_REF                => 'present',
-        self::COLUMN_STATE              => 'present',
-        self::COLUMN_TAX_NUMBER         => 'present',
-        self::COLUMN_ZIP                => 'present',
-    ];
 
     /**
      * @var string
@@ -174,8 +154,6 @@ class Customer extends AbstractEntity
      * Customer constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {

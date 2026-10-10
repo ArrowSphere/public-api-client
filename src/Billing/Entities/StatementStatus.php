@@ -3,8 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Billing\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Billing\Enum\StatementStatusEnum;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class StatementStatus extends AbstractEntity
 {
@@ -13,14 +11,6 @@ class StatementStatus extends AbstractEntity
     public const COLUMN_VALIDATION_DATE = 'validationDate';
     public const COLUMN_REJECTION_DATE = 'rejectionDate';
     public const COLUMN_STATE = 'state';
-
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLUMN_CREATION_DATE => 'string|present|nullable',
-        self::COLUMN_SUBMISSION_DATE => 'string|present|nullable',
-        self::COLUMN_VALIDATION_DATE => 'string|present|nullable',
-        self::COLUMN_REJECTION_DATE => 'string|present|nullable',
-        self::COLUMN_STATE => 'string|required',
-    ];
 
     /**
      * @var string|null
@@ -51,17 +41,10 @@ class StatementStatus extends AbstractEntity
      * Status constructor.
      *
      * @param array $data
-     *
-     * @throws EntityValidationException
-     * @throws \ReflectionException
      */
     public function __construct(array $data)
     {
         parent::__construct($data);
-
-        if (self::$enableValidation && ! StatementStatusEnum::isValidValue($data[self::COLUMN_STATE])) {
-            throw new EntityValidationException('Billing Statement State: ' . $data[self::COLUMN_STATE] . ' not supported');
-        }
 
         $this->creationDate = $data[self::COLUMN_CREATION_DATE];
         $this->submissionDate = $data[self::COLUMN_SUBMISSION_DATE];

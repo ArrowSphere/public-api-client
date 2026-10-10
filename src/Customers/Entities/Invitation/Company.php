@@ -3,7 +3,6 @@
 namespace ArrowSphere\PublicApiClient\Customers\Entities\Invitation;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 /**
  * Class Company
@@ -12,10 +11,6 @@ class Company extends AbstractEntity
 {
     public const COLLUMN_REFERENCE = 'reference';
 
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLLUMN_REFERENCE => 'required',
-    ];
-
     /**
      * @var string
      */
@@ -23,8 +18,6 @@ class Company extends AbstractEntity
 
     /**
      * @param array $data
-     *
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {
