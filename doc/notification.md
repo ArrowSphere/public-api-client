@@ -29,15 +29,14 @@ You can get it through the main entry point `PublicApiClient` and its method `ge
 ```php
 <?php
 
-use ArrowSphere\PublicApiClient\Notification\SupportClient;
+use ArrowSphere\PublicApiClient\Notification\NotificationClient;
 
 const URL = 'https://your-url-to-arrowsphere.example.com';
-const ACCESS_TOKEN = 'your access token';
+const API_KEY = 'your API key in ArrowSphere';
 
-$client = (new SupportClient())
+$client = (new NotificationClient())
     ->setUrl(URL)
-    ->setAccessToken(ACCESS_TOKEN);
-
+    ->setApiKey(API_KEY);
 ```
 
 ## _Endpoints_
@@ -47,6 +46,22 @@ $client = (new SupportClient())
 The "getOneNotification" endpoint allows the user to get a specific notification.
 
 The `NotificationClient::getOneNotification()` method returns a `NotificationEntity`.
+
+### CreateNotification
+
+The "createNotification" endpoint creates a notification from the given payload.
+
+The `NotificationClient::createNotification()` method returns the created notification as an array.
+
+```php
+<?php
+
+$notification = $client->createNotification([
+    'userName' => 'bruce.wayne',
+    'subject'  => 'Order fulfilled - [XSP656567]',
+    'content'  => 'Your order has been fulfilled with success',
+]);
+```
 
 ### ListNotifications
 
@@ -93,6 +108,6 @@ The `NotificationClient::deleteAllNotifications()` method just returns a no cont
 
 The "countNotifications" endpoint is used to retrieve the total amount of notification a user has.
 
-The `NotificationClient::CountNotifications()` method returns a string with the total amount result.
+The `NotificationClient::countNotifications()` method returns a string with the total amount result.
 
 The only QueryParameters enabled for filter result is `hasBeenRead` (for count either read or unread notifications, by default if no query parameters is passed the unread's amount are displayed).

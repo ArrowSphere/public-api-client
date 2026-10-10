@@ -1,5 +1,9 @@
 # Catalog Add-on Client
 
+## Deprecated
+
+This client is deprecated, and the associated endpoints are deprecated. You should use the [offers](catalog-offer.md) instead (`OfferClient::postFind()` and `OfferClient::getOfferDetails()`).
+
 ## General information
 
 An add-on is an offer that cannot be purchased alone, it has to be attached to a compatible offer.

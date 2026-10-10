@@ -339,7 +339,7 @@ $payload =[
 ];
 $order = new CreateOrder($payload);
 $ref = $client->createOrder($order);
-echo  'order has been created successfully '. $ref
+echo 'order has been created successfully ' . $ref;
 ```
 
 #### Creating an order from a quote reference

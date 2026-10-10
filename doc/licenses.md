@@ -452,15 +452,28 @@ $client = (new LicensesClient())
     ->setUrl(URL)
     ->setApiKey(API_KEY);
 
-$predictions = $client->getPredictions('XSP1234');
+$predictions = $client->getPrediction('XSP1234');
 ```
 
-The `LicensesClient::getPredictions()` method returns a `Predictions` with Predictions values.
+The `LicensesClient::getPrediction()` method returns a `Predictions` with Predictions values.
 
 - `getCurrency()`: returns the currecny  of the license and predictions.
 - `getUpdatedAt()`: returns the last date the prediction machine learning script was launched .
 - `getLicenseReference()`: returns the license reference .
 - `getPredictionResponse()`: returns an array of predictionResponse with the date and value .
+
+### getCredentials endpoint
+
+The "getCredentials" endpoint returns the credentials of a license, for the vendors that provide some.
+
+The `LicensesClient::getCredentials()` method returns a `Credentials` entity, with the `getUsername()`, `getPasswordResetUrl()` and `getUrl()` getters.
+
+```php
+<?php
+
+$credentials = $client->getCredentials('XSP1234');
+echo $credentials->getUsername() . PHP_EOL;
+```
 
 ### getAwsPayerAccountList endpoint
 

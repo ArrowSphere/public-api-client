@@ -194,7 +194,7 @@ $contactId = 12345;
 
 $invitation = $client->createInvitation($contactId);
 
-echo "New invitation with keycode " . $invitation->getKeycode() . PHP_EOL;
+echo "New invitation with keycode " . $invitation->getCode() . PHP_EOL;
 
 ```
 
@@ -267,7 +267,98 @@ Example:
 
 ```php
 $reference = 'XSP12345';
-$program => 'MSCP';
+$program = 'MSCP';
         
 $client->cancelMigration($reference, $program);
+```
+### Get a customer
+
+You can get a single customer by calling the `getCustomer()` method with its reference. It returns a `Customer` entity.
+
+```php
+<?php
+
+$customer = $client->getCustomer('XSP12345');
+echo $customer->getCompanyName() . PHP_EOL;
+```
+
+### Update a customer
+
+You can update a customer by calling the `updateCustomer()` method with a `Customer` entity. The reference identifies the customer to update and is not sent in the payload, as well as the deletion date. The method returns the updated `Customer` entity.
+
+```php
+<?php
+
+use ArrowSphere\PublicApiClient\Customers\Entities\Customer;
+
+$customer = $client->getCustomer('XSP12345');
+$data = $customer->jsonSerialize();
+$data[Customer::COLUMN_COMPANY_NAME] = 'Wayne enterprises';
+
+$updatedCustomer = $client->updateCustomer(new Customer($data));
+```
+
+### List the customers page by page
+
+The `getCustomersPage()` method returns a `CustomersResponse` that holds the customers of the current page and the pagination information, when you need to control the pagination yourself.
+
+```php
+<?php
+
+$client->setPerPage(20);
+$client->setPage(2);
+
+$response = $client->getCustomersPage();
+foreach ($response->getCustomers() as $customer) {
+    echo $customer->getCompanyName() . PHP_EOL;
+}
+```
+
+### Get an invitation
+
+You can get an invitation by calling the `getInvitation()` method with its code. It returns an `Invitation` entity.
+
+```php
+<?php
+
+$invitation = $client->getInvitation('ABCD12345');
+echo $invitation->getContact()->getEmail() . PHP_EOL;
+```
+
+### GDAP relationships
+
+The `getGdapList()` method returns a `Generator` of the `Gdap` entities of a customer, going through all the pages. The `getGdap()` method returns a single relationship from its identifier.
+
+```php
+<?php
+
+foreach ($client->getGdapList('XSP12345') as $gdap) {
+    echo $gdap->getDisplayName() . ': ' . $gdap->getStatus() . PHP_EOL;
+}
+
+$gdap = $client->getGdap('XSP12345', '123');
+```
+
+### Reconciliation
+
+The `postReconciliation()` method starts the reconciliation of the customers of a program, and returns the raw response.
+
+```php
+<?php
+
+$client->postReconciliation('MSCP');
+```
+
+### Export the customers
+
+The `postExportCustomers()` method requests an export of the customers, described by an `ExportCustomersRequest`, and returns the raw response.
+
+### Microsoft agreement validation status
+
+The `getMicrosoftAgreementValidationStatus()` method returns `true` when the Microsoft customer agreement has been validated.
+
+```php
+<?php
+
+$isValidated = $client->getMicrosoftAgreementValidationStatus();
 ```

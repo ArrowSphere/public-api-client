@@ -50,6 +50,7 @@ echo "Hello " . $whoami->getCompanyName();
 
 - [Who Am I](doc/general-whoami.md)
 - [Check Domain](doc/general-checkDomain.md)
+- [Marketplace](doc/general-marketplace.md)
 
 ### Catalog clients
 
@@ -57,8 +58,14 @@ echo "Hello " . $whoami->getCompanyName();
 - [Program](doc/catalog-program.md)
 - [Service](doc/catalog-service.md) (deprecated in favor of [Family](doc/catalog-family.md))
 - [Offer](doc/catalog-offer.md)
-- [Add-on](doc/catalog-addon.md)
+- [Add-on](doc/catalog-addon.md) (deprecated in favor of [Offer](doc/catalog-offer.md))
 - [Family](doc/catalog-family.md)
+
+### Billing clients
+
+- [Statements](doc/billing-statements.md)
+- [Preferences](doc/billing-preferences.md)
+- [ERP exports](doc/erp-exports.md)
 
 ### Customers clients
 
@@ -93,9 +100,21 @@ echo "Hello " . $whoami->getCompanyName();
 
 - [Support](doc/support.md)
 
+### Monitoring clients
+
+- [Monitoring](doc/monitoring.md)
+
+### Orders clients
+
+- [Orders](doc/orders.md)
+
 ### Partners clients
 
-- [Partners](doc/partners.md)
+- [Partners](doc/partners.md) (deprecated in favor of [Organization Unit](doc/organization-unit.md) and [Contacts](doc/contacts.md))
+
+### Quotes clients
+
+- [Quotes](doc/quotes.md)
 
 ### Organization Unit clients
 
@@ -104,4 +123,8 @@ echo "Hello " . $whoami->getCompanyName();
 ### Contacts clients
 
 - [Contacts](doc/contacts.md)
+
+### Subscription clients
+
+- [Subscription](doc/subscription.md)
 

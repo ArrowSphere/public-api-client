@@ -27,14 +27,14 @@ You can get it through the main entry point `PublicApiClient` and its method `ge
 ```php
 <?php
 
-use ArrowSphere\PublicApiClient\subscription\SubscriptionClient;
+use ArrowSphere\PublicApiClient\Subscription\SubscriptionClient;
 
-const URL = 'https://your-url-to-arrowsphere.example.com
+const URL = 'https://your-url-to-arrowsphere.example.com';
+const API_KEY = 'your API key in ArrowSphere';
 
 $client = (new SubscriptionClient())
     ->setUrl(URL)
     ->setApiKey(API_KEY);
-
 
 $client->validateSubscription('XSPS12345');
 ```

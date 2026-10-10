@@ -25,7 +25,7 @@ make coverage
 
 ### Static analysis and code style
 
-PHPStan and php-cs-fixer run via Docker (requires Docker daemon).
+PHPStan and php-cs-fixer are dev dependencies, run from `vendor/bin` by the Makefile (run `composer install` first).
 
 ```bash
 # Run all static checks (phpstan + cs-fixer dry-run)
@@ -37,7 +37,7 @@ make static-codestyle-check
 # Code style: apply fixes
 make static-codestyle-fix
 
-# PHPStan only (max level, paths: src/)
+# PHPStan only (level 9, paths: src/)
 make static-phpstan
 
 # Regenerate baselines after intentional suppressions
@@ -121,14 +121,14 @@ public function doSomething(string $bar): string
 **Legacy** (`src/AbstractEntity.php`):
 - Constructor receives `array $data`.
 - Field name constants: `COLUMN_FOO = 'foo'` on the entity class.
-- Getters read from `$this->data[static::COLUMN_FOO]`.
+- The constructor copies the data into private properties, which the getters return.
 - Validation via `illuminate/validation` is **disabled by default** (`$enableValidation =
   false`); it is enabled only in tests via `setUp()`.
 
 **Newer** (`src/Entities/AbstractEntity.php`):
-- PHP 8 `#[Property]` attribute on constructor parameters.
+- PHP 8 `#[Property]` attribute on typed properties.
 - Reflection-based auto-hydration from the input array.
-- Getters read from typed properties.
+- Getters are either explicit methods or provided by `__call()` (`getFoo()` / `setFoo()`).
 - ALWAYS USE NEWER STYLE FOR NEW ENTITIES; legacy style is only for existing entities that haven't been migrated yet.
 
 ### Exceptions
