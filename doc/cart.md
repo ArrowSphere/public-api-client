@@ -53,12 +53,11 @@ You can get it through the main entry point `PublicApiClient` and its method `ge
 use ArrowSphere\PublicApiClient\Cart\CartClient;
 
 const URL = 'https://your-url-to-arrowsphere.example.com';
-const ACCESS_TOKEN = 'your access token';
+const API_KEY = 'your API key in ArrowSphere';
 
 $client = (new CartClient())
     ->setUrl(URL)
-    ->setIdToken(ACCESS_TOKEN);
-
+    ->setApiKey(API_KEY);
 ```
 
 ## _Endpoints_
@@ -70,6 +69,18 @@ The "addCartItem" endpoint has been designed specifically to create and add an i
 The [PostData](#PostData) is supposed to contain offerName, priceBandArrowsphereSku and quantity at least (additionalData is an optional field)
 
 The `CartClient::addCartItem()` method returns a `CartEntity`.
+
+### ChangeCustomer
+
+The "ChangeCustomer" endpoint assigns the user cart to another end customer, identified by its reference.
+
+The `CartClient::changeCustomer()` method returns the updated cart as an array.
+
+```php
+<?php
+
+$cart = $client->changeCustomer('XSP12345');
+```
 
 ### PatchUpdateOneCartItem
 

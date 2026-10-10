@@ -25,18 +25,23 @@ You can get it through the main entry point `PublicApiClient` and its method `ge
 <?php
 
 use ArrowSphere\PublicApiClient\Monitoring\MonitoringClient;
+use ArrowSphere\PublicApiClient\Monitoring\Request\Report;
 
-const URL = 'https://your-url-to-arrowsphere.example.com
+const URL = 'https://your-url-to-arrowsphere.example.com';
+const API_KEY = 'your API key in ArrowSphere';
 
 $client = (new MonitoringClient())
     ->setUrl(URL)
     ->setApiKey(API_KEY);
 
-
-$report = $client->createReport([new Report([ 
-    'body' => ["blockedURL"=> 'xxx'],
-    'type' => "csp-violation",
-    'url' => "xxx/home",
-    'userAgent' => "chrome"
-])]);
+$client->sendReport([
+    new Report([
+        'body'      => ['blockedURL' => 'xxx'],
+        'type'      => 'csp-violation',
+        'url'       => 'xxx/home',
+        'userAgent' => 'chrome',
+    ]),
+]);
 ```
+
+The `MonitoringClient::sendReport()` method sends the given reports in a single request and returns `true`.

@@ -146,7 +146,7 @@ Example:
 $parameters = [
     ErpExportsClient::EXPORT_TYPE_REFERENCE => 'DJ284LDZ-standard',
     ErpExportsClient::EXPORT_OUTPUT_FORMAT => [
-        ErpExportsClient::EXPORT_OUTPUT_FORMAT_DATE => 'DD-MM-YYYfefdY',
+        ErpExportsClient::EXPORT_OUTPUT_FORMAT_DATE => 'DD-MM-YYYY',
         ErpExportsClient::EXPORT_OUTPUT_FORMAT_FILE => 'csv',
     ],
     ErpExportsClient::EXPORT_FILTERS => [
@@ -187,4 +187,20 @@ $parameters = [
 
 $exportReference = $client->createErpExportsAsync($parameters);
 echo "export reference: {$exportReference}";
+```
+
+### Export billing erp lines synchronously
+
+The `createErpExportSync()` method takes the same parameters as `createErpExportsAsync()`, but returns the exported lines directly. It goes through all the pages and returns a `Generator` that yields each line as an array indexed by the column names.
+
+```php
+<?php
+
+$lines = $client->createErpExportSync([
+    ErpExportsClient::EXPORT_TYPE_REFERENCE => 'DJ284LDZ-standard',
+]);
+
+foreach ($lines as $line) {
+    echo implode(';', $line) . PHP_EOL;
+}
 ```

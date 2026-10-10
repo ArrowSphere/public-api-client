@@ -115,15 +115,14 @@ You can get it through the main entry point `PublicApiClient` and its method `ge
 ```php
 <?php
 
-use ArrowSphere\PublicApiClient\Notification\SupportClient;
+use ArrowSphere\PublicApiClient\Support\SupportClient;
 
 const URL = 'https://your-url-to-arrowsphere.example.com';
-const API_KEY = 'your API Key for autenticate';
+const API_KEY = 'your API key in ArrowSphere';
 
 $client = (new SupportClient())
     ->setUrl(URL)
     ->setApiKey(API_KEY);
-
 ```
 
 
@@ -194,6 +193,16 @@ The `SupportClient::getAttachment()` method just returns the new added attachmen
 The "listComments" endpoint is used to retrieve all comments a user has posted to the support center.
 
 The `SupportClient::listComments()` method returns an array of `CommentEntity`.
+
+### listAllComments
+
+The `SupportClient::listAllComments()` method calls the "listComments" endpoint as many times as needed to go through all the pages, and returns all the comments of the issue as a single array.
+
+```php
+<?php
+
+$comments = $client->listAllComments(1234);
+```
 
 ### addComment
 
