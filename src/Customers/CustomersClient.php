@@ -11,6 +11,7 @@ use ArrowSphere\PublicApiClient\Customers\Entities\ProvisionResponse;
 use ArrowSphere\PublicApiClient\Customers\Request\ExportCustomersRequest;
 use ArrowSphere\PublicApiClient\Customers\Request\MigrationRequest;
 use ArrowSphere\PublicApiClient\Customers\Request\ProvisionRequest;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
@@ -208,6 +209,7 @@ class CustomersClient extends AbstractClient
      *
      * @return Invitation
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
@@ -229,6 +231,7 @@ class CustomersClient extends AbstractClient
      *
      * @return Invitation
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
@@ -276,6 +279,7 @@ class CustomersClient extends AbstractClient
      *
      * @return Gdap
      *
+     * @throws EntitiesException
      * @throws PublicApiClientException
      * @throws GuzzleException
      */
@@ -312,6 +316,7 @@ class CustomersClient extends AbstractClient
      *
      * @return Generator<Gdap>
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
      * @throws NotFoundException
      * @throws PublicApiClientException

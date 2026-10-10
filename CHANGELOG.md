@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Migrated the `Whoami`, `Contact`, `Gdap` and `Invitation` (with its `Company` and `Contact` sub-entities) entities to the attribute-based entity system, without changing their methods nor their serialization
+- Fixed `Whoami::getAddressLine1()`, `Whoami::getAddressLine2()` and `Invitation\Contact::getUsername()`, which threw a `TypeError` when the API returned a null value: they now return a nullable type
 - Migrated the `Program`, `Family`, `PriceBand` and `FilterFindResult` catalog entities to the attribute-based entity system, without changing their getters nor their serialization
 - Fixed `Program::getLogo()` and `FilterFindResult::getName()`, which threw a `TypeError` when the API returned a null value
 - Added a `serializeNull` option to the `Property` attribute of the attribute-based entities, to serialize a field even when it is null instead of omitting it

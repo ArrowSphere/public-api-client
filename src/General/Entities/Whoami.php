@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\General\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class Whoami
@@ -42,133 +42,101 @@ class Whoami extends AbstractEntity
 
     public const COLUMN_INTERNAL_REFERENCE = 'internalReference';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_COMPANY_NAME       => 'required',
-        self::COLUMN_ADDRESS_LINE_1     => 'present',
-        self::COLUMN_ADDRESS_LINE_2     => 'present',
-        self::COLUMN_ZIP                => 'present',
-        self::COLUMN_CITY               => 'present',
-        self::COLUMN_COUNTRY_CODE       => 'required',
-        self::COLUMN_STATE              => 'present',
-        self::COLUMN_RECEPTION_PHONE    => 'present',
-        self::COLUMN_WEBSITE_URL        => 'present',
-        self::COLUMN_EMAIL_CONTACT      => 'present',
-        self::COLUMN_HEADCOUNT          => 'present',
-        self::COLUMN_TAX_NUMBER         => 'present',
-        self::COLUMN_REFERENCE          => 'present',
-        self::COLUMN_REF                => 'present',
-        self::COLUMN_BILLING_ID         => 'present',
-        self::COLUMN_INTERNAL_REFERENCE => 'present',
-    ];
-
     /**
      * @var string
      */
-    private $companyName;
-
-    /**
-     * @var string
-     */
-    private $addressLine1;
-
-    /**
-     * @var string
-     */
-    private $addressLine2;
-
-    /**
-     * @var string
-     */
-    private $zip;
-
-    /**
-     * @var string
-     */
-    private $city;
-
-    /**
-     * @var string
-     */
-    private $countryCode;
-
-    /**
-     * @var string
-     */
-    private $state;
-
-    /**
-     * @var string
-     */
-    private $receptionPhone;
-
-    /**
-     * @var string
-     */
-    private $websiteUrl;
-
-    /**
-     * @var string
-     */
-    private $emailContact;
+    #[Property(name: self::COLUMN_COMPANY_NAME, required: true)]
+    protected string $companyName;
 
     /**
      * @var string|null
      */
-    private $headcount;
+    #[Property(name: self::COLUMN_ADDRESS_LINE_1, serializeNull: true)]
+    protected ?string $addressLine1 = null;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_ADDRESS_LINE_2, serializeNull: true)]
+    protected ?string $addressLine2 = null;
 
     /**
      * @var string
      */
-    private $taxNumber;
+    #[Property(name: self::COLUMN_ZIP, required: true)]
+    protected string $zip;
 
     /**
      * @var string
      */
-    private $reference;
+    #[Property(name: self::COLUMN_CITY, required: true)]
+    protected string $city;
 
     /**
      * @var string
      */
-    private $ref;
+    #[Property(name: self::COLUMN_COUNTRY_CODE, required: true)]
+    protected string $countryCode;
 
     /**
      * @var string
      */
-    private $billingId;
+    #[Property(name: self::COLUMN_STATE, required: true)]
+    protected string $state;
 
     /**
      * @var string
      */
-    private $internalReference;
+    #[Property(name: self::COLUMN_RECEPTION_PHONE, required: true)]
+    protected string $receptionPhone;
 
     /**
-     * Whoami constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
+     * @var string
      */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
+    #[Property(name: self::COLUMN_WEBSITE_URL, required: true)]
+    protected string $websiteUrl;
 
-        $this->companyName = $data[self::COLUMN_COMPANY_NAME];
-        $this->addressLine1 = $data[self::COLUMN_ADDRESS_LINE_1];
-        $this->addressLine2 = $data[self::COLUMN_ADDRESS_LINE_2];
-        $this->zip = $data[self::COLUMN_ZIP];
-        $this->city = $data[self::COLUMN_CITY];
-        $this->countryCode = $data[self::COLUMN_COUNTRY_CODE];
-        $this->state = $data[self::COLUMN_STATE];
-        $this->receptionPhone = $data[self::COLUMN_RECEPTION_PHONE];
-        $this->websiteUrl = $data[self::COLUMN_WEBSITE_URL];
-        $this->emailContact = $data[self::COLUMN_EMAIL_CONTACT];
-        $this->headcount = $data[self::COLUMN_HEADCOUNT];
-        $this->taxNumber = $data[self::COLUMN_TAX_NUMBER];
-        $this->reference = $data[self::COLUMN_REFERENCE];
-        $this->ref = $data[self::COLUMN_REF];
-        $this->billingId = $data[self::COLUMN_BILLING_ID];
-        $this->internalReference = $data[self::COLUMN_INTERNAL_REFERENCE];
-    }
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_EMAIL_CONTACT, required: true)]
+    protected string $emailContact;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_HEADCOUNT, serializeNull: true)]
+    protected ?string $headcount = null;
+
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_TAX_NUMBER, required: true)]
+    protected string $taxNumber;
+
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_REFERENCE, required: true)]
+    protected string $reference;
+
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_REF, required: true)]
+    protected string $ref;
+
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_BILLING_ID, required: true)]
+    protected string $billingId;
+
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_INTERNAL_REFERENCE, required: true)]
+    protected string $internalReference;
 
     /**
      * @return string
@@ -179,17 +147,17 @@ class Whoami extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAddressLine1(): string
+    public function getAddressLine1(): ?string
     {
         return $this->addressLine1;
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAddressLine2(): string
+    public function getAddressLine2(): ?string
     {
         return $this->addressLine2;
     }
@@ -296,27 +264,5 @@ class Whoami extends AbstractEntity
     public function getInternalReference(): string
     {
         return $this->internalReference;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_COMPANY_NAME       => $this->getCompanyName(),
-            self::COLUMN_ADDRESS_LINE_1     => $this->getAddressLine1(),
-            self::COLUMN_ADDRESS_LINE_2     => $this->getAddressLine2(),
-            self::COLUMN_ZIP                => $this->getZip(),
-            self::COLUMN_CITY               => $this->getCity(),
-            self::COLUMN_COUNTRY_CODE       => $this->getCountryCode(),
-            self::COLUMN_STATE              => $this->getState(),
-            self::COLUMN_RECEPTION_PHONE    => $this->getReceptionPhone(),
-            self::COLUMN_WEBSITE_URL        => $this->getWebsiteUrl(),
-            self::COLUMN_EMAIL_CONTACT      => $this->getEmailContact(),
-            self::COLUMN_HEADCOUNT          => $this->getHeadcount(),
-            self::COLUMN_TAX_NUMBER         => $this->getTaxNumber(),
-            self::COLUMN_REFERENCE          => $this->getReference(),
-            self::COLUMN_REF                => $this->getRef(),
-            self::COLUMN_BILLING_ID         => $this->getBillingId(),
-            self::COLUMN_INTERNAL_REFERENCE => $this->getInternalReference(),
-        ];
     }
 }

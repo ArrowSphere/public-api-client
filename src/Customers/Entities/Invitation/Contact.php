@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Customers\Entities\Invitation;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class Contact
@@ -19,38 +19,35 @@ class Contact extends AbstractEntity
     public const COLUMN_LAST_NAME = 'lastName';
 
     /**
-     * @var string
+     * @var string|null
      */
-    private $username;
+    #[Property(name: self::COLUMN_USERNAME, serializeNull: true)]
+    protected ?string $username = null;
 
     /**
      * @var string
      */
-    private $email;
+    #[Property(name: self::COLUMN_EMAIL, required: true)]
+    protected string $email;
 
     /**
      * @var string
      */
-    private $firstName;
+    #[Property(name: self::COLUMN_FIRST_NAME, required: true)]
+    protected string $firstName;
 
     /**
      * @var string
      */
-    private $lastName;
+    #[Property(name: self::COLUMN_LAST_NAME, required: true)]
+    protected string $lastName;
 
     /**
-     * @param array $data
-     *
-     * @throws EntityValidationException
+     * @return string|null
      */
-    public function __construct(array $data)
+    public function getUsername(): ?string
     {
-        parent::__construct($data);
-
-        $this->username = $data[self::COLUMN_USERNAME];
-        $this->email = $data[self::COLUMN_EMAIL];
-        $this->firstName = $data[self::COLUMN_FIRST_NAME];
-        $this->lastName = $data[self::COLUMN_LAST_NAME];
+        return $this->username;
     }
 
     /**
@@ -63,14 +60,6 @@ class Contact extends AbstractEntity
         $this->username = $username;
 
         return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getUsername(): string
-    {
-        return $this->username;
     }
 
     /**
@@ -131,18 +120,5 @@ class Contact extends AbstractEntity
         $this->lastName = $lastName;
 
         return $this;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_USERNAME => $this->username,
-            self::COLUMN_EMAIL => $this->email,
-            self::COLUMN_FIRST_NAME => $this->firstName,
-            self::COLUMN_LAST_NAME => $this->lastName,
-        ];
     }
 }

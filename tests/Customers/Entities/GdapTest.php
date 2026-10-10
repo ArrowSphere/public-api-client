@@ -79,6 +79,26 @@ class GdapTest extends AbstractEntityTest
 }
 JSON
             ],
+            'missing fields' => [
+                'fields' => [
+                    'id' => '123',
+                ],
+                'expected' => <<<JSON
+{
+    "id": "123",
+    "displayName": "",
+    "status": "",
+    "startDate": "",
+    "endDate": "",
+    "duration": "",
+    "durationInDays": "",
+    "autoExtend": "",
+    "approvalLink": "",
+    "privileges": [],
+    "securityGroups": []
+}
+JSON
+            ],
         ];
     }
 }
