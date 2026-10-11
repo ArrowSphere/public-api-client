@@ -2,11 +2,11 @@
 
 namespace ArrowSphere\PublicApiClient\Entities\Exception;
 
-use Exception;
+use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 
 /**
  * Class EntitiesException
  */
-class EntitiesException extends Exception
+class EntitiesException extends PublicApiClientException
 {
 }

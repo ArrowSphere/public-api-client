@@ -139,6 +139,7 @@ public function doSomething(string $bar): string
 - `PublicApiClientException` — base; thrown on HTTP 4xx/5xx or JSON decode failure.
 - `NotFoundException` — thrown specifically on HTTP 404.
 - `EntityValidationException` — thrown when legacy entity validation fails.
+- `EntitiesException` — thrown when an attribute-based entity cannot be built (missing required field, invalid value); extends `PublicApiClientException`.
 
 ---
 

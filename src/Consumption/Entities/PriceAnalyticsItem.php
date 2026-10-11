@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Consumption\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class PriceAnalyticsItem extends AbstractEntity
 {
@@ -13,61 +13,35 @@ class PriceAnalyticsItem extends AbstractEntity
     public const COLUMN_ENDCUSTOMERPRICE = 'endCustomerBuyPrice';
     public const COLUMN_LISTPRICE = 'listBuyPrice';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_RESELLERPRICE    => 'numeric|required',
-        self::COLUMN_ARROWPRICE       => 'numeric',
-        self::COLUMN_ENDCUSTOMERPRICE => 'numeric|nullable',
-        self::COLUMN_LISTPRICE        => 'numeric|required',
-        self::COLUMN_CURRENCY         => 'string|required',
-    ];
-
     /**
      * @var float
      */
-    private $resellerBuyPrice;
+    #[Property(name: self::COLUMN_RESELLERPRICE, type: 'float', required: true)]
+    protected float $resellerBuyPrice;
 
     /**
      * @var float|null
      */
-    private $arrowBuyPrice;
+    #[Property(name: self::COLUMN_ARROWPRICE, type: 'float', serializeNull: true)]
+    protected ?float $arrowBuyPrice = null;
 
     /**
      * @var float
      */
-    private $listBuyPrice;
+    #[Property(name: self::COLUMN_LISTPRICE, type: 'float', required: true)]
+    protected float $listBuyPrice;
 
     /**
-     * @var float
+     * @var float|null
      */
-    private $endCustomerBuyPrice;
+    #[Property(name: self::COLUMN_ENDCUSTOMERPRICE, type: 'float', serializeNull: true)]
+    protected ?float $endCustomerBuyPrice = null;
 
     /**
      * @var string
      */
-    private $currency;
-
-    /**
-     * PriceAnalyticsItem constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->resellerBuyPrice = $data[self::COLUMN_RESELLERPRICE];
-        $this->listBuyPrice = $data[self::COLUMN_LISTPRICE];
-        $this->currency = $data[self::COLUMN_CURRENCY];
-
-        if (isset($data[self::COLUMN_ARROWPRICE])) {
-            $this->arrowBuyPrice = $data[self::COLUMN_ARROWPRICE];
-        }
-        if (isset($data[self::COLUMN_ENDCUSTOMERPRICE])) {
-            $this->endCustomerBuyPrice = $data[self::COLUMN_ENDCUSTOMERPRICE];
-        }
-    }
+    #[Property(name: self::COLUMN_CURRENCY, required: true)]
+    protected string $currency;
 
     /**
      * @return string
@@ -120,19 +94,5 @@ class PriceAnalyticsItem extends AbstractEntity
         $this->endCustomerBuyPrice += $item->getEndCustomerBuyPrice() ?? 0;
 
         $this->currency = $item->getCurrency();
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_RESELLERPRICE    => $this->getResellerBuyPrice(),
-            self::COLUMN_ARROWPRICE       => $this->getArrowBuyPrice(),
-            self::COLUMN_LISTPRICE        => $this->getListBuyPrice(),
-            self::COLUMN_ENDCUSTOMERPRICE => $this->getEndCustomerBuyPrice(),
-            self::COLUMN_CURRENCY         => $this->getCurrency()
-        ];
     }
 }
