@@ -2,9 +2,9 @@
 
 namespace ArrowSphere\PublicApiClient\Customers\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
 use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\Property;
 use ArrowSphere\PublicApiClient\Partners\Entities\OrganizationUnit;
 
 /**
@@ -52,124 +52,125 @@ class Customer extends AbstractEntity
 
     public const COLUMN_ORGANIZATION_UNIT = 'OrganizationUnit';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_ADDRESS_LINE_1     => 'required',
-        self::COLUMN_ADDRESS_LINE_2     => 'present',
-        self::COLUMN_BILLING_ID         => 'present',
-        self::COLUMN_CITY               => 'required',
-        self::COLUMN_COMPANY_NAME       => 'required',
-        self::COLUMN_CONTACT            => 'required|array',
-        self::COLUMN_COUNTRY_CODE       => 'required',
-        self::COLUMN_DETAILS            => 'present|array',
-        self::COLUMN_EMAIL_CONTACT      => 'present',
-        self::COLUMN_HEADCOUNT          => 'present',
-        self::COLUMN_INTERNAL_REFERENCE => 'present',
-        self::COLUMN_RECEPTION_PHONE    => 'present',
-        self::COLUMN_REF                => 'present',
-        self::COLUMN_STATE              => 'present',
-        self::COLUMN_TAX_NUMBER         => 'present',
-        self::COLUMN_ZIP                => 'present',
-    ];
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_ADDRESS_LINE_1)]
+    protected string $addressLine1 = '';
 
     /**
      * @var string
      */
-    private $addressLine1;
+    #[Property(name: self::COLUMN_ADDRESS_LINE_2)]
+    protected string $addressLine2 = '';
 
     /**
      * @var string
      */
-    private $addressLine2;
+    #[Property(name: self::COLUMN_BILLING_ID)]
+    protected string $billingId = '';
 
     /**
      * @var string
      */
-    private $billingId;
+    #[Property(name: self::COLUMN_CITY, required: true)]
+    protected string $city;
 
     /**
      * @var string
      */
-    private $city;
-
-    /**
-     * @var string
-     */
-    private $companyName;
+    #[Property(name: self::COLUMN_COMPANY_NAME, required: true)]
+    protected string $companyName;
 
     /**
      * @var Contact
      */
-    private $contact;
+    #[Property(name: self::COLUMN_CONTACT, type: Contact::class, required: true)]
+    protected Contact $contact;
 
     /**
      * @var string
      */
-    private $countryCode;
+    #[Property(name: self::COLUMN_COUNTRY_CODE, required: true)]
+    protected string $countryCode;
 
     /**
      * @var CompanyDetails
      */
-    private $details;
+    #[Property(name: self::COLUMN_DETAILS, type: CompanyDetails::class, required: true)]
+    protected CompanyDetails $details;
 
     /**
      * @var string|null
      */
-    private $deletedAt;
+    #[Property(name: self::COLUMN_DELETED_AT, serializeNull: true)]
+    protected ?string $deletedAt = null;
 
     /**
      * @var string
      */
-    private $emailContact;
+    #[Property(name: self::COLUMN_EMAIL_CONTACT, required: true)]
+    protected string $emailContact;
 
     /**
      * @var int|null
      */
-    private $headcount;
+    #[Property(name: self::COLUMN_HEADCOUNT, type: 'int', serializeNull: true)]
+    protected ?int $headcount = null;
 
     /**
      * @var string
      */
-    private $internalReference;
+    #[Property(name: self::COLUMN_INTERNAL_REFERENCE, required: true)]
+    protected string $internalReference;
 
     /**
      * @var string
      */
-    private $receptionPhone;
+    #[Property(name: self::COLUMN_RECEPTION_PHONE, required: true)]
+    protected string $receptionPhone;
 
     /**
      * @var string
      */
-    private $ref;
-
-    /**
-     * @var string
-     */
-    private $reference;
-
-    /**
-     * @var string
-     */
-    private $state;
-
-    /**
-     * @var string
-     */
-    private $taxNumber;
+    #[Property(name: self::COLUMN_REF, required: true)]
+    protected string $ref;
 
     /**
      * @var string|null
      */
-    private $websiteUrl;
+    #[Property(name: self::COLUMN_REFERENCE, serializeNull: true)]
+    protected ?string $reference = null;
 
     /**
      * @var string
      */
-    private $zip;
+    #[Property(name: self::COLUMN_STATE, required: true)]
+    protected string $state;
+
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_TAX_NUMBER, required: true)]
+    protected string $taxNumber;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_WEBSITE_URL, serializeNull: true)]
+    protected ?string $websiteUrl = null;
+
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_ZIP, required: true)]
+    protected string $zip;
 
     /**
      * @var OrganizationUnit|null
      */
-    private $organizationUnit;
+    #[Property(name: self::COLUMN_ORGANIZATION_UNIT, type: OrganizationUnit::class, serializeNull: true)]
+    protected ?OrganizationUnit $organizationUnit = null;
 
     /**
      * Customer constructor.
@@ -177,61 +178,15 @@ class Customer extends AbstractEntity
      * @param array $data
      *
      * @throws EntitiesException
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {
+        // A customer without details gets an empty object from the API, which would be considered as missing
+        if (empty($data[self::COLUMN_DETAILS])) {
+            $data[self::COLUMN_DETAILS] = new CompanyDetails([]);
+        }
+
         parent::__construct($data);
-
-        $this->addressLine1 = $data[self::COLUMN_ADDRESS_LINE_1] ?? '';
-        $this->addressLine2 = $data[self::COLUMN_ADDRESS_LINE_2] ?? '';
-        $this->billingId = $data[self::COLUMN_BILLING_ID] ?? 0;
-        $this->city = $data[self::COLUMN_CITY];
-        $this->companyName = $data[self::COLUMN_COMPANY_NAME];
-        $this->contact = new Contact($data[self::COLUMN_CONTACT]);
-        $this->countryCode = $data[self::COLUMN_COUNTRY_CODE];
-        $this->details = new CompanyDetails($data[self::COLUMN_DETAILS]);
-        $this->deletedAt = $data[self::COLUMN_DELETED_AT] ?? null;
-        $this->emailContact = $data[self::COLUMN_EMAIL_CONTACT];
-        $this->headcount = $data[self::COLUMN_HEADCOUNT];
-        $this->internalReference = $data[self::COLUMN_INTERNAL_REFERENCE];
-        $this->receptionPhone = $data[self::COLUMN_RECEPTION_PHONE];
-        $this->ref = $data[self::COLUMN_REF];
-        $this->reference = $data[self::COLUMN_REFERENCE] ?? null;
-        $this->state = $data[self::COLUMN_STATE];
-        $this->taxNumber = $data[self::COLUMN_TAX_NUMBER];
-        $this->websiteUrl = $data[self::COLUMN_WEBSITE_URL] ?? null;
-        $this->zip = $data[self::COLUMN_ZIP];
-        $this->organizationUnit = isset($data[self::COLUMN_ORGANIZATION_UNIT]) ? new OrganizationUnit($data[self::COLUMN_ORGANIZATION_UNIT]) : null;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_ADDRESS_LINE_1     => $this->addressLine1,
-            self::COLUMN_ADDRESS_LINE_2     => $this->addressLine2,
-            self::COLUMN_BILLING_ID         => $this->billingId,
-            self::COLUMN_CITY               => $this->city,
-            self::COLUMN_COMPANY_NAME       => $this->companyName,
-            self::COLUMN_CONTACT            => $this->contact->jsonSerialize(),
-            self::COLUMN_COUNTRY_CODE       => $this->countryCode,
-            self::COLUMN_DETAILS            => $this->details->jsonSerialize(),
-            self::COLUMN_DELETED_AT         => $this->deletedAt,
-            self::COLUMN_EMAIL_CONTACT      => $this->emailContact,
-            self::COLUMN_HEADCOUNT          => $this->headcount,
-            self::COLUMN_INTERNAL_REFERENCE => $this->internalReference,
-            self::COLUMN_RECEPTION_PHONE    => $this->receptionPhone,
-            self::COLUMN_REF                => $this->ref,
-            self::COLUMN_REFERENCE          => $this->reference,
-            self::COLUMN_STATE              => $this->state,
-            self::COLUMN_TAX_NUMBER         => $this->taxNumber,
-            self::COLUMN_WEBSITE_URL        => $this->websiteUrl,
-            self::COLUMN_ZIP                => $this->zip,
-            self::COLUMN_ORGANIZATION_UNIT  => isset($this->organizationUnit) ? $this->organizationUnit->jsonSerialize() : null,
-        ];
     }
 
     /**
@@ -347,9 +302,9 @@ class Customer extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getReference(): string
+    public function getReference(): ?string
     {
         return $this->reference;
     }

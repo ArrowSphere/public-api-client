@@ -38,4 +38,10 @@ JSON;
 
         self::assertSame($expected, json_encode($companyDetails, JSON_PRETTY_PRINT));
     }
+
+    public function testSerializationOmitsMissingDetails(): void
+    {
+        self::assertSame('[]', json_encode(new CompanyDetails([])));
+        self::assertSame('{"Migration":false}', json_encode(new CompanyDetails(['Migration' => false, 'TenantId' => null])));
+    }
 }
