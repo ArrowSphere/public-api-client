@@ -2,7 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Orders\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class Identifiers extends AbstractEntity
 {
@@ -11,22 +12,12 @@ class Identifiers extends AbstractEntity
     /**
      * @var Vendor
      */
-    private Vendor $vendor;
+    #[Property(name: self::COLUMN_VENDOR, type: Vendor::class, required: true)]
+    protected Vendor $vendor;
 
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->vendor = new Vendor($data[self::COLUMN_VENDOR]);
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_VENDOR => $this->vendor,
-        ];
-    }
-
+    /**
+     * @return Vendor
+     */
     public function getVendor(): Vendor
     {
         return $this->vendor;

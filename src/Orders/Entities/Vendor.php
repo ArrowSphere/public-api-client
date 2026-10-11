@@ -2,29 +2,22 @@
 
 namespace ArrowSphere\PublicApiClient\Orders\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class Vendor extends AbstractEntity
 {
     public const COLUMN_SKU = 'sku';
 
     /**
-     * @var string Vendor SKU
+     * @var string
      */
-    private string $sku;
+    #[Property(name: self::COLUMN_SKU, required: true)]
+    protected string $sku;
 
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->sku = $data[self::COLUMN_SKU];
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [self::COLUMN_SKU => $this->sku];
-    }
-
+    /**
+     * @return string
+     */
     public function getSku(): string
     {
         return $this->sku;

@@ -3,6 +3,7 @@
 namespace ArrowSphere\PublicApiClient\Orders\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 
 class OrdersProduct extends AbstractEntity
 {
@@ -125,6 +126,13 @@ class OrdersProduct extends AbstractEntity
      */
     private ?Reference $license;
 
+    /**
+     * OrdersProduct constructor.
+     *
+     * @param array $data
+     *
+     * @throws EntitiesException
+     */
     public function __construct(array $data)
     {
         parent::__construct($data);

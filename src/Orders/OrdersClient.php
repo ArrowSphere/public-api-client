@@ -3,6 +3,7 @@
 namespace ArrowSphere\PublicApiClient\Orders;
 
 use ArrowSphere\PublicApiClient\AbstractClient;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Orders\Entities\GetOrdersResponse;
 use ArrowSphere\PublicApiClient\Orders\Entities\Order;
 use ArrowSphere\PublicApiClient\Orders\Entities\OrderHistory;
@@ -148,6 +149,7 @@ class OrdersClient extends AbstractClient
     /**
      * @return OrderHistory[]
      *
+     * @throws EntitiesException
      * @throws \ArrowSphere\PublicApiClient\Exception\EntityValidationException
      * @throws \ArrowSphere\PublicApiClient\Exception\NotFoundException
      * @throws \ArrowSphere\PublicApiClient\Exception\PublicApiClientException|\GuzzleHttp\Exception\GuzzleException
