@@ -2,7 +2,9 @@
 
 namespace ArrowSphere\PublicApiClient\Tests\Consumption;
 
+use ArrowSphere\PublicApiClient\Consumption\Entities\HealthCheckItem;
 use ArrowSphere\PublicApiClient\Consumption\HealthCheckClient;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
@@ -124,8 +126,8 @@ JSON;
      */
     public function testGetItemWithBadAttribute(): void
     {
-        $this->expectException(EntityValidationException::class);
-        $this->expectExceptionMessage('classification is required');
+        $this->expectException(EntitiesException::class);
+        $this->expectExceptionMessage(HealthCheckItem::class . ': Missing field: classification');
         $response = <<<JSON
 {
     "status": 200,

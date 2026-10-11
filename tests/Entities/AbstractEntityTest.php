@@ -3,6 +3,7 @@
 namespace ArrowSphere\PublicApiClient\Tests\Entities;
 
 use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
+use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Tests\Entities\Fixtures\SampleChild;
 use ArrowSphere\PublicApiClient\Tests\Entities\Fixtures\SampleEntity;
 use ArrowSphere\PublicApiClient\Tests\Entities\Fixtures\SerializeNullEntity;
@@ -80,6 +81,13 @@ class AbstractEntityTest extends TestCase
     {
         $this->expectException(EntitiesException::class);
         $this->expectExceptionMessage(TwoRequiredFieldsEntity::class . ': Missing field: first, Missing field: second');
+
+        new TwoRequiredFieldsEntity([]);
+    }
+
+    public function testMissingFieldIsAPublicApiClientException(): void
+    {
+        $this->expectException(PublicApiClientException::class);
 
         new TwoRequiredFieldsEntity([]);
     }

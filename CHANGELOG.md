@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Fixed `EntitiesException`, thrown when an attribute-based entity cannot be built, which did not extend `PublicApiClientException`: a missing field in an API response escaped the `catch (PublicApiClientException)` blocks of the consumers
+- Migrated the `CreateQuoteResponse` quotes entity and the `HealthCheckItem`, `MonthlyAnalyticsItem` and `PriceAnalyticsItem` consumption entities to the attribute-based entity system, without changing their methods nor their serialization
 - Migrated the `Order` and `OrdersProduct` entities to the attribute-based entity system, without changing their methods
 - Added the `createdBy`, `createdByImpersonator` and `commitmentAmountTotal` fields, returned by the API, to the serialization of `Order`
 - Fixed `OrdersProduct::getSubscription()`, which made the whole order fail to build when the API returned a product without subscription: it now returns a nullable `Reference`

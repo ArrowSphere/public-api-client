@@ -2,7 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Quotes\Response;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class CreateQuoteResponse extends AbstractEntity
 {
@@ -11,37 +12,22 @@ class CreateQuoteResponse extends AbstractEntity
     public const COLUMN_STATUS = 'status';
 
     /**
-     * @var string Quote api link
-     */
-    protected string $link;
-
-    /**
      * @var string Quote reference
      */
+    #[Property(name: self::COLUMN_REFERENCE, required: true)]
     protected string $reference;
 
     /**
      * @var string Quote status
      */
+    #[Property(name: self::COLUMN_STATUS, required: true)]
     protected string $status;
 
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->reference = $data[self::COLUMN_REFERENCE];
-        $this->status = $data[self::COLUMN_STATUS];
-        $this->link = $data[self::COLUMN_LINK];
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_REFERENCE => $this->reference,
-            self::COLUMN_STATUS => $this->status,
-            self::COLUMN_LINK => $this->link,
-        ];
-    }
+    /**
+     * @var string Quote api link
+     */
+    #[Property(name: self::COLUMN_LINK, required: true)]
+    protected string $link;
 
     public function getReference(): string
     {

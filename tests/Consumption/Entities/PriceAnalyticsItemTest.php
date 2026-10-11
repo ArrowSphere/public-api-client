@@ -23,4 +23,18 @@ class PriceAnalyticsItemTest extends TestCase
 
         self::assertEquals('{"resellerBuyPrice":1025302.09,"arrowBuyPrice":975550.55,"listBuyPrice":1025302.09,"endCustomerBuyPrice":123,"currency":"USD"}', json_encode($price));
     }
+
+    public function testSerialisationWithoutOptionalPrices(): void
+    {
+        $price = new PriceAnalyticsItem([
+            "resellerBuyPrice"    => 1025302.09,
+            "listBuyPrice"        => 1025302.09,
+            "endCustomerBuyPrice" => null,
+            "currency"            => "USD"
+        ]);
+
+        self::assertNull($price->getArrowBuyPrice());
+        self::assertNull($price->getEndCustomerBuyPrice());
+        self::assertEquals('{"resellerBuyPrice":1025302.09,"arrowBuyPrice":null,"listBuyPrice":1025302.09,"endCustomerBuyPrice":null,"currency":"USD"}', json_encode($price));
+    }
 }

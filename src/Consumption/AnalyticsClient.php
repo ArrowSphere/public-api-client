@@ -4,6 +4,7 @@ namespace ArrowSphere\PublicApiClient\Consumption;
 
 use ArrowSphere\PublicApiClient\Consumption\Entities\MonthlyAnalyticsItem;
 use ArrowSphere\PublicApiClient\Consumption\Enum\ConstantEnum;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ReflectionException;
@@ -23,6 +24,7 @@ class AnalyticsClient extends AbstractConsumptionClient
      *
      * @return MonthlyAnalyticsItem[]
      *
+     * @throws EntitiesException
      * @throws PublicApiClientException|ReflectionException
      */
     public function getMonthly(string $month, array $classification = [], array $vendorCode = [], array $marketPlace = [], array $license = [], string $tag = null) : array

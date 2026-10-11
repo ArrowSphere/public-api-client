@@ -2,8 +2,10 @@
 
 namespace ArrowSphere\PublicApiClient\Consumption\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
 use ArrowSphere\PublicApiClient\Consumption\Enum\ColorEnum;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
+use ArrowSphere\PublicApiClient\Entities\Property;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\General\Enum\ClassificationEnum;
 
@@ -15,64 +17,55 @@ class HealthCheckItem extends AbstractEntity
     public const COLUMN_COLOR = 'color';
     public const COLUMN_MESSAGE = 'message';
 
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLUMN_VENDOR         => 'string|required',
-        self::COLUMN_MARKETPLACE    => 'string|required',
-        self::COLUMN_CLASSIFICATION => 'string|required',
-        self::COLUMN_COLOR          => 'string|required',
-        self::COLUMN_MESSAGE        => 'string|required',
-    ];
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_VENDOR, required: true)]
+    protected string $vendor;
 
     /**
      * @var string
      */
-    private $vendor;
+    #[Property(name: self::COLUMN_MARKETPLACE, required: true)]
+    protected string $marketPlace;
 
     /**
      * @var string
      */
-    private $marketPlace;
+    #[Property(name: self::COLUMN_CLASSIFICATION, required: true)]
+    protected string $classification;
 
     /**
      * @var string
      */
-    private $classification;
+    #[Property(name: self::COLUMN_COLOR, required: true)]
+    protected string $color;
 
     /**
      * @var string
      */
-    private $color;
-
-    /**
-     * @var string
-     */
-    private $message;
+    #[Property(name: self::COLUMN_MESSAGE, required: true)]
+    protected string $message;
 
     /**
      * HealthCheckItem constructor.
      *
      * @param array $data
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
-     * @throws \ReflectionException
      */
     public function __construct(array $data)
     {
         parent::__construct($data);
 
-        if (! ColorEnum::isValidName($data[self::COLUMN_COLOR])) {
-            throw new EntityValidationException('Color: ' . $data[self::COLUMN_COLOR] . ' not supported');
+        if (! ColorEnum::isValidName($this->color)) {
+            throw new EntityValidationException('Color: ' . $this->color . ' not supported');
         }
 
-        if (! ClassificationEnum::isValidName($data[self::COLUMN_CLASSIFICATION])) {
-            throw new EntityValidationException('Classification: ' . $data[self::COLUMN_CLASSIFICATION] . ' not supported');
+        if (! ClassificationEnum::isValidName($this->classification)) {
+            throw new EntityValidationException('Classification: ' . $this->classification . ' not supported');
         }
-
-        $this->color = $data[self::COLUMN_COLOR];
-        $this->vendor = $data[self::COLUMN_VENDOR];
-        $this->marketPlace = $data[self::COLUMN_MARKETPLACE];
-        $this->classification = $data[self::COLUMN_CLASSIFICATION];
-        $this->message = $data[self::COLUMN_MESSAGE];
     }
 
     /**
@@ -113,19 +106,5 @@ class HealthCheckItem extends AbstractEntity
     public function getMessage(): string
     {
         return $this->message;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_VENDOR => $this->getVendor(),
-            self::COLUMN_MARKETPLACE => $this->getMarketPlace(),
-            self::COLUMN_CLASSIFICATION => $this->getClassification(),
-            self::COLUMN_COLOR => $this->getColor(),
-            self::COLUMN_MESSAGE => $this->getMessage()
-        ];
     }
 }

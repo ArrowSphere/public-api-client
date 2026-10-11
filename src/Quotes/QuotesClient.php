@@ -3,6 +3,7 @@
 namespace ArrowSphere\PublicApiClient\Quotes;
 
 use ArrowSphere\PublicApiClient\AbstractClient;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use ArrowSphere\PublicApiClient\Quotes\Request\CreateQuote;
@@ -23,6 +24,7 @@ class QuotesClient extends AbstractClient
      *
      * @return CreateQuoteResponse
      *
+     * @throws EntitiesException
      * @throws NotFoundException
      * @throws GuzzleException
      * @throws PublicApiClientException
