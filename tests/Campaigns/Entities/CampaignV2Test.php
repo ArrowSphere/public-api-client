@@ -2,7 +2,9 @@
 
 namespace ArrowSphere\PublicApiClient\Tests\Campaigns\Entities;
 
+use ArrowSphere\PublicApiClient\Campaigns\Entities\Asset\Asset;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\CampaignV2;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
 
 /**
@@ -147,10 +149,40 @@ class CampaignV2Test extends AbstractEntityTest
     },
     "startDate": null,
     "updatedAt": null,
-    "weight": 1
+    "weight": 1,
+    "downloadUrls": {
+        "assets": []
+    }
 }
 JSON
             ],
         ];
+    }
+
+    public function testDownloadUrlsAssets(): void
+    {
+        $campaign = new CampaignV2([
+            'createdAt'    => '2021-06-25T16:00:00Z',
+            'downloadUrls' => [
+                'assets' => [
+                    ['uuid' => 'aaaa-bbbb', 'url' => 'https://example.com/a.png'],
+                ],
+            ],
+        ]);
+
+        self::assertContainsOnlyInstancesOf(Asset::class, $campaign->getDownloadUrlsAssets());
+        self::assertSame('aaaa-bbbb', $campaign->getDownloadUrlsAssets()[0]->getUuid());
+        self::assertSame(
+            ['assets' => [['uuid' => 'aaaa-bbbb', 'url' => 'https://example.com/a.png']]],
+            json_decode((string) json_encode($campaign), true)['downloadUrls']
+        );
+    }
+
+    public function testMissingCreatedAt(): void
+    {
+        $this->expectException(EntitiesException::class);
+        $this->expectExceptionMessage(CampaignV2::class . ': Missing field: createdAt');
+
+        new CampaignV2(['reference' => 'CAMPAIGN_REF']);
     }
 }

@@ -8,7 +8,6 @@ use ArrowSphere\PublicApiClient\Campaigns\Entities\Asset\AssetUploadUrl;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\Campaign;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\CampaignV2;
 use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use Generator;
@@ -33,7 +32,7 @@ class CampaignsClient extends AbstractClient
      * @return Campaign|null
      *
      * @throws GuzzleException
-     * @throws EntityValidationException
+     * @throws EntitiesException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -76,7 +75,7 @@ class CampaignsClient extends AbstractClient
      * @return CampaignV2|null
      *
      * @throws GuzzleException
-     * @throws EntityValidationException
+     * @throws EntitiesException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */
@@ -120,7 +119,7 @@ class CampaignsClient extends AbstractClient
      *
      * @return Generator
      *
-     * @throws EntityValidationException
+     * @throws EntitiesException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -173,7 +172,7 @@ class CampaignsClient extends AbstractClient
      * @return Campaign|null
      *
      * @throws GuzzleException
-     * @throws EntityValidationException
+     * @throws EntitiesException
      * @throws NotFoundException
      * @throws PublicApiClientException
      *
@@ -217,7 +216,7 @@ class CampaignsClient extends AbstractClient
      *
      * @return Campaign|null
      *
-     * @throws EntityValidationException
+     * @throws EntitiesException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -263,7 +262,7 @@ class CampaignsClient extends AbstractClient
      *
      * @return Generator<CampaignV2>
      *
-     * @throws EntityValidationException
+     * @throws EntitiesException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException

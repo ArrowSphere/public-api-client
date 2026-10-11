@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Campaigns\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class Banner extends AbstractEntity
 {
@@ -26,58 +26,44 @@ class Banner extends AbstractEntity
     /**
      * @var string
      */
-    private $backgroundImageUuid;
+    #[Property(name: self::COLUMN_BACKGROUND_IMAGE_UUID)]
+    protected string $backgroundImageUuid = self::DEFAULT_VALUE_BACKGROUND_IMAGE_UUID;
 
     /**
      * @var string|null
      */
-    private $backgroundColor;
+    #[Property(name: self::COLUMN_BACKGROUND_COLOR, serializeNull: true)]
+    protected ?string $backgroundColor = self::DEFAULT_VALUE_BACKGROUND_COLOR;
 
     /**
      * @var string
      */
-    private $type;
+    #[Property(name: self::COLUMN_TYPE)]
+    protected string $type = self::DEFAULT_VALUE_TYPE;
 
     /**
      * @var string
      */
-    private $buttonPlacement;
+    #[Property(name: self::COLUMN_BUTTON_PLACEMENT)]
+    protected string $buttonPlacement = self::DEFAULT_VALUE_BUTTON_PLACEMENT;
 
     /**
      * @var string|null
      */
-    private $buttonText;
+    #[Property(name: self::COLUMN_BUTTON_TEXT, serializeNull: true)]
+    protected ?string $buttonText = self::DEFAULT_VALUE_BUTTON_TEXT;
 
     /**
      * @var string|null
      */
-    private $text;
+    #[Property(name: self::COLUMN_TEXT, serializeNull: true)]
+    protected ?string $text = self::DEFAULT_VALUE_TEXT;
 
     /**
      * @var string|null
      */
-    private $textColor;
-
-    /**
-     * Statement constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     * @throws \ReflectionException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->backgroundImageUuid = $data[self::COLUMN_BACKGROUND_IMAGE_UUID] ?? self::DEFAULT_VALUE_BACKGROUND_IMAGE_UUID;
-        $this->backgroundColor = $data[self::COLUMN_BACKGROUND_COLOR] ?? self::DEFAULT_VALUE_BACKGROUND_COLOR;
-        $this->type = $data[self::COLUMN_TYPE] ?? self::DEFAULT_VALUE_TYPE;
-        $this->buttonPlacement = $data[self::COLUMN_BUTTON_PLACEMENT] ?? self::DEFAULT_VALUE_BUTTON_PLACEMENT;
-        $this->buttonText = $data[self::COLUMN_BUTTON_TEXT] ?? self::DEFAULT_VALUE_BUTTON_TEXT;
-        $this->text = $data[self::COLUMN_TEXT] ?? self::DEFAULT_VALUE_TEXT;
-        $this->textColor = $data[self::COLUMN_TEXT_COLOR] ?? self::DEFAULT_VALUE_TEXT_COLOR;
-    }
+    #[Property(name: self::COLUMN_TEXT_COLOR, serializeNull: true)]
+    protected ?string $textColor = self::DEFAULT_VALUE_TEXT_COLOR;
 
     /**
      * @return string
@@ -133,21 +119,5 @@ class Banner extends AbstractEntity
     public function getTextColor(): ?string
     {
         return $this->textColor;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_BACKGROUND_IMAGE_UUID => $this->getBackgroundImageUuid(),
-            self::COLUMN_BACKGROUND_COLOR      => $this->getBackgroundColor(),
-            self::COLUMN_TYPE                  => $this->getType(),
-            self::COLUMN_BUTTON_PLACEMENT      => $this->getButtonPlacement(),
-            self::COLUMN_BUTTON_TEXT           => $this->getButtonText(),
-            self::COLUMN_TEXT                  => $this->getText(),
-            self::COLUMN_TEXT_COLOR            => $this->getTextColor(),
-        ];
     }
 }

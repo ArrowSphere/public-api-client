@@ -135,4 +135,18 @@ JSON
             ],
         ];
     }
+
+    public function testWithoutLandingPage(): void
+    {
+        $campaign = new Campaign([
+            'reference' => 'CAMPAIGN_REF',
+            'name'      => 'My campaign',
+            'createdAt' => '2021-06-25T16:00:00Z',
+            'banners'   => [],
+        ]);
+
+        self::assertNull($campaign->getLandingPage()->getUrl());
+        self::assertSame('', $campaign->getLandingPage()->getHeader()->getTitle());
+        self::assertSame([], $campaign->getLandingPage()->getFooter()->getFeatures());
+    }
 }
