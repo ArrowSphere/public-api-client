@@ -2,175 +2,182 @@
 
 namespace ArrowSphere\PublicApiClient\Orders\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class Order extends AbstractEntity
 {
     public const COLUMN_REFERENCE = 'reference';
+
     public const COLUMN_STATUS = 'status';
+
     public const COLUMN_DATE_STATUS = 'dateStatus';
+
     public const COLUMN_DATE_CREATION = 'dateCreation';
+
     public const COLUMN_ORDER_REFERENCE = 'order_reference';
+
     public const COLUMN_CREATED_BY = 'createdBy';
+
     public const COLUMN_CREATED_BY_IMPERSONATOR = 'createdByImpersonator';
+
     public const COLUMN_COMMITMENT_AMOUNT_TOTAL = 'commitmentAmountTotal';
+
     public const COLUMN_PARTNER = 'partner';
+
     public const COLUMN_CUSTOMER = 'customer';
+
     public const COLUMN_PO_NUMBER = 'ponumber';
+
     public const COLUMN_PRODUCTS = 'products';
+
     public const COLUMN_EXTRA_INFORMATION = 'extraInformation';
+
     public const COLUMN_SCHEDULED_DATE = 'scheduledDate';
 
     /**
-     * @var string order reference ID
+     * @var string
      */
+    #[Property(name: self::COLUMN_REFERENCE, required: true)]
     protected string $reference;
 
     /**
-     * @var string Order status
+     * @var string
      */
+    #[Property(name: self::COLUMN_STATUS, required: true)]
     protected string $status;
 
     /**
-     * @var string Date the current status was updated
+     * @var string
      */
+    #[Property(name: self::COLUMN_DATE_STATUS, required: true)]
     protected string $dateStatus;
 
     /**
-     * @var string Date the order was created
+     * @var string
      */
+    #[Property(name: self::COLUMN_DATE_CREATION, required: true)]
     protected string $dateCreation;
 
     /**
-     * @var string Arrow order reference
+     * @var string
      */
+    #[Property(name: self::COLUMN_ORDER_REFERENCE, required: true)]
     protected string $orderReference;
 
     /**
      * @var string|null
      */
-    protected ?string $createdBy;
+    #[Property(name: self::COLUMN_CREATED_BY, serializeNull: true)]
+    protected ?string $createdBy = null;
 
     /**
      * @var string|null
      */
-    protected ?string $createdByImpersonator;
+    #[Property(name: self::COLUMN_CREATED_BY_IMPERSONATOR, serializeNull: true)]
+    protected ?string $createdByImpersonator = null;
 
     /**
      * @var float
      */
+    #[Property(name: self::COLUMN_COMMITMENT_AMOUNT_TOTAL, type: 'float', required: true)]
     protected float $commitmentAmountTotal;
 
     /**
      * @var Partner
      */
+    #[Property(name: self::COLUMN_PARTNER, type: Partner::class, required: true)]
     protected Partner $partner;
 
     /**
      * @var Reference
      */
+    #[Property(name: self::COLUMN_CUSTOMER, type: Reference::class, required: true)]
     protected Reference $customer;
 
     /**
-     * @var string|null PO number
+     * @var string
      */
-    protected ?string $poNumber;
+    #[Property(name: self::COLUMN_PO_NUMBER)]
+    protected string $poNumber = '';
 
     /**
      * @var OrdersProduct[]
      */
-    protected array $products;
+    #[Property(name: self::COLUMN_PRODUCTS, type: OrdersProduct::class, isArray: true)]
+    protected array $products = [];
 
     /**
      * @var ExtraInformation|null
      */
-    private ?ExtraInformation $extraInformation;
+    #[Property(name: self::COLUMN_EXTRA_INFORMATION, type: ExtraInformation::class, serializeNull: true)]
+    protected ?ExtraInformation $extraInformation = null;
 
     /**
-     * @var string Date chosen by the user to define when the order will be provisioned
+     * @var string
      */
-    private string $scheduledDate;
+    #[Property(name: self::COLUMN_SCHEDULED_DATE)]
+    protected string $scheduledDate = '';
 
     /**
-     * Order constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntitiesException
+     * @return string
      */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->reference = $data[self::COLUMN_REFERENCE];
-        $this->status = $data[self::COLUMN_STATUS];
-        $this->dateStatus = $data[self::COLUMN_DATE_STATUS];
-        $this->dateCreation = $data[self::COLUMN_DATE_CREATION];
-        $this->orderReference = $data[self::COLUMN_ORDER_REFERENCE];
-        $this->partner = new Partner($data[self::COLUMN_PARTNER]);
-        $this->customer = new Reference($data[self::COLUMN_CUSTOMER]);
-        $this->poNumber = $data[self::COLUMN_PO_NUMBER] ?? '';
-        $this->products = array_map(static fn (array $product) => new OrdersProduct($product), $data[self::COLUMN_PRODUCTS]);
-        $this->createdBy = $data[self::COLUMN_CREATED_BY] ?? null;
-        $this->createdByImpersonator = $data[self::COLUMN_CREATED_BY_IMPERSONATOR] ?? null;
-        $this->commitmentAmountTotal = $data[self::COLUMN_COMMITMENT_AMOUNT_TOTAL];
-        $this->extraInformation = isset($data[self::COLUMN_EXTRA_INFORMATION]) ? new ExtraInformation($data[self::COLUMN_EXTRA_INFORMATION]) : null;
-        $this->scheduledDate = $data[self::COLUMN_SCHEDULED_DATE] ?? '';
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_REFERENCE         => $this->reference,
-            self::COLUMN_STATUS            => $this->status,
-            self::COLUMN_DATE_STATUS       => $this->dateStatus,
-            self::COLUMN_DATE_CREATION     => $this->dateCreation,
-            self::COLUMN_ORDER_REFERENCE   => $this->orderReference,
-            self::COLUMN_PARTNER           => $this->partner->jsonSerialize(),
-            self::COLUMN_CUSTOMER          => $this->customer->jsonSerialize(),
-            self::COLUMN_PO_NUMBER         => $this->poNumber,
-            self::COLUMN_PRODUCTS          => array_map(static fn (OrdersProduct $product) => $product->jsonSerialize(), $this->products),
-            self::COLUMN_EXTRA_INFORMATION => $this->extraInformation?->jsonSerialize(),
-            self::COLUMN_SCHEDULED_DATE    => $this->scheduledDate,
-        ];
-    }
-
     public function getReference(): string
     {
         return $this->reference;
     }
 
+    /**
+     * @return string
+     */
     public function getStatus(): string
     {
         return $this->status;
     }
 
+    /**
+     * @return string
+     */
     public function getDateStatus(): string
     {
         return $this->dateStatus;
     }
 
+    /**
+     * @return string
+     */
     public function getDateCreation(): string
     {
         return $this->dateCreation;
     }
 
+    /**
+     * @return string
+     */
     public function getOrderReference(): string
     {
         return $this->orderReference;
     }
 
+    /**
+     * @return Partner
+     */
     public function getPartner(): Partner
     {
         return $this->partner;
     }
 
+    /**
+     * @return Reference
+     */
     public function getCustomer(): Reference
     {
         return $this->customer;
     }
 
+    /**
+     * @return string|null
+     */
     public function getPoNumber(): ?string
     {
         return $this->poNumber;
@@ -184,26 +191,41 @@ class Order extends AbstractEntity
         return $this->products;
     }
 
+    /**
+     * @return string|null
+     */
     public function getCreatedBy(): ?string
     {
         return $this->createdBy;
     }
 
+    /**
+     * @return string|null
+     */
     public function getCreatedByImpersonator(): ?string
     {
         return $this->createdByImpersonator;
     }
 
+    /**
+     * @return float
+     */
     public function getCommitmentAmountTotal(): float
     {
         return $this->commitmentAmountTotal;
     }
 
+    /**
+     * @return ExtraInformation|null
+     */
     public function getExtraInformation(): ?ExtraInformation
     {
         return $this->extraInformation;
     }
 
+    /**
+     * @return string|null
+     */
     public function getScheduledDate(): ?string
     {
         return $this->scheduledDate;
