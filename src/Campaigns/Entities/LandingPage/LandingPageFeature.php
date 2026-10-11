@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Campaigns\Entities\LandingPage;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class LandingPageFeature extends AbstractEntity
 {
@@ -20,40 +20,26 @@ class LandingPageFeature extends AbstractEntity
     /**
      * @var string
      */
-    private $title;
+    #[Property(name: self::COLUMN_TITLE)]
+    protected string $title = self::DEFAULT_VALUE_TITLE;
 
     /**
      * @var string
      */
-    private $description;
+    #[Property(name: self::COLUMN_DESCRIPTION)]
+    protected string $description = self::DEFAULT_VALUE_DESCRIPTION;
 
     /**
      * @var string
      */
-    private $icon;
+    #[Property(name: self::COLUMN_ICON)]
+    protected string $icon = self::DEFAULT_VALUE_ICON;
 
     /**
      * @var int
      */
-    private $size;
-
-    /**
-     * Statement constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     * @throws \ReflectionException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->title = $data[self::COLUMN_TITLE] ?? self::DEFAULT_VALUE_TITLE;
-        $this->description = $data[self::COLUMN_DESCRIPTION] ?? self::DEFAULT_VALUE_DESCRIPTION;
-        $this->icon = $data[self::COLUMN_ICON] ?? self::DEFAULT_VALUE_ICON;
-        $this->size = $data[self::COLUMN_SIZE] ?? self::DEFAULT_VALUE_SIZE;
-    }
+    #[Property(name: self::COLUMN_SIZE, type: 'int')]
+    protected int $size = self::DEFAULT_VALUE_SIZE;
 
     /**
      * @return string
@@ -85,18 +71,5 @@ class LandingPageFeature extends AbstractEntity
     public function getSize(): int
     {
         return $this->size;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_TITLE       => $this->getTitle(),
-            self::COLUMN_DESCRIPTION => $this->getDescription(),
-            self::COLUMN_ICON        => $this->getIcon(),
-            self::COLUMN_SIZE        => $this->getSize(),
-        ];
     }
 }

@@ -2,7 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Campaigns\Entities\Asset;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class AssetImageFields
@@ -28,55 +29,50 @@ class AssetImageFields extends AbstractEntity
     /**
      * @var string
      */
-    private $key;
+    #[Property(name: self::COLUMN_KEY, required: true)]
+    protected string $key;
 
     /**
      * @var string
      */
-    private $bucket;
+    #[Property(name: self::COLUMN_BUCKET, required: true)]
+    protected string $bucket;
 
     /**
      * @var string
      */
-    private $amzAlgorithm;
+    #[Property(name: self::COLUMN_X_AMZ_ALGORITHM, required: true)]
+    protected string $amzAlgorithm;
 
     /**
      * @var string
      */
-    private $amzCredential;
+    #[Property(name: self::COLUMN_X_AMZ_CREDENTIAL, required: true)]
+    protected string $amzCredential;
 
     /**
      * @var string
      */
-    private $amzDate;
+    #[Property(name: self::COLUMN_X_AMZ_DATE, required: true)]
+    protected string $amzDate;
 
     /**
      * @var string
      */
-    private $amzSecurityToken;
+    #[Property(name: self::COLUMN_X_AMZ_SECURITY_TOKEN, required: true)]
+    protected string $amzSecurityToken;
 
     /**
      * @var string
      */
-    private $policy;
+    #[Property(name: self::COLUMN_POLICY, required: true)]
+    protected string $policy;
 
     /**
      * @var string
      */
-    private $amzSignature;
-
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-        $this->key = $data[self::COLUMN_KEY];
-        $this->bucket = $data[self::COLUMN_BUCKET];
-        $this->amzAlgorithm = $data[self::COLUMN_X_AMZ_ALGORITHM];
-        $this->amzCredential = $data[self::COLUMN_X_AMZ_CREDENTIAL];
-        $this->amzDate = $data[self::COLUMN_X_AMZ_DATE];
-        $this->amzSecurityToken = $data[self::COLUMN_X_AMZ_SECURITY_TOKEN];
-        $this->policy = $data[self::COLUMN_POLICY];
-        $this->amzSignature = $data[self::COLUMN_X_AMZ_SIGNATURE];
-    }
+    #[Property(name: self::COLUMN_X_AMZ_SIGNATURE, required: true)]
+    protected string $amzSignature;
 
     /**
      * @return string
@@ -140,19 +136,5 @@ class AssetImageFields extends AbstractEntity
     public function getAmzSignature(): string
     {
         return $this->amzSignature;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_KEY                  => $this->key,
-            self::COLUMN_BUCKET               => $this->bucket,
-            self::COLUMN_X_AMZ_ALGORITHM      => $this->amzAlgorithm,
-            self::COLUMN_X_AMZ_CREDENTIAL     => $this->amzCredential,
-            self::COLUMN_X_AMZ_DATE           => $this->amzDate,
-            self::COLUMN_X_AMZ_SECURITY_TOKEN => $this->amzSecurityToken,
-            self::COLUMN_POLICY               => $this->policy,
-            self::COLUMN_X_AMZ_SIGNATURE      => $this->amzSignature,
-        ];
     }
 }

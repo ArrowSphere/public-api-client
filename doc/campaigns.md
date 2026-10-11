@@ -70,7 +70,7 @@ This entity represents an assets of the campaign.
 | Field   | Type               | Example                                     | Description       |
 |---------| ------------------ |---------------------------------------------|-------------------|
 | uuid    | `string`           | d8553daa-1d39-489e-89c0-3731c0d3ad0b        | The asset's uuid. |
-| url     | `string` or `null` | https://www.exemple.com/images/picture.png  | The asset's url.  |
+| url     | `string`           | https://www.exemple.com/images/picture.png  | The asset's url.  |
 
 
 #### LandingPage and its sub-entities
@@ -121,8 +121,8 @@ This entity describes the body of the campaign's landing page.
 | Field               | Type               | Example                                     | Description                                             |
 | ------------------- | ------------------ | ------------------------------------------- | ------------------------------------------------------- |
 | backgroundImageUuid | `string`           | 0fed6621-fe0c-4290-813a-58217e37b3ae        | The uuid to use if the body has an image.               |
-| buttonText          | `string`           | Register                                    | The button text if the body is a form type.             |
-| contactEmail        | `string`           | myemail@mail.com                            | The e-mail used to send information with the Form type. |
+| buttonText          | `string` or `null` | Register                                    | The button text if the body is a form type.             |
+| contactEmail        | `string` or `null` | myemail@mail.com                            | The e-mail used to send information with the Form type. |
 | description         | `string`           | <p>This is a great description.</p>         | The landing page's body description. Can contain html.  |
 | title               | `string`           | This is a body title.                       | The landing page's body title.                          |
 | type                | `string`           | PICTURE                                     | The landing page's body type, PICTURE, VIDEO OR FORM.   |

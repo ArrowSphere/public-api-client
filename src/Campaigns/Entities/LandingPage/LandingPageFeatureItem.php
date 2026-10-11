@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Campaigns\Entities\LandingPage;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class LandingPageFeatureItem extends AbstractEntity
 {
@@ -24,52 +24,38 @@ class LandingPageFeatureItem extends AbstractEntity
     /**
      * @var string
      */
-    private $title;
+    #[Property(name: self::COLUMN_TITLE)]
+    protected string $title = self::DEFAULT_VALUE_TITLE;
 
     /**
      * @var string
      */
-    private $description;
+    #[Property(name: self::COLUMN_DESCRIPTION)]
+    protected string $description = self::DEFAULT_VALUE_DESCRIPTION;
 
     /**
      * @var string
      */
-    private $icon;
+    #[Property(name: self::COLUMN_ICON)]
+    protected string $icon = self::DEFAULT_VALUE_ICON;
 
     /**
      * @var int
      */
-    private $size;
+    #[Property(name: self::COLUMN_SIZE, type: 'int')]
+    protected int $size = self::DEFAULT_VALUE_SIZE;
 
     /**
      * @var string
      */
-    private $buttonText;
+    #[Property(name: self::COLUMN_BUTTON_TEXT)]
+    protected string $buttonText = self::DEFAULT_VALUE_BUTTON_TEXT;
 
     /**
      * @var string
      */
-    private $buttonUrl;
-
-    /**
-     * Statement constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     * @throws \ReflectionException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->title = $data[self::COLUMN_TITLE] ?? self::DEFAULT_VALUE_TITLE;
-        $this->description = $data[self::COLUMN_DESCRIPTION] ?? self::DEFAULT_VALUE_DESCRIPTION;
-        $this->icon = $data[self::COLUMN_ICON] ?? self::DEFAULT_VALUE_ICON;
-        $this->size = $data[self::COLUMN_SIZE] ?? self::DEFAULT_VALUE_SIZE;
-        $this->buttonText = $data[self::COLUMN_BUTTON_TEXT] ?? self::DEFAULT_VALUE_BUTTON_TEXT;
-        $this->buttonUrl = $data[self::COLUMN_BUTTON_URL] ?? self::DEFAULT_VALUE_BUTTON_URL;
-    }
+    #[Property(name: self::COLUMN_BUTTON_URL)]
+    protected string $buttonUrl = self::DEFAULT_VALUE_BUTTON_URL;
 
     /**
      * @return string
@@ -117,20 +103,5 @@ class LandingPageFeatureItem extends AbstractEntity
     public function getButtonUrl(): string
     {
         return $this->buttonUrl;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_TITLE       => $this->getTitle(),
-            self::COLUMN_DESCRIPTION => $this->getDescription(),
-            self::COLUMN_ICON        => $this->getIcon(),
-            self::COLUMN_SIZE        => $this->getSize(),
-            self::COLUMN_BUTTON_TEXT => $this->getButtonText(),
-            self::COLUMN_BUTTON_URL  => $this->getButtonUrl(),
-        ];
     }
 }
