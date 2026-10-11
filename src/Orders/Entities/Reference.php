@@ -2,31 +2,22 @@
 
 namespace ArrowSphere\PublicApiClient\Orders\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class Reference extends AbstractEntity
 {
     public const COLUMN_REFERENCE = 'reference';
 
     /**
-     * @var string ArrowSphere  reference ID
+     * @var string
      */
-    private string $reference;
+    #[Property(name: self::COLUMN_REFERENCE, required: true)]
+    protected string $reference;
 
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->reference = $data[self::COLUMN_REFERENCE];
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_REFERENCE => $this->reference,
-        ];
-    }
-
+    /**
+     * @return string
+     */
     public function getReference(): string
     {
         return $this->reference;

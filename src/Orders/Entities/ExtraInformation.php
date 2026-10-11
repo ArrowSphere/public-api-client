@@ -2,7 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Orders\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class ExtraInformation extends AbstractEntity
 {
@@ -11,22 +12,12 @@ class ExtraInformation extends AbstractEntity
     /**
      * @var array
      */
-    private array $programs;
+    #[Property(name: self::COLUMN_PROGRAMS, type: 'array')]
+    protected array $programs = [];
 
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->programs = $data[self::COLUMN_PROGRAMS];
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_PROGRAMS => $this->programs,
-        ];
-    }
-
+    /**
+     * @return array
+     */
     public function getPrograms(): array
     {
         return $this->programs;

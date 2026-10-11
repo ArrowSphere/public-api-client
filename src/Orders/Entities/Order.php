@@ -3,6 +3,7 @@
 namespace ArrowSphere\PublicApiClient\Orders\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 
 class Order extends AbstractEntity
 {
@@ -91,6 +92,13 @@ class Order extends AbstractEntity
      */
     private string $scheduledDate;
 
+    /**
+     * Order constructor.
+     *
+     * @param array $data
+     *
+     * @throws EntitiesException
+     */
     public function __construct(array $data)
     {
         parent::__construct($data);

@@ -2,83 +2,86 @@
 
 namespace ArrowSphere\PublicApiClient\Orders\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class OrderHistory extends AbstractEntity
 {
     public const COLUMN_ORDER_ID = 'orderId';
+
     public const COLUMN_ACTION = 'action';
+
     public const COLUMN_DESCRIPTION = 'description';
+
     public const COLUMN_USER = 'user';
+
     public const COLUMN_DATE_ACTION = 'dateAction';
 
     /**
      * @var string
      */
-    private string $orderId;
+    #[Property(name: self::COLUMN_ORDER_ID, required: true)]
+    protected string $orderId;
 
     /**
-     * @var string Action on the order
+     * @var string
      */
-    private string $action;
+    #[Property(name: self::COLUMN_ACTION)]
+    protected string $action = '';
 
     /**
-     * @var string Description of the action
+     * @var string
      */
-    private string $description;
+    #[Property(name: self::COLUMN_DESCRIPTION)]
+    protected string $description = '';
 
     /**
-     * @var string Name of the user that executed the action
+     * @var string
      */
-    private string $user;
+    #[Property(name: self::COLUMN_USER)]
+    protected string $user = '';
 
     /**
-     * @var string Date the action was executed
+     * @var string
      */
-    private string $dateAction;
+    #[Property(name: self::COLUMN_DATE_ACTION)]
+    protected string $dateAction = '';
 
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->orderId = $data[self::COLUMN_ORDER_ID];
-        $this->action = $data[self::COLUMN_ACTION] ?? '';
-        $this->description = $data[self::COLUMN_DESCRIPTION] ?? '';
-        $this->user = $data[self::COLUMN_USER] ?? '';
-        $this->dateAction = $data[self::COLUMN_DATE_ACTION] ?? '';
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_ORDER_ID    => $this->orderId,
-            self::COLUMN_ACTION      => $this->action,
-            self::COLUMN_DESCRIPTION => $this->description,
-            self::COLUMN_USER        => $this->user,
-            self::COLUMN_DATE_ACTION => $this->dateAction,
-        ];
-    }
-
+    /**
+     * @return string
+     */
     public function getOrderId(): string
     {
         return $this->orderId;
     }
 
+    /**
+     * @return string
+     */
     public function getAction(): string
     {
         return $this->action;
     }
 
+    /**
+     * @return string
+     */
     public function getDescription(): string
     {
         return $this->description;
     }
 
+    /**
+     * @return string
+     */
     public function getUser(): string
     {
         return $this->user;
     }
 
+    /**
+     * @return string
+     */
     public function getDateAction(): string
     {
         return $this->dateAction;

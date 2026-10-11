@@ -18,11 +18,16 @@ class CustomersResponse extends AbstractEntity
 
     /**
      * @var Pagination
-     *
-     * @throws EntitiesException
      */
     private $pagination;
 
+    /**
+     * CustomersResponse constructor.
+     *
+     * @param array $data
+     *
+     * @throws EntitiesException
+     */
     public function __construct(array $data)
     {
         parent::__construct($data['data']);

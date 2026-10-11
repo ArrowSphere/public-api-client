@@ -2,29 +2,22 @@
 
 namespace ArrowSphere\PublicApiClient\Orders\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class Program extends AbstractEntity
 {
     public const COLUMN_LEGACY_CODE = 'legacyCode';
 
     /**
-     * @var string Program legacy code
+     * @var string
      */
-    private string $legacyCode;
+    #[Property(name: self::COLUMN_LEGACY_CODE, required: true)]
+    protected string $legacyCode;
 
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->legacyCode = $data[self::COLUMN_LEGACY_CODE];
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [self::COLUMN_LEGACY_CODE => $this->legacyCode];
-    }
-
+    /**
+     * @return string
+     */
     public function getLegacyCode(): string
     {
         return $this->legacyCode;

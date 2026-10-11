@@ -2,57 +2,54 @@
 
 namespace ArrowSphere\PublicApiClient\Orders\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class Contact extends AbstractEntity
 {
     public const COLUMN_EMAIL = 'email';
+
     public const COLUMN_FIRSTNAME = 'firstName';
+
     public const COLUMN_LASTNAME = 'lastName';
 
     /**
-     * @var string The contact email
+     * @var string
      */
-    private string $email;
+    #[Property(name: self::COLUMN_EMAIL, required: true)]
+    protected string $email;
 
     /**
-     * @var string The contact first name
+     * @var string
      */
-    private string $firstName;
+    #[Property(name: self::COLUMN_FIRSTNAME, required: true)]
+    protected string $firstName;
 
     /**
-     * @var string The contact last name
+     * @var string
      */
-    private string $lastName;
+    #[Property(name: self::COLUMN_LASTNAME, required: true)]
+    protected string $lastName;
 
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->email = $data[self::COLUMN_EMAIL];
-        $this->firstName = $data[self::COLUMN_FIRSTNAME];
-        $this->lastName = $data[self::COLUMN_LASTNAME];
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_EMAIL     => $this->email,
-            self::COLUMN_FIRSTNAME => $this->firstName,
-            self::COLUMN_LASTNAME  => $this->lastName,
-        ];
-    }
-
+    /**
+     * @return string
+     */
     public function getEmail(): string
     {
         return $this->email;
     }
 
+    /**
+     * @return string
+     */
     public function getFirstName(): string
     {
         return $this->firstName;
     }
 
+    /**
+     * @return string
+     */
     public function getLastName(): string
     {
         return $this->lastName;
