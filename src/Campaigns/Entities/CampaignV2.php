@@ -2,9 +2,10 @@
 
 namespace ArrowSphere\PublicApiClient\Campaigns\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\Asset\Asset;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class CampaignV2 extends AbstractEntity
 {
@@ -35,107 +36,115 @@ class CampaignV2 extends AbstractEntity
     public const DEFAULT_VALUE_WEIGHT = 1;
 
     /**
-     * @var string
+     * @var Banner
      */
-    private $reference;
+    #[Property(name: self::COLUMN_BANNER, type: Banner::class, required: true)]
+    protected Banner $banner;
 
     /**
      * @var string
      */
-    private $name;
-
-    /**
-     * @var string
-     */
-    private $category;
+    #[Property(name: self::COLUMN_CATEGORY)]
+    protected string $category = self::DEFAULT_VALUE_CATEGORY;
 
     /**
      * @var bool
      */
-    private $isActivated;
+    #[Property(name: self::COLUMN_IS_ACTIVATED, type: 'bool')]
+    protected bool $isActivated = false;
 
     /**
      * @var string
      */
-    private $createdAt;
+    #[Property(name: self::COLUMN_CREATED_AT, required: true)]
+    protected string $createdAt;
 
     /**
      * @var string|null
      */
-    private $updatedAt;
+    #[Property(name: self::COLUMN_DELETED_AT, serializeNull: true)]
+    protected ?string $deletedAt = self::DEFAULT_VALUE_DELETED_AT;
 
     /**
      * @var string|null
      */
-    private $deletedAt;
-
-    /**
-     * @var Rules
-     */
-    private $rules;
-
-    /**
-     * @var int
-     */
-    private $weight;
-
-    /**
-     * @var string|null
-     */
-    private $startDate;
-
-    /**
-     * @var string|null
-     */
-    private $endDate;
-
-    /**
-     * @var Banner
-     */
-    private $banner;
+    #[Property(name: self::COLUMN_END_DATE, serializeNull: true)]
+    protected ?string $endDate = self::DEFAULT_VALUE_END_DATE;
 
     /**
      * @var LandingPageV2
      */
-    private $landingPage;
+    #[Property(name: self::COLUMN_LANDING_PAGE, type: LandingPageV2::class, required: true)]
+    protected LandingPageV2 $landingPage;
 
     /**
-     * @var Asset[]
+     * @var string
      */
-    private $downloadUrlsAssets;
+    #[Property(name: self::COLUMN_NAME)]
+    protected string $name = self::DEFAULT_VALUE_NAME;
 
     /**
-     * Statement constructor.
+     * @var string
+     */
+    #[Property(name: self::COLUMN_REFERENCE)]
+    protected string $reference = self::DEFAULT_VALUE_REFERENCE;
+
+    /**
+     * @var Rules
+     */
+    #[Property(name: self::COLUMN_RULES, type: Rules::class, required: true)]
+    protected Rules $rules;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_START_DATE, serializeNull: true)]
+    protected ?string $startDate = self::DEFAULT_VALUE_START_DATE;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_UPDATED_AT, serializeNull: true)]
+    protected ?string $updatedAt = self::DEFAULT_VALUE_UPDATED_AT;
+
+    /**
+     * @var int
+     */
+    #[Property(name: self::COLUMN_WEIGHT, type: 'int')]
+    protected int $weight = self::DEFAULT_VALUE_WEIGHT;
+
+    /**
+     * @var Asset[] The assets of the nested downloadUrls field, hydrated by the constructor
+     */
+    protected array $downloadUrlsAssets = [];
+
+    /**
+     * CampaignV2 constructor.
      *
      * @param array $data
      *
-     * @throws EntityValidationException
+     * @throws EntitiesException
      */
     public function __construct(array $data)
     {
+        // A missing or empty banner, landing page or rules gets an instance with its default values, as an empty array would be considered as missing
+        if (empty($data[self::COLUMN_BANNER])) {
+            $data[self::COLUMN_BANNER] = new Banner([]);
+        }
+
+        if (empty($data[self::COLUMN_LANDING_PAGE])) {
+            $data[self::COLUMN_LANDING_PAGE] = new LandingPageV2([]);
+        }
+
+        if (empty($data[self::COLUMN_RULES])) {
+            $data[self::COLUMN_RULES] = new Rules([]);
+        }
+
         parent::__construct($data);
 
-        $this->banner = new Banner($data[self::COLUMN_BANNER] ?? []);
-        $this->category = $data[self::COLUMN_CATEGORY] ?? self::DEFAULT_VALUE_CATEGORY;
-        $this->isActivated = $data[self::COLUMN_IS_ACTIVATED] ?? false;
-        $this->createdAt = $data[self::COLUMN_CREATED_AT] ?? self::DEFAULT_VALUE_CREATED_AT;
-        $this->deletedAt = $data[self::COLUMN_DELETED_AT] ?? self::DEFAULT_VALUE_DELETED_AT;
-        $this->endDate = $data[self::COLUMN_END_DATE] ?? self::DEFAULT_VALUE_END_DATE;
-        $this->landingPage = new LandingPageV2($data[self::COLUMN_LANDING_PAGE] ?? []);
-        $this->name = $data[self::COLUMN_NAME] ?? self::DEFAULT_VALUE_NAME ;
-        $this->reference = $data[self::COLUMN_REFERENCE] ?? self::DEFAULT_VALUE_REFERENCE;
-        $this->rules = new Rules($data[self::COLUMN_RULES] ?? []);
-        $this->startDate = $data[self::COLUMN_START_DATE] ?? self::DEFAULT_VALUE_START_DATE;
-        $this->updatedAt = $data[self::COLUMN_UPDATED_AT] ?? self::DEFAULT_VALUE_UPDATED_AT;
-        $this->weight = $data[self::COLUMN_WEIGHT] ?? self::DEFAULT_VALUE_WEIGHT;
-
-        if (isset($data[self::COLUMN_DOWNLOAD_URLS][self::KEY_ASSETS])) {
-            $this->downloadUrlsAssets = array_map(static function (array $asset) {
-                return new Asset($asset);
-            }, $data[self::COLUMN_DOWNLOAD_URLS][self::KEY_ASSETS]);
-        } else {
-            $this->downloadUrlsAssets = [];
-        }
+        $this->downloadUrlsAssets = array_map(static function (array $asset) {
+            return new Asset($asset);
+        }, $data[self::COLUMN_DOWNLOAD_URLS][self::KEY_ASSETS] ?? []);
     }
 
     /**
@@ -255,21 +264,8 @@ class CampaignV2 extends AbstractEntity
      */
     public function jsonSerialize(): array
     {
-        return [
-            self::COLUMN_BANNER         => $this->getBanner(),
-            self::COLUMN_CATEGORY       => $this->getCategory(),
-            self::COLUMN_IS_ACTIVATED   => $this->getIsActivated(),
-            self::COLUMN_CREATED_AT     => $this->getCreatedAt(),
-            self::COLUMN_DELETED_AT     => $this->getDeletedAt(),
-            self::COLUMN_END_DATE       => $this->getEndDate(),
-            self::COLUMN_LANDING_PAGE   => $this->getLandingPage(),
-            self::COLUMN_NAME           => $this->getName(),
-            self::COLUMN_REFERENCE      => $this->getReference(),
-            self::COLUMN_RULES          => $this->getRules(),
-            self::COLUMN_START_DATE     => $this->getStartDate(),
-            self::COLUMN_UPDATED_AT     => $this->getUpdatedAt(),
-            self::COLUMN_WEIGHT         => $this->getWeight(),
-            self::COLUMN_DOWNLOAD_URLS  => [self::KEY_ASSETS => $this->getDownloadUrlsAssets()],
+        return parent::jsonSerialize() + [
+            self::COLUMN_DOWNLOAD_URLS => [self::KEY_ASSETS => $this->getDownloadUrlsAssets()],
         ];
     }
 }

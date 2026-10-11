@@ -229,6 +229,7 @@ This entity represents the rules of the campaign.
 | locations     | `string[]` | ['MCP', 'ARROWSPHERE']   | The different locations of the campaign, where it can be shown. |
 | marketplaces  | `string[]` | ['FR', 'US', 'UK']       | The different marketplaces of the campaign.                     |
 | resellers     | `string[]` | ['XSP12345', 'XSP45678'] | The different resellers associated to the campaign.             |
+| roles         | `string[]` | ['admin']                | The different roles of the users that will see the campaign.    |
 | subscriptions | `string[]` | ['MSCSP']                | The different subscriptions related to the campaign.            |
 
 

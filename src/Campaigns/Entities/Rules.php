@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Campaigns\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class Rules extends AbstractEntity
 {
@@ -24,52 +24,38 @@ class Rules extends AbstractEntity
     /**
      * @var string[]
      */
-    private $locations;
+    #[Property(name: self::COLUMN_LOCATIONS, isArray: true)]
+    protected array $locations = self::DEFAULT_VALUE_LOCATIONS;
 
     /**
      * @var string[]
      */
-    private $roles;
+    #[Property(name: self::COLUMN_ROLES, isArray: true)]
+    protected array $roles = self::DEFAULT_VALUE_ROLES;
 
     /**
      * @var string[]
      */
-    private $marketplaces;
+    #[Property(name: self::COLUMN_MARKETPLACES, isArray: true)]
+    protected array $marketplaces = self::DEFAULT_VALUE_MARKETPLACES;
 
     /**
      * @var string[]
      */
-    private $subscriptions;
+    #[Property(name: self::COLUMN_SUBSCRIPTIONS, isArray: true)]
+    protected array $subscriptions = self::DEFAULT_VALUE_SUBSCRIPTIONS;
 
     /**
      * @var string[]
      */
-    private $resellers;
+    #[Property(name: self::COLUMN_RESELLERS, isArray: true)]
+    protected array $resellers = self::DEFAULT_VALUE_RESELLERS;
 
     /**
      * @var string[]
      */
-    private $endCustomers;
-
-    /**
-     * Statement constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     * @throws \ReflectionException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->locations = $data[self::COLUMN_LOCATIONS] ?? self::DEFAULT_VALUE_LOCATIONS;
-        $this->roles = $data[self::COLUMN_ROLES] ?? self::DEFAULT_VALUE_ROLES;
-        $this->marketplaces = $data[self::COLUMN_MARKETPLACES] ?? self::DEFAULT_VALUE_MARKETPLACES;
-        $this->subscriptions = $data[self::COLUMN_SUBSCRIPTIONS] ?? self::DEFAULT_VALUE_SUBSCRIPTIONS;
-        $this->resellers = $data[self::COLUMN_RESELLERS] ?? self::DEFAULT_VALUE_RESELLERS;
-        $this->endCustomers = $data[self::COLUMN_ENDCUSTOMERS] ?? self::DEFAULT_VALUE_ENDCUSTOMERS;
-    }
+    #[Property(name: self::COLUMN_ENDCUSTOMERS, isArray: true)]
+    protected array $endCustomers = self::DEFAULT_VALUE_ENDCUSTOMERS;
 
     /**
      * @return string[]
@@ -117,20 +103,5 @@ class Rules extends AbstractEntity
     public function getEndCustomers(): array
     {
         return $this->endCustomers;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_LOCATIONS     => $this->getLocations(),
-            self::COLUMN_ROLES         => $this->getRoles(),
-            self::COLUMN_MARKETPLACES  => $this->getMarketplaces(),
-            self::COLUMN_SUBSCRIPTIONS => $this->getSubscriptions(),
-            self::COLUMN_RESELLERS     => $this->getResellers(),
-            self::COLUMN_ENDCUSTOMERS  => $this->getEndCustomers(),
-        ];
     }
 }
