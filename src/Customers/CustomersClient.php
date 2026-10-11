@@ -47,6 +47,7 @@ class CustomersClient extends AbstractClient
      *
      * @return Generator<Customer>
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
@@ -137,6 +138,7 @@ class CustomersClient extends AbstractClient
      *
      * @return Customer
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
@@ -144,13 +146,18 @@ class CustomersClient extends AbstractClient
      */
     public function updateCustomer(Customer $customer, array $parameters = []): Customer
     {
+        $reference = $customer->getReference();
+        if ($reference === null) {
+            throw new PublicApiClientException('The customer to update must have a reference');
+        }
+
         $payload = $customer->jsonSerialize();
         unset(
             $payload[Customer::COLUMN_DELETED_AT],
             $payload[Customer::COLUMN_REFERENCE]
         );
 
-        $this->path = '/customers/' . urlencode($customer->getReference());
+        $this->path = '/customers/' . urlencode($reference);
 
         $rawResponse = $this->patch($payload, $parameters);
 
@@ -167,6 +174,7 @@ class CustomersClient extends AbstractClient
      *
      * @return Customer
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
@@ -384,6 +392,7 @@ class CustomersClient extends AbstractClient
     }
 
     /**
+     * @throws EntitiesException
      * @throws NotFoundException
      * @throws EntityValidationException
      * @throws GuzzleException

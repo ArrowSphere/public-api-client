@@ -3,6 +3,7 @@
 namespace ArrowSphere\PublicApiClient\Customers\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Entities\Pagination;
 
 class CustomersResponse extends AbstractEntity
@@ -17,6 +18,8 @@ class CustomersResponse extends AbstractEntity
 
     /**
      * @var Pagination
+     *
+     * @throws EntitiesException
      */
     private $pagination;
 

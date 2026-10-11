@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Migrated the `Customer`, `CompanyDetails`, `ProvisionResponse` and `Attribute` customers entities to the attribute-based entity system, without changing their methods nor their serialization
+- Fixed the default `BillingId` of a `Customer` built without it: it is now an empty string instead of the integer `0`, which made the API store a billing id "0" when creating or updating a customer
+- Fixed `Customer::getReference()`, which threw a `TypeError` for a customer without reference (such as a customer to create): it now returns a nullable string, and `CustomersClient::updateCustomer()` throws a `PublicApiClientException` for a customer without reference
 - Migrated the `Whoami`, `Contact`, `Gdap` and `Invitation` (with its `Company` and `Contact` sub-entities) entities to the attribute-based entity system, without changing their methods nor their serialization
 - Fixed `Whoami::getAddressLine1()`, `Whoami::getAddressLine2()` and `Invitation\Contact::getUsername()`, which threw a `TypeError` when the API returned a null value: they now return a nullable type
 - Migrated the `Program`, `Family`, `PriceBand` and `FilterFindResult` catalog entities to the attribute-based entity system, without changing their getters nor their serialization

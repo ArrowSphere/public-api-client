@@ -74,4 +74,35 @@ JSON;
 
         self::assertSame($expected, json_encode($customer, JSON_PRETTY_PRINT));
     }
+
+    public function testSerializeWithDefaults(): void
+    {
+        $customer = new Customer([
+            'AddressLine1'      => null,
+            'City'              => 'Gotham City',
+            'CompanyName'       => 'Wayne industries',
+            'Contact'           => [
+                'Email'     => 'test@example.com',
+                'FirstName' => 'Bruce',
+                'LastName'  => 'Wayne',
+                'Phone'     => '',
+            ],
+            'CountryCode'       => 'US',
+            'Details'           => [],
+            'EmailContact'      => 'nobody@example.com',
+            'Headcount'         => null,
+            'InternalReference' => '',
+            'ReceptionPhone'    => '',
+            'Ref'               => '',
+            'State'             => '',
+            'TaxNumber'         => '',
+            'Zip'               => '',
+        ]);
+
+        self::assertSame('', $customer->getAddressLine1());
+        self::assertSame('', $customer->getBillingId());
+        self::assertNull($customer->getReference());
+        self::assertNull($customer->getOrganizationUnit());
+        self::assertSame('{"AddressLine1":"","AddressLine2":"","BillingId":"","City":"Gotham City","CompanyName":"Wayne industries","Contact":{"Email":"test@example.com","FirstName":"Bruce","LastName":"Wayne","Phone":""},"CountryCode":"US","Details":[],"DeletedAt":null,"EmailContact":"nobody@example.com","Headcount":null,"InternalReference":"","ReceptionPhone":"","Ref":"","Reference":null,"State":"","TaxNumber":"","WebsiteUrl":null,"Zip":"","OrganizationUnit":null}', json_encode($customer));
+    }
 }

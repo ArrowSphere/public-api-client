@@ -1110,6 +1110,23 @@ JSON;
     }
 
     /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     */
+    public function testUpdateCustomerRequiresAReference(): void
+    {
+        $data = $this->getCustomerData();
+        unset($data['Reference']);
+
+        $this->httpClient->expects(self::never())->method('request');
+
+        $this->expectException(PublicApiClientException::class);
+        $this->expectExceptionMessage('The customer to update must have a reference');
+
+        $this->client->updateCustomer(new Customer($data));
+    }
+
+    /**
      * Returns the data of a customer, in the format expected by the Customer entity.
      *
      * @return array

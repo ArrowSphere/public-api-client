@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Customers\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class CompanyDetails
@@ -22,75 +22,41 @@ class CompanyDetails extends AbstractEntity
 
     public const COLUMN_TENANT_ID = 'TenantId';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_MIGRATION => 'boolean',
-    ];
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_DOMAIN_NAME)]
+    protected ?string $domainName = null;
 
     /**
      * @var string|null
      */
-    private $domainName;
+    #[Property(name: self::COLUMN_IBM_CE_ID)]
+    protected ?string $ibmCeId = null;
 
     /**
-     * @var string
+     * @var string|null
      */
-    private $ibmCeId;
-
-    /**
-     * @var string
-     */
-    private $ibmMaas360ResellerId;
+    #[Property(name: self::COLUMN_IBM_MAAS_360_RESELLER_ID)]
+    protected ?string $ibmMaas360ResellerId = null;
 
     /**
      * @var bool|null
      */
-    private $migration;
+    #[Property(name: self::COLUMN_MIGRATION, type: 'bool')]
+    protected ?bool $migration = null;
 
     /**
      * @var string|null
      */
-    private $oracleOnlineKey;
+    #[Property(name: self::COLUMN_ORACLE_ONLINE_KEY)]
+    protected ?string $oracleOnlineKey = null;
 
     /**
      * @var string|null
      */
-    private $tenantId;
-
-    /**
-     * CompanyDetails constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->domainName = $data[self::COLUMN_DOMAIN_NAME] ?? null;
-        $this->ibmCeId = $data[self::COLUMN_IBM_CE_ID] ?? null;
-        $this->ibmMaas360ResellerId = $data[self::COLUMN_IBM_MAAS_360_RESELLER_ID] ?? null;
-        $this->migration = $data[self::COLUMN_MIGRATION] ?? null;
-        $this->oracleOnlineKey = $data[self::COLUMN_ORACLE_ONLINE_KEY] ?? null;
-        $this->tenantId = $data[self::COLUMN_TENANT_ID] ?? null;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return array_filter([
-            self::COLUMN_DOMAIN_NAME              => $this->domainName,
-            self::COLUMN_IBM_CE_ID                => $this->ibmCeId,
-            self::COLUMN_IBM_MAAS_360_RESELLER_ID => $this->ibmMaas360ResellerId,
-            self::COLUMN_MIGRATION                => $this->migration,
-            self::COLUMN_ORACLE_ONLINE_KEY        => $this->oracleOnlineKey,
-            self::COLUMN_TENANT_ID                => $this->tenantId,
-        ], static function ($val) {
-            return $val !== null;
-        });
-    }
+    #[Property(name: self::COLUMN_TENANT_ID)]
+    protected ?string $tenantId = null;
 
     /**
      * @return string|null
@@ -101,7 +67,7 @@ class CompanyDetails extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getIbmCeId(): ?string
     {
@@ -109,7 +75,7 @@ class CompanyDetails extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getIbmMaas360ResellerId(): ?string
     {
