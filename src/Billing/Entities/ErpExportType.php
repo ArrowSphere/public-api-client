@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Billing\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class ErpExportType extends AbstractEntity
 {
@@ -11,36 +11,17 @@ class ErpExportType extends AbstractEntity
 
     public const COLUMN_COLUMNS = 'columns';
 
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLUMN_NAME => 'string|required',
-        self::COLUMN_COLUMNS => 'array|required',
-    ];
-
     /**
      * @var string
      */
-    private $name;
+    #[Property(name: self::COLUMN_NAME, required: true)]
+    protected string $name;
 
     /**
      * @var array
      */
-    private $columns;
-
-    /**
-     * Erp Export Type constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     * @throws \ReflectionException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->name = $data[self::COLUMN_NAME];
-        $this->columns = $data[self::COLUMN_COLUMNS];
-    }
+    #[Property(name: self::COLUMN_COLUMNS, type: 'array', required: true)]
+    protected array $columns;
 
     /**
      * @return string
@@ -56,16 +37,5 @@ class ErpExportType extends AbstractEntity
     public function getColumns(): array
     {
         return $this->columns;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_NAME => $this->getName(),
-            self::COLUMN_COLUMNS => $this->getColumns(),
-        ];
     }
 }
