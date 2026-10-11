@@ -4,6 +4,7 @@ namespace ArrowSphere\PublicApiClient\Billing;
 
 use ArrowSphere\PublicApiClient\Billing\Entities\Preference;
 use ArrowSphere\PublicApiClient\Billing\Entities\Preferences;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
@@ -47,6 +48,7 @@ class PreferencesClient extends AbstractBillingClient
      *
      * @return Preferences
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException

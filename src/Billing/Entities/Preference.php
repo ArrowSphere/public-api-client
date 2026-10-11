@@ -2,10 +2,12 @@
 
 namespace ArrowSphere\PublicApiClient\Billing\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\AbstractEntity as LegacyAbstractEntity;
 use ArrowSphere\PublicApiClient\Billing\Enum\PreferenceGroupByColumnsEnum;
-use ArrowSphere\PublicApiClient\Billing\Enum\PreferenceOverridesEnum;
 use ArrowSphere\PublicApiClient\Billing\Enum\PreferenceTypeEnum;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
+use ArrowSphere\PublicApiClient\Entities\Property;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class Preference extends AbstractEntity
@@ -18,79 +20,70 @@ class Preference extends AbstractEntity
     public const KEY_FILTERS = 'filters';
     public const KEY_OVERRIDES = 'overrides';
 
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::KEY_NAME => 'string|required',
-        self::KEY_PRIORITY => 'numeric|required',
-        self::KEY_IDENTIFIER => 'string|required',
-        self::KEY_PARAMETERS => 'array|present',
-        self::KEY_PARAMETERS . '.' . self::KEY_COLUMNS => 'array|required_if:' . self::KEY_IDENTIFIER . ',' . PreferenceTypeEnum::GROUP_BY,
-        self::KEY_FILTERS => 'array|present',
-        self::KEY_OVERRIDES => 'array|required',
-        self::KEY_OVERRIDES . '.' . PreferenceOverridesEnum::ARS_SKU => 'string|required'
-    ];
-
     /**
      * @var string
      */
-    private $name;
+    #[Property(name: self::KEY_NAME, required: true)]
+    protected string $name;
 
     /**
      * @var int
      */
-    private $priority;
+    #[Property(name: self::KEY_PRIORITY, type: 'int', required: true)]
+    protected int $priority;
 
     /**
      * @var string
      */
-    private $identifier;
+    #[Property(name: self::KEY_IDENTIFIER, required: true)]
+    protected string $identifier;
 
     /**
      * @var array
      */
-    private $parameters;
+    #[Property(name: self::KEY_PARAMETERS, type: 'array')]
+    protected array $parameters = [];
 
     /**
      * @var array
      */
-    private $filters;
+    #[Property(name: self::KEY_FILTERS, type: 'array')]
+    protected array $filters = [];
 
     /**
      * @var array
      */
-    private $overrides;
+    #[Property(name: self::KEY_OVERRIDES, type: 'array', required: true)]
+    protected array $overrides;
 
     /**
-     * Preferences constructor.
+     * Preference constructor.
      *
      * @param array $data
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
-     * @throws \ReflectionException
      */
     public function __construct(array $data)
     {
         parent::__construct($data);
 
-        if (self::$enableValidation) {
-            if (! PreferenceTypeEnum::isValidValue($data[self::KEY_IDENTIFIER])) {
-                throw new EntityValidationException('Identifier: ' . $data[self::KEY_IDENTIFIER] . ' not supported');
+        if (LegacyAbstractEntity::$enableValidation) {
+            if (! PreferenceTypeEnum::isValidValue($this->identifier)) {
+                throw new EntityValidationException('Identifier: ' . $this->identifier . ' not supported');
             }
 
-            if ($data[self::KEY_IDENTIFIER] === PreferenceTypeEnum::GROUP_BY) {
-                $values = PreferenceGroupByColumnsEnum::invalidValues($data[self::KEY_PARAMETERS][self::KEY_COLUMNS]);
+            if ($this->identifier === PreferenceTypeEnum::GROUP_BY) {
+                if (empty($this->parameters[self::KEY_COLUMNS]) || ! is_array($this->parameters[self::KEY_COLUMNS])) {
+                    throw new EntityValidationException(self::KEY_PARAMETERS . '.' . self::KEY_COLUMNS . ' is required if ' . self::KEY_IDENTIFIER . ' is equal to ' . PreferenceTypeEnum::GROUP_BY);
+                }
 
+                $values = PreferenceGroupByColumnsEnum::invalidValues($this->parameters[self::KEY_COLUMNS]);
                 if (! empty($values)) {
                     throw new EntityValidationException('GroupBy Columns: ' . implode(' ', $values) . ' not supported');
                 }
             }
         }
-
-        $this->name = $data[self::KEY_NAME];
-        $this->priority = $data[self::KEY_PRIORITY];
-        $this->identifier = $data[self::KEY_IDENTIFIER];
-        $this->parameters = $data[self::KEY_PARAMETERS];
-        $this->filters = $data[self::KEY_FILTERS];
-        $this->overrides = $data[self::KEY_OVERRIDES];
     }
 
     /**
@@ -146,13 +139,11 @@ class Preference extends AbstractEntity
      */
     public function jsonSerialize(): array
     {
-        return [
-            self::KEY_NAME => $this->getName(),
-            self::KEY_PRIORITY => $this->getPriority(),
-            self::KEY_IDENTIFIER => $this->getIdentifier(),
-            self::KEY_PARAMETERS => $this->getParameters(),
-            self::KEY_FILTERS => (object)$this->getFilters(),
-            self::KEY_OVERRIDES => $this->getOverrides(),
-        ];
+        $data = parent::jsonSerialize();
+
+        // The filters are a map, serialized as an object even when empty
+        $data[self::KEY_FILTERS] = (object) $this->filters;
+
+        return $data;
     }
 }

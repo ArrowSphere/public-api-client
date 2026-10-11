@@ -2,8 +2,11 @@
 
 namespace ArrowSphere\PublicApiClient\Billing\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\AbstractEntity as LegacyAbstractEntity;
 use ArrowSphere\PublicApiClient\Billing\Enum\BillingPeriodicityEnum;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
+use ArrowSphere\PublicApiClient\Entities\Property;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class StatementLine extends AbstractEntity
@@ -34,200 +37,171 @@ class StatementLine extends AbstractEntity
     public const COLUMN_PRICES = 'prices';
     public const COLUMN_DESCRIPTION = 'description';
 
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLUMN_REFERENCE => 'string|required',
-        self::COLUMN_VENDOR_END_CUSTOMER_SUBSCRIPTION_ID => 'string|present|nullable',
-        self::COLUMN_VENDOR_NAME => 'string|present|nullable',
-        self::COLUMN_PROGRAM_CODE => 'string|present|nullable',
-        self::COLUMN_CLASSIFICATION => 'string|present|nullable',
-        self::COLUMN_VENDOR_PRODUCT_NAME => 'string|present|nullable',
-        self::COLUMN_VENDOR_SKU => 'string|present|nullable',
-        self::COLUMN_ARROW_SKU => 'string|required',
-        self::COLUMN_ORDER_ID => 'string|present|nullable',
-        self::COLUMN_RESELLER_ORDER_ID => 'string|present|nullable',
-        self::COLUMN_BILLING_PERIOD_START => 'string|present|nullable',
-        self::COLUMN_BILLING_PERIOD_END => 'string|present|nullable',
-        self::COLUMN_USAGE_START_DATE => 'string|required',
-        self::COLUMN_USAGE_END_DATE => 'string|required',
-        self::COLUMN_SUBSCRIPTION_START_DATE => 'string|present|nullable',
-        self::COLUMN_SUBSCRIPTION_END_DATE => 'string|present|nullable',
-        self::COLUMN_BILLING_PERIODICITY => 'string|present|nullable',
-        self::COLUMN_QUANTITY => 'numeric|present|nullable',
-        self::COLUMN_SUBSCRIPTION_FRIENDLY_NAME => 'string|present|nullable',
-        self::COLUMN_ARS_SUBSCRIPTION_ID => 'string|present|nullable',
-        self::COLUMN_OFFER_NAME => 'string|present|nullable',
-        self::COLUMN_RATES => 'array|required',
-        self::COLUMN_CURRENCY => 'string|required',
-        self::COLUMN_PRICES => 'array|required',
-        self::COLUMN_DESCRIPTION => 'string|present|nullable',
-    ];
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_REFERENCE, required: true)]
+    protected string $reference;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_VENDOR_END_CUSTOMER_SUBSCRIPTION_ID, serializeNull: true)]
+    protected ?string $vendorEndCustomerSubscriptionId = null;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_VENDOR_NAME, serializeNull: true)]
+    protected ?string $vendorName = null;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_PROGRAM_CODE, serializeNull: true)]
+    protected ?string $programCode = null;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_CLASSIFICATION, serializeNull: true)]
+    protected ?string $classification = null;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_VENDOR_PRODUCT_NAME, serializeNull: true)]
+    protected ?string $vendorProductName = null;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_VENDOR_SKU, serializeNull: true)]
+    protected ?string $vendorSku = null;
 
     /**
      * @var string
      */
-    private $reference;
+    #[Property(name: self::COLUMN_ARROW_SKU, required: true)]
+    protected string $arrowSku;
 
     /**
      * @var string|null
      */
-    private $vendorEndCustomerSubscriptionId;
+    #[Property(name: self::COLUMN_OFFER_NAME, serializeNull: true)]
+    protected ?string $offerName = null;
 
     /**
      * @var string|null
      */
-    private $vendorName;
+    #[Property(name: self::COLUMN_SUBSCRIPTION_FRIENDLY_NAME, serializeNull: true)]
+    protected ?string $subscriptionFriendlyName = null;
 
     /**
      * @var string|null
      */
-    private $programCode;
+    #[Property(name: self::COLUMN_ARS_SUBSCRIPTION_ID, serializeNull: true)]
+    protected ?string $arsSubscriptionId = null;
 
     /**
      * @var string|null
      */
-    private $classification;
+    #[Property(name: self::COLUMN_ORDER_ID, serializeNull: true)]
+    protected ?string $orderId = null;
 
     /**
      * @var string|null
      */
-    private $vendorProductName;
+    #[Property(name: self::COLUMN_RESELLER_ORDER_ID, serializeNull: true)]
+    protected ?string $resellerOrderId = null;
 
     /**
      * @var string|null
      */
-    private $vendorSku;
+    #[Property(name: self::COLUMN_SUBSCRIPTION_START_DATE, serializeNull: true)]
+    protected ?string $subscriptionStartDate = null;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_SUBSCRIPTION_END_DATE, serializeNull: true)]
+    protected ?string $subscriptionEndDate = null;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_BILLING_PERIODICITY, serializeNull: true)]
+    protected ?string $billingPeriodicity = null;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_BILLING_PERIOD_START, serializeNull: true)]
+    protected ?string $billingPeriodStart = null;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_BILLING_PERIOD_END, serializeNull: true)]
+    protected ?string $billingPeriodEnd = null;
 
     /**
      * @var string
      */
-    private $arrowSku;
-
-    /**
-     * @var string|null
-     */
-    private $offerName;
-
-    /**
-     * @var string|null
-     */
-    private $subscriptionFriendlyName;
-
-    /**
-     * @var string|null
-     */
-    private $arsSubscriptionId;
-
-    /**
-     * @var string|null
-     */
-    private $orderId;
-
-    /**
-     * @var string|null
-     */
-    private $resellerOrderId;
-
-    /**
-     * @var string|null
-     */
-    private $subscriptionStartDate;
-
-    /**
-     * @var string|null
-     */
-    private $subscriptionEndDate;
-
-    /**
-     * @var string|null
-     */
-    private $billingPeriodicity;
-
-    /**
-     * @var string|null
-     */
-    private $billingPeriodStart;
-
-    /**
-     * @var string|null
-     */
-    private $billingPeriodEnd;
+    #[Property(name: self::COLUMN_USAGE_START_DATE, required: true)]
+    protected string $usageStartDate;
 
     /**
      * @var string
      */
-    private $usageStartDate;
-
-    /**
-     * @var string
-     */
-    private $usageEndDate;
+    #[Property(name: self::COLUMN_USAGE_END_DATE, required: true)]
+    protected string $usageEndDate;
 
     /**
      * @var Rates
      */
-    private $rates;
+    #[Property(name: self::COLUMN_RATES, type: Rates::class, required: true)]
+    protected Rates $rates;
 
     /**
      * @var float|null
      */
-    private $quantity;
+    #[Property(name: self::COLUMN_QUANTITY, type: 'float', serializeNull: true)]
+    protected ?float $quantity = null;
 
     /**
      * @var string
      */
-    private $currency;
+    #[Property(name: self::COLUMN_CURRENCY, required: true)]
+    protected string $currency;
 
     /**
      * @var Prices
      */
-    private $prices;
+    #[Property(name: self::COLUMN_PRICES, type: Prices::class, required: true)]
+    protected Prices $prices;
 
     /**
      * @var string|null
      */
-    private $description;
+    #[Property(name: self::COLUMN_DESCRIPTION, serializeNull: true)]
+    protected ?string $description = null;
 
     /**
-     * Statement constructor.
+     * StatementLine constructor.
      *
      * @param array $data
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
-     * @throws \ReflectionException
      */
     public function __construct(array $data)
     {
         parent::__construct($data);
 
-        if (self::$enableValidation && ! BillingPeriodicityEnum::isValidValue($data[self::COLUMN_BILLING_PERIODICITY])) {
-            throw new EntityValidationException('Billing periodicity: ' . $data[self::COLUMN_BILLING_PERIODICITY] . ' not supported');
+        if (LegacyAbstractEntity::$enableValidation && ! BillingPeriodicityEnum::isValidValue($this->billingPeriodicity)) {
+            throw new EntityValidationException('Billing periodicity: ' . $this->billingPeriodicity . ' not supported');
         }
-
-        $this->reference = $data[self::COLUMN_REFERENCE];
-        $this->vendorEndCustomerSubscriptionId = $data[self::COLUMN_VENDOR_END_CUSTOMER_SUBSCRIPTION_ID];
-        $this->vendorName = $data[self::COLUMN_VENDOR_NAME];
-        $this->programCode = $data[self::COLUMN_PROGRAM_CODE];
-        $this->classification = $data[self::COLUMN_CLASSIFICATION];
-        $this->vendorProductName = $data[self::COLUMN_VENDOR_PRODUCT_NAME];
-        $this->vendorSku = $data[self::COLUMN_VENDOR_SKU];
-        $this->arrowSku = $data[self::COLUMN_ARROW_SKU];
-        $this->orderId = $data[self::COLUMN_ORDER_ID];
-        $this->resellerOrderId = $data[self::COLUMN_RESELLER_ORDER_ID];
-        $this->billingPeriodStart = $data[self::COLUMN_BILLING_PERIOD_START];
-        $this->billingPeriodEnd = $data[self::COLUMN_BILLING_PERIOD_END];
-        $this->usageStartDate = $data[self::COLUMN_USAGE_START_DATE];
-        $this->usageEndDate = $data[self::COLUMN_USAGE_END_DATE];
-        $this->subscriptionStartDate = $data[self::COLUMN_SUBSCRIPTION_START_DATE];
-        $this->subscriptionEndDate = $data[self::COLUMN_SUBSCRIPTION_END_DATE];
-        $this->billingPeriodicity = $data[self::COLUMN_BILLING_PERIODICITY];
-        $this->subscriptionFriendlyName = $data[self::COLUMN_SUBSCRIPTION_FRIENDLY_NAME];
-        $this->arsSubscriptionId = $data[self::COLUMN_ARS_SUBSCRIPTION_ID];
-        $this->offerName = $data[self::COLUMN_OFFER_NAME];
-        $this->rates = new Rates($data[self::COLUMN_RATES]);
-        $this->quantity = $data[self::COLUMN_QUANTITY];
-        $this->currency = $data[self::COLUMN_CURRENCY];
-        $this->prices = new Prices($data[self::COLUMN_PRICES]);
-        $this->description = $data[self::COLUMN_DESCRIPTION];
     }
 
     /**
@@ -428,39 +402,5 @@ class StatementLine extends AbstractEntity
     public function getDescription(): ?string
     {
         return $this->description;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_REFERENCE => $this->getReference(),
-            self::COLUMN_VENDOR_END_CUSTOMER_SUBSCRIPTION_ID => $this->getVendorEndCustomerSubscriptionId(),
-            self::COLUMN_VENDOR_NAME => $this->getVendorName(),
-            self::COLUMN_PROGRAM_CODE => $this->getProgramCode(),
-            self::COLUMN_CLASSIFICATION => $this->getClassification(),
-            self::COLUMN_VENDOR_PRODUCT_NAME => $this->getVendorProductName(),
-            self::COLUMN_VENDOR_SKU => $this->getVendorSku(),
-            self::COLUMN_ARROW_SKU => $this->getArrowSku(),
-            self::COLUMN_OFFER_NAME => $this->getOfferName(),
-            self::COLUMN_SUBSCRIPTION_FRIENDLY_NAME => $this->getSubscriptionFriendlyName(),
-            self::COLUMN_ARS_SUBSCRIPTION_ID => $this->getArsSubscriptionId(),
-            self::COLUMN_ORDER_ID => $this->getOrderId(),
-            self::COLUMN_RESELLER_ORDER_ID => $this->getResellerOrderId(),
-            self::COLUMN_SUBSCRIPTION_START_DATE => $this->getSubscriptionStartDate(),
-            self::COLUMN_SUBSCRIPTION_END_DATE => $this->getSubscriptionEndDate(),
-            self::COLUMN_BILLING_PERIODICITY => $this->getBillingPeriodicity(),
-            self::COLUMN_BILLING_PERIOD_START => $this->getBillingPeriodStart(),
-            self::COLUMN_BILLING_PERIOD_END => $this->getBillingPeriodEnd(),
-            self::COLUMN_USAGE_START_DATE => $this->getUsageStartDate(),
-            self::COLUMN_USAGE_END_DATE => $this->getUsageEndDate(),
-            self::COLUMN_RATES => $this->getRates()->jsonSerialize(),
-            self::COLUMN_QUANTITY => $this->getQuantity(),
-            self::COLUMN_CURRENCY => $this->getCurrency(),
-            self::COLUMN_PRICES => $this->getPrices()->jsonSerialize(),
-            self::COLUMN_DESCRIPTION => $this->getDescription(),
-        ];
     }
 }

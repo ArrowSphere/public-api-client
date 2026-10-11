@@ -2,8 +2,11 @@
 
 namespace ArrowSphere\PublicApiClient\Billing\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\AbstractEntity as LegacyAbstractEntity;
 use ArrowSphere\PublicApiClient\Billing\Enum\RateTypeEnum;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
+use ArrowSphere\PublicApiClient\Entities\Property;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 
 class Rates extends AbstractEntity
@@ -11,39 +14,33 @@ class Rates extends AbstractEntity
     public const COLUMN_SELL_RATE = 'sellRate';
     public const COLUMN_SELL_RATE_TYPE = 'sellRateType';
 
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLUMN_SELL_RATE => 'numeric|present|nullable',
-        self::COLUMN_SELL_RATE_TYPE => 'string|present|nullable',
-    ];
-
     /**
      * @var float|null
      */
-    private $sellRate;
+    #[Property(name: self::COLUMN_SELL_RATE, type: 'float', serializeNull: true)]
+    protected ?float $sellRate = null;
 
     /**
      * @var string|null
      */
-    private $sellRateType;
+    #[Property(name: self::COLUMN_SELL_RATE_TYPE, serializeNull: true)]
+    protected ?string $sellRateType = null;
 
     /**
-     * Identity constructor.
+     * Rates constructor.
      *
      * @param array $data
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
-     * @throws \ReflectionException
      */
     public function __construct(array $data)
     {
         parent::__construct($data);
 
-        if (self::$enableValidation && $data[self::COLUMN_SELL_RATE_TYPE] !== null && ! RateTypeEnum::isValidValue($data[self::COLUMN_SELL_RATE_TYPE])) {
-            throw new EntityValidationException('End Customer Rate type: ' . $data[self::COLUMN_SELL_RATE_TYPE] . ' not supported');
+        if (LegacyAbstractEntity::$enableValidation && $this->sellRateType !== null && ! RateTypeEnum::isValidValue($this->sellRateType)) {
+            throw new EntityValidationException('End Customer Rate type: ' . $this->sellRateType . ' not supported');
         }
-
-        $this->sellRate = $data[self::COLUMN_SELL_RATE];
-        $this->sellRateType = $data[self::COLUMN_SELL_RATE_TYPE];
     }
 
     /**
@@ -60,16 +57,5 @@ class Rates extends AbstractEntity
     public function getSellRateType(): ?string
     {
         return $this->sellRateType;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_SELL_RATE => $this->getSellRate(),
-            self::COLUMN_SELL_RATE_TYPE => $this->getSellRateType(),
-        ];
     }
 }

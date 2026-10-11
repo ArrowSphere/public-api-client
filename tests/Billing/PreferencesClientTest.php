@@ -4,6 +4,7 @@ namespace ArrowSphere\PublicApiClient\Tests\Billing;
 
 use ArrowSphere\PublicApiClient\Billing\Entities\Preference;
 use ArrowSphere\PublicApiClient\Billing\Entities\Preferences;
+use ArrowSphere\PublicApiClient\Billing\Enum\PreferenceOverridesEnum;
 use ArrowSphere\PublicApiClient\Billing\PreferencesClient;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
@@ -135,11 +136,16 @@ class PreferencesClientTest extends AbstractClientTest
     public function testCreateInvalidPreferences(): void
     {
         $payload = [
+            'name'       => 'Group by columns',
+            'priority'   => 1,
+            'overrides'  => [PreferenceOverridesEnum::ARS_SKU => 'MY-SKU'],
+            'filters'    => [],
             'identifier' => 'GroupBy',
             'parameters' => [], // columns is required
         ];
 
         $this->expectException(EntityValidationException::class);
+        $this->expectExceptionMessage('parameters.columns is required if identifier is equal to GroupBy');
         $preference = new Preference($payload);
     }
 
@@ -152,6 +158,10 @@ class PreferencesClientTest extends AbstractClientTest
     public function testCreateInvalidColumnsPreferences(): void
     {
         $payload = [
+            'name'       => 'Group by columns',
+            'priority'   => 1,
+            'overrides'  => [PreferenceOverridesEnum::ARS_SKU => 'MY-SKU'],
+            'filters'    => [],
             'identifier' => 'GroupBy',
             'parameters' => [
                 'columns' => [
@@ -161,6 +171,7 @@ class PreferencesClientTest extends AbstractClientTest
         ];
 
         $this->expectException(EntityValidationException::class);
+        $this->expectExceptionMessage('GroupBy Columns: FooBar not supported');
         $preference = new Preference($payload);
     }
 }

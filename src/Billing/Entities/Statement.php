@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Billing\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class Statement extends AbstractEntity
 {
@@ -24,134 +24,101 @@ class Statement extends AbstractEntity
     public const COLUMN_DESCRIPTION = 'description';
     public const COLUMN_STATUS = 'status';
 
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLUMN_REFERENCE => 'string|required',
-        self::COLUMN_SEQUENCE => 'string|present|nullable',
-        self::COLUMN_BILLING_GROUP => 'string|required',
-        self::COLUMN_BILLING_STRATEGY => 'string|nullable',
-        self::COLUMN_VENDOR_NAME => 'string|present|nullable',
-        self::COLUMN_PROGRAM_CODE => 'string|present|nullable',
-        self::COLUMN_CLASSIFICATION => 'string|present|nullable',
-        self::COLUMN_REPORT_PERIOD => 'string|required',
-        self::COLUMN_MARKETPLACE => 'string|required',
-        self::COLUMN_ISSUE_DATE => 'string|present|nullable',
-        self::COLUMN_FROM => 'array|required',
-        self::COLUMN_TO => 'array|required',
-        self::COLUMN_CURRENCY => 'string|required',
-        self::COLUMN_PRICES => 'array|required',
-        self::COLUMN_DESCRIPTION => 'string|present|nullable',
-        self::COLUMN_STATUS => 'array|nullable',
-    ];
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_REFERENCE, required: true)]
+    protected string $reference;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_SEQUENCE, serializeNull: true)]
+    protected ?string $sequence = null;
 
     /**
      * @var string
      */
-    private $reference;
+    #[Property(name: self::COLUMN_BILLING_GROUP, required: true)]
+    protected string $billingGroup;
 
     /**
      * @var string|null
      */
-    private $sequence;
+    #[Property(name: self::COLUMN_BILLING_STRATEGY, serializeNull: true)]
+    protected ?string $billingStrategy = null;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_VENDOR_NAME, serializeNull: true)]
+    protected ?string $vendorName = null;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_PROGRAM_CODE, serializeNull: true)]
+    protected ?string $programCode = null;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_CLASSIFICATION, serializeNull: true)]
+    protected ?string $classification = null;
 
     /**
      * @var string
      */
-    private $billingGroup;
-
-    /**
-     * @var string|null
-     */
-    private $billingStrategy;
-
-    /**
-     * @var string|null
-     */
-    private $vendorName;
-
-    /**
-     * @var string|null
-     */
-    private $programCode;
-
-    /**
-     * @var string|null
-     */
-    private $classification;
+    #[Property(name: self::COLUMN_REPORT_PERIOD, required: true)]
+    protected string $reportPeriod;
 
     /**
      * @var string
      */
-    private $reportPeriod;
-
-    /**
-     * @var string
-     */
-    private $marketplace;
+    #[Property(name: self::COLUMN_MARKETPLACE, required: true)]
+    protected string $marketplace;
 
     /**
      * @var string|null
      */
-    private $issueDate;
+    #[Property(name: self::COLUMN_ISSUE_DATE, serializeNull: true)]
+    protected ?string $issueDate = null;
 
     /**
      * @var Identity
      */
-    private $from;
+    #[Property(name: self::COLUMN_FROM, type: Identity::class, required: true)]
+    protected Identity $from;
 
     /**
      * @var Identity
      */
-    private $to;
+    #[Property(name: self::COLUMN_TO, type: Identity::class, required: true)]
+    protected Identity $to;
 
     /**
      * @var string
      */
-    private $currency;
+    #[Property(name: self::COLUMN_CURRENCY, required: true)]
+    protected string $currency;
 
     /**
      * @var Prices
      */
-    private $prices;
+    #[Property(name: self::COLUMN_PRICES, type: Prices::class, required: true)]
+    protected Prices $prices;
 
     /**
      * @var string|null
      */
-    private $description;
+    #[Property(name: self::COLUMN_DESCRIPTION, serializeNull: true)]
+    protected ?string $description = null;
 
     /**
      * @var StatementStatus|null
      */
-    private $status;
-
-    /**
-     * Statement constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     * @throws \ReflectionException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->reference = $data[self::COLUMN_REFERENCE];
-        $this->sequence = $data[self::COLUMN_SEQUENCE];
-        $this->billingGroup = $data[self::COLUMN_BILLING_GROUP];
-        $this->billingStrategy = $data[self::COLUMN_BILLING_STRATEGY] ?? null;
-        $this->vendorName = $data[self::COLUMN_VENDOR_NAME];
-        $this->programCode = $data[self::COLUMN_PROGRAM_CODE];
-        $this->classification = $data[self::COLUMN_CLASSIFICATION];
-        $this->reportPeriod = $data[self::COLUMN_REPORT_PERIOD];
-        $this->marketplace = $data[self::COLUMN_MARKETPLACE];
-        $this->issueDate = $data[self::COLUMN_ISSUE_DATE];
-        $this->from = new Identity($data[self::COLUMN_FROM]);
-        $this->to = new Identity($data[self::COLUMN_TO]);
-        $this->currency = $data[self::COLUMN_CURRENCY];
-        $this->prices = new Prices($data[self::COLUMN_PRICES]);
-        $this->description = $data[self::COLUMN_DESCRIPTION];
-        $this->status = isset($data[self::COLUMN_STATUS]) ? new StatementStatus($data[self::COLUMN_STATUS]) : null;
-    }
+    #[Property(name: self::COLUMN_STATUS, type: StatementStatus::class, serializeNull: true)]
+    protected ?StatementStatus $status = null;
 
     /**
      * @return string
@@ -279,32 +246,5 @@ class Statement extends AbstractEntity
     public function getStatus(): ?StatementStatus
     {
         return $this->status;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        $status = $this->getStatus();
-
-        return [
-            self::COLUMN_REFERENCE => $this->getReference(),
-            self::COLUMN_SEQUENCE => $this->getSequence(),
-            self::COLUMN_BILLING_GROUP => $this->getBillingGroup(),
-            self::COLUMN_BILLING_STRATEGY => $this->getBillingStrategy(),
-            self::COLUMN_VENDOR_NAME => $this->getVendorName(),
-            self::COLUMN_PROGRAM_CODE => $this->getProgramCode(),
-            self::COLUMN_CLASSIFICATION => $this->getClassification(),
-            self::COLUMN_REPORT_PERIOD => $this->getReportPeriod(),
-            self::COLUMN_MARKETPLACE => $this->getMarketplace(),
-            self::COLUMN_ISSUE_DATE => $this->getIssueDate(),
-            self::COLUMN_FROM => $this->getFrom()->jsonSerialize(),
-            self::COLUMN_TO => $this->getTo()->jsonSerialize(),
-            self::COLUMN_CURRENCY => $this->getCurrency(),
-            self::COLUMN_PRICES => $this->getPrices()->jsonSerialize(),
-            self::COLUMN_DESCRIPTION => $this->getDescription(),
-            self::COLUMN_STATUS => $status === null ? null : $status->jsonSerialize(),
-        ];
     }
 }

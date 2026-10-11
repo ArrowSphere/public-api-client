@@ -2,8 +2,9 @@
 
 namespace ArrowSphere\PublicApiClient\Billing\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class Preferences extends AbstractEntity
 {
@@ -12,44 +13,40 @@ class Preferences extends AbstractEntity
     public const KEY_USABLE = 'usable';
     public const KEY_STATUS = 'status';
 
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::KEY_PREFERENCES => 'array|present',
-        self::KEY_VALIDITY . '.' . self::KEY_USABLE => 'boolean|required',
-        self::KEY_VALIDITY . '.' . self::KEY_STATUS => 'string|required',
-    ];
-
     /**
      * @var Preference[]
      */
-    private $list;
+    #[Property(name: self::KEY_PREFERENCES, type: Preference::class, isArray: true)]
+    protected array $list = [];
 
     /**
-     * @var bool
+     * @var bool The usable flag of the nested validity field, hydrated by the constructor
      */
-    private $usable;
+    protected bool $usable;
 
     /**
-     * @var string
+     * @var string The status of the nested validity field, hydrated by the constructor
      */
-    private $status;
+    protected string $status;
 
     /**
      * Preferences constructor.
      *
      * @param array $data
      *
-     * @throws EntityValidationException
-     * @throws \ReflectionException
+     * @throws EntitiesException
      */
     public function __construct(array $data)
     {
         parent::__construct($data);
 
-        $this->list = array_map(static function (array $preference) {
-            return new Preference($preference);
-        }, $data[self::KEY_PREFERENCES]);
-        $this->usable = $data[self::KEY_VALIDITY][self::KEY_USABLE];
-        $this->status = $data[self::KEY_VALIDITY][self::KEY_STATUS];
+        $validity = $data[self::KEY_VALIDITY] ?? null;
+        if (! is_array($validity) || ! isset($validity[self::KEY_USABLE], $validity[self::KEY_STATUS])) {
+            throw new EntitiesException(static::class . ': Missing field: ' . self::KEY_VALIDITY);
+        }
+
+        $this->usable = (bool) $validity[self::KEY_USABLE];
+        $this->status = (string) $validity[self::KEY_STATUS];
     }
 
     /**
@@ -81,13 +78,10 @@ class Preferences extends AbstractEntity
      */
     public function jsonSerialize(): array
     {
-        return [
-            self::KEY_PREFERENCES => array_map(static function (Preference $preference) {
-                return $preference->jsonSerialize();
-            }, $this->getList()),
+        return parent::jsonSerialize() + [
             self::KEY_VALIDITY => [
-                self::KEY_USABLE => $this->getUsable(),
-                self::KEY_STATUS => $this->getStatus(),
+                self::KEY_USABLE => $this->usable,
+                self::KEY_STATUS => $this->status,
             ],
         ];
     }
