@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Orders\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class OrdersProduct extends AbstractEntity
 {
@@ -42,223 +42,238 @@ class OrdersProduct extends AbstractEntity
     public const COLUMN_LICENSE = 'license';
 
     /**
-     * @var string product SKU
+     * @var string
      */
-    private string $sku;
+    #[Property(name: self::COLUMN_SKU, required: true)]
+    protected string $sku;
 
     /**
-     * @var string Product name
+     * @var string
      */
-    private string $name;
+    #[Property(name: self::COLUMN_NAME, required: true)]
+    protected string $name;
 
     /**
-     * @var string Product classification (IaaS, SaaS, PSW...)
+     * @var string
      */
-    private string $classification;
+    #[Property(name: self::COLUMN_CLASSIFICATION, required: true)]
+    protected string $classification;
 
     /**
-     * @var string Product vendor name
+     * @var string
      */
-    private string $vendorName;
+    #[Property(name: self::COLUMN_VENDOR_NAME, required: true)]
+    protected string $vendorName;
 
     /**
-     * @var string Product Program name
+     * @var string
      */
-    private string $programName;
+    #[Property(name: self::COLUMN_PROGRAM_NAME, required: true)]
+    protected string $programName;
 
     /**
      * @var Program
      */
-    private Program $program;
+    #[Property(name: self::COLUMN_PROGRAM, type: Program::class, required: true)]
+    protected Program $program;
 
     /**
      * @var Identifiers
      */
-    private Identifiers $identifiers;
+    #[Property(name: self::COLUMN_IDENTIFIERS, type: Identifiers::class, required: true)]
+    protected Identifiers $identifiers;
 
     /**
-     * @var int Number of products bought
+     * @var int
      */
-    private int $quantity;
+    #[Property(name: self::COLUMN_QUANTITY, type: 'int', required: true)]
+    protected int $quantity;
 
     /**
-     * @var string Order status
+     * @var string
      */
-    private string $status;
+    #[Property(name: self::COLUMN_STATUS)]
+    protected string $status = '';
 
     /**
-     * @var string Date the product became the current "Status"
+     * @var string
      */
-    private string $dateStatus;
+    #[Property(name: self::COLUMN_DATE_STATUS)]
+    protected string $dateStatus = '';
 
     /**
-     * @var string An individual product can be a different status than the order
+     * @var string
      */
-    private string $detailedStatus;
+    #[Property(name: self::COLUMN_DETAILED_STATUS)]
+    protected string $detailedStatus = '';
 
     /**
-     * @var bool whether the product is an addon or not
+     * @var bool
      */
-    private bool $isAddon;
+    #[Property(name: self::COLUMN_IS_ADDON, type: 'bool')]
+    protected bool $isAddon = false;
 
     /**
-     * @var bool whether the product is a trial or not
+     * @var bool
      */
-    private bool $isTrial;
+    #[Property(name: self::COLUMN_IS_TRIAL, type: 'bool')]
+    protected bool $isTrial = false;
 
     /**
      * @var string[]
      */
-    private array $arrowSubCategories;
+    #[Property(name: self::COLUMN_ARROW_SUB_CATEGORIES, isArray: true)]
+    protected array $arrowSubCategories = [];
 
     /**
      * @var Prices
      */
-    private Prices $prices;
-
-    /**
-     * @var Reference
-     */
-    private Reference $subscription;
+    #[Property(name: self::COLUMN_PRICES, type: Prices::class, required: true)]
+    protected Prices $prices;
 
     /**
      * @var Reference|null
      */
-    private ?Reference $license;
+    #[Property(name: self::COLUMN_SUBSCRIPTION, type: Reference::class, serializeNull: true)]
+    protected ?Reference $subscription = null;
 
     /**
-     * OrdersProduct constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntitiesException
+     * @var Reference|null
      */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
+    #[Property(name: self::COLUMN_LICENSE, type: Reference::class, serializeNull: true)]
+    protected ?Reference $license = null;
 
-        $this->sku = $data[self::COLUMN_SKU];
-        $this->name = $data[self::COLUMN_NAME];
-        $this->classification = $data[self::COLUMN_CLASSIFICATION];
-        $this->vendorName = $data[self::COLUMN_VENDOR_NAME];
-        $this->programName = $data[self::COLUMN_PROGRAM_NAME];
-        $this->program = new Program($data[self::COLUMN_PROGRAM]);
-        $this->identifiers = new Identifiers($data[self::COLUMN_IDENTIFIERS]);
-        $this->quantity = $data[self::COLUMN_QUANTITY];
-        $this->status = $data[self::COLUMN_STATUS] ?? '';
-        $this->dateStatus = $data[self::COLUMN_DATE_STATUS] ?? '';
-        $this->detailedStatus = $data[self::COLUMN_DETAILED_STATUS] ?? '';
-        $this->isAddon = $data[self::COLUMN_IS_ADDON] ?? false;
-        $this->isTrial = $data[self::COLUMN_IS_TRIAL] ?? false;
-        $this->arrowSubCategories = $data[self::COLUMN_ARROW_SUB_CATEGORIES] ?? [];
-        $this->prices = new Prices($data[self::COLUMN_PRICES]);
-        $this->subscription = new Reference($data[self::COLUMN_SUBSCRIPTION]);
-        $this->license = $data[self::COLUMN_LICENSE] ? new Reference($data[self::COLUMN_LICENSE]) : null;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_SKU                  => $this->sku,
-            self::COLUMN_NAME                 => $this->name,
-            self::COLUMN_CLASSIFICATION       => $this->classification,
-            self::COLUMN_VENDOR_NAME          => $this->vendorName,
-            self::COLUMN_PROGRAM_NAME         => $this->programName,
-            self::COLUMN_PROGRAM              => $this->program->jsonSerialize(),
-            self::COLUMN_IDENTIFIERS          => $this->identifiers->jsonSerialize(),
-            self::COLUMN_QUANTITY             => $this->quantity,
-            self::COLUMN_STATUS               => $this->status,
-            self::COLUMN_DATE_STATUS          => $this->dateStatus,
-            self::COLUMN_DETAILED_STATUS      => $this->detailedStatus,
-            self::COLUMN_IS_ADDON             => $this->isAddon,
-            self::COLUMN_IS_TRIAL             => $this->isTrial,
-            self::COLUMN_ARROW_SUB_CATEGORIES => $this->arrowSubCategories,
-            self::COLUMN_PRICES               => $this->prices->jsonSerialize(),
-            self::COLUMN_SUBSCRIPTION         => $this->subscription->jsonSerialize(),
-            self::COLUMN_LICENSE              => $this->license ? $this->license->jsonSerialize() : null,
-        ];
-    }
-
-    public function getDateStatus(): string
-    {
-        return $this->dateStatus;
-    }
-
+    /**
+     * @return string
+     */
     public function getSku(): string
     {
         return $this->sku;
     }
 
+    /**
+     * @return string
+     */
     public function getName(): string
     {
         return $this->name;
     }
 
+    /**
+     * @return string
+     */
     public function getClassification(): string
     {
         return $this->classification;
     }
 
+    /**
+     * @return string
+     */
     public function getVendorName(): string
     {
         return $this->vendorName;
     }
 
+    /**
+     * @return string
+     */
     public function getProgramName(): string
     {
         return $this->programName;
     }
 
+    /**
+     * @return Program
+     */
     public function getProgram(): Program
     {
         return $this->program;
     }
 
+    /**
+     * @return Identifiers
+     */
     public function getIdentifiers(): Identifiers
     {
         return $this->identifiers;
     }
 
+    /**
+     * @return int
+     */
     public function getQuantity(): int
     {
         return $this->quantity;
     }
 
+    /**
+     * @return string
+     */
     public function getStatus(): string
     {
         return $this->status;
     }
 
+    /**
+     * @return string
+     */
+    public function getDateStatus(): string
+    {
+        return $this->dateStatus;
+    }
+
+    /**
+     * @return string
+     */
     public function getDetailedStatus(): string
     {
         return $this->detailedStatus;
     }
 
+    /**
+     * @return bool
+     */
     public function getIsAddon(): bool
     {
         return $this->isAddon;
     }
 
+    /**
+     * @return bool
+     */
     public function getIsTrial(): bool
     {
         return $this->isTrial;
     }
 
+    /**
+     * @return string[]
+     */
     public function getArrowSubCategories(): array
     {
         return $this->arrowSubCategories;
     }
 
+    /**
+     * @return Prices
+     */
     public function getPrices(): Prices
     {
         return $this->prices;
     }
 
-    public function getSubscription(): Reference
+    /**
+     * @return Reference|null
+     */
+    public function getSubscription(): ?Reference
     {
         return $this->subscription;
     }
 
+    /**
+     * @return Reference|null
+     */
     public function getLicense(): ?Reference
     {
         return $this->license;

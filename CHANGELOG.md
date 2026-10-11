@@ -5,6 +5,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Migrated the `Order` and `OrdersProduct` entities to the attribute-based entity system, without changing their methods
+- Added the `createdBy`, `createdByImpersonator` and `commitmentAmountTotal` fields, returned by the API, to the serialization of `Order`
+- Fixed `OrdersProduct::getSubscription()`, which made the whole order fail to build when the API returned a product without subscription: it now returns a nullable `Reference`
 - Migrated the `Contact`, `ExtraInformation`, `Identifiers`, `OrderHistory`, `Partner`, `Prices`, `Program`, `Reference` and `Vendor` orders entities to the attribute-based entity system, without changing their methods nor their serialization
 - Migrated the `Customer`, `CompanyDetails`, `ProvisionResponse` and `Attribute` customers entities to the attribute-based entity system, without changing their methods nor their serialization
 - Fixed the default `BillingId` of a `Customer` built without it: it is now an empty string instead of the integer `0`, which made the API store a billing id "0" when creating or updating a customer

@@ -18,6 +18,7 @@ class OrdersClient extends AbstractClient
      *
      * @return Generator<Order>
      *
+     * @throws EntitiesException
      * @throws \ArrowSphere\PublicApiClient\Exception\EntityValidationException
      * @throws \ArrowSphere\PublicApiClient\Exception\NotFoundException
      * @throws \ArrowSphere\PublicApiClient\Exception\PublicApiClientException|\GuzzleHttp\Exception\GuzzleException
@@ -92,6 +93,7 @@ class OrdersClient extends AbstractClient
     }
 
     /**
+     * @throws EntitiesException
      * @throws \ArrowSphere\PublicApiClient\Exception\NotFoundException
      * @throws \ArrowSphere\PublicApiClient\Exception\PublicApiClientException|\GuzzleHttp\Exception\GuzzleException
      */

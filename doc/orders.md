@@ -178,7 +178,7 @@ The OrderProduct host the product info of the order
 | isTrial            | `boolean`     | false                                                                | Whether the product is a trial or not                          |
 | arrowSubCategories | `string[]`    | \[nce]                                                               | Indicates if the product has subCategories like nce from MSC   |
 | prices             | `Prices`      | [Prices](#Prices)                                                    | Product Prices                                                 |
-| subscription       | `Reference`   | [Reference](#Reference)                                              | Reference to the subscription                                  |
+| subscription       | `?Reference`  | [Reference](#Reference)                                              | Reference to the subscription                                  |
 | license            | `?Reference`  | [Reference](#Reference)                                              | Reference to the licence                                       |
 
 #### Program

@@ -3,6 +3,7 @@
 namespace ArrowSphere\PublicApiClient\Orders\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Entities\Pagination;
 
 class GetOrdersResponse extends AbstractEntity
@@ -20,6 +21,13 @@ class GetOrdersResponse extends AbstractEntity
      */
     private Pagination $pagination;
 
+    /**
+     * GetOrdersResponse constructor.
+     *
+     * @param array $data
+     *
+     * @throws EntitiesException
+     */
     public function __construct(array $data)
     {
         parent::__construct($data['data']);
