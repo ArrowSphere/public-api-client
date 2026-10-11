@@ -2,7 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Campaigns\Entities\Asset;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class AssetUploadUrl
@@ -16,19 +17,14 @@ class AssetUploadUrl extends AbstractEntity
     /**
      * @var string
      */
-    private $uuid;
+    #[Property(name: self::COLUMN_UUID, required: true)]
+    protected string $uuid;
 
     /**
      * @var AssetImage
      */
-    private $image;
-
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-        $this->uuid = $data[self::COLUMN_UUID];
-        $this->image = new AssetImage($data[self::COLUMN_IMAGE]);
-    }
+    #[Property(name: self::COLUMN_IMAGE, type: AssetImage::class, required: true)]
+    protected AssetImage $image;
 
     /**
      * @return string
@@ -44,13 +40,5 @@ class AssetUploadUrl extends AbstractEntity
     public function getImage(): AssetImage
     {
         return $this->image;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_UUID  => $this->uuid,
-            self::COLUMN_IMAGE => $this->image,
-        ];
     }
 }

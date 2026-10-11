@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Campaigns\Entities\LandingPage;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class LandingPageFeatureV2 extends AbstractEntity
 {
@@ -17,39 +17,20 @@ class LandingPageFeatureV2 extends AbstractEntity
     /**
      * @var string
      */
-    private $title;
+    #[Property(name: self::COLUMN_TITLE)]
+    protected string $title = self::DEFAULT_VALUE_TITLE;
 
     /**
      * @var string
      */
-    private $description;
+    #[Property(name: self::COLUMN_DESCRIPTION)]
+    protected string $description = self::DEFAULT_VALUE_DESCRIPTION;
 
     /**
      * @var LandingPageFeatureItem[]
      */
-    private $items;
-
-    /**
-     * Statement constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     * @throws \ReflectionException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->title = $data[self::COLUMN_TITLE] ?? self::DEFAULT_VALUE_TITLE;
-        $this->description = $data[self::COLUMN_DESCRIPTION] ?? self::DEFAULT_VALUE_DESCRIPTION;
-        $this->items = array_map(
-            static function (array $items) {
-                return new LandingPageFeatureItem($items);
-            },
-            $data[self::COLUMN_ITEMS] ?? []
-        );
-    }
+    #[Property(name: self::COLUMN_ITEMS, type: LandingPageFeatureItem::class, isArray: true)]
+    protected array $items = [];
 
     /**
      * @return string
@@ -73,17 +54,5 @@ class LandingPageFeatureV2 extends AbstractEntity
     public function getItems(): array
     {
         return $this->items;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_TITLE       => $this->getTitle(),
-            self::COLUMN_DESCRIPTION => $this->getDescription(),
-            self::COLUMN_ITEMS       => $this->getItems(),
-        ];
     }
 }

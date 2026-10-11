@@ -157,6 +157,29 @@ JSON
 JSON
                 ,
             ],
+            'without features' => [
+                'fields'   => [],
+                'expected' => <<<JSON
+{
+    "backgroundColor": "",
+    "buttonText": "",
+    "buttonUrl": "",
+    "feature": {
+        "title": "",
+        "description": "",
+        "items": []
+    },
+    "marketingFeature": {
+        "title": "",
+        "description": "",
+        "items": []
+    },
+    "textColor": "#FFF",
+    "title": ""
+}
+JSON
+                ,
+            ],
         ];
     }
 }

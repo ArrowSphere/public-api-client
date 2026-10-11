@@ -5,6 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Migrated the Campaigns asset entities (`Asset`, `AssetImage`, `AssetImageFields`, `AssetUploadUrl`) and landing page sub-entities (`LandingPageBody`, `LandingPageHeader`, `LandingPageFooter`, `LandingPageFooterV2`, `LandingPageFeature`, `LandingPageFeatureV2`, `LandingPageFeatureItem`, `LandingPageMarketingFeature`, `LandingPageMarketingFeatureItem`) to the attribute-based entity system, without changing their methods nor their serialization
 - Fixed `EntitiesException`, thrown when an attribute-based entity cannot be built, which did not extend `PublicApiClientException`: a missing field in an API response escaped the `catch (PublicApiClientException)` blocks of the consumers
 - Migrated the `CreateQuoteResponse` quotes entity and the `HealthCheckItem`, `MonthlyAnalyticsItem` and `PriceAnalyticsItem` consumption entities to the attribute-based entity system, without changing their methods nor their serialization
 - Migrated the `Order` and `OrdersProduct` entities to the attribute-based entity system, without changing their methods

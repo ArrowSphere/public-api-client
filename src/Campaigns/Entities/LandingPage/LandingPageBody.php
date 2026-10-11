@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Campaigns\Entities\LandingPage;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class LandingPageBody extends AbstractEntity
 {
@@ -26,58 +26,44 @@ class LandingPageBody extends AbstractEntity
     /**
      * @var string
      */
-    private $backgroundImageUuid;
+    #[Property(name: self::COLUMN_BACKGROUND_IMAGE_UUID)]
+    protected string $backgroundImageUuid = self::DEFAULT_VALUE_BACKGROUND_IMAGE_UUID;
 
     /**
      * @var string
      */
-    private $type;
+    #[Property(name: self::COLUMN_TYPE)]
+    protected string $type = self::DEFAULT_VALUE_TYPE;
 
     /**
      * @var string
      */
-    private $title;
+    #[Property(name: self::COLUMN_TITLE)]
+    protected string $title = self::DEFAULT_VALUE_TITLE;
 
     /**
      * @var string
      */
-    private $description;
+    #[Property(name: self::COLUMN_DESCRIPTION)]
+    protected string $description = self::DEFAULT_VALUE_DESCRIPTION;
 
     /**
      * @var string|null
      */
-    private $videoUrl;
+    #[Property(name: self::COLUMN_VIDEO_URL, serializeNull: true)]
+    protected ?string $videoUrl = self::DEFAULT_VALUE_VIDEO_URL;
 
     /**
      * @var string|null
      */
-    private $buttonText;
+    #[Property(name: self::COLUMN_BUTTON_TEXT, serializeNull: true)]
+    protected ?string $buttonText = self::DEFAULT_VALUE_BUTTON_TEXT;
 
     /**
      * @var string|null
      */
-    private $contactEmail;
-
-    /**
-     * Statement constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     * @throws \ReflectionException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->backgroundImageUuid = $data[self::COLUMN_BACKGROUND_IMAGE_UUID] ?? self::DEFAULT_VALUE_BACKGROUND_IMAGE_UUID;
-        $this->type = $data[self::COLUMN_TYPE] ?? self::DEFAULT_VALUE_TYPE;
-        $this->title = $data[self::COLUMN_TITLE] ?? self::DEFAULT_VALUE_TITLE;
-        $this->description = $data[self::COLUMN_DESCRIPTION] ?? self::DEFAULT_VALUE_DESCRIPTION;
-        $this->videoUrl = $data[self::COLUMN_VIDEO_URL] ?? self::DEFAULT_VALUE_VIDEO_URL;
-        $this->buttonText = $data[self::COLUMN_BUTTON_TEXT] ?? self::DEFAULT_VALUE_BUTTON_TEXT;
-        $this->contactEmail = $data[self::COLUMN_CONTACT_EMAIL] ?? self::DEFAULT_VALUE_CONTACT_EMAIL;
-    }
+    #[Property(name: self::COLUMN_CONTACT_EMAIL, serializeNull: true)]
+    protected ?string $contactEmail = self::DEFAULT_VALUE_CONTACT_EMAIL;
 
     /**
      * @return string
@@ -133,21 +119,5 @@ class LandingPageBody extends AbstractEntity
     public function getContactEmail(): ?string
     {
         return $this->contactEmail;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_BACKGROUND_IMAGE_UUID => $this->getBackgroundImageUuid(),
-            self::COLUMN_TYPE                  => $this->getType(),
-            self::COLUMN_TITLE                 => $this->getTitle(),
-            self::COLUMN_DESCRIPTION           => $this->getDescription(),
-            self::COLUMN_VIDEO_URL             => $this->getVideoUrl(),
-            self::COLUMN_BUTTON_TEXT           => $this->getButtonText(),
-            self::COLUMN_CONTACT_EMAIL         => $this->getContactEmail(),
-        ];
     }
 }

@@ -7,6 +7,7 @@ use ArrowSphere\PublicApiClient\Campaigns\Entities\Asset\Asset;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\Asset\AssetUploadUrl;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\Campaign;
 use ArrowSphere\PublicApiClient\Campaigns\Entities\CampaignV2;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
@@ -313,6 +314,7 @@ class CampaignsClient extends AbstractClient
      *
      * @return Asset[]
      *
+     * @throws EntitiesException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException
@@ -350,6 +352,7 @@ class CampaignsClient extends AbstractClient
      *
      * @return AssetUploadUrl[]
      *
+     * @throws EntitiesException
      * @throws GuzzleException
      * @throws NotFoundException
      * @throws PublicApiClientException

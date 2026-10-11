@@ -2,7 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Campaigns\Entities\Asset;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class AssetImage
@@ -16,19 +17,14 @@ class AssetImage extends AbstractEntity
     /**
      * @var string
      */
-    private $url;
+    #[Property(name: self::COLUMN_URL, required: true)]
+    protected string $url;
 
     /**
      * @var AssetImageFields
      */
-    private $fields;
-
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-        $this->url = $data[self::COLUMN_URL];
-        $this->fields = new AssetImageFields($data[self::COLUMN_FIELDS]);
-    }
+    #[Property(name: self::COLUMN_FIELDS, type: AssetImageFields::class, required: true)]
+    protected AssetImageFields $fields;
 
     /**
      * @return string
@@ -44,13 +40,5 @@ class AssetImage extends AbstractEntity
     public function getFields(): AssetImageFields
     {
         return $this->fields;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_URL    => $this->url,
-            self::COLUMN_FIELDS => $this->fields,
-        ];
     }
 }

@@ -2,8 +2,9 @@
 
 namespace ArrowSphere\PublicApiClient\Campaigns\Entities\LandingPage;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class LandingPageFooterV2 extends AbstractEntity
 {
@@ -24,57 +25,64 @@ class LandingPageFooterV2 extends AbstractEntity
     /**
      * @var string
      */
-    private $title;
+    #[Property(name: self::COLUMN_BACKGROUND_COLOR)]
+    protected string $backgroundColor = self::DEFAULT_VALUE_BACKGROUND_COLOR;
 
     /**
      * @var string
      */
-    private $backgroundColor;
+    #[Property(name: self::COLUMN_BUTTON_TEXT)]
+    protected string $buttonText = self::DEFAULT_VALUE_BUTTON_TEXT;
 
     /**
      * @var string
      */
-    private $buttonText;
-
-    /**
-     * @var string
-     */
-    private $buttonUrl;
-
-    /**
-     * @var string
-     */
-    private $textColor;
+    #[Property(name: self::COLUMN_BUTTON_URL)]
+    protected string $buttonUrl = self::DEFAULT_VALUE_BUTTON_URL;
 
     /**
      * @var LandingPageFeatureV2
      */
-    private $feature;
+    #[Property(name: self::COLUMN_FEATURE, type: LandingPageFeatureV2::class, required: true)]
+    protected LandingPageFeatureV2 $feature;
 
     /**
      * @var LandingPageMarketingFeature
      */
-    private $marketingFeature;
+    #[Property(name: self::COLUMN_MARKETING_FEATURE, type: LandingPageMarketingFeature::class, required: true)]
+    protected LandingPageMarketingFeature $marketingFeature;
 
     /**
-     * Statement constructor.
+     * @var string
+     */
+    #[Property(name: self::COLUMN_TEXT_COLOR)]
+    protected string $textColor = self::DEFAULT_VALUE_TEXT_COLOR;
+
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_TITLE)]
+    protected string $title = self::DEFAULT_VALUE_TITLE;
+
+    /**
+     * LandingPageFooterV2 constructor.
      *
      * @param array $data
      *
-     * @throws EntityValidationException
-     * @throws \ReflectionException
+     * @throws EntitiesException
      */
     public function __construct(array $data)
     {
-        parent::__construct($data);
+        // A missing or empty feature gets an instance with its default values, as an empty array would be considered as missing
+        if (empty($data[self::COLUMN_FEATURE])) {
+            $data[self::COLUMN_FEATURE] = new LandingPageFeatureV2([]);
+        }
 
-        $this->backgroundColor = $data[self::COLUMN_BACKGROUND_COLOR] ?? self::DEFAULT_VALUE_BACKGROUND_COLOR;
-        $this->buttonText = $data[self::COLUMN_BUTTON_TEXT] ?? self::DEFAULT_VALUE_BUTTON_TEXT;
-        $this->buttonUrl = $data[self::COLUMN_BUTTON_URL] ?? self::DEFAULT_VALUE_BUTTON_URL;
-        $this->feature = new LandingPageFeatureV2($data[self::COLUMN_FEATURE] ?? []);
-        $this->marketingFeature = new LandingPageMarketingFeature($data[self::COLUMN_MARKETING_FEATURE] ?? []);
-        $this->textColor = $data[self::COLUMN_TEXT_COLOR] ?? self::DEFAULT_VALUE_TEXT_COLOR;
-        $this->title = $data[self::COLUMN_TITLE] ?? self::DEFAULT_VALUE_TITLE;
+        if (empty($data[self::COLUMN_MARKETING_FEATURE])) {
+            $data[self::COLUMN_MARKETING_FEATURE] = new LandingPageMarketingFeature([]);
+        }
+
+        parent::__construct($data);
     }
 
     /**
@@ -131,21 +139,5 @@ class LandingPageFooterV2 extends AbstractEntity
     public function getMarketingFeature(): LandingPageMarketingFeature
     {
         return $this->marketingFeature;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_BACKGROUND_COLOR  => $this->getBackgroundColor(),
-            self::COLUMN_BUTTON_TEXT       => $this->getButtonText(),
-            self::COLUMN_BUTTON_URL        => $this->getButtonUrl(),
-            self::COLUMN_FEATURE           => $this->getFeature(),
-            self::COLUMN_MARKETING_FEATURE => $this->getMarketingFeature(),
-            self::COLUMN_TEXT_COLOR        => $this->getTextColor(),
-            self::COLUMN_TITLE             => $this->getTitle(),
-        ];
     }
 }
