@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.38] - 2026-10-12
+
 - Migrated the `AbstractOffer`, `Offer` and `OfferFindResult` catalog entities to the attribute-based entity system, without changing their methods nor their serialization, except the order of their JSON keys; `Classification`, whose serialization is a string, now implements `JsonSerializable` on its own
 - Migrated the `CustomersResponse` and `GetOrdersResponse` paginated responses to the attribute-based entity system, and the catalog and licenses `FindResult` to the attribute-based base class, without changing their methods nor their serialization
 - `Pagination` implements `JsonSerializable`, so that `json_encode()` serializes it instead of returning an empty object
@@ -759,7 +761,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.37...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.38...HEAD
+[0.11.38]: https://github.com/ArrowSphere/public-api-client/compare/0.11.37...0.11.38
 [0.11.37]: https://github.com/ArrowSphere/public-api-client/compare/0.11.36...0.11.37
 [0.11.36]: https://github.com/ArrowSphere/public-api-client/compare/0.11.35...0.11.36
 [0.11.35]: https://github.com/ArrowSphere/public-api-client/compare/0.11.34...0.11.35
