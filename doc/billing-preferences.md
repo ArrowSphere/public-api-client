@@ -12,14 +12,14 @@ This client will gives an uniform access to see and edit your preferences and re
 
 The `Preference` entity allows to manage the company's main contact:
 
-| Field      | Type      | Example                          | Description                                                                                          |
-| ---------- | --------- | -------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| name       | `string`  | Rule1                            |                                                                                                      |
-| priority   | `numeric` | 2                                | 0 is the highest priority                                                                            |
-| identifier | `string`  | GroupBy                          | Preference type (see below for the full list of types)                                               |
-| parameters | `array`   | [ columns => ... ]               | Associative list of parameters (depends on the type)                                                 |
-| filters    | `array`   | [ CustomerXspRef => [ XSP123 ] ] | Associative list of column filters. Available columns: CustomerXspRef, VendorName and Classification |
-| overrides  | `array`   | [ ArsSku => SKU ]                | Associative list of column overrides, ArsSku is mandatory                                            |
+| Field      | Type     | Example                          | Description                                                                                          |
+| ---------- | -------- | -------------------------------- | ---------------------------------------------------------------------------------------------------- |
+| name       | `string` | Rule1                            |                                                                                                      |
+| priority   | `int`    | 2                                | 0 is the highest priority                                                                            |
+| identifier | `string` | GroupBy                          | Preference type (see below for the full list of types)                                               |
+| parameters | `array`  | [ columns => ... ]               | Associative list of parameters (depends on the type)                                                 |
+| filters    | `array`  | [ CustomerXspRef => [ XSP123 ] ] | Associative list of column filters. Available columns: CustomerXspRef, VendorName and Classification |
+| overrides  | `array`  | [ ArsSku => SKU ]                | Associative list of column overrides, ArsSku is mandatory                                            |
 
 ## Preference Types
 

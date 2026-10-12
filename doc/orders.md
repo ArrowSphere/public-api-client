@@ -14,17 +14,17 @@ OrdersFilters is designed to simplify search process of orders
 
 ### OrdersFilters
 
-| Field               | Type         | Example                 | Description                                                           |
-|---------------------|--------------|-------------------------|-----------------------------------------------------------------------|
-| orderBy             | `?string`    | asc                     | The order of the listing "asc" for ascending or "desc" for descending |
-| sortBy              | `?string`    | status                  | The field which the order will be applied on                          |
-| from                | `?string`    | 2024-12-01              | From which start date we get orders                                   |
-| reference           | `?string`    | XSPO123                 | The order reference                                                   |
-| status              | `?string`    | pending validation      | The order status                                                      |
-| program             | `?string`    | Microsoft               | The order program                                                     |
-| period              | `?string`    | 2023-12-01              | The order creation date                                               |
-| lastUpdate          | `?string`    | 2023-12-01              | The order last update date, this filter works on the dateStatus field |
-| organizationUnitRef | `?string[]`  | \['XSPOU20', 'XSPOU28'] | The organization unit reference                                       |
+| Field               | Type                 | Example                 | Description                                                           |
+|---------------------|----------------------|-------------------------|-----------------------------------------------------------------------|
+| orderBy             | `string` or `null`   | asc                     | The order of the listing "asc" for ascending or "desc" for descending |
+| sortBy              | `string` or `null`   | status                  | The field which the order will be applied on                          |
+| from                | `string` or `null`   | 2024-12-01              | From which start date we get orders                                   |
+| reference           | `string` or `null`   | XSPO123                 | The order reference                                                   |
+| status              | `string` or `null`   | pending validation      | The order status                                                      |
+| program             | `string` or `null`   | Microsoft               | The order program                                                     |
+| period              | `string` or `null`   | 2023-12-01              | The order creation date                                               |
+| lastUpdate          | `string` or `null`   | 2023-12-01              | The order last update date, this filter works on the dateStatus field |
+| organizationUnitRef | `string[]` or `null` | \['XSPOU20', 'XSPOU28'] | The organization unit reference                                       |
 
 ### CreateOrder and its sub-entities
 
@@ -32,46 +32,46 @@ OrdersFilters is designed to simplify search process of orders
 
 To simplify order creating process we design objects structure where dev can simply set the needed attribute
 
-| Field            | Type                 | Example                                         | Description                                                                              |
-|------------------|----------------------|-------------------------------------------------|------------------------------------------------------------------------------------------|
-| scheduledDate    | `?string`            | 2024-12-01                                      | Schedule a date for new order                                                            |
-| extraInformation | `ExtraInformation[]` | List of [ExtraInformation](#ExtraInformation)   | Define list of Eavs for order                                                            |
-| customer         | `Customer`           | [Customer](#Customer)                           | Define end Customer for order                                                            |
-| products         | `?Product[]`         | List of product [Product](#Product)             | Define List of product of order. Required if `quoteRef` is not provided                 |
-| customFields     | `CustomField[]`      | List of customField [CustomField](#CustomField) | Define List of customField of order                                                      |
-| quoteRef         | `?string`            | XSPO1234                                        | Reference to an existing quote. Required if `products` is not provided                  |
+| Field            | Type                  | Example                                         | Description                                                             |
+|------------------|-----------------------|-------------------------------------------------|-------------------------------------------------------------------------|
+| scheduledDate    | `string` or `null`    | 2024-12-01                                      | Schedule a date for new order                                           |
+| extraInformation | `ExtraInformation[]`  | List of [ExtraInformation](#ExtraInformation)   | Define list of Eavs for order                                           |
+| customer         | `Customer`            | [Customer](#Customer)                           | Define end Customer for order                                           |
+| products         | `Product[]` or `null` | List of product [Product](#Product)             | Define List of product of order. Required if `quoteRef` is not provided |
+| customFields     | `CustomField[]`       | List of customField [CustomField](#CustomField) | Define List of customField of order                                     |
+| quoteRef         | `string` or `null`    | XSPO1234                                        | Reference to an existing quote. Required if `products` is not provided  |
 
 #### Customer
 
-| Field       | Type      | Example | Description              |
-|-------------|-----------|---------|--------------------------|
-| reference   | `string`  | XSP4533 | customer Ref             |
-| ponumber    | `?string` | 133     | Define customer PoNumber |
+| Field     | Type               | Example | Description              |
+|-----------|--------------------|---------|--------------------------|
+| reference | `string`           | XSP4533 | customer Ref             |
+| ponumber  | `string` or `null` | 133     | Define customer PoNumber |
 
 #### Product
 
-| Field                        | Type         | Example                 | Description                                                                                                                                                                                                                                                     |
-|------------------------------|--------------|-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| parentLicenseId              | `?string`    |                         | This field is mandatory in case of add-ons ordering, if the parentSku is not provided: Set a License ID of an active product with available add-ons (see Catalog or List addons offers by License)                                                              |
-| parentSku                    | `?string`    | XXX-XXX-XXXX            | This field is mandatory in case of add-ons ordering, if the parentLicenseId is not provided: Set a SKU of a compatible base product on your current order to attach the add-on to. This way you can order both the base product and the add-on at the same time |
-| autoRenew                    | `bool`       | true                    | Auto-renew option available for the subscription initialize by                                                                                                                                                                                                  |
-| effectiveStartDate           | `?string`    |                         | This field is restricted to specific rights, format YYYY-MM-DD choose the start date                                                                                                                                                                            |
-| effectiveEndDate             | `?string`    |                         | This field is restricted to specific rights, format YYYY-MM-DD choose the end date                                                                                                                                                                              |
-| vendorReferenceId            | `?string`    |                         | This field is restricted to specific rights, The vendor reference is used to identify the subscription on vendor side                                                                                                                                           |
-| parentVendorReferenceId      | `?string`    |                         | This field is mandatory in case of add-ons ordering, if the parentSku is not provided: Set a License ID of an active product with available add-ons (see Catalog or List addons offers by License)                                                              |
-| friendlyName                 | `?string`    | test                    | Initialize the subscription friendlyName                                                                                                                                                                                                                        |
-| comment1                     | `?string`    | com1                    | Custom field, add a comment attach to this product                                                                                                                                                                                                              |
-| comment2                     | `?string`    | com2                    | Custom field, add a comment attach to this product                                                                                                                                                                                                              |
-| discount                     | `?float`     | -5.5                    | Discount rate applied to item list priceString                                                                                                                                                                                                                  |
-| uplift                       | `?float`     | 5                       | Uplift rate applied to item buy price                                                                                                                                                                                                                           |
-| promotionId                  | `?string`    |                         | PromotionId you want to apply                                                                                                                                                                                                                                   |
-| coterminosityDate            | `?string`    |                         | Calculate end date, useful for coterminosity scenario                                                                                                                                                                                                           |
-| coterminositySubscriptionRef | `?string`    |                         | Reference license to which we want to align, useful for coterminosity scenario                                                                                                                                                                                  |
-| price                        | `?Price`     | [Price](#Price)         | This field is restricted to specific rights, it is used for injection scenario only                                                                                                                                                                             |
-| sku                          | `?string`    | XXXX-XXXX-XXX           | This field is mandatory in case of add-ons ordering                                                                                                                                                                                                             |
-| arrowSpherePriceBandSku      | `string`     | testArrowsSku           | ArrowSphere unique priceBand SKU you want to buy                                                                                                                                                                                                                |
-| quantity                     | `int`        | 133                     | Quantity to purchase                                                                                                                                                                                                                                            |
-| subscription                 | `Reference`  | [Reference](#Reference) | Reference of subscription related to the product                                                                                                                                                                                                                |
+| Field                        | Type               | Example                 | Description                                                                                                                                                                                                                                                     |
+|------------------------------|--------------------|-------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| parentLicenseId              | `string` or `null` |                         | This field is mandatory in case of add-ons ordering, if the parentSku is not provided: Set a License ID of an active product with available add-ons (see Catalog or List addons offers by License)                                                              |
+| parentSku                    | `string` or `null` | XXX-XXX-XXXX            | This field is mandatory in case of add-ons ordering, if the parentLicenseId is not provided: Set a SKU of a compatible base product on your current order to attach the add-on to. This way you can order both the base product and the add-on at the same time |
+| autoRenew                    | `bool`             | true                    | Auto-renew option available for the subscription initialize by                                                                                                                                                                                                  |
+| effectiveStartDate           | `string` or `null` |                         | This field is restricted to specific rights, format YYYY-MM-DD choose the start date                                                                                                                                                                            |
+| effectiveEndDate             | `string` or `null` |                         | This field is restricted to specific rights, format YYYY-MM-DD choose the end date                                                                                                                                                                              |
+| vendorReferenceId            | `string` or `null` |                         | This field is restricted to specific rights, The vendor reference is used to identify the subscription on vendor side                                                                                                                                           |
+| parentVendorReferenceId      | `string` or `null` |                         | This field is mandatory in case of add-ons ordering, if the parentSku is not provided: Set a License ID of an active product with available add-ons (see Catalog or List addons offers by License)                                                              |
+| friendlyName                 | `string` or `null` | test                    | Initialize the subscription friendlyName                                                                                                                                                                                                                        |
+| comment1                     | `string` or `null` | com1                    | Custom field, add a comment attach to this product                                                                                                                                                                                                              |
+| comment2                     | `string` or `null` | com2                    | Custom field, add a comment attach to this product                                                                                                                                                                                                              |
+| discount                     | `float` or `null`  | -5.5                    | Discount rate applied to item list priceString                                                                                                                                                                                                                  |
+| uplift                       | `float` or `null`  | 5                       | Uplift rate applied to item buy price                                                                                                                                                                                                                           |
+| promotionId                  | `string` or `null` |                         | PromotionId you want to apply                                                                                                                                                                                                                                   |
+| coterminosityDate            | `string` or `null` |                         | Calculate end date, useful for coterminosity scenario                                                                                                                                                                                                           |
+| coterminositySubscriptionRef | `string` or `null` |                         | Reference license to which we want to align, useful for coterminosity scenario                                                                                                                                                                                  |
+| price                        | `Price` or `null`  | [Price](#Price)         | This field is restricted to specific rights, it is used for injection scenario only                                                                                                                                                                             |
+| sku                          | `string` or `null` | XXXX-XXXX-XXX           | This field is mandatory in case of add-ons ordering                                                                                                                                                                                                             |
+| arrowSpherePriceBandSku      | `string`           | testArrowsSku           | ArrowSphere unique priceBand SKU you want to buy                                                                                                                                                                                                                |
+| quantity                     | `int`              | 133                     | Quantity to purchase                                                                                                                                                                                                                                            |
+| subscription                 | `Reference`        | [Reference](#Reference) | Reference of subscription related to the product                                                                                                                                                                                                                |
 
 #### CustomField
 | Field | Type     | Example | Description        |
@@ -91,11 +91,11 @@ To simplify order creating process we design objects structure where dev can sim
 
 #### PriceDetail
 
-| Field        | Type      | Example | Description                       |
-|--------------|-----------|---------|-----------------------------------|
-| exchangeRate | `?float`  | 0.92    | Mandatory in case of Vendor price |
-| currency     | `string`  | USD     | currency                          |
-| unitPrice    | `float`   | 3.1     |                                   |
+| Field        | Type              | Example | Description                       |
+|--------------|-------------------|---------|-----------------------------------|
+| exchangeRate | `float` or `null` | 0.92    | Mandatory in case of Vendor price |
+| currency     | `string`          | USD     | currency                          |
+| unitPrice    | `float`           | 3.1     |                                   |
 
 ## Response Entities
 
@@ -105,31 +105,31 @@ To simplify order creating process we design objects structure where dev can sim
 
 An Order is managed by the `Order` entity.
 
-| Field                 | Type               | Example                                     | Description                                                     |
-|-----------------------|--------------------|---------------------------------------------|-----------------------------------------------------------------|
-| reference             | `String`           | 1234                                        | Order reference ID                                              |
-| status                | `String`           | open                                        | Order status                                                    |
-| dateStatus            | `String`           | 2024-01-01                                  | Date the current status was updated                             |
-| dateCreation          | `String`           | 2023-12-12                                  | Date the order was created                                      |
-| orderReference        | `String`           | XSPO1234                                    | Arrow order reference                                           |
-| createdBy             | `?String`          | admin                                       | User who create the order                                       |
-| createdByImpersonator | `?String`          | admin                                       | User impersonate who create the order                           |
-| commitmentAmountTotal | `float`            | 1877.98                                     | Total Amount of the order                                       |
-| partner               | `Partner`          | [Partner](#Partner)                         | The partner related to the order                                |
-| customer              | `Reference`        | [Reference](#Reference)                     | The end-customer related to the order                           |
-| poNumber              | `?String`          | 1234                                        | Order PoNumber                                                  |
-| products              | `OrdersProduct[] ` | an array of [OrdersProduct](#OrdersProduct) | The list of [OrdersProduct](#OrdersProduct) linked to the order |
-| extraInformation      | `ExtraInformation` | [ExtraInformation](#ExtraInformation)       | Order extraInformation (EAVS)                                   |
-| scheduledDate         | `String`           | 2023-12-12                                  | scheduled date of order if exist                                |
+| Field                 | Type                         | Example                                     | Description                                                     |
+|-----------------------|------------------------------|---------------------------------------------|-----------------------------------------------------------------|
+| reference             | `string`                     | 1234                                        | Order reference ID                                              |
+| status                | `string`                     | open                                        | Order status                                                    |
+| dateStatus            | `string`                     | 2024-01-01                                  | Date the current status was updated                             |
+| dateCreation          | `string`                     | 2023-12-12                                  | Date the order was created                                      |
+| orderReference        | `string`                     | XSPO1234                                    | Arrow order reference                                           |
+| createdBy             | `string` or `null`           | admin                                       | User who create the order                                       |
+| createdByImpersonator | `string` or `null`           | admin                                       | User impersonate who create the order                           |
+| commitmentAmountTotal | `float`                      | 1877.98                                     | Total Amount of the order                                       |
+| partner               | `Partner`                    | [Partner](#Partner)                         | The partner related to the order                                |
+| customer              | `Reference`                  | [Reference](#Reference)                     | The end-customer related to the order                           |
+| poNumber              | `string` or `null`           | 1234                                        | Order PoNumber                                                  |
+| products              | `OrdersProduct[] `           | an array of [OrdersProduct](#OrdersProduct) | The list of [OrdersProduct](#OrdersProduct) linked to the order |
+| extraInformation      | `ExtraInformation` or `null` | [ExtraInformation](#ExtraInformation)       | Order extraInformation (EAVS)                                   |
+| scheduledDate         | `string` or `null`           | 2023-12-12                                  | scheduled date of order if exist                                |
 
 #### Partner
 
 The Partner which is related to the order.
 
-| Field       | Type        | Example             | Description                     |
-|-------------|-------------|---------------------|---------------------------------|
-| companyName | `string`    | test                | The company name of the partner |
-| contact     | `Contact[]` | [Contact](#Contact) | The company contact             |
+| Field       | Type      | Example             | Description                     |
+|-------------|-----------|---------------------|---------------------------------|
+| companyName | `string`  | test                | The company name of the partner |
+| contact     | `Contact` | [Contact](#Contact) | The company contact             |
 
 #### Contact
 
@@ -161,25 +161,25 @@ The ExtraInformation define the specific field used by vendors
 
 The OrderProduct host the product info of the order
 
-| Field              | Type          | Example                                                              | Description                                                    |
-|--------------------|---------------|----------------------------------------------------------------------|----------------------------------------------------------------|
-| sku                | `string`      | Microsoft\| \|MS-0ZH-VISIO \| \|B4D4B7F4-4089-43B6-9C44-DE97B760FB11 | product Order SKU                                              |
-| name               | `string`      | Dynamics 365 Commerce                                                | Product name                                                   |
-| classification     | `string`      | SaaS                                                                 | Product classification (IaaS, SaaS, PSW...)                    |
-| vendorName         | `string`      | Microsoft                                                            | Product vendor name                                            |
-| programName        | `string`      | Microsoft Cloud Solution Provider (CSP)                              | Product Program name                                           |
-| program            | `Program`     | [Program](#Program)                                                  |                                                                |
-| identifiers        | `Identifiers` | [Identifiers](#Identifiers)                                          | Vendor identifier                                              |
-| quantity           | `int`         | 3                                                                    | Number of products bought                                      |
-| status             | `string`      | Provisioned                                                          | Order status                                                   |
-| dateStatus         | `string`      | 2017-05-15 09:39:05                                                  | Date the product became the current "Status"                   |
-| detailedStatus     | `string`      | Provisioned                                                          | An individual product can be a different status than the order |
-| isAddon            | `boolean`     | false                                                                | Whether the product is an addon or not                         |
-| isTrial            | `boolean`     | false                                                                | Whether the product is a trial or not                          |
-| arrowSubCategories | `string[]`    | \[nce]                                                               | Indicates if the product has subCategories like nce from MSC   |
-| prices             | `Prices`      | [Prices](#Prices)                                                    | Product Prices                                                 |
-| subscription       | `?Reference`  | [Reference](#Reference)                                              | Reference to the subscription                                  |
-| license            | `?Reference`  | [Reference](#Reference)                                              | Reference to the licence                                       |
+| Field              | Type                  | Example                                                              | Description                                                    |
+|--------------------|-----------------------|----------------------------------------------------------------------|----------------------------------------------------------------|
+| sku                | `string`              | Microsoft\| \|MS-0ZH-VISIO \| \|B4D4B7F4-4089-43B6-9C44-DE97B760FB11 | product Order SKU                                              |
+| name               | `string`              | Dynamics 365 Commerce                                                | Product name                                                   |
+| classification     | `string`              | SaaS                                                                 | Product classification (IaaS, SaaS, PSW...)                    |
+| vendorName         | `string`              | Microsoft                                                            | Product vendor name                                            |
+| programName        | `string`              | Microsoft Cloud Solution Provider (CSP)                              | Product Program name                                           |
+| program            | `Program`             | [Program](#Program)                                                  |                                                                |
+| identifiers        | `Identifiers`         | [Identifiers](#Identifiers)                                          | Vendor identifier                                              |
+| quantity           | `int`                 | 3                                                                    | Number of products bought                                      |
+| status             | `string`              | Provisioned                                                          | Order status                                                   |
+| dateStatus         | `string`              | 2017-05-15 09:39:05                                                  | Date the product became the current "Status"                   |
+| detailedStatus     | `string`              | Provisioned                                                          | An individual product can be a different status than the order |
+| isAddon            | `bool`                | false                                                                | Whether the product is an addon or not                         |
+| isTrial            | `bool`                | false                                                                | Whether the product is a trial or not                          |
+| arrowSubCategories | `string[]`            | \[nce]                                                               | Indicates if the product has subCategories like nce from MSC   |
+| prices             | `Prices`              | [Prices](#Prices)                                                    | Product Prices                                                 |
+| subscription       | `Reference` or `null` | [Reference](#Reference)                                              | Reference to the subscription                                  |
+| license            | `Reference` or `null` | [Reference](#Reference)                                              | Reference to the licence                                       |
 
 #### Program
 

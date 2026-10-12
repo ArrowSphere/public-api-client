@@ -21,20 +21,20 @@ A Monthly analytics item is managed by the `MonthlyAnalyticsItem` entity.
 | marketPlace    | `string`             | FR        | The marketplace attached to this split                          |
 | vendor         | `string`             | Microsoft | The vendor attached to this split                               |
 | classification | `string`             | SAAS      | The classification attached of this split                       |
-| tag            | `string/null`        | Pax8      | The tag attached of this split                                  |
+| tag            | `string` or `null`   | Pax8      | The tag attached of this split                                  |
 | month          | `string`             | 2020-05   | The month attached of this split                                |
 | localPrice     | `PriceAnalyticsItem` |           | The localPrice item attached of this split, in local currency   |
 | usdPrice       | `PriceAnalyticsItem` |           | The usdPrice localPrice attached of this split, in usd currency |
 
 Description of `PriceAnalyticsItem`
 
-| Field               | Type         | Example | Description                                              |
-| ------------------- | ------------ | ------- | -------------------------------------------------------- |
-| resellerBuyPrice    | `float`      | 1367.67 | The reseller buy price                                   |
-| arrowBuyPrice       | `float/null` | 134.34  | The arrow buy price, can be null if it is call by an MSP |
-| endCustomerBuyPrice | `float/null` | 345.32  | The end cutomer buy price, can be null for usd case      |
-| listBuyPrice        | `float`      | 563.34  | The list buy price                                       |
-| currency            | `string`     | EUR     | The currency attached to the arrow and reseller price    |
+| Field               | Type              | Example | Description                                              |
+| ------------------- | ----------------- | ------- | -------------------------------------------------------- |
+| resellerBuyPrice    | `float`           | 1367.67 | The reseller buy price                                   |
+| arrowBuyPrice       | `float` or `null` | 134.34  | The arrow buy price, can be null if it is call by an MSP |
+| endCustomerBuyPrice | `float` or `null` | 345.32  | The end cutomer buy price, can be null for usd case      |
+| listBuyPrice        | `float`           | 563.34  | The list buy price                                       |
+| currency            | `string`          | EUR     | The currency attached to the arrow and reseller price    |
 
 ## Usage
 
