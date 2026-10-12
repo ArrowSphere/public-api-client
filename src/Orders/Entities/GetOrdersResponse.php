@@ -2,9 +2,10 @@
 
 namespace ArrowSphere\PublicApiClient\Orders\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
 use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Entities\Pagination;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class GetOrdersResponse extends AbstractEntity
 {
@@ -14,12 +15,14 @@ class GetOrdersResponse extends AbstractEntity
     /**
      * @var Order[]
      */
-    private array $orders;
+    #[Property(name: self::ORDERS, type: Order::class, isArray: true)]
+    protected array $orders = [];
 
     /**
      * @var Pagination
      */
-    private Pagination $pagination;
+    #[Property(name: self::PAGINATION, type: Pagination::class)]
+    protected Pagination $pagination;
 
     /**
      * GetOrdersResponse constructor.
@@ -30,24 +33,16 @@ class GetOrdersResponse extends AbstractEntity
      */
     public function __construct(array $data)
     {
-        parent::__construct($data['data']);
+        // The orders come from the data of the response, the pagination from its root
+        parent::__construct([
+            self::ORDERS  => $data['data'][self::ORDERS] ?? [],
+            self::PAGINATION => $data[self::PAGINATION] ?? [],
+        ]);
 
-        $this->orders = array_map(
-            static fn (array $order) => new Order($order),
-            $data['data'][self::ORDERS] ?? []
-        );
-        $this->pagination = new Pagination($data[self::PAGINATION] ?? []);
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::ORDERS     => array_map(static fn (Order $order) => $order->jsonSerialize(), $this->orders),
-            self::PAGINATION => $this->pagination->jsonSerialize(),
-        ];
+        // A missing pagination gets an empty one, as an empty array would be considered as missing
+        if (! isset($this->pagination)) {
+            $this->pagination = new Pagination([]);
+        }
     }
 
     /**
