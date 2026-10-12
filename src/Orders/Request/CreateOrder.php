@@ -20,21 +20,45 @@ class CreateOrder extends AbstractEntity
     public const COLUMN_CUSTOM_FIELDS = 'customFields';
     public const COLUMN_QUOTE_REF = 'quoteRef';
 
+    /**
+     * @var string|null
+     */
     #[Property()]
     protected ?string $scenario = null;
+
+    /**
+     * @var CustomField[]|null
+     */
     #[Property(type: CustomField::class, isArray: true)]
     protected ?array $customFields = null;
+
+    /**
+     * @var string|null
+     */
     #[Property()]
     protected ?string $scheduledDate = null;
+
+    /**
+     * @var ExtraInformation|null
+     */
     #[Property(type: ExtraInformation::class)]
     protected ?ExtraInformation $extraInformation = null;
 
+    /**
+     * @var Customer
+     */
     #[Property(type: Customer::class, required: true)]
     protected Customer $customer;
 
+    /**
+     * @var Product[]|null
+     */
     #[Property(type: Product::class, isArray: true, required: false)]
     protected ?array $products = null;
 
+    /**
+     * @var string|null
+     */
     #[Property()]
     protected ?string $quoteRef = null;
 
@@ -79,5 +103,61 @@ class CreateOrder extends AbstractEntity
                 self::class . ': At least one of quoteRef or products must be provided'
             );
         }
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getScenario(): ?string
+    {
+        return $this->scenario;
+    }
+
+    /**
+     * @return CustomField[]|null
+     */
+    public function getCustomFields(): ?array
+    {
+        return $this->customFields;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getScheduledDate(): ?string
+    {
+        return $this->scheduledDate;
+    }
+
+    /**
+     * @return ExtraInformation|null
+     */
+    public function getExtraInformation(): ?ExtraInformation
+    {
+        return $this->extraInformation;
+    }
+
+    /**
+     * @return Customer
+     */
+    public function getCustomer(): Customer
+    {
+        return $this->customer;
+    }
+
+    /**
+     * @return Product[]|null
+     */
+    public function getProducts(): ?array
+    {
+        return $this->products;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getQuoteRef(): ?string
+    {
+        return $this->quoteRef;
     }
 }

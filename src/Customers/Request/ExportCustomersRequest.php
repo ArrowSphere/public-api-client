@@ -10,6 +10,9 @@ class ExportCustomersRequest extends AbstractEntity
 {
     public const COLUMN_FILTERS = 'filters';
 
+    /**
+     * @var CustomerFilters|null
+     */
     #[Property(type: CustomerFilters::class)]
     protected ?CustomerFilters $filters = null;
 
@@ -26,5 +29,13 @@ class ExportCustomersRequest extends AbstractEntity
     public function __construct(array $data)
     {
         parent::__construct($data);
+    }
+
+    /**
+     * @return CustomerFilters|null
+     */
+    public function getFilters(): ?CustomerFilters
+    {
+        return $this->filters;
     }
 }
