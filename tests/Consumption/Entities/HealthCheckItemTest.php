@@ -3,25 +3,34 @@
 namespace ArrowSphere\PublicApiClient\Tests\Consumption\Entities;
 
 use ArrowSphere\PublicApiClient\Consumption\Entities\HealthCheckItem;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
-use PHPUnit\Framework\TestCase;
-use ReflectionException;
+use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
 
-class HealthCheckItemTest extends TestCase
+class HealthCheckItemTest extends AbstractEntityTest
 {
-    /**
-     * @throws EntityValidationException|ReflectionException
-     */
-    public function testHealthCheckItemSerialisation(): void
-    {
-        $healthcheckItem = new HealthCheckItem([
-            "vendor"         => "Microsoft",
-            "marketplace"    => "FR",
-            "classification" => "SAAS",
-            "color"          => "green",
-            "message"        => "OK"
-        ]);
+    protected const CLASS_NAME = HealthCheckItem::class;
 
-        self::assertEquals('{"vendor":"Microsoft","marketplace":"FR","classification":"SAAS","color":"green","message":"OK"}', json_encode($healthcheckItem));
+    public function providerSerialization(): array
+    {
+        return [
+            'standard' => [
+                'fields'   => [
+                    "vendor"         => "Microsoft",
+                    "marketplace"    => "FR",
+                    "classification" => "SAAS",
+                    "color"          => "green",
+                    "message"        => "OK"
+                ],
+                'expected' => <<<JSON
+{
+    "vendor": "Microsoft",
+    "marketplace": "FR",
+    "classification": "SAAS",
+    "color": "green",
+    "message": "OK"
+}
+JSON
+                ,
+            ],
+        ];
     }
 }

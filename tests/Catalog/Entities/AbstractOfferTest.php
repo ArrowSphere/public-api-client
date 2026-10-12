@@ -3,19 +3,20 @@
 namespace ArrowSphere\PublicApiClient\Tests\Catalog\Entities;
 
 use ArrowSphere\PublicApiClient\Catalog\Entities\AbstractOffer;
-use PHPUnit\Framework\TestCase;
+use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
 
 /**
  * Class AbstractOfferTest
  */
-class AbstractOfferTest extends TestCase
+class AbstractOfferTest extends AbstractEntityTest
 {
-    public function testSerialisation(): void
+    protected const CLASS_NAME = AbstractOffer::class;
+
+    public function providerSerialization(): array
     {
-        $abstractOffer = $this->getMockForAbstractClass(
-            AbstractOffer::class,
-            [
-                [
+        return [
+            'standard' => [
+                'fields'   => [
                     'category'          => ['my category'],
                     'customer_category' => 'my customer category',
                     'has_addons'        => false,
@@ -50,10 +51,7 @@ class AbstractOfferTest extends TestCase
                     'weight_forced'     => 0.12,
                     'weight_top_sales'  => 0.48,
                 ],
-            ]
-        );
-
-        $expected = <<<JSON
+                'expected' => <<<JSON
 {
     "add_ons": [],
     "category": [
@@ -94,8 +92,14 @@ class AbstractOfferTest extends TestCase
         }
     ]
 }
-JSON;
+JSON
+                ,
+            ],
+        ];
+    }
 
-        self::assertJsonStringEqualsJsonString($expected, (string) json_encode($abstractOffer));
+    protected function createEntity(array $fields): object
+    {
+        return $this->getMockForAbstractClass(AbstractOffer::class, [$fields]);
     }
 }

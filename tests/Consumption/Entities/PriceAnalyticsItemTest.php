@@ -3,25 +3,35 @@
 namespace ArrowSphere\PublicApiClient\Tests\Consumption\Entities;
 
 use ArrowSphere\PublicApiClient\Consumption\Entities\PriceAnalyticsItem;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
-use PHPUnit\Framework\TestCase;
+use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
 
-class PriceAnalyticsItemTest extends TestCase
+class PriceAnalyticsItemTest extends AbstractEntityTest
 {
-    /**
-     * @throws EntityValidationException
-     */
-    public function testHealthCheckItemSerialisation(): void
-    {
-        $price = new PriceAnalyticsItem([
-            "arrowBuyPrice"       => 975550.55,
-            "resellerBuyPrice"    => 1025302.09,
-            "listBuyPrice"        => 1025302.09,
-            "endCustomerBuyPrice" => 123,
-            "currency"            => "USD"
-        ]);
+    protected const CLASS_NAME = PriceAnalyticsItem::class;
 
-        self::assertEquals('{"resellerBuyPrice":1025302.09,"arrowBuyPrice":975550.55,"listBuyPrice":1025302.09,"endCustomerBuyPrice":123,"currency":"USD"}', json_encode($price));
+    public function providerSerialization(): array
+    {
+        return [
+            'standard' => [
+                'fields'   => [
+                    "arrowBuyPrice"       => 975550.55,
+                    "resellerBuyPrice"    => 1025302.09,
+                    "listBuyPrice"        => 1025302.09,
+                    "endCustomerBuyPrice" => 123,
+                    "currency"            => "USD"
+                ],
+                'expected' => <<<JSON
+{
+    "resellerBuyPrice": 1025302.09,
+    "arrowBuyPrice": 975550.55,
+    "listBuyPrice": 1025302.09,
+    "endCustomerBuyPrice": 123,
+    "currency": "USD"
+}
+JSON
+                ,
+            ],
+        ];
     }
 
     public function testSerialisationWithoutOptionalPrices(): void

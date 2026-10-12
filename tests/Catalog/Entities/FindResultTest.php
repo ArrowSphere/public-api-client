@@ -4,36 +4,30 @@ namespace ArrowSphere\PublicApiClient\Tests\Catalog\Entities;
 
 use ArrowSphere\PublicApiClient\Catalog\Entities\FindResult;
 use ArrowSphere\PublicApiClient\Catalog\OfferClient;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
-use PHPUnit\Framework\TestCase;
+use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
 
 /**
  * Class FindResultTest
  */
-class FindResultTest extends TestCase
+class FindResultTest extends AbstractEntityTest
 {
-    /**
-     * @throws EntityValidationException
-     */
-    public function testSerialisation(): void
-    {
-        $findResult = new FindResult(
-            [
-                'products'   => [],
-                'filters'    => [],
-                'topOffers'  => [],
-                'pagination' => [
-                    'current_page' => 1,
-                    'total_page'   => 1,
-                    'total'        => 0,
-                ],
-            ],
-            $this->getMockBuilder(OfferClient::class)->getMock(),
-            [],
-            []
-        );
+    protected const CLASS_NAME = FindResult::class;
 
-        $expected = <<<JSON
+    public function providerSerialization(): array
+    {
+        return [
+            'standard' => [
+                'fields'   => [
+                    'products'   => [],
+                    'filters'    => [],
+                    'topOffers'  => [],
+                    'pagination' => [
+                        'current_page' => 1,
+                        'total_page'   => 1,
+                        'total'        => 0,
+                    ],
+                ],
+                'expected' => <<<JSON
 {
     "offers": {},
     "filters": [],
@@ -41,8 +35,14 @@ class FindResultTest extends TestCase
     "nbResults": 0,
     "topOffer": []
 }
-JSON;
+JSON
+                ,
+            ],
+        ];
+    }
 
-        self::assertEquals($expected, json_encode($findResult, JSON_PRETTY_PRINT));
+    protected function createEntity(array $fields): object
+    {
+        return new FindResult($fields, $this->getMockBuilder(OfferClient::class)->getMock(), [], []);
     }
 }

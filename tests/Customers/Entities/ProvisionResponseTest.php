@@ -4,14 +4,16 @@ namespace ArrowSphere\PublicApiClient\Tests\Customers\Entities;
 
 use ArrowSphere\PublicApiClient\Customers\Entities\Attribute;
 use ArrowSphere\PublicApiClient\Customers\Entities\ProvisionResponse;
-use PHPUnit\Framework\TestCase;
+use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
 
-class ProvisionResponseTest extends TestCase
+class ProvisionResponseTest extends AbstractEntityTest
 {
+    protected const CLASS_NAME = ProvisionResponse::class;
+
     /**
      * @return array<string, array{array, string}>
      */
-    public static function serializationProvider(): array
+    public function providerSerialization(): array
     {
         return [
             'with attributes'    => [
@@ -26,13 +28,12 @@ class ProvisionResponseTest extends TestCase
     }
 
     /**
-     * @dataProvider serializationProvider
+     * @dataProvider providerSerialization
      */
-    public function testSerialization(array $data, string $expected): void
+    public function testGetterValues(array $data, string $expected): void
     {
         $response = new ProvisionResponse($data);
 
-        self::assertSame($expected, json_encode($response));
         self::assertSame($data['status'], $response->getStatus());
         self::assertContainsOnlyInstancesOf(Attribute::class, $response->getAttributes());
     }

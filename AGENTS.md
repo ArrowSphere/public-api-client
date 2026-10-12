@@ -145,7 +145,7 @@ public function doSomething(string $bar): string
 
 ## Testing Conventions
 
-- All test classes extend `AbstractClientTest`.
+- Client test classes extend `AbstractClientTest`.
 - Declare `protected const MOCKED_CLIENT_CLASS = YourClient::class;`.
 - `GuzzleHttp\Client` is mocked via `$this->createMock(Client::class)`; the mock is
   available as `$this->httpClient`.
@@ -158,6 +158,14 @@ public function doSomething(string $bar): string
 - JSON fixtures go as **heredoc strings** directly inside the test method body.
 - Do not change `AbstractEntity::$enableValidation`; it is set to `true` in
   `AbstractClientTest::setUp()`.
+- Every entity has its own test class, named after it (`FooTest` for `Foo`), which extends
+  `AbstractEntityTest` (`AbstractQuantityEntityTest` for an entity built with a quantity):
+  declare `protected const CLASS_NAME = Foo::class;` and return the cases from
+  `providerSerialization()` (`fields` and the `expected` JSON as a heredoc). The inherited
+  `testSerialization` compares the JSON regardless of the order of the keys, and `testGetters`
+  calls every getter of the entity built from each case. Override `createEntity()` when the
+  entity needs more than its data (a client, an abstract class); add behaviour tests as extra
+  methods.
 
 ---
 

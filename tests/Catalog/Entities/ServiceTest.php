@@ -3,27 +3,41 @@
 namespace ArrowSphere\PublicApiClient\Tests\Catalog\Entities;
 
 use ArrowSphere\PublicApiClient\Catalog\Entities\Service;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
-use PHPUnit\Framework\TestCase;
+use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
 
-class ServiceTest extends TestCase
+class ServiceTest extends AbstractEntityTest
 {
-    /**
-     * @throws EntityValidationException
-     */
-    public function testServiceSerialisation(): void
-    {
-        $service = new Service([
-            "reference"                     => "microsoft",
-            "name"                          => "Microsoft",
-            "associatedSubscriptionProgram" => "MSCSP",
-            "logo"                          => "/index.php/site/img/type/vendor/ref/3",
-            "category"                      => "SAAS",
-            "description"                   => "description",
-            "serviceTags"                   => ["Productivity"],
-            "program"                       => "Microsoft"
-        ]);
+    protected const CLASS_NAME = Service::class;
 
-        self::assertEquals('{"associatedSubscriptionProgram":"MSCSP","category":"SAAS","description":"description","name":"Microsoft","program":"Microsoft","reference":"microsoft","serviceTags":["Productivity"]}', json_encode($service));
+    public function providerSerialization(): array
+    {
+        return [
+            'standard' => [
+                'fields'   => [
+                    "reference"                     => "microsoft",
+                    "name"                          => "Microsoft",
+                    "associatedSubscriptionProgram" => "MSCSP",
+                    "logo"                          => "/index.php/site/img/type/vendor/ref/3",
+                    "category"                      => "SAAS",
+                    "description"                   => "description",
+                    "serviceTags"                   => ["Productivity"],
+                    "program"                       => "Microsoft"
+                ],
+                'expected' => <<<JSON
+{
+    "associatedSubscriptionProgram": "MSCSP",
+    "category": "SAAS",
+    "description": "description",
+    "name": "Microsoft",
+    "program": "Microsoft",
+    "reference": "microsoft",
+    "serviceTags": [
+        "Productivity"
+    ]
+}
+JSON
+                ,
+            ],
+        ];
     }
 }

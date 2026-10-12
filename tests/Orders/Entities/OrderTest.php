@@ -4,16 +4,18 @@ namespace ArrowSphere\PublicApiClient\Tests\Orders\Entities;
 
 use ArrowSphere\PublicApiClient\Orders\Entities\Order;
 use ArrowSphere\PublicApiClient\Orders\Entities\OrdersProduct;
-use PHPUnit\Framework\TestCase;
+use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
 
-class OrderTest extends TestCase
+class OrderTest extends AbstractEntityTest
 {
+    protected const CLASS_NAME = Order::class;
+
     /**
      * Builds the orders of the client test fixtures, as is and without their optional fields.
      *
      * @return array<string, array{array, string}>
      */
-    public static function serializationProvider(): array
+    public function providerSerialization(): array
     {
         $expected = json_decode((string) file_get_contents(__DIR__ . '/../data/orderSerialization.json'), true);
         $cases = [];
@@ -41,14 +43,11 @@ class OrderTest extends TestCase
     }
 
     /**
-     * @dataProvider serializationProvider
+     * @dataProvider providerSerialization
      */
-    public function testSerialization(array $data, string $expected): void
+    public function testProductsAreOrdersProducts(array $data, string $expected): void
     {
-        $order = new Order($data);
-
-        self::assertSame($expected, json_encode($order));
-        self::assertContainsOnlyInstancesOf(OrdersProduct::class, $order->getProducts());
+        self::assertContainsOnlyInstancesOf(OrdersProduct::class, (new Order($data))->getProducts());
     }
 
     public function testCreatorAndCommitmentFields(): void

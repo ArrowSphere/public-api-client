@@ -3,22 +3,36 @@
 namespace ArrowSphere\PublicApiClient\Tests\Entities;
 
 use ArrowSphere\PublicApiClient\Entities\Pagination;
-use PHPUnit\Framework\TestCase;
+use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
 
-class PaginationTest extends TestCase
+class PaginationTest extends AbstractEntityTest
 {
-    public function testJsonEncode(): void
-    {
-        $pagination = new Pagination([
-            'per_page'     => 10,
-            'current_page' => 2,
-            'total_page'   => 3,
-            'total'        => 25,
-            'next'         => '/api/customers?page=3',
-            'previous'     => '/api/customers?page=1',
-        ]);
+    protected const CLASS_NAME = Pagination::class;
 
-        self::assertSame(json_encode($pagination->jsonSerialize()), json_encode($pagination));
-        self::assertSame(2, $pagination->getCurrentPage());
+    public function providerSerialization(): array
+    {
+        return [
+            'standard' => [
+                'fields'   => [
+                    'per_page'     => 10,
+                    'current_page' => 2,
+                    'total_page'   => 3,
+                    'total'        => 25,
+                    'next'         => '/api/customers?page=3',
+                    'previous'     => '/api/customers?page=1',
+                ],
+                'expected' => <<<JSON
+{
+    "per_page": 10,
+    "current_page": 2,
+    "total_page": 3,
+    "total": 25,
+    "next": "\/api\/customers?page=3",
+    "previous": "\/api\/customers?page=1"
+}
+JSON
+                ,
+            ],
+        ];
     }
 }

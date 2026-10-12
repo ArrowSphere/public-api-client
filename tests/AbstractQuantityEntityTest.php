@@ -42,4 +42,23 @@ abstract class AbstractQuantityEntityTest extends TestCase
         // The order of the keys is not significant
         self::assertJsonStringEqualsJsonString($expected, (string) json_encode($activeSeats));
     }
+
+    /**
+     * Calls every getter of the entity, so that a getter which cannot return the value the entity holds fails.
+     *
+     * @dataProvider providerSerialization
+     *
+     * @param array $fields
+     * @param int $quantity
+     * @param string $expected
+     */
+    public function testGetters(array $fields, int $quantity, string $expected): void
+    {
+        $className = static::CLASS_NAME;
+        if ($className === null) {
+            self::fail('The const CLASS_NAME must be redefined in ' . static::class);
+        }
+
+        AbstractEntityTest::callGetters(new $className($fields, $quantity), $this);
+    }
 }

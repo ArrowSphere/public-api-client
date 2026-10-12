@@ -3,14 +3,16 @@
 namespace ArrowSphere\PublicApiClient\Tests\Catalog\Entities;
 
 use ArrowSphere\PublicApiClient\Catalog\Entities\FilterFindResult;
-use PHPUnit\Framework\TestCase;
+use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
 
-class FilterFindResultTest extends TestCase
+class FilterFindResultTest extends AbstractEntityTest
 {
+    protected const CLASS_NAME = FilterFindResult::class;
+
     /**
      * @return array<string, array{array, string}>
      */
-    public static function serializationProvider(): array
+    public function providerSerialization(): array
     {
         return [
             'with values' => [
@@ -25,13 +27,12 @@ class FilterFindResultTest extends TestCase
     }
 
     /**
-     * @dataProvider serializationProvider
+     * @dataProvider providerSerialization
      */
-    public function testSerialization(array $data, string $expected): void
+    public function testGetterValues(array $data, string $expected): void
     {
         $filter = new FilterFindResult($data);
 
-        self::assertSame($expected, json_encode($filter));
         self::assertSame($data['name'], $filter->getName());
         self::assertSame($data['values'], $filter->getValues());
     }

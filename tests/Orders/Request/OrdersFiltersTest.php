@@ -3,21 +3,30 @@
 namespace ArrowSphere\PublicApiClient\Tests\Orders\Request;
 
 use ArrowSphere\PublicApiClient\Orders\Request\OrdersFilters;
-use PHPUnit\Framework\TestCase;
+use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
 
-class OrdersFiltersTest extends TestCase
+class OrdersFiltersTest extends AbstractEntityTest
 {
-    public function testCreateOrder(): void
-    {
-        $payload = [
-            'reference' => 'XSP123',
-            'status' => 'open',
-            'program' => 'adobe',
-        ];
-        $price = new OrdersFilters($payload);
+    protected const CLASS_NAME = OrdersFilters::class;
 
-        self::assertEquals('XSP123', $price->jsonSerialize()['reference']);
-        self::assertEquals('open', $price->jsonSerialize()['status']);
-        self::assertEquals('adobe', $price->jsonSerialize()['program']);
+    public function providerSerialization(): array
+    {
+        return [
+            'standard' => [
+                'fields'   => [
+                    'reference' => 'XSP123',
+                    'status'    => 'open',
+                    'program'   => 'adobe',
+                ],
+                'expected' => <<<JSON
+{
+    "reference": "XSP123",
+    "status": "open",
+    "program": "adobe"
+}
+JSON
+                ,
+            ],
+        ];
     }
 }
