@@ -3,25 +3,35 @@
 namespace ArrowSphere\PublicApiClient\Tests\Catalog\Entities;
 
 use ArrowSphere\PublicApiClient\Catalog\Entities\Program;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
-use PHPUnit\Framework\TestCase;
+use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
 
-class ProgramTest extends TestCase
+class ProgramTest extends AbstractEntityTest
 {
-    /**
-     * @throws EntityValidationException
-     */
-    public function testProgramSerialisation(): void
-    {
-        $program = new Program([
-            "reference"                     => "microsoft",
-            "name"                          => "Microsoft",
-            "associatedSubscriptionProgram" => "MSCSP",
-            "logo"                          => "/index.php/site/img/type/vendor/ref/3",
-            "category"                      => "SAAS"
-        ]);
+    protected const CLASS_NAME = Program::class;
 
-        self::assertEquals('{"associatedSubscriptionProgram":"MSCSP","category":"SAAS","logo":"\/index.php\/site\/img\/type\/vendor\/ref\/3","name":"Microsoft","reference":"microsoft"}', json_encode($program));
+    public function providerSerialization(): array
+    {
+        return [
+            'standard' => [
+                'fields'   => [
+                    "reference"                     => "microsoft",
+                    "name"                          => "Microsoft",
+                    "associatedSubscriptionProgram" => "MSCSP",
+                    "logo"                          => "/index.php/site/img/type/vendor/ref/3",
+                    "category"                      => "SAAS"
+                ],
+                'expected' => <<<JSON
+{
+    "associatedSubscriptionProgram": "MSCSP",
+    "category": "SAAS",
+    "logo": "\/index.php\/site\/img\/type\/vendor\/ref\/3",
+    "name": "Microsoft",
+    "reference": "microsoft"
+}
+JSON
+                ,
+            ],
+        ];
     }
 
     public function testProgramWithoutLogo(): void

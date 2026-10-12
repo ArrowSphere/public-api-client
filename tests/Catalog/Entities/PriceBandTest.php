@@ -3,14 +3,16 @@
 namespace ArrowSphere\PublicApiClient\Tests\Catalog\Entities;
 
 use ArrowSphere\PublicApiClient\Catalog\Entities\PriceBand;
-use PHPUnit\Framework\TestCase;
+use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
 
-class PriceBandTest extends TestCase
+class PriceBandTest extends AbstractEntityTest
 {
+    protected const CLASS_NAME = PriceBand::class;
+
     /**
      * @return array<string, array{array, string}>
      */
-    public static function serializationProvider(): array
+    public function providerSerialization(): array
     {
         $data = [
             'min_quantity'         => 1,
@@ -39,13 +41,12 @@ class PriceBandTest extends TestCase
     }
 
     /**
-     * @dataProvider serializationProvider
+     * @dataProvider providerSerialization
      */
-    public function testSerialization(array $data, string $expected): void
+    public function testGetterValues(array $data, string $expected): void
     {
         $priceBand = new PriceBand($data);
 
-        self::assertSame($expected, json_encode($priceBand));
         self::assertSame($data['min_quantity'], $priceBand->getMinQuantity());
         self::assertSame($data['currency'], $priceBand->getCurrency());
     }

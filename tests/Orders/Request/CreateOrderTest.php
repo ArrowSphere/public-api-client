@@ -4,30 +4,46 @@ namespace ArrowSphere\PublicApiClient\Tests\Orders\Request;
 
 use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Orders\Request\CreateOrder;
-use PHPUnit\Framework\TestCase;
+use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
 
-class CreateOrderTest extends TestCase
+class CreateOrderTest extends AbstractEntityTest
 {
-    public function testCreateOrder(): void
+    protected const CLASS_NAME = CreateOrder::class;
+
+    public function providerSerialization(): array
     {
-        $payload = [
-            'customer' => [
-                'reference' => 'test',
-                'poNumber'  => 'test',
-            ],
-            'products' => [
-                [
-                    'quantity'                => 2,
-                    'friendlyName'            => 'test',
-                    'arrowSpherePriceBandSku' => 'testArrowsSku',
+        return [
+            'standard' => [
+                'fields'   => [
+                    'customer' => [
+                        'reference' => 'test',
+                        'poNumber'  => 'test',
+                    ],
+                    'products' => [
+                        [
+                            'quantity'                => 2,
+                            'friendlyName'            => 'test',
+                            'arrowSpherePriceBandSku' => 'testArrowsSku',
+                        ],
+                    ],
                 ],
+                'expected' => <<<JSON
+{
+    "customer": {
+        "reference": "test"
+    },
+    "products": [
+        {
+            "arrowSpherePriceBandSku": "testArrowsSku",
+            "quantity": 2,
+            "friendlyName": "test"
+        }
+    ]
+}
+JSON
+                ,
             ],
         ];
-
-        $order = new CreateOrder($payload);
-
-        self::assertEquals(2, $order->jsonSerialize()['products'][0]['quantity']);
-        self::assertArrayNotHasKey('scheduledDate', $order->jsonSerialize());
     }
 
     public function testExceptionCreateOrderWithoutCustomer(): void

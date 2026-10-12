@@ -3,20 +3,24 @@
 namespace ArrowSphere\PublicApiClient\Tests\Catalog\Entities;
 
 use ArrowSphere\PublicApiClient\Catalog\Entities\Classification;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
-use PHPUnit\Framework\TestCase;
+use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
 
-class ClassificationTest extends TestCase
+class ClassificationTest extends AbstractEntityTest
 {
-    /**
-     * @throws EntityValidationException
-     */
-    public function testClassificationSerialisation(): void
-    {
-        $classification = new Classification([
-            "name" => "Microsoft",
-        ]);
+    protected const CLASS_NAME = Classification::class;
 
-        self::assertEquals('"Microsoft"', json_encode($classification));
+    public function providerSerialization(): array
+    {
+        return [
+            'standard' => [
+                'fields'   => [
+                    "name" => "Microsoft",
+                ],
+                'expected' => <<<JSON
+"Microsoft"
+JSON
+                ,
+            ],
+        ];
     }
 }

@@ -2,30 +2,30 @@
 
 namespace ArrowSphere\PublicApiClient\Tests\Licenses\Entities\Offer\PriceBand;
 
-use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\SaleConstraints;
+use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\Identifiers;
 use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
 
-/**
- * Class SaleContraintsTest
- */
-class SaleContraintsTest extends AbstractEntityTest
+class IdentifiersTest extends AbstractEntityTest
 {
-    protected const CLASS_NAME = SaleConstraints::class;
+    protected const CLASS_NAME = Identifiers::class;
 
     public function providerSerialization(): array
     {
         return [
             'standard' => [
                 'fields'   => [
-                    'minQuantity' => 12,
-                    'maxQuantity' => 56,
+                    'arrowsphere' => [
+                        'sku' => 'my sku',
+                    ],
                 ],
                 'expected' => <<<JSON
 {
-    "minQuantity": 12,
-    "maxQuantity": 56
+    "arrowsphere": {
+        "sku": "my sku"
+    }
 }
 JSON
+                ,
             ],
         ];
     }

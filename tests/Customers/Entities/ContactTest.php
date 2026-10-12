@@ -3,35 +3,35 @@
 namespace ArrowSphere\PublicApiClient\Tests\Customers\Entities;
 
 use ArrowSphere\PublicApiClient\Customers\Entities\Contact;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
-use PHPUnit\Framework\TestCase;
+use ArrowSphere\PublicApiClient\Tests\AbstractEntityTest;
 
 /**
  * Class ContactTest
  */
-class ContactTest extends TestCase
+class ContactTest extends AbstractEntityTest
 {
-    /**
-     * @throws EntityValidationException
-     */
-    public function testSerialize(): void
-    {
-        $contact = new Contact([
-            'Email'     => 'test@example.com',
-            'FirstName' => 'Bruce',
-            'LastName'  => 'Wayne',
-            'Phone'     => '1-800-555-1234',
-        ]);
+    protected const CLASS_NAME = Contact::class;
 
-        $expected = <<<JSON
+    public function providerSerialization(): array
+    {
+        return [
+            'standard' => [
+                'fields'   => [
+                    'Email'     => 'test@example.com',
+                    'FirstName' => 'Bruce',
+                    'LastName'  => 'Wayne',
+                    'Phone'     => '1-800-555-1234',
+                ],
+                'expected' => <<<JSON
 {
     "Email": "test@example.com",
     "FirstName": "Bruce",
     "LastName": "Wayne",
     "Phone": "1-800-555-1234"
 }
-JSON;
-
-        self::assertSame($expected, json_encode($contact, JSON_PRETTY_PRINT));
+JSON
+                ,
+            ],
+        ];
     }
 }

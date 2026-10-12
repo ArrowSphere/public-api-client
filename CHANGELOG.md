@@ -5,6 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Every entity now has its own test class extending `AbstractEntityTest`, which also calls every getter of the entity built from each serialization case
 - Migrated the deprecated `Service` catalog entity and the deprecated `OrganizationUnit` and `OrganizationUnitsResponse` partners entities to the attribute-based entity system, without changing their methods nor their serialization; no entity extends the legacy `AbstractEntity` anymore
 
 ## [0.11.38] - 2026-10-12
