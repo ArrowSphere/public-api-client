@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class SaleConstraints
@@ -17,27 +17,14 @@ class SaleConstraints extends AbstractEntity
     /**
      * @var float|null
      */
-    private $minQuantity;
+    #[Property(name: self::COLUMN_MIN_QUANTITY, type: 'float', serializeNull: true)]
+    protected ?float $minQuantity = null;
 
     /**
      * @var float|null
      */
-    private $maxQuantity;
-
-    /**
-     * SaleConstraints constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->minQuantity = $data[self::COLUMN_MIN_QUANTITY];
-        $this->maxQuantity = $data[self::COLUMN_MAX_QUANTITY];
-    }
+    #[Property(name: self::COLUMN_MAX_QUANTITY, type: 'float', serializeNull: true)]
+    protected ?float $maxQuantity = null;
 
     /**
      * @return float|null
@@ -53,16 +40,5 @@ class SaleConstraints extends AbstractEntity
     public function getMaxQuantity(): ?float
     {
         return $this->maxQuantity;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_MIN_QUANTITY => $this->getMinQuantity(),
-            self::COLUMN_MAX_QUANTITY => $this->getMaxQuantity(),
-        ];
     }
 }

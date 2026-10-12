@@ -111,4 +111,15 @@ JSON
             ],
         ];
     }
+
+    public function testEmptyArrowSubCategories(): void
+    {
+        $fields = $this->providerSerialization()['standard']['fields'];
+        $fields['arrowSubCategories'] = [];
+
+        $offer = new Offer($fields);
+
+        self::assertSame([], $offer->getArrowSubCategories());
+        self::assertSame([], $offer->jsonSerialize()['arrowSubCategories']);
+    }
 }

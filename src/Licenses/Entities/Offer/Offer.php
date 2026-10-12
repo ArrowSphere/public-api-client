@@ -2,8 +2,9 @@
 
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\Offer;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class Offer
@@ -24,69 +25,63 @@ class Offer extends AbstractEntity
 
     public const COLUMN_ARROW_SUB_CATEGORIES = 'arrowSubCategories';
 
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLUMN_ACTION_FLAGS           => 'required|array',
-        self::COLUMN_CLASSIFICATION         => 'required|string',
-        self::COLUMN_IS_ENABLED             => 'required|boolean',
-        self::COLUMN_LAST_UPDATE            => 'required|string',
-        self::COLUMN_NAME                   => 'required|string',
-        self::COLUMN_PRICE_BAND             => 'required|array',
-        self::COLUMN_ARROW_SUB_CATEGORIES   => 'required'
-    ];
-
     /**
      * @var ActionFlags
      */
-    private $actionFlags;
+    #[Property(name: self::COLUMN_ACTION_FLAGS, type: ActionFlags::class, required: true)]
+    protected ActionFlags $actionFlags;
 
     /**
      * @var string
      */
-    private $classification;
+    #[Property(name: self::COLUMN_CLASSIFICATION, required: true)]
+    protected string $classification;
 
     /**
      * @var bool
      */
-    private $isEnabled;
+    #[Property(name: self::COLUMN_IS_ENABLED, type: 'bool', required: true)]
+    protected bool $isEnabled;
 
     /**
      * @var string|null
      */
-    private $lastUpdate;
+    #[Property(name: self::COLUMN_LAST_UPDATE, serializeNull: true)]
+    protected ?string $lastUpdate = null;
 
     /**
      * @var string
      */
-    private $name;
+    #[Property(name: self::COLUMN_NAME, required: true)]
+    protected string $name;
 
     /**
      * @var PriceBand
      */
-    private $priceBand;
+    #[Property(name: self::COLUMN_PRICE_BAND, type: PriceBand::class, required: true)]
+    protected PriceBand $priceBand;
 
     /**
-     * @var array|null
+     * @var string[]|null
      */
-    private $arrowSubCategories;
+    #[Property(name: self::COLUMN_ARROW_SUB_CATEGORIES, isArray: true, serializeNull: true)]
+    protected ?array $arrowSubCategories = null;
 
     /**
      * Offer constructor.
      *
      * @param array $data
      *
-     * @throws EntityValidationException
+     * @throws EntitiesException
      */
     public function __construct(array $data)
     {
         parent::__construct($data);
 
-        $this->actionFlags = new ActionFlags($data[self::COLUMN_ACTION_FLAGS]);
-        $this->classification = $data[self::COLUMN_CLASSIFICATION];
-        $this->isEnabled = $data[self::COLUMN_IS_ENABLED];
-        $this->lastUpdate = $data[self::COLUMN_LAST_UPDATE];
-        $this->name = $data[self::COLUMN_NAME];
-        $this->priceBand = new PriceBand($data[self::COLUMN_PRICE_BAND]);
-        $this->arrowSubCategories = $data[self::COLUMN_ARROW_SUB_CATEGORIES];
+        // An empty list stays an empty list, the attribute hydration would consider it as missing
+        if (($data[self::COLUMN_ARROW_SUB_CATEGORIES] ?? null) === []) {
+            $this->arrowSubCategories = [];
+        }
     }
 
     /**
@@ -143,21 +138,5 @@ class Offer extends AbstractEntity
     public function getArrowSubCategories(): ?array
     {
         return $this->arrowSubCategories;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_ACTION_FLAGS           => $this->actionFlags->jsonSerialize(),
-            self::COLUMN_CLASSIFICATION         => $this->classification,
-            self::COLUMN_IS_ENABLED             => $this->isEnabled,
-            self::COLUMN_LAST_UPDATE            => $this->lastUpdate,
-            self::COLUMN_NAME                   => $this->name,
-            self::COLUMN_PRICE_BAND             => $this->priceBand->jsonSerialize(),
-            self::COLUMN_ARROW_SUB_CATEGORIES   => $this->arrowSubCategories
-        ];
     }
 }

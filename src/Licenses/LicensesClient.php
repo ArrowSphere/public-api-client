@@ -207,6 +207,7 @@ class LicensesClient extends AbstractLicensesClient
      *
      * @return FindResult
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
      * @throws PublicApiClientException
      * @throws GuzzleException

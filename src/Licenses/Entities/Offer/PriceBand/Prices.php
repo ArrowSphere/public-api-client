@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class Prices
@@ -16,42 +16,23 @@ class Prices extends AbstractEntity
 
     public const COLUMN_PUBLIC = 'public';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_BUY    => 'required|numeric',
-        self::COLUMN_SELL   => 'required|numeric',
-        self::COLUMN_PUBLIC => 'required|numeric',
-    ];
+    /**
+     * @var float
+     */
+    #[Property(name: self::COLUMN_BUY, type: 'float', required: true)]
+    protected float $buy;
 
     /**
      * @var float
      */
-    private $buy;
+    #[Property(name: self::COLUMN_SELL, type: 'float', required: true)]
+    protected float $sell;
 
     /**
      * @var float
      */
-    private $sell;
-
-    /**
-     * @var float
-     */
-    private $public;
-
-    /**
-     * Prices constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->buy = $data[self::COLUMN_BUY];
-        $this->sell = $data[self::COLUMN_SELL];
-        $this->public = $data[self::COLUMN_PUBLIC];
-    }
+    #[Property(name: self::COLUMN_PUBLIC, type: 'float', required: true)]
+    protected float $public;
 
     /**
      * @return float
@@ -75,17 +56,5 @@ class Prices extends AbstractEntity
     public function getPublic(): float
     {
         return $this->public;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_BUY    => $this->getBuy(),
-            self::COLUMN_SELL   => $this->getSell(),
-            self::COLUMN_PUBLIC => $this->getPublic(),
-        ];
     }
 }
