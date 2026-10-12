@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\License;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class Predictions
@@ -14,49 +14,30 @@ class Predictions extends AbstractEntity
     public const COLUMN_UPDATED_AT = 'updatedAt';
     public const COLUMN_LICENSE_REFERENCE = 'licenseReference';
     public const COLUMN_PREDICTIONS = 'predictions';
-    protected const VALIDATION_RULES = [
-        self::COLUMN_CURRENCY => 'present',
-        self::COLUMN_UPDATED_AT => 'present',
-        self::COLUMN_LICENSE_REFERENCE => 'present',
-        self::COLUMN_PREDICTIONS =>'present'
-    ];
 
     /**
      * @var string
      */
-    private $currency;
+    #[Property(name: self::COLUMN_CURRENCY, required: true)]
+    protected string $currency;
 
     /**
      * @var string
      */
-    private $updatedAt;
+    #[Property(name: self::COLUMN_UPDATED_AT, required: true)]
+    protected string $updatedAt;
 
     /**
      * @var string
      */
-    private $licenseReference;
+    #[Property(name: self::COLUMN_LICENSE_REFERENCE, required: true)]
+    protected string $licenseReference;
 
     /**
-     * @var PredictionResponse[]
+     * @var array
      */
-    private $prediction;
-
-    /**
-     * Predictions constructor
-     *
-     * @param array $data
-     *
-     * @throws  EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->currency = $data[self::COLUMN_CURRENCY];
-        $this->updatedAt = $data[self::COLUMN_UPDATED_AT];
-        $this->licenseReference = $data[self::COLUMN_LICENSE_REFERENCE];
-        $this->prediction = $data[self::COLUMN_PREDICTIONS];
-    }
+    #[Property(name: self::COLUMN_PREDICTIONS, type: 'array')]
+    protected array $predictions = [];
 
     /**
      * Predictions constructor
@@ -89,19 +70,6 @@ class Predictions extends AbstractEntity
      */
     public function getPredictionResponse(): array
     {
-        return $this->prediction;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_CURRENCY => $this->getCurrency(),
-            self::COLUMN_UPDATED_AT => $this->getUpdatedAt(),
-            self::COLUMN_LICENSE_REFERENCE => $this->getLicenseReference(),
-            self::COLUMN_PREDICTIONS => $this->getPredictionResponse(),
-        ];
+        return $this->predictions;
     }
 }

@@ -259,6 +259,7 @@ class LicensesClient extends AbstractLicensesClient
      *
      * @return Predictions
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
@@ -277,6 +278,7 @@ class LicensesClient extends AbstractLicensesClient
      *
      * @return Generator|Config[]
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
@@ -320,6 +322,7 @@ class LicensesClient extends AbstractLicensesClient
      *
      * @return Config
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException
@@ -338,6 +341,7 @@ class LicensesClient extends AbstractLicensesClient
      *
      * @return AwsPayerAccount[]
      *
+     * @throws EntitiesException
      * @throws NotFoundException
      * @throws PublicApiClientException
      * @throws GuzzleException
@@ -375,6 +379,7 @@ class LicensesClient extends AbstractLicensesClient
      *
      * @return Credentials
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
      * @throws GuzzleException
      * @throws NotFoundException

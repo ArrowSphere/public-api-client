@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\License;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class Config
@@ -16,42 +16,23 @@ class Config extends AbstractEntity
 
     public const COLUMN_STATE = 'state';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_NAME  => 'required|string',
-        self::COLUMN_SCOPE => 'required|string',
-        self::COLUMN_STATE => 'required|string',
-    ];
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_NAME, required: true)]
+    protected string $name;
 
     /**
      * @var string
      */
-    private $name;
+    #[Property(name: self::COLUMN_SCOPE, required: true)]
+    protected string $scope;
 
     /**
      * @var string
      */
-    private $scope;
-
-    /**
-     * @var string
-     */
-    private $state;
-
-    /**
-     * Config constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->name = $data[self::COLUMN_NAME];
-        $this->scope = $data[self::COLUMN_SCOPE];
-        $this->state = $data[self::COLUMN_STATE];
-    }
+    #[Property(name: self::COLUMN_STATE, required: true)]
+    protected string $state;
 
     /**
      * @return string
@@ -75,17 +56,5 @@ class Config extends AbstractEntity
     public function getState(): string
     {
         return $this->state;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_NAME  => $this->name,
-            self::COLUMN_SCOPE => $this->scope,
-            self::COLUMN_STATE => $this->state,
-        ];
     }
 }

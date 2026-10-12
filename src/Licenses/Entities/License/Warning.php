@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\License;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class Warning
@@ -14,35 +14,17 @@ class Warning extends AbstractEntity
 
     public const COLUMN_MESSAGE = 'message';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_KEY  => 'required|string',
-        self::COLUMN_MESSAGE => 'required|string',
-    ];
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_KEY, required: true)]
+    protected string $key;
 
     /**
      * @var string
      */
-    private $key;
-
-    /**
-     * @var string
-     */
-    private $message;
-
-    /**
-     * Warning constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->key = $data[self::COLUMN_KEY];
-        $this->message = $data[self::COLUMN_MESSAGE];
-    }
+    #[Property(name: self::COLUMN_MESSAGE, required: true)]
+    protected string $message;
 
     /**
      * @return string
@@ -58,16 +40,5 @@ class Warning extends AbstractEntity
     public function getMessage(): string
     {
         return $this->message;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_KEY     => $this->key,
-            self::COLUMN_MESSAGE => $this->message,
-        ];
     }
 }

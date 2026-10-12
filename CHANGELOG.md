@@ -5,6 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Migrated the `License` entity with its `ActiveSeats`, `AwsPayerAccount`, `Config`, `Credentials`, `PredictionResponse`, `Predictions`, `Price`, `Security` and `Warning` sub-entities, and the licenses `FilterFindResult`, to the attribute-based entity system, without changing their methods nor their serialization, except the order of the `License` and `Price` JSON keys, which follows their properties
 - Fixed the types of the documentation to match the getters: PHP types instead of `numeric`, `boolean`, `String` or `Array`, wrong types of `License::getStatusLabel()`, `Billing::getCycle()`, `Billing::getTerm()`, `Customer::getHeadcount()` and orders `Partner::getContact()`, and the nullable getters documented as nullable, all written as `type` or `null`
 - Migrated the `ErpExportType`, `Identity`, `Preference`, `Preferences`, `Prices`, `Rates`, `Statement`, `StatementLine` and `StatementStatus` billing entities to the attribute-based entity system, without changing their methods nor their serialization
 - Fixed the types of the billing statements documentation to match the getters (`float` instead of `numeric`, nullable types written as `type` or `null`), and documented the `StatementStatus` entity

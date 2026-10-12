@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\License;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class ActiveSeats
@@ -17,27 +17,14 @@ class ActiveSeats extends AbstractEntity
     /**
      * @var string|null
      */
-    private $lastUpdate;
+    #[Property(name: self::COLUMN_LAST_UPDATE, serializeNull: true)]
+    protected ?string $lastUpdate = null;
 
     /**
      * @var float|null
      */
-    private $number;
-
-    /**
-     * ActiveSeats constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->lastUpdate = $data[self::COLUMN_LAST_UPDATE];
-        $this->number = $data[self::COLUMN_NUMBER];
-    }
+    #[Property(name: self::COLUMN_NUMBER, type: 'float', serializeNull: true)]
+    protected ?float $number = null;
 
     /**
      * @return string|null
@@ -53,16 +40,5 @@ class ActiveSeats extends AbstractEntity
     public function getNumber(): ?float
     {
         return $this->number;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_LAST_UPDATE => $this->lastUpdate,
-            self::COLUMN_NUMBER      => $this->number,
-        ];
     }
 }
