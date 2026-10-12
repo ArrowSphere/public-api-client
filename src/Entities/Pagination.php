@@ -2,7 +2,9 @@
 
 namespace ArrowSphere\PublicApiClient\Entities;
 
-class Pagination
+use JsonSerializable;
+
+class Pagination implements JsonSerializable
 {
     public const PAGINATION_PER_PAGE = 'per_page';
     public const PAGINATION_CURRENT_PAGE = 'current_page';
