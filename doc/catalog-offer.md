@@ -10,41 +10,41 @@ An offer is the most important data of the catalog because it's the unit of sale
 
 An offer is managed by the `Offer` entity.
 
-| Field               | Type          | Example                              | Description                                                                                           |
-|---------------------|---------------|--------------------------------------|-------------------------------------------------------------------------------------------------------|
-| addons              | `string[]`    | ['123', '456']                       | An array containing the compatible add-ons for this offer                                             |
-| buyingProgram       | `string`      | Corporate                            |                                                                                                       |
-| category            | `string[]`    | ['Productivity']                     | An array of categories                                                                                |
-| classification      | `string`      | SAAS                                 | The [classification](catalog-classification.md)                                                       |
-| conversionSkus      | `string[]`    | ['123', '456']                       | An array containing the offers that this one can convert to. To be used with a trial.                 |
-| customerCategory    | `string`      | Corporate                            | A category for the customer                                                                           |
-| description         | `string`      | Some text...                         | A short text description for this offer                                                               |
-| endCustomerFeatures | `string`      | Some text...                         | A long text with HTML describing the offer's features, to be displayed to the end customers           |
-| eula                | `string`      | Some text...                         | The end-user license agreement                                                                        |
-| featuresPicture     | `string`      | https://example.com/image.png        | An image to be displayed next to the features                                                         |
-| fullFeatures        | `string`      | Some text...                         | A long text with HTML describing the offer's features, to be displayed to the resellers               |
-| hasAddons           | `bool`        | true                                 | A flag to indicate whether the offer has add-on(s) or not                                             |
-| isAddon             | `bool`        | false                                | A flag to indicate whether the offer is an add-on or not                                              |
-| isEnabled           | `bool`        | true                                 | A flag to indicate whether the offer is activated or not                                              |
-| isTrial             | `bool`        | false                                | A flag to indicate whether the offer is a trial or not                                                |
-| keywords            | `string[]`    | ['Corporate']                        | An array of keywords                                                                                  |
-| marketplace         | `string`      | US                                   | The marketplace of the catalog the offer comes from                                                   |
-| name                | `string`      | Microsoft 365 Business Standard      | The name                                                                                              |
-| orderableSku        | `string`      | U0FBU3x8bWljcm9zb2Z0fH (....)        | Another identifier of the offer, to be used in the ordering API                                       |
-| prerequisites       | `string[]`    | ['123', '456']                       | An array containing the offers compatible with this add-on. Makes sense only for add-ons.             |
-| priceBands          | `PriceBand[]` | an array of [PriceBand](#PriceBand)  | An array of [PriceBand](#PriceBand) with calculated prices for the reseller                           |
-| programIsEnabled    | `bool`        | true                                 | A flag to indicate whether the program of the offer is enabled or not                                 |
-| requirements        | `string`      | Some text...                         | A long text with HTML describing what the reseller has to do to be allowed to purchase this offer     |
-| serviceDescription  | `string`      | Some text...                         | A short text description for the [service](catalog-service.md)                                        |
-| serviceName         | `string`      | Office 365 Business – (Corporate)    | The name of the [service](catalog-service.md)                                                         |
-| serviceRef          | `string`      | MS-0A-O365-BUSINESS                  | The identifier of the [service](catalog-service.md)                                                   |
-| shortFeatures       | `string`      | Some text...                         | A long text with HTML describing a summary of the offer's features, to be displayed to the resellers. |
-| sku                 | `string`      | 031C9E47-4802-4248-838E-778FB1D2CC05 | The sku (unique identifier for the offer)                                                             |
-| thumbnail           | `string`      | https://example.com/image.png        | The main image for the offer                                                                          |
-| vendor              | `string`      | Microsoft                            | The vendor                                                                                            |
-| vendorCode          | `string`      | microsoft                            | The [program](catalog-program.md) (the name `vendorCode` is confusing but it is really a program)     |
-| weightForced        | `float`       | 0                                    | A numeric value to sort offers on, with offers manually entered                                       |
-| weightTopSales      | `float`       | 0                                    | A numeric value to sort offers on, calculated on the best sales for the marketplace                   |
+| Field               | Type                 | Example                              | Description                                                                                           |
+|---------------------|----------------------|--------------------------------------|-------------------------------------------------------------------------------------------------------|
+| addons              | `string[]`           | ['123', '456']                       | An array containing the compatible add-ons for this offer                                             |
+| buyingProgram       | `string` or `null`   | Corporate                            |                                                                                                       |
+| category            | `string[]`           | ['Productivity']                     | An array of categories                                                                                |
+| classification      | `string`             | SAAS                                 | The [classification](catalog-classification.md)                                                       |
+| conversionSkus      | `string[]` or `null` | ['123', '456']                       | An array containing the offers that this one can convert to. To be used with a trial.                 |
+| customerCategory    | `string`             | Corporate                            | A category for the customer                                                                           |
+| description         | `string` or `null`   | Some text...                         | A short text description for this offer                                                               |
+| endCustomerFeatures | `string` or `null`   | Some text...                         | A long text with HTML describing the offer's features, to be displayed to the end customers           |
+| eula                | `string` or `null`   | Some text...                         | The end-user license agreement                                                                        |
+| featuresPicture     | `string` or `null`   | https://example.com/image.png        | An image to be displayed next to the features                                                         |
+| fullFeatures        | `string` or `null`   | Some text...                         | A long text with HTML describing the offer's features, to be displayed to the resellers               |
+| hasAddons           | `bool`               | true                                 | A flag to indicate whether the offer has add-on(s) or not                                             |
+| isAddon             | `bool`               | false                                | A flag to indicate whether the offer is an add-on or not                                              |
+| isEnabled           | `bool`               | true                                 | A flag to indicate whether the offer is activated or not                                              |
+| isTrial             | `bool`               | false                                | A flag to indicate whether the offer is a trial or not                                                |
+| keywords            | `string[]`           | ['Corporate']                        | An array of keywords                                                                                  |
+| marketplace         | `string`             | US                                   | The marketplace of the catalog the offer comes from                                                   |
+| name                | `string`             | Microsoft 365 Business Standard      | The name                                                                                              |
+| orderableSku        | `string` or `null`   | U0FBU3x8bWljcm9zb2Z0fH (....)        | Another identifier of the offer, to be used in the ordering API                                       |
+| prerequisites       | `string[]`           | ['123', '456']                       | An array containing the offers compatible with this add-on. Makes sense only for add-ons.             |
+| priceBands          | `PriceBand[]`        | an array of [PriceBand](#PriceBand)  | An array of [PriceBand](#PriceBand) with calculated prices for the reseller                           |
+| programIsEnabled    | `bool`               | true                                 | A flag to indicate whether the program of the offer is enabled or not                                 |
+| requirements        | `string` or `null`   | Some text...                         | A long text with HTML describing what the reseller has to do to be allowed to purchase this offer     |
+| serviceDescription  | `string` or `null`   | Some text...                         | A short text description for the [service](catalog-service.md)                                        |
+| serviceName         | `string`             | Office 365 Business – (Corporate)    | The name of the [service](catalog-service.md)                                                         |
+| serviceRef          | `string`             | MS-0A-O365-BUSINESS                  | The identifier of the [service](catalog-service.md)                                                   |
+| shortFeatures       | `string` or `null`   | Some text...                         | A long text with HTML describing a summary of the offer's features, to be displayed to the resellers. |
+| sku                 | `string`             | 031C9E47-4802-4248-838E-778FB1D2CC05 | The sku (unique identifier for the offer)                                                             |
+| thumbnail           | `string`             | https://example.com/image.png        | The main image for the offer                                                                          |
+| vendor              | `string`             | Microsoft                            | The vendor                                                                                            |
+| vendorCode          | `string`             | microsoft                            | The [program](catalog-program.md) (the name `vendorCode` is confusing but it is really a program)     |
+| weightForced        | `float`              | 0                                    | A numeric value to sort offers on, with offers manually entered                                       |
+| weightTopSales      | `float`              | 0                                    | A numeric value to sort offers on, calculated on the best sales for the marketplace                   |
 
 ### PriceBand
 
@@ -59,29 +59,29 @@ The prices can change depending on these parameters, hence the concept of price 
 
 A price band is managed by the `PriceBand` entity.
 
-| Field              | Type     | Example   | Description                                                                                                                                                    |
-|--------------------|----------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| minQuantity        | `int`    | 1         | The minimum quantity for the price band to be valid                                                                                                            |
-| maxQuantity        | `int`    | 999       | The maximum quantity for the price band to be valid. If there's no maximum, this field takes the value `null`                                                  |
-| recurringBuyPrice  | `float`  | 12.99     | The buy price for the reseller                                                                                                                                 |
-| recurringSellPrice | `float`  | 14.99     | The list price of the offer (public price)                                                                                                                     |
-| arrowPrice         | `float`  | 9.99      | The buy price for Arrow (this field is `null` for non-Arrow users                                                                                              |
-| term               | `string` | 1 Year    | For how long the customer commits himself                                                                                                                      |
-| unitType           | `string` | LICENSE   |                                                                                                                                                                |
-| recurringTimeUnit  | `string` | per Month | The periodicity, i.e how frequently the customer needs to pay                                                                                                  |
-| currency           | `string` | USD       | The currency of the price band                                                                                                                                 |
-| periodAsHours      | `int`    | 720       | The periodicity, converted to hours (with a base of 30 days per month so it's not an accurate value, should be used only as a key to identify the periodicity) |
-| termAsHours        | `int`    | 8640      | The term, converted to hours (with a base of 30 days per month so it's not an accurate value, should be used only as a key to identify the term)               |
+| Field              | Type              | Example   | Description                                                                                                                                                    |
+|--------------------|-------------------|-----------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| minQuantity        | `int`             | 1         | The minimum quantity for the price band to be valid                                                                                                            |
+| maxQuantity        | `int` or `null`   | 999       | The maximum quantity for the price band to be valid. If there's no maximum, this field takes the value `null`                                                  |
+| recurringBuyPrice  | `float`           | 12.99     | The buy price for the reseller                                                                                                                                 |
+| recurringSellPrice | `float`           | 14.99     | The list price of the offer (public price)                                                                                                                     |
+| arrowPrice         | `float` or `null` | 9.99      | The buy price for Arrow (this field is `null` for non-Arrow users                                                                                              |
+| term               | `string`          | 1 Year    | For how long the customer commits himself                                                                                                                      |
+| unitType           | `string`          | LICENSE   |                                                                                                                                                                |
+| recurringTimeUnit  | `string`          | per Month | The periodicity, i.e how frequently the customer needs to pay                                                                                                  |
+| currency           | `string`          | USD       | The currency of the price band                                                                                                                                 |
+| periodAsHours      | `int`             | 720       | The periodicity, converted to hours (with a base of 30 days per month so it's not an accurate value, should be used only as a key to identify the periodicity) |
+| termAsHours        | `int`             | 8640      | The term, converted to hours (with a base of 30 days per month so it's not an accurate value, should be used only as a key to identify the term)               |
 
 ### FilterFindResult
 
 This entity represents a filter returned by the [Find endpoint](#Find endpoint).
 It shows a number of possible filters in the search results and the count for each of them.
 
-| Field  | Type     | Example     | Description              |
-|--------|----------|-------------|--------------------------|
-| name   | `string` | vendor      | The name of the filter   |
-| values | `array`  | (see below) | The values of the filter |
+| Field  | Type               | Example     | Description              |
+|--------|--------------------|-------------|--------------------------|
+| name   | `string` or `null` | vendor      | The name of the filter   |
+| values | `array`            | (see below) | The values of the filter |
 
 Each entry in the `values` array looks like this:
 

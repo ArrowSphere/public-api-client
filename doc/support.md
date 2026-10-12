@@ -77,13 +77,13 @@ The additionalData represent the some additional information to be added to the 
 
 It represents the information for the related topic.
 
-| Field          | Type       | Example                       | Description                                                                                  |
-|----------------|------------|-------------------------------|----------------------------------------------------------------------------------------------|
-| id             | `int`      | 1                             | Topic identifier                                                                             |
-| name           | `string`   | platformIssue                 | Topic name                                                                                   |
-| label          | `string`   | Microsoft platform issue      | Topic label                                                                                  |
-| premium        | `boolean`  | true                          | Whether the topic is premium or not                                                          |
-| description    | `string`   | Arrowsphere                   | Our experts will cross-reference your designs and solutions against Microsoft best practices |
+| Field       | Type     | Example                  | Description                                                                                  |
+|-------------|----------|--------------------------|----------------------------------------------------------------------------------------------|
+| id          | `int`    | 1                        | Topic identifier                                                                             |
+| name        | `string` | platformIssue            | Topic name                                                                                   |
+| label       | `string` | Microsoft platform issue | Topic label                                                                                  |
+| premium     | `bool`   | true                     | Whether the topic is premium or not                                                          |
+| description | `string` | Arrowsphere              | Our experts will cross-reference your designs and solutions against Microsoft best practices |
 
 
 ### Attachment

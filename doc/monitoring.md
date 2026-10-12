@@ -12,7 +12,7 @@ A report is managed by the `Report` entity.
 
 | Field     | Type     | Example                | Description               |
 |-----------|----------|------------------------|---------------------------|
-| body      | `Array`  | ["blockedURL"=> 'xxx'] | content of the report     |
+| body      | `array`  | ["blockedURL"=> 'xxx'] | content of the report     |
 | type      | `string` | "csp-violation"        | type of report            |
 | url       | `string` | "xxx/home"             | link where report emitted |
 | userAgent | `string` | "chrome"               | browser user agent        |
