@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Catalog\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class Service
@@ -26,69 +26,47 @@ class Service extends AbstractEntity
 
     public const COLUMN_SERVICE_TAGS = 'serviceTags';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_ASSOCIATED_SUBSCRIPTION_PROGRAM => 'required',
-        self::COLUMN_CLASSIFICATION                  => 'required',
-        self::COLUMN_NAME                            => 'required',
-        self::COLUMN_PROGRAM                         => 'required',
-        self::COLUMN_REFERENCE                       => 'required',
-        self::COLUMN_SERVICE_TAGS                    => 'present|array',
-    ];
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_ASSOCIATED_SUBSCRIPTION_PROGRAM, required: true)]
+    protected string $associatedSubscriptionProgram;
 
     /**
      * @var string
      */
-    private $associatedSubscriptionProgram;
+    #[Property(name: self::COLUMN_CLASSIFICATION, required: true)]
+    protected string $classification;
 
     /**
      * @var string
      */
-    private $classification;
+    #[Property(name: self::COLUMN_DESCRIPTION)]
+    protected string $description = '';
 
     /**
      * @var string
      */
-    private $description;
+    #[Property(name: self::COLUMN_NAME, required: true)]
+    protected string $name;
 
     /**
      * @var string
      */
-    private $name;
+    #[Property(name: self::COLUMN_PROGRAM, required: true)]
+    protected string $program;
 
     /**
      * @var string
      */
-    private $program;
-
-    /**
-     * @var string
-     */
-    private $reference;
+    #[Property(name: self::COLUMN_REFERENCE, required: true)]
+    protected string $reference;
 
     /**
      * @var string[]
      */
-    private $serviceTags;
-
-    /**
-     * Service constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->associatedSubscriptionProgram = $data[self::COLUMN_ASSOCIATED_SUBSCRIPTION_PROGRAM];
-        $this->classification = $data[self::COLUMN_CLASSIFICATION];
-        $this->description = $data[self::COLUMN_DESCRIPTION] ?? '';
-        $this->name = $data[self::COLUMN_NAME];
-        $this->program = $data[self::COLUMN_PROGRAM];
-        $this->reference = $data[self::COLUMN_REFERENCE];
-        $this->serviceTags = $data[self::COLUMN_SERVICE_TAGS];
-    }
+    #[Property(name: self::COLUMN_SERVICE_TAGS, isArray: true)]
+    protected array $serviceTags = [];
 
     /**
      * @return string
@@ -144,18 +122,5 @@ class Service extends AbstractEntity
     public function getServiceTags(): array
     {
         return $this->serviceTags;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_ASSOCIATED_SUBSCRIPTION_PROGRAM => $this->getAssociatedSubscriptionProgram(),
-            self::COLUMN_CLASSIFICATION                  => $this->getClassification(),
-            self::COLUMN_DESCRIPTION                     => $this->getDescription(),
-            self::COLUMN_NAME                            => $this->getName(),
-            self::COLUMN_PROGRAM                         => $this->getProgram(),
-            self::COLUMN_REFERENCE                       => $this->getReference(),
-            self::COLUMN_SERVICE_TAGS                    => $this->getServiceTags(),
-        ];
     }
 }

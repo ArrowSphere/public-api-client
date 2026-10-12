@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Migrated the deprecated `Service` catalog entity and the deprecated `OrganizationUnit` and `OrganizationUnitsResponse` partners entities to the attribute-based entity system, without changing their methods nor their serialization; no entity extends the legacy `AbstractEntity` anymore
+
 ## [0.11.38] - 2026-10-12
 
 - Migrated the `AbstractOffer`, `Offer` and `OfferFindResult` catalog entities to the attribute-based entity system, without changing their methods nor their serialization, except the order of their JSON keys; `Classification`, whose serialization is a string, now implements `JsonSerializable` on its own
