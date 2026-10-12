@@ -3,6 +3,7 @@
 namespace ArrowSphere\PublicApiClient\Catalog;
 
 use ArrowSphere\PublicApiClient\Catalog\Entities\Offer;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use Generator;
@@ -55,6 +56,7 @@ class AddonClient extends AbstractCatalogClient
      *
      * @return Generator|Offer[]
      *
+     * @throws EntitiesException
      * @throws NotFoundException
      * @throws PublicApiClientException
      *
@@ -125,6 +127,7 @@ class AddonClient extends AbstractCatalogClient
      *
      * @return Offer
      *
+     * @throws EntitiesException
      * @throws NotFoundException
      * @throws PublicApiClientException
      *

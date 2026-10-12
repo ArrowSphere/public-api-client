@@ -2,9 +2,9 @@
 
 namespace ArrowSphere\PublicApiClient\Catalog\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
 use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 abstract class AbstractOffer extends AbstractEntity
 {
@@ -46,133 +46,130 @@ abstract class AbstractOffer extends AbstractEntity
 
     public const COLUMN_WEIGHT_TOP_SALES = 'weight_top_sales';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_CATEGORY          => 'present|array',
-        self::COLUMN_CUSTOMER_CATEGORY => 'present',
-        self::COLUMN_HAS_ADDONS        => 'required',
-        self::COLUMN_IS_ADDON          => 'required',
-        self::COLUMN_IS_TRIAL          => 'required',
-        self::COLUMN_KEYWORDS          => 'present|array',
-        self::COLUMN_ADDONS            => 'array',
-        self::COLUMN_PREREQUISITES     => 'array',
-        self::COLUMN_MARKETPLACE       => 'required',
-        self::COLUMN_NAME              => 'required',
-        'prices'                       => 'required|array',
-        self::COLUMN_SERVICE_NAME      => 'present',
-        self::COLUMN_SERVICE_REF       => 'required',
-        self::COLUMN_SKU               => 'required',
-        self::COLUMN_THUMBNAIL         => 'present',
-        self::COLUMN_TYPE              => 'required',
-        self::COLUMN_VENDOR            => 'required',
-        self::COLUMN_VENDOR_CODE       => 'required',
-        self::COLUMN_WEIGHT_FORCED     => 'required|numeric',
-        self::COLUMN_WEIGHT_TOP_SALES  => 'required|numeric',
-    ];
-
     /**
      * @var string[]|null
      */
-    private $addons;
+    #[Property(name: self::COLUMN_ADDONS, isArray: true, serializeNull: true)]
+    protected ?array $addons = null;
 
     /**
      * @var string[]
      */
-    private $category;
+    #[Property(name: self::COLUMN_CATEGORY, type: 'array')]
+    protected array $category = [];
 
     /**
      * @var string
      */
-    private $classification;
+    #[Property(name: self::COLUMN_TYPE, required: true)]
+    protected string $classification;
 
     /**
      * @var string
      */
-    private $customerCategory;
+    #[Property(name: self::COLUMN_CUSTOMER_CATEGORY, required: true)]
+    protected string $customerCategory;
 
     /**
      * @var bool
      */
-    private $hasAddons;
+    #[Property(name: self::COLUMN_HAS_ADDONS, type: 'bool', required: true)]
+    protected bool $hasAddons;
 
     /**
      * @var bool
      */
-    private $isAddon;
+    #[Property(name: self::COLUMN_IS_ADDON, type: 'bool', required: true)]
+    protected bool $isAddon;
 
     /**
      * @var bool
      */
-    private $isTrial;
+    #[Property(name: self::COLUMN_IS_TRIAL, type: 'bool', required: true)]
+    protected bool $isTrial;
 
     /**
      * @var string[]
      */
-    private $keywords;
+    #[Property(name: self::COLUMN_KEYWORDS, type: 'array')]
+    protected array $keywords = [];
 
     /**
      * @var string
      */
-    private $marketplace;
+    #[Property(name: self::COLUMN_MARKETPLACE, required: true)]
+    protected string $marketplace;
 
     /**
      * @var string
      */
-    private $name;
+    #[Property(name: self::COLUMN_NAME, required: true)]
+    protected string $name;
 
     /**
      * @var string[]|null
      */
-    private $prerequisites;
+    #[Property(name: self::COLUMN_PREREQUISITES, isArray: true, serializeNull: true)]
+    protected ?array $prerequisites = null;
 
     /**
      * @var PriceBand[]
      */
-    private $priceBands;
+    #[Property(name: 'prices', type: PriceBand::class, isArray: true)]
+    protected array $priceBands = [];
 
     /**
-     * @var bool
+     * @var bool The nested program.isEnabled field, hydrated by the constructor
      */
-    private $programIsEnabled;
-
-    /**
-     * @var string
-     */
-    private $serviceName;
+    protected bool $programIsEnabled = true;
 
     /**
      * @var string
      */
-    private $serviceRef;
+    #[Property(name: self::COLUMN_SERVICE_NAME, required: true)]
+    protected string $serviceName;
 
     /**
      * @var string
      */
-    private $sku;
+    #[Property(name: self::COLUMN_SERVICE_REF, required: true)]
+    protected string $serviceRef;
 
     /**
      * @var string
      */
-    private $thumbnail;
+    #[Property(name: self::COLUMN_SKU, required: true)]
+    protected string $sku;
 
     /**
      * @var string
      */
-    private $vendor;
+    #[Property(name: self::COLUMN_THUMBNAIL, required: true)]
+    protected string $thumbnail;
 
     /**
      * @var string
      */
-    private $vendorCode;
+    #[Property(name: self::COLUMN_VENDOR, required: true)]
+    protected string $vendor;
+
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_VENDOR_CODE, required: true)]
+    protected string $vendorCode;
 
     /**
      * @var float
      */
-    private $weightForced;
+    #[Property(name: self::COLUMN_WEIGHT_FORCED, type: 'float', required: true)]
+    protected float $weightForced;
 
     /**
      * @var float
      */
-    private $weightTopSales;
+    #[Property(name: self::COLUMN_WEIGHT_TOP_SALES, type: 'float', required: true)]
+    protected float $weightTopSales;
 
     /**
      * AbstractOffer constructor.
@@ -180,35 +177,21 @@ abstract class AbstractOffer extends AbstractEntity
      * @param array $data
      *
      * @throws EntitiesException
-     * @throws EntityValidationException
      */
     public function __construct(array $data)
     {
         parent::__construct($data);
 
-        $this->addons = $data[self::COLUMN_ADDONS] ?? null;
-        $this->category = $data[self::COLUMN_CATEGORY];
-        $this->classification = $data[self::COLUMN_TYPE];
-        $this->customerCategory = $data[self::COLUMN_CUSTOMER_CATEGORY];
-        $this->hasAddons = $data[self::COLUMN_HAS_ADDONS];
-        $this->isAddon = $data[self::COLUMN_IS_ADDON];
-        $this->isTrial = $data[self::COLUMN_IS_TRIAL];
-        $this->keywords = $data[self::COLUMN_KEYWORDS];
-        $this->marketplace = $data[self::COLUMN_MARKETPLACE];
-        $this->name = $data[self::COLUMN_NAME];
-        $this->priceBands = array_map(static function (array $priceBandData) {
-            return new PriceBand($priceBandData);
-        }, $data['prices']);
-        $this->prerequisites = $data[self::COLUMN_PREREQUISITES] ?? null;
-        $this->programIsEnabled = $data['program']['isEnabled'] ?? true;
-        $this->serviceName = $data[self::COLUMN_SERVICE_NAME];
-        $this->serviceRef = $data[self::COLUMN_SERVICE_REF];
-        $this->sku = $data[self::COLUMN_SKU];
-        $this->thumbnail = $data[self::COLUMN_THUMBNAIL];
-        $this->vendor = $data[self::COLUMN_VENDOR];
-        $this->vendorCode = $data[self::COLUMN_VENDOR_CODE];
-        $this->weightForced = $data[self::COLUMN_WEIGHT_FORCED];
-        $this->weightTopSales = $data[self::COLUMN_WEIGHT_TOP_SALES];
+        $this->programIsEnabled = (bool) ($data['program']['isEnabled'] ?? true);
+
+        // An empty list stays an empty list, the attribute hydration would consider it as missing
+        if (($data[self::COLUMN_ADDONS] ?? null) === []) {
+            $this->addons = [];
+        }
+
+        if (($data[self::COLUMN_PREREQUISITES] ?? null) === []) {
+            $this->prerequisites = [];
+        }
 
         $this->sortBandsByBillingCycle();
     }
@@ -438,31 +421,5 @@ abstract class AbstractOffer extends AbstractEntity
 
             return $checkTimeUnit === 0 ? $bandA->getMinQuantity() <=> $bandB->getMinQuantity() : $checkTimeUnit;
         });
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_ADDONS            => $this->getAddons(),
-            self::COLUMN_CATEGORY          => $this->getCategory(),
-            self::COLUMN_CUSTOMER_CATEGORY => $this->getCustomerCategory(),
-            self::COLUMN_HAS_ADDONS        => $this->getHasAddons(),
-            self::COLUMN_IS_ADDON          => $this->getIsAddon(),
-            self::COLUMN_IS_TRIAL          => $this->getIsTrial(),
-            self::COLUMN_KEYWORDS          => $this->getKeywords(),
-            self::COLUMN_MARKETPLACE       => $this->getMarketplace(),
-            self::COLUMN_PREREQUISITES     => $this->getPrerequisites(),
-            self::COLUMN_NAME              => $this->getName(),
-            self::COLUMN_SERVICE_NAME      => $this->getServiceName(),
-            self::COLUMN_SERVICE_REF       => $this->getServiceRef(),
-            self::COLUMN_SKU               => $this->getSku(),
-            self::COLUMN_THUMBNAIL         => $this->getThumbnail(),
-            self::COLUMN_TYPE              => $this->getClassification(),
-            self::COLUMN_VENDOR            => $this->getVendor(),
-            self::COLUMN_VENDOR_CODE       => $this->getVendorCode(),
-            self::COLUMN_WEIGHT_FORCED     => $this->getWeightForced(),
-            self::COLUMN_WEIGHT_TOP_SALES  => $this->getWeightTopSales(),
-            'prices'                       => $this->getPriceBands()
-        ];
     }
 }

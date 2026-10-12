@@ -5,6 +5,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Migrated the `AbstractOffer`, `Offer` and `OfferFindResult` catalog entities to the attribute-based entity system, without changing their methods nor their serialization, except the order of their JSON keys; `Classification`, whose serialization is a string, now implements `JsonSerializable` on its own
 - Migrated the `CustomersResponse` and `GetOrdersResponse` paginated responses to the attribute-based entity system, and the catalog and licenses `FindResult` to the attribute-based base class, without changing their methods nor their serialization
 - `Pagination` implements `JsonSerializable`, so that `json_encode()` serializes it instead of returning an empty object
 - Migrated the `Offer` licenses entity with its `ActionFlags` and `PriceBand` sub-entities (and their `ActionFlags`, `Billing`, `Identifiers`, `Arrowsphere`, `Prices` and `SaleConstraints` sub-entities), and `LicenseOfferFindResult`, to the attribute-based entity system, without changing their methods nor their serialization, except the order of the `PriceBand` JSON keys, which follows its properties

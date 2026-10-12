@@ -2,37 +2,37 @@
 
 namespace ArrowSphere\PublicApiClient\Catalog\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
+use JsonSerializable;
 
 /**
  * Class Classification
+ *
+ * Its serialization is its name, a string, which the attribute-based entities cannot return.
  */
-class Classification extends AbstractEntity
+class Classification implements JsonSerializable
 {
     public const COLUMN_NAME = 'name';
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_NAME => 'required',
-    ];
 
     /**
      * @var string
      */
-    private $name;
+    private string $name;
 
     /**
      * Classification constructor.
      *
      * @param array $data
      *
-     * @throws EntityValidationException
+     * @throws EntitiesException
      */
     public function __construct(array $data)
     {
-        parent::__construct($data);
+        if (! isset($data[self::COLUMN_NAME])) {
+            throw new EntitiesException(static::class . ': Missing field: ' . self::COLUMN_NAME);
+        }
 
-        $this->name = $data[self::COLUMN_NAME];
+        $this->name = (string) $data[self::COLUMN_NAME];
     }
 
     /**
