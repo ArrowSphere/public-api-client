@@ -106,6 +106,7 @@ class FindResult extends AbstractEntity
     /**
      * @return Generator|OfferFindResult[]
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
      * @throws PublicApiClientException
      */

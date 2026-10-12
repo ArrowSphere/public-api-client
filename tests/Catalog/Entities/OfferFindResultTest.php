@@ -98,6 +98,6 @@ class OfferFindResultTest extends TestCase
 }
 JSON;
 
-        self::assertEquals($expected, json_encode($offerFindResult, JSON_PRETTY_PRINT));
+        self::assertJsonStringEqualsJsonString($expected, (string) json_encode($offerFindResult));
     }
 }

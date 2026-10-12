@@ -2,7 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Catalog\Entities;
 
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class Offer
@@ -37,101 +38,99 @@ class Offer extends AbstractOffer
 
     public const COLUMN_SHORT_FEATURES = 'short_features';
 
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLUMN_CONVERSION_SKUS => 'array',
-        self::COLUMN_IS_ENABLED      => 'required',
-        self::COLUMN_RELATED_OFFERS  => 'array',
-    ];
-
     /**
      * @var string|null
      */
-    private $buyingProgram;
+    #[Property(name: self::COLUMN_BUYING_PROGRAM, serializeNull: true)]
+    protected ?string $buyingProgram = null;
 
     /**
      * @var string[]|null
      */
-    private $conversionSkus;
+    #[Property(name: self::COLUMN_CONVERSION_SKUS, isArray: true, serializeNull: true)]
+    protected ?array $conversionSkus = null;
 
     /**
      * @var string|null
      */
-    private $description;
+    #[Property(name: self::COLUMN_DESCRIPTION, serializeNull: true)]
+    protected ?string $description = null;
 
     /**
      * @var string|null
      */
-    private $endCustomerFeatures;
+    #[Property(name: self::COLUMN_END_CUSTOMER_FEATURES, serializeNull: true)]
+    protected ?string $endCustomerFeatures = null;
 
     /**
      * @var string|null
      */
-    private $eula;
+    #[Property(name: self::COLUMN_EULA, serializeNull: true)]
+    protected ?string $eula = null;
 
     /**
      * @var string|null
      */
-    private $featuresPicture;
+    #[Property(name: self::COLUMN_FEATURES_PICTURE, serializeNull: true)]
+    protected ?string $featuresPicture = null;
 
     /**
      * @var string|null
      */
-    private $fullFeatures;
+    #[Property(name: self::COLUMN_FULL_FEATURES, serializeNull: true)]
+    protected ?string $fullFeatures = null;
 
     /**
      * @var bool
      */
-    private $isEnabled;
+    #[Property(name: self::COLUMN_IS_ENABLED, type: 'bool', required: true)]
+    protected bool $isEnabled;
 
     /**
      * @var string|null
      */
-    private $orderableSku;
+    #[Property(name: self::COLUMN_ORDERABLE_SKU, serializeNull: true)]
+    protected ?string $orderableSku = null;
 
     /**
-     * @var string[]
+     * @var array
      */
-    private $relatedOffers;
-
-    /**
-     * @var string|null
-     */
-    private $requirements;
+    #[Property(name: self::COLUMN_RELATED_OFFERS, type: 'array')]
+    protected array $relatedOffers = [];
 
     /**
      * @var string|null
      */
-    private $serviceDescription;
+    #[Property(name: self::COLUMN_REQUIREMENTS, serializeNull: true)]
+    protected ?string $requirements = null;
 
     /**
      * @var string|null
      */
-    private $shortFeatures;
+    #[Property(name: self::COLUMN_SERVICE_DESCRIPTION, serializeNull: true)]
+    protected ?string $serviceDescription = null;
+
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_SHORT_FEATURES, serializeNull: true)]
+    protected ?string $shortFeatures = null;
 
     /**
      * Offer constructor.
      *
      * @param array $data
      *
-     * @throws EntityValidationException
+     * @throws EntitiesException
      */
     public function __construct(array $data)
     {
         parent::__construct($data);
 
-        $this->buyingProgram = $data[self::COLUMN_BUYING_PROGRAM] ?? null;
-        $this->conversionSkus = $data[self::COLUMN_CONVERSION_SKUS] ?? null;
-        $this->description = $data[self::COLUMN_DESCRIPTION] ?? null;
-        $this->endCustomerFeatures = $data[self::COLUMN_END_CUSTOMER_FEATURES] ?? null;
-        $this->eula = $data[self::COLUMN_EULA] ?? null;
-        $this->featuresPicture = $data[self::COLUMN_FEATURES_PICTURE] ?? null;
-        $this->fullFeatures = $data[self::COLUMN_FULL_FEATURES] ?? null;
-        $this->isEnabled = $data[self::COLUMN_IS_ENABLED];
-        $this->orderableSku = $data[self::COLUMN_ORDERABLE_SKU] ?? null;
-        $this->relatedOffers = $data[self::COLUMN_RELATED_OFFERS] ?? [];
-        $this->requirements = $data[self::COLUMN_REQUIREMENTS] ?? null;
-        $this->serviceDescription = $data[self::COLUMN_SERVICE_DESCRIPTION] ?? null;
-        $this->shortFeatures = $data[self::COLUMN_SHORT_FEATURES] ?? null;
+        // An empty list stays an empty list, the attribute hydration would consider it as missing
+        if (($data[self::COLUMN_CONVERSION_SKUS] ?? null) === []) {
+            $this->conversionSkus = [];
+        }
     }
 
     /**
@@ -243,21 +242,9 @@ class Offer extends AbstractOffer
      */
     public function jsonSerialize(): array
     {
-        return array_merge(parent::jsonSerialize(), [
-            self::COLUMN_BUYING_PROGRAM        => $this->getBuyingProgram(),
-            self::COLUMN_CONVERSION_SKUS       => $this->getConversionSkus(),
-            self::COLUMN_DESCRIPTION           => $this->getDescription(),
-            self::COLUMN_END_CUSTOMER_FEATURES => $this->getEndCustomerFeatures(),
-            self::COLUMN_EULA                  => $this->getEula(),
-            self::COLUMN_IS_ENABLED            => $this->getIsEnabled(),
-            self::COLUMN_IS_PROGRAM_ENABLED    => $this->getProgramIsEnabled(),
-            self::COLUMN_ORDERABLE_SKU         => $this->getOrderableSku(),
-            self::COLUMN_RELATED_OFFERS        => $this->getRelatedOffers(),
-            self::COLUMN_SERVICE_DESCRIPTION   => $this->getServiceDescription(),
-            self::COLUMN_FEATURES_PICTURE      => $this->getFeaturesPicture(),
-            self::COLUMN_FULL_FEATURES         => $this->getFullFeatures(),
-            self::COLUMN_REQUIREMENTS          => $this->getRequirements(),
-            self::COLUMN_SHORT_FEATURES        => $this->getShortFeatures(),
-        ]);
+        // The nested program.isEnabled field is serialized under a dotted key
+        return parent::jsonSerialize() + [
+            self::COLUMN_IS_PROGRAM_ENABLED => $this->getProgramIsEnabled(),
+        ];
     }
 }

@@ -3,6 +3,7 @@
 namespace ArrowSphere\PublicApiClient\Catalog;
 
 use ArrowSphere\PublicApiClient\Catalog\Entities\Classification;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use Generator;
@@ -31,6 +32,7 @@ class ClassificationClient extends AbstractCatalogClient
      *
      * @return Generator|Classification[]
      *
+     * @throws EntitiesException
      * @throws NotFoundException
      * @throws PublicApiClientException
      */

@@ -96,6 +96,6 @@ class AbstractOfferTest extends TestCase
 }
 JSON;
 
-        self::assertEquals($expected, json_encode($abstractOffer, JSON_PRETTY_PRINT));
+        self::assertJsonStringEqualsJsonString($expected, (string) json_encode($abstractOffer));
     }
 }
