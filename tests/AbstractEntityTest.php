@@ -38,6 +38,7 @@ abstract class AbstractEntityTest extends TestCase
 
         $activeSeats = new $className($fields);
 
-        self::assertSame($expected, json_encode($activeSeats, JSON_PRETTY_PRINT));
+        // The order of the keys is not significant
+        self::assertJsonStringEqualsJsonString($expected, (string) json_encode($activeSeats));
     }
 }

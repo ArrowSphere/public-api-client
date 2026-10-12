@@ -2,8 +2,9 @@
 
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\License;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class Price
@@ -29,68 +30,63 @@ class Price extends AbstractEntity
     /**
      * @var string|null
      */
-    private $priceBandArrowsphereSku;
+    #[Property(name: self::COLUMN_PRICE_BAND_ARROWSPHERE_SKU, serializeNull: true)]
+    protected ?string $priceBandArrowsphereSku = null;
 
     /**
      * @var float
      */
-    private $buyPrice;
+    #[Property(name: self::COLUMN_BUY_PRICE, type: 'float', required: true)]
+    protected float $buyPrice;
 
     /**
      * @var float
      */
-    private $listPrice;
+    #[Property(name: self::COLUMN_LIST_PRICE, type: 'float', required: true)]
+    protected float $listPrice;
 
     /**
      * @var float
      */
-    private $sellPrice;
+    #[Property(name: self::COLUMN_SELL_PRICE, type: 'float', required: true)]
+    protected float $sellPrice;
 
     /**
-     * @var float
+     * @var float Computed from the unit price and the quantity, a value in the data is ignored
      */
-    private $totalBuyPrice;
+    #[Property(name: self::COLUMN_TOTAL_BUY_PRICE, type: 'float')]
+    protected float $totalBuyPrice = 0.0;
 
     /**
-     * @var float
+     * @var float Computed from the unit price and the quantity, a value in the data is ignored
      */
-    private $totalListPrice;
+    #[Property(name: self::COLUMN_TOTAL_LIST_PRICE, type: 'float')]
+    protected float $totalListPrice = 0.0;
 
     /**
-     * @var float
+     * @var float Computed from the unit price and the quantity, a value in the data is ignored
      */
-    private $totalSellPrice;
+    #[Property(name: self::COLUMN_TOTAL_SELL_PRICE, type: 'float')]
+    protected float $totalSellPrice = 0.0;
 
     /**
      * @var string|null
      */
-    private $currency;
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_PRICE_BAND_ARROWSPHERE_SKU => 'present',
-        self::COLUMN_BUY_PRICE                  => 'present|numeric',
-        self::COLUMN_SELL_PRICE                 => 'present|numeric',
-        self::COLUMN_LIST_PRICE                 => 'present|numeric',
-        self::COLUMN_CURRENCY                   => 'present',
-    ];
+    #[Property(name: self::COLUMN_CURRENCY, serializeNull: true)]
+    protected ?string $currency = null;
 
     /**
      * Price constructor.
      *
      * @param array $data
-     * @param int $qty
+     * @param int $qty The quantity the totals are computed for
      *
-     * @throws EntityValidationException
+     * @throws EntitiesException
      */
     public function __construct(array $data, int $qty = 1)
     {
         parent::__construct($data);
 
-        $this->priceBandArrowsphereSku = $data[self::COLUMN_PRICE_BAND_ARROWSPHERE_SKU];
-        $this->buyPrice = $data[self::COLUMN_BUY_PRICE];
-        $this->sellPrice = $data[self::COLUMN_SELL_PRICE];
-        $this->listPrice = $data[self::COLUMN_LIST_PRICE];
-        $this->currency = $data[self::COLUMN_CURRENCY];
         $this->totalListPrice = round($this->listPrice * $qty, 2);
         $this->totalBuyPrice = round($this->buyPrice * $qty, 2);
         $this->totalSellPrice = round($this->sellPrice * $qty, 2);
@@ -158,22 +154,5 @@ class Price extends AbstractEntity
     public function getCurrency(): ?string
     {
         return $this->currency;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_PRICE_BAND_ARROWSPHERE_SKU => $this->priceBandArrowsphereSku,
-            self::COLUMN_BUY_PRICE                  => $this->buyPrice,
-            self::COLUMN_SELL_PRICE                 => $this->sellPrice,
-            self::COLUMN_LIST_PRICE                 => $this->listPrice,
-            self::COLUMN_TOTAL_BUY_PRICE            => $this->totalBuyPrice,
-            self::COLUMN_TOTAL_SELL_PRICE           => $this->totalSellPrice,
-            self::COLUMN_TOTAL_LIST_PRICE           => $this->totalListPrice,
-            self::COLUMN_CURRENCY                   => $this->currency,
-        ];
     }
 }

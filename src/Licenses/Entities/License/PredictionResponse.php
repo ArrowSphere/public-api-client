@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\License;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class PredictionResponse
@@ -16,32 +16,14 @@ class PredictionResponse extends AbstractEntity
     /**
      * @var float
      */
-    private $amount;
+    #[Property(name: self::COLUMN_AMOUNT, type: 'float', required: true)]
+    protected float $amount;
 
     /**
      * @var string
      */
-    private $date;
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_DATE => 'present',
-        self::COLUMN_AMOUNT => 'present',
-    ];
-
-    /**
-     * PredictionResponse constructor
-     *
-     * @param array $data
-     *
-     * @throws  EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->date = $data[self::COLUMN_DATE];
-        $this->amount = $data[self::COLUMN_AMOUNT];
-    }
+    #[Property(name: self::COLUMN_DATE, required: true)]
+    protected string $date;
 
     /**
      * @return float
@@ -57,16 +39,5 @@ class PredictionResponse extends AbstractEntity
     public function getDate(): string
     {
         return $this->date;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_DATE => $this->getDate(),
-            self::COLUMN_AMOUNT => $this->getAmount(),
-        ];
     }
 }

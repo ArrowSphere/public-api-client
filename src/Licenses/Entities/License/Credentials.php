@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\License;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class Credentials
@@ -16,42 +16,23 @@ class Credentials extends AbstractEntity
 
     public const COLUMN_URL = 'url';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_USERNAME           => 'nullable|string',
-        self::COLUMN_PASSWORD_RESET_URL => 'nullable|string',
-        self::COLUMN_URL                => 'nullable|string',
-    ];
+    /**
+     * @var string|null
+     */
+    #[Property(name: self::COLUMN_USERNAME, serializeNull: true)]
+    protected ?string $username = null;
 
     /**
      * @var string|null
      */
-    private $username;
+    #[Property(name: self::COLUMN_PASSWORD_RESET_URL, serializeNull: true)]
+    protected ?string $passwordResetUrl = null;
 
     /**
      * @var string|null
      */
-    private $passwordResetUrl;
-
-    /**
-     * @var string|null
-     */
-    private $url;
-
-    /**
-     * Credentials constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->username = $data[self::COLUMN_USERNAME] ?? null;
-        $this->passwordResetUrl = $data[self::COLUMN_PASSWORD_RESET_URL] ?? null;
-        $this->url = $data[self::COLUMN_URL] ?? null;
-    }
+    #[Property(name: self::COLUMN_URL, serializeNull: true)]
+    protected ?string $url = null;
 
     /**
      * @return string|null
@@ -75,17 +56,5 @@ class Credentials extends AbstractEntity
     public function getUrl(): ?string
     {
         return $this->url;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_USERNAME           => $this->username,
-            self::COLUMN_PASSWORD_RESET_URL => $this->passwordResetUrl,
-            self::COLUMN_URL                => $this->url,
-        ];
     }
 }

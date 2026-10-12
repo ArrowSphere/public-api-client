@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Licenses\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class FilterFindResult
@@ -17,34 +17,14 @@ class FilterFindResult extends AbstractEntity
     /**
      * @var string
      */
-    private $name;
+    #[Property(name: self::COLUMN_NAME, required: true)]
+    protected string $name;
 
     /**
      * @var array
      */
-    private $values;
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_NAME                => 'present',
-        self::COLUMN_VALUES              => 'present|array',
-        self::COLUMN_VALUES . '.*.value' => 'present',
-        self::COLUMN_VALUES . '.*.count' => 'required|numeric',
-    ];
-
-    /**
-     * FilterFindResult constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->name = $data[self::COLUMN_NAME];
-        $this->values = $data[self::COLUMN_VALUES];
-    }
+    #[Property(name: self::COLUMN_VALUES, type: 'array')]
+    protected array $values = [];
 
     /**
      * @return string
@@ -60,13 +40,5 @@ class FilterFindResult extends AbstractEntity
     public function getValues(): array
     {
         return $this->values;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_NAME   => $this->getName(),
-            self::COLUMN_VALUES => $this->getValues()
-        ];
     }
 }

@@ -168,4 +168,19 @@ JSON
             ],
         ];
     }
+
+    public function testEmptyListsAndRenewalDateFallback(): void
+    {
+        $fields = $this->providerSerialization()['standard']['fields'];
+        $fields['configs'] = [];
+        $fields['warnings'] = [];
+        unset($fields['next_renewal_date'], $fields['security']);
+
+        $license = new License($fields);
+
+        self::assertSame([], $license->getConfigs());
+        self::assertSame([], $license->getWarnings());
+        self::assertSame($fields['end_date'], $license->getNextRenewalDate());
+        self::assertNull($license->getSecurity()->getActiveFraudEvents());
+    }
 }

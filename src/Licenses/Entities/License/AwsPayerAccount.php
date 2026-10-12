@@ -2,7 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\License;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 class AwsPayerAccount extends AbstractEntity
 {
@@ -10,25 +11,23 @@ class AwsPayerAccount extends AbstractEntity
     public const COLUMN_FRIENDLY_NAME = 'friendlyName';
     public const COLUMN_LICENSE_REF = 'licenseRef';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_TYPE => 'required|string',
-        self::COLUMN_FRIENDLY_NAME => 'required|string',
-        self::COLUMN_LICENSE_REF => 'required|string',
-    ];
-
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_TYPE, required: true)]
     protected string $type;
 
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_FRIENDLY_NAME, required: true)]
     protected string $friendlyName;
+
+    /**
+     * @var string
+     */
+    #[Property(name: self::COLUMN_LICENSE_REF, required: true)]
     protected string $licenseRef;
-
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->type = $data[self::COLUMN_TYPE];
-        $this->friendlyName = $data[self::COLUMN_FRIENDLY_NAME];
-        $this->licenseRef = $data[self::COLUMN_LICENSE_REF];
-    }
 
     public function getType(): string
     {
@@ -43,14 +42,5 @@ class AwsPayerAccount extends AbstractEntity
     public function getLicenseRef(): string
     {
         return $this->licenseRef;
-    }
-
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_TYPE => $this->type,
-            self::COLUMN_FRIENDLY_NAME => $this->friendlyName,
-            self::COLUMN_LICENSE_REF => $this->licenseRef,
-        ];
     }
 }

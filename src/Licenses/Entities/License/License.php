@@ -2,8 +2,9 @@
 
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\License;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class License
@@ -100,318 +101,306 @@ class License extends AbstractEntity
 
     public const COLUMN_CUSTOMER_VENDOR_REFERENCE = 'customerVendorReference';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_ACCEPT_EULA     => 'present|boolean',
-        self::COLUMN_AUTO_RENEW      => 'present|boolean',
-        self::COLUMN_BASE_SEAT       => 'present|numeric',
-        self::COLUMN_CLOUD_TYPE      => 'required',
-        self::COLUMN_ID              => 'required|numeric',
-        self::COLUMN_OFFER           => 'required',
-        self::COLUMN_PARTNER_REF     => 'required',
-        self::COLUMN_PRICE           => 'required|array',
-        self::COLUMN_SEAT            => 'present|numeric',
-        self::COLUMN_SKU             => 'required',
-        self::COLUMN_STATUS_CODE     => 'required|numeric',
-        self::COLUMN_STATUS_LABEL    => 'required',
-        self::COLUMN_SUBSCRIPTION_ID => 'required',
-        self::COLUMN_SUBSIDIARY_NAME => 'required',
-        self::COLUMN_TRIAL           => 'present|boolean',
-        self::COLUMN_VENDOR_NAME     => 'required',
-        self::COLUMN_VENDOR_CODE     => 'required',
-    ];
-
     /**
      * @var bool
      */
-    private $acceptEula;
+    #[Property(name: self::COLUMN_ACCEPT_EULA, type: 'bool', required: true)]
+    protected bool $acceptEula;
 
     /**
      * @var ActiveSeats
      */
-    private $activeSeats;
+    #[Property(name: self::COLUMN_ACTIVE_SEATS, type: ActiveSeats::class, required: true)]
+    protected ActiveSeats $activeSeats;
 
     /**
      * @var bool
      */
-    private $autoRenew;
+    #[Property(name: self::COLUMN_AUTO_RENEW, type: 'bool', required: true)]
+    protected bool $autoRenew;
 
     /**
      * @var int
      */
-    private $baseSeat;
+    #[Property(name: self::COLUMN_BASE_SEAT, type: 'int', required: true)]
+    protected int $baseSeat;
 
     /**
      * @var string
      */
-    private $category;
+    #[Property(name: self::COLUMN_CATEGORY, required: true)]
+    protected string $category;
 
     /**
      * @var string|null
      */
-    private $classification;
+    #[Property(name: self::COLUMN_CLOUD_TYPE, serializeNull: true)]
+    protected ?string $classification = null;
 
     /**
      * @var Config[]|null
      */
-    private $configs;
+    #[Property(name: self::COLUMN_CONFIGS, type: Config::class, isArray: true, serializeNull: true)]
+    protected ?array $configs = null;
 
     /**
      * @var string
      */
-    private $customerName;
+    #[Property(name: self::COLUMN_CUSTOMER_NAME, required: true)]
+    protected string $customerName;
 
     /**
      * @var string
      */
-    private $customerRef;
+    #[Property(name: self::COLUMN_CUSTOMER_REF, required: true)]
+    protected string $customerRef;
 
     /**
      * @var string|null
      */
-    private $endDate;
+    #[Property(name: self::COLUMN_END_DATE, serializeNull: true)]
+    protected ?string $endDate = null;
 
     /**
      * @var string|null
      */
-    private $friendlyName;
+    #[Property(name: self::COLUMN_FRIENDLY_NAME, serializeNull: true)]
+    protected ?string $friendlyName = null;
 
     /**
      * @var int
      */
-    private $id;
+    #[Property(name: self::COLUMN_ID, type: 'int', required: true)]
+    protected int $id;
 
     /**
      * @var bool
      */
-    private $isEnabled;
+    #[Property(name: self::COLUMN_IS_ENABLED, type: 'bool', required: true)]
+    protected bool $isEnabled;
 
     /**
      * @var string|null
      */
-    private $lastUpdate;
+    #[Property(name: self::COLUMN_LAST_UPDATE, serializeNull: true)]
+    protected ?string $lastUpdate = null;
 
     /**
      * @var string
      */
-    private $marketplace;
+    #[Property(name: self::COLUMN_MARKETPLACE, required: true)]
+    protected string $marketplace;
 
     /**
      * @var string
      */
-    private $message;
+    #[Property(name: self::COLUMN_MESSAGE, required: true)]
+    protected string $message;
 
     /**
      * @var string|null
      */
-    private $nextRenewalDate;
+    #[Property(name: self::COLUMN_NEXT_RENEWAL_DATE, serializeNull: true)]
+    protected ?string $nextRenewalDate = null;
 
     /**
      * @var string|null
      */
-    private $offer;
+    #[Property(name: self::COLUMN_OFFER, serializeNull: true)]
+    protected ?string $offer = null;
 
     /**
      * @var int|null
      */
-    private $parentLineId;
+    #[Property(name: self::COLUMN_PARENT_LINE_ID, type: 'int', serializeNull: true)]
+    protected ?int $parentLineId = null;
 
     /**
      * @var string|null
      */
-    private $parentOrderRef;
+    #[Property(name: self::COLUMN_PARENT_ORDER_REF, serializeNull: true)]
+    protected ?string $parentOrderRef = null;
 
     /**
      * @var string
      */
-    private $partnerRef;
+    #[Property(name: self::COLUMN_PARTNER_REF, required: true)]
+    protected string $partnerRef;
 
     /**
      * @var int
      */
-    private $periodicity;
+    #[Property(name: self::COLUMN_PERIODICITY, type: 'int', required: true)]
+    protected int $periodicity;
 
     /**
      * @var Price
      */
-    private $price;
+    #[Property(name: self::COLUMN_PRICE, type: Price::class, required: true)]
+    protected Price $price;
 
     /**
      * @var string
      */
-    private $resellerName;
+    #[Property(name: self::COLUMN_RESELLER_NAME, required: true)]
+    protected string $resellerName;
 
     /**
      * @var string
      */
-    private $resellerRef;
+    #[Property(name: self::COLUMN_RESELLER_REF, required: true)]
+    protected string $resellerRef;
 
     /**
      * @var int
      */
-    private $seat;
+    #[Property(name: self::COLUMN_SEAT, type: 'int', required: true)]
+    protected int $seat;
 
     /**
      * @var string|null
      */
-    private $serviceRef;
+    #[Property(name: self::COLUMN_SERVICE_REF, serializeNull: true)]
+    protected ?string $serviceRef = null;
 
     /**
      * @var string
      */
-    private $sku;
+    #[Property(name: self::COLUMN_SKU, required: true)]
+    protected string $sku;
 
     /**
      * @var string|null
      */
-    private $startDate;
+    #[Property(name: self::COLUMN_START_DATE, serializeNull: true)]
+    protected ?string $startDate = null;
 
     /**
      * @var int
      */
-    private $statusCode;
+    #[Property(name: self::COLUMN_STATUS_CODE, type: 'int', required: true)]
+    protected int $statusCode;
 
     /**
      * @var string
      */
-    private $statusLabel;
+    #[Property(name: self::COLUMN_STATUS_LABEL, required: true)]
+    protected string $statusLabel;
 
     /**
      * @var string
      */
-    private $subscriptionId;
+    #[Property(name: self::COLUMN_SUBSCRIPTION_ID, required: true)]
+    protected string $subscriptionId;
 
     /**
      * @var string|null
      */
-    private $subsidiaryName;
+    #[Property(name: self::COLUMN_SUBSIDIARY_NAME, serializeNull: true)]
+    protected ?string $subsidiaryName = null;
 
     /**
      * @var int
      */
-    private $term;
+    #[Property(name: self::COLUMN_TERM, type: 'int', required: true)]
+    protected int $term;
 
     /**
      * @var bool
      */
-    private $trial;
+    #[Property(name: self::COLUMN_TRIAL, type: 'bool', required: true)]
+    protected bool $trial;
 
     /**
      * @var string
      */
-    private $type;
+    #[Property(name: self::COLUMN_TYPE, required: true)]
+    protected string $type;
 
     /**
      * @var string|null
      */
-    private $uom;
+    #[Property(name: self::COLUMN_UOM, serializeNull: true)]
+    protected ?string $uom = null;
 
     /**
      * @var string|null
      */
-    private $vendorBillingId;
+    #[Property(name: self::COLUMN_VENDOR_BILLING_ID, serializeNull: true)]
+    protected ?string $vendorBillingId = null;
 
     /**
      * @var string
      */
-    private $vendorCode;
+    #[Property(name: self::COLUMN_VENDOR_CODE, required: true)]
+    protected string $vendorCode;
 
     /**
      * @var string
      */
-    private $vendorName;
+    #[Property(name: self::COLUMN_VENDOR_NAME, required: true)]
+    protected string $vendorName;
 
     /**
      * @var string
      */
-    private $customerVendorReference;
+    #[Property(name: self::COLUMN_CUSTOMER_VENDOR_REFERENCE)]
+    protected string $customerVendorReference = '';
 
     /**
      * @var string|null
      */
-    private $vendorSubscriptionId;
+    #[Property(name: self::COLUMN_VENDOR_SUBSCRIPTION_ID, serializeNull: true)]
+    protected ?string $vendorSubscriptionId = null;
 
     /**
      * @var Warning[]|null
      */
-    private $warnings;
+    #[Property(name: self::COLUMN_WARNINGS, type: Warning::class, isArray: true, serializeNull: true)]
+    protected ?array $warnings = null;
 
     /**
      * @var Security
      */
-    private $security;
+    #[Property(name: self::COLUMN_SECURITY, type: Security::class, required: true)]
+    protected Security $security;
 
     /**
      * @var array<string,string>
      */
-    private $attributes;
+    #[Property(name: self::COLUMN_ATTRIBUTES, type: 'array')]
+    protected array $attributes = [];
 
     /**
      * License constructor.
      *
      * @param array $data
      *
-     * @throws EntityValidationException
+     * @throws EntitiesException
      */
     public function __construct(array $data)
     {
+        // A missing or empty security gets an instance with its default values, as an empty array would be considered as missing
+        if (empty($data[self::COLUMN_SECURITY])) {
+            $data[self::COLUMN_SECURITY] = new Security([]);
+        }
+
         parent::__construct($data);
 
-        $this->acceptEula = $data[self::COLUMN_ACCEPT_EULA];
-        $this->activeSeats = new ActiveSeats($data[self::COLUMN_ACTIVE_SEATS]);
-        $this->autoRenew = $data[self::COLUMN_AUTO_RENEW];
-        $this->baseSeat = $data[self::COLUMN_BASE_SEAT];
-        $this->category = $data[self::COLUMN_CATEGORY];
-        $this->classification = $data[self::COLUMN_CLOUD_TYPE];
+        // The price totals depend on the number of seats, which the attribute hydration does not know
+        $this->price = new Price((array) $data[self::COLUMN_PRICE], $this->seat);
 
-        if (isset($data[self::COLUMN_CONFIGS])) {
-            $this->configs = array_map(static function (array $config) {
-                return new Config($config);
-            }, $data[self::COLUMN_CONFIGS]);
+        // The renewal date defaults to the end date
+        $this->nextRenewalDate ??= $this->endDate;
+
+        // An empty list stays an empty list, the attribute hydration would consider it as missing
+        if (($data[self::COLUMN_CONFIGS] ?? null) === []) {
+            $this->configs = [];
         }
 
-        if (isset($data[self::COLUMN_WARNINGS])) {
-            $this->warnings = array_map(static function (array $warning) {
-                return new Warning($warning);
-            }, $data[self::COLUMN_WARNINGS]);
+        if (($data[self::COLUMN_WARNINGS] ?? null) === []) {
+            $this->warnings = [];
         }
-
-        $this->customerName = $data[self::COLUMN_CUSTOMER_NAME];
-        $this->customerRef = $data[self::COLUMN_CUSTOMER_REF];
-        $this->customerVendorReference = $data[self::COLUMN_CUSTOMER_VENDOR_REFERENCE] ?? '';
-        $this->endDate = $data[self::COLUMN_END_DATE];
-        $this->friendlyName = $data[self::COLUMN_FRIENDLY_NAME];
-        $this->id = $data[self::COLUMN_ID];
-        $this->isEnabled = $data[self::COLUMN_IS_ENABLED];
-        $this->lastUpdate = $data[self::COLUMN_LAST_UPDATE];
-        $this->marketplace = $data[self::COLUMN_MARKETPLACE];
-        $this->message = $data[self::COLUMN_MESSAGE];
-        $this->nextRenewalDate = $data[self::COLUMN_NEXT_RENEWAL_DATE] ?? $data[self::COLUMN_END_DATE];
-        $this->offer = $data[self::COLUMN_OFFER];
-        $this->parentLineId = $data[self::COLUMN_PARENT_LINE_ID];
-        $this->parentOrderRef = $data[self::COLUMN_PARENT_ORDER_REF];
-        $this->partnerRef = $data[self::COLUMN_PARTNER_REF];
-        $this->periodicity = $data[self::COLUMN_PERIODICITY];
-        $this->price = new Price($data[self::COLUMN_PRICE], $data[self::COLUMN_SEAT]);
-        $this->resellerName = $data[self::COLUMN_RESELLER_NAME];
-        $this->resellerRef = $data[self::COLUMN_RESELLER_REF];
-        $this->seat = $data[self::COLUMN_SEAT];
-        $this->serviceRef = $data[self::COLUMN_SERVICE_REF];
-        $this->sku = $data[self::COLUMN_SKU];
-        $this->startDate = $data[self::COLUMN_START_DATE];
-        $this->statusCode = $data[self::COLUMN_STATUS_CODE];
-        $this->statusLabel = $data[self::COLUMN_STATUS_LABEL];
-        $this->subscriptionId = $data[self::COLUMN_SUBSCRIPTION_ID];
-        $this->subsidiaryName = $data[self::COLUMN_SUBSIDIARY_NAME];
-        $this->term = $data[self::COLUMN_TERM];
-        $this->trial = $data[self::COLUMN_TRIAL];
-        $this->type = $data[self::COLUMN_TYPE];
-        $this->uom = $data[self::COLUMN_UOM];
-        $this->vendorBillingId = $data[self::COLUMN_VENDOR_BILLING_ID] ?? null;
-        $this->vendorCode = $data[self::COLUMN_VENDOR_CODE];
-        $this->vendorName = $data[self::COLUMN_VENDOR_NAME];
-        $this->vendorSubscriptionId = $data[self::COLUMN_VENDOR_SUBSCRIPTION_ID];
-        $this->security = new Security($data[self::COLUMN_SECURITY] ?? []);
-        $this->attributes = $data[self::COLUMN_ATTRIBUTES] ?? [];
     }
 
     /**
@@ -772,85 +761,5 @@ class License extends AbstractEntity
     public function getAttributes(): array
     {
         return $this->attributes;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_ID => $this->id,
-            self::COLUMN_SUBSCRIPTION_ID => $this->subscriptionId,
-            self::COLUMN_PARENT_LINE_ID => $this->parentLineId,
-            self::COLUMN_PARENT_ORDER_REF => $this->parentOrderRef,
-            self::COLUMN_VENDOR_NAME => $this->vendorName,
-            self::COLUMN_VENDOR_CODE => $this->vendorCode,
-            self::COLUMN_SUBSIDIARY_NAME => $this->subsidiaryName,
-            self::COLUMN_PARTNER_REF => $this->partnerRef,
-            self::COLUMN_STATUS_CODE => $this->statusCode,
-            self::COLUMN_STATUS_LABEL => $this->statusLabel,
-            self::COLUMN_SERVICE_REF => $this->serviceRef,
-            self::COLUMN_SKU => $this->sku,
-            self::COLUMN_UOM => $this->uom,
-            self::COLUMN_PRICE => $this->price->jsonSerialize(),
-            self::COLUMN_CLOUD_TYPE => $this->classification,
-            self::COLUMN_BASE_SEAT => $this->baseSeat,
-            self::COLUMN_CONFIGS => $this->jsonSerializeConfigs(),
-            self::COLUMN_SEAT => $this->seat,
-            self::COLUMN_TRIAL => $this->trial,
-            self::COLUMN_AUTO_RENEW => $this->autoRenew,
-            self::COLUMN_OFFER => $this->offer,
-            self::COLUMN_CATEGORY => $this->category,
-            self::COLUMN_TYPE => $this->type,
-            self::COLUMN_START_DATE => $this->startDate,
-            self::COLUMN_END_DATE => $this->endDate,
-            self::COLUMN_ACCEPT_EULA => $this->acceptEula,
-            self::COLUMN_CUSTOMER_REF => $this->customerRef,
-            self::COLUMN_CUSTOMER_NAME => $this->customerName,
-            self::COLUMN_CUSTOMER_VENDOR_REFERENCE => $this->customerVendorReference,
-            self::COLUMN_RESELLER_REF => $this->resellerRef,
-            self::COLUMN_RESELLER_NAME => $this->resellerName,
-            self::COLUMN_MARKETPLACE => $this->marketplace,
-            self::COLUMN_ACTIVE_SEATS => $this->activeSeats->jsonSerialize(),
-            self::COLUMN_FRIENDLY_NAME => $this->friendlyName,
-            self::COLUMN_VENDOR_BILLING_ID => $this->vendorBillingId,
-            self::COLUMN_VENDOR_SUBSCRIPTION_ID => $this->vendorSubscriptionId,
-            self::COLUMN_MESSAGE => $this->message,
-            self::COLUMN_NEXT_RENEWAL_DATE => $this->nextRenewalDate,
-            self::COLUMN_PERIODICITY => $this->periodicity,
-            self::COLUMN_TERM => $this->term,
-            self::COLUMN_IS_ENABLED => $this->isEnabled,
-            self::COLUMN_LAST_UPDATE => $this->lastUpdate,
-            self::COLUMN_WARNINGS => $this->jsonSerializeWarnings(),
-            self::COLUMN_SECURITY => $this->security,
-            self::COLUMN_ATTRIBUTES => $this->attributes,
-        ];
-    }
-
-    private function jsonSerializeConfigs(): ?array
-    {
-        $configs = null;
-
-        if (is_array($this->configs)) {
-            $configs = array_map(static function (Config $config) {
-                return $config->jsonSerialize();
-            }, $this->configs);
-        }
-
-        return $configs;
-    }
-
-    private function jsonSerializeWarnings(): ?array
-    {
-        $warnings = null;
-
-        if (is_array($this->warnings)) {
-            $warnings = array_map(static function (Warning $warning) {
-                return $warning->jsonSerialize();
-            }, $this->warnings);
-        }
-
-        return $warnings;
     }
 }
