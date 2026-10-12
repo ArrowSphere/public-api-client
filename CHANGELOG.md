@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.37] - 2026-10-12
+
 - Migrated the `Campaign`, `CampaignV2`, `Banner`, `LandingPage`, `LandingPageV2` and `Rules` campaigns entities to the attribute-based entity system, without changing their methods nor their serialization
 - Fixed `Campaign`, which threw a `TypeError` for a campaign without landing page: it now gets an empty landing page, as `CampaignV2` does
 - Restored the `CampaignV2` and `LandingPageV2` entity tests, which were never run because of their file names
@@ -748,7 +750,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.36...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.37...HEAD
+[0.11.37]: https://github.com/ArrowSphere/public-api-client/compare/0.11.36...0.11.37
 [0.11.36]: https://github.com/ArrowSphere/public-api-client/compare/0.11.35...0.11.36
 [0.11.35]: https://github.com/ArrowSphere/public-api-client/compare/0.11.34...0.11.35
 [0.11.34]: https://github.com/ArrowSphere/public-api-client/compare/0.11.33...0.11.34
