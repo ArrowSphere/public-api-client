@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Added explicit getters and property PHPDoc to the request entities of the Customers, Monitoring, Orders and Quotes clients, which only had the magic getters (same names, so callers are not affected)
+- Added `Invitation\Company::COLUMN_REFERENCE` and deprecated the misspelled `COLLUMN_REFERENCE`
 - Every entity now has its own test class extending `AbstractEntityTest`, which also calls every getter of the entity built from each serialization case
 - Migrated the deprecated `Service` catalog entity and the deprecated `OrganizationUnit` and `OrganizationUnitsResponse` partners entities to the attribute-based entity system, without changing their methods nor their serialization; no entity extends the legacy `AbstractEntity` anymore
 

@@ -10,12 +10,17 @@ use ArrowSphere\PublicApiClient\Entities\Property;
  */
 class Company extends AbstractEntity
 {
-    public const COLLUMN_REFERENCE = 'reference';
+    public const COLUMN_REFERENCE = 'reference';
+
+    /**
+     * @deprecated use COLUMN_REFERENCE, this constant has a typo
+     */
+    public const COLLUMN_REFERENCE = self::COLUMN_REFERENCE;
 
     /**
      * @var string
      */
-    #[Property(name: self::COLLUMN_REFERENCE, required: true)]
+    #[Property(name: self::COLUMN_REFERENCE, required: true)]
     protected string $reference;
 
     /**

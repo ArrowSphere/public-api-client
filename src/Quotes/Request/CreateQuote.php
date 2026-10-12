@@ -13,12 +13,21 @@ class CreateQuote extends AbstractEntity
     public const COLUMN_CUSTOMER = 'customer';
     public const COLUMN_ITEMS = 'items';
 
+    /**
+     * @var string|null
+     */
     #[Property()]
     protected ?string $promotionCode = null;
 
+    /**
+     * @var Customer|null
+     */
     #[Property(type: Customer::class)]
     protected ?Customer $customer = null;
 
+    /**
+     * @var Item[]|null
+     */
     #[Property(type: Item::class, isArray: true)]
     protected ?array $items = [];
 
@@ -46,5 +55,29 @@ class CreateQuote extends AbstractEntity
     public function __construct(array $data)
     {
         parent::__construct($data);
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getPromotionCode(): ?string
+    {
+        return $this->promotionCode;
+    }
+
+    /**
+     * @return Customer|null
+     */
+    public function getCustomer(): ?Customer
+    {
+        return $this->customer;
+    }
+
+    /**
+     * @return Item[]|null
+     */
+    public function getItems(): ?array
+    {
+        return $this->items;
     }
 }

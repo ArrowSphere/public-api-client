@@ -11,9 +11,15 @@ class MigrationRequest extends AbstractEntity
     public const COLUMN_PROGRAM = 'program';
     public const COLUMN_ATTRIBUTES = 'attributes';
 
+    /**
+     * @var string
+     */
     #[Property(required: true)]
     protected string $program;
 
+    /**
+     * @var Attributes[]
+     */
     #[Property(type: Attributes::class, isArray: true, required: true)]
     protected array $attributes;
 
@@ -33,5 +39,21 @@ class MigrationRequest extends AbstractEntity
     public function __construct(array $data)
     {
         parent::__construct($data);
+    }
+
+    /**
+     * @return string
+     */
+    public function getProgram(): string
+    {
+        return $this->program;
+    }
+
+    /**
+     * @return Attributes[]
+     */
+    public function getAttributes(): array
+    {
+        return $this->attributes;
     }
 }
