@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\Identifiers\Arrowsphere;
 
 /**
@@ -16,25 +16,8 @@ class Identifiers extends AbstractEntity
     /**
      * @var Arrowsphere
      */
-    private $arrowsphere;
-
-    protected const VALIDATION_RULES = [
-        self::COLUMN_ARROWSPHERE => 'present|array'
-    ];
-
-    /**
-     * SaleConstraints constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->arrowsphere = new Arrowsphere($data[self::COLUMN_ARROWSPHERE]);
-    }
+    #[Property(name: self::COLUMN_ARROWSPHERE, type: Arrowsphere::class, required: true)]
+    protected Arrowsphere $arrowsphere;
 
     /**
      * @return Arrowsphere
@@ -42,15 +25,5 @@ class Identifiers extends AbstractEntity
     public function getArrowsphere(): Arrowsphere
     {
         return $this->arrowsphere;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_ARROWSPHERE => $this->arrowsphere->jsonSerialize(),
-        ];
     }
 }

@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Licenses\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 use ArrowSphere\PublicApiClient\Licenses\Entities\License\License;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\Offer;
 
@@ -18,44 +18,23 @@ class LicenseOfferFindResult extends AbstractEntity
 
     public const COLUMN_OFFER = 'offer';
 
-    protected const VALIDATION_RULES = parent::VALIDATION_RULES + [
-        self::COLUMN_LICENSE   => 'required',
-        self::COLUMN_HIGHLIGHT => 'array',
-    ];
-
     /**
      * @var array
      */
-    private $highlight;
+    #[Property(name: self::COLUMN_HIGHLIGHT, type: 'array')]
+    protected array $highlight = [];
 
     /**
      * @var License
      */
-    private $license;
+    #[Property(name: self::COLUMN_LICENSE, type: License::class, required: true)]
+    protected License $license;
 
     /**
      * @var Offer|null
      */
-    private $offer;
-
-    /**
-     * LicenseOfferFindResult constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->highlight = $data[self::COLUMN_HIGHLIGHT] ?? [];
-        $this->license = new License($data[self::COLUMN_LICENSE]);
-
-        if (isset($data[self::COLUMN_OFFER])) {
-            $this->offer = new Offer($data[self::COLUMN_OFFER]);
-        }
-    }
+    #[Property(name: self::COLUMN_OFFER, type: Offer::class)]
+    protected ?Offer $offer = null;
 
     /**
      * @return array
@@ -79,19 +58,5 @@ class LicenseOfferFindResult extends AbstractEntity
     public function getOffer(): ?Offer
     {
         return $this->offer;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return array_merge(
-            [
-            self::COLUMN_HIGHLIGHT => $this->getHighlight(),
-            self::COLUMN_LICENSE   => $this->getLicense()->jsonSerialize()
-            ],
-            $this->getOffer() === null ? [] : [self::COLUMN_OFFER     => $this->getOffer()->jsonSerialize()]
-        );
     }
 }

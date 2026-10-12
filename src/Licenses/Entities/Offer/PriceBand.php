@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\Offer;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\ActionFlags;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\Billing;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\Identifiers;
@@ -31,77 +31,53 @@ class PriceBand extends AbstractEntity
 
     public const COLUMN_IDENTIFIERS = 'identifiers';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_ACTION_FLAGS     => 'required|array',
-        self::COLUMN_BILLING          => 'required|array',
-        self::COLUMN_CURRENCY         => 'required',
-        self::COLUMN_IS_ENABLED       => 'required|boolean',
-        self::COLUMN_MARKETPLACE      => 'required',
-        self::COLUMN_PRICES           => 'required|array',
-        self::COLUMN_SALE_CONSTRAINTS => 'required|array',
-        self::COLUMN_IDENTIFIERS      => 'required|array',
-    ];
-
     /**
      * @var bool
      */
-    private $isEnabled;
+    #[Property(name: self::COLUMN_IS_ENABLED, type: 'bool', required: true)]
+    protected bool $isEnabled;
 
     /**
      * @var ActionFlags
      */
-    private $actionFlags;
+    #[Property(name: self::COLUMN_ACTION_FLAGS, type: ActionFlags::class, required: true)]
+    protected ActionFlags $actionFlags;
 
     /**
      * @var Billing
      */
-    private $billing;
+    #[Property(name: self::COLUMN_BILLING, type: Billing::class, required: true)]
+    protected Billing $billing;
 
     /**
      * @var string
      */
-    private $currency;
+    #[Property(name: self::COLUMN_CURRENCY, required: true)]
+    protected string $currency;
 
     /**
      * @var string
      */
-    private $marketplace;
+    #[Property(name: self::COLUMN_MARKETPLACE, required: true)]
+    protected string $marketplace;
 
     /**
      * @var Prices
      */
-    private $prices;
+    #[Property(name: self::COLUMN_PRICES, type: Prices::class, required: true)]
+    protected Prices $prices;
 
     /**
      * @var SaleConstraints
      */
-    private $saleConstraints;
+    #[Property(name: self::COLUMN_SALE_CONSTRAINTS, type: SaleConstraints::class, required: true)]
+    protected SaleConstraints $saleConstraints;
 
     /**
      * @var Identifiers
      */
-    private $identifiers;
-
-    /**
-     * PriceBand constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->isEnabled = $data[self::COLUMN_IS_ENABLED];
-        $this->actionFlags = new ActionFlags($data[self::COLUMN_ACTION_FLAGS]);
-        $this->billing = new Billing($data[self::COLUMN_BILLING]);
-        $this->currency = $data[self::COLUMN_CURRENCY];
-        $this->marketplace = $data[self::COLUMN_MARKETPLACE];
-        $this->prices = new Prices($data[self::COLUMN_PRICES]);
-        $this->saleConstraints = new SaleConstraints($data[self::COLUMN_SALE_CONSTRAINTS]);
-        $this->identifiers = new Identifiers($data[self::COLUMN_IDENTIFIERS]);
-    }
+    #[Property(name: self::COLUMN_IDENTIFIERS, type: Identifiers::class, required: true)]
+    protected Identifiers $identifiers;
 
     /**
      * @return bool
@@ -165,22 +141,5 @@ class PriceBand extends AbstractEntity
     public function Identifiers(): Identifiers
     {
         return $this->identifiers;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_ACTION_FLAGS     => $this->actionFlags->jsonSerialize(),
-            self::COLUMN_BILLING          => $this->billing->jsonSerialize(),
-            self::COLUMN_CURRENCY         => $this->currency,
-            self::COLUMN_IS_ENABLED       => $this->isEnabled,
-            self::COLUMN_MARKETPLACE      => $this->marketplace,
-            self::COLUMN_PRICES           => $this->prices->jsonSerialize(),
-            self::COLUMN_SALE_CONSTRAINTS => $this->saleConstraints->jsonSerialize(),
-            self::COLUMN_IDENTIFIERS      => $this->identifiers->jsonSerialize(),
-        ];
     }
 }

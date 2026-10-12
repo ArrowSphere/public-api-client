@@ -3,6 +3,7 @@
 namespace ArrowSphere\PublicApiClient\Licenses\Entities;
 
 use ArrowSphere\PublicApiClient\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
 use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
@@ -66,6 +67,7 @@ class FindResult extends AbstractEntity
      * @param array $postData
      * @param array $parameters
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
      */
     public function __construct(array $data, LicensesClient $client, array $postData, array $parameters)
@@ -100,6 +102,7 @@ class FindResult extends AbstractEntity
     /**
      * @return Generator|LicenseOfferFindResult[]
      *
+     * @throws EntitiesException
      * @throws EntityValidationException
      * @throws PublicApiClientException
      * @throws NotFoundException

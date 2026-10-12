@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class Billing
@@ -16,42 +16,23 @@ class Billing extends AbstractEntity
 
     public const COLUMN_TYPE = 'type';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_CYCLE => 'required|numeric',
-        self::COLUMN_TERM  => 'required|numeric',
-        self::COLUMN_TYPE  => 'required|string',
-    ];
+    /**
+     * @var int
+     */
+    #[Property(name: self::COLUMN_CYCLE, type: 'int', required: true)]
+    protected int $cycle;
 
     /**
      * @var int
      */
-    private $cycle;
-
-    /**
-     * @var int
-     */
-    private $term;
+    #[Property(name: self::COLUMN_TERM, type: 'int', required: true)]
+    protected int $term;
 
     /**
      * @var string
      */
-    private $type;
-
-    /**
-     * Billing constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->cycle = $data[self::COLUMN_CYCLE];
-        $this->term = $data[self::COLUMN_TERM];
-        $this->type = $data[self::COLUMN_TYPE];
-    }
+    #[Property(name: self::COLUMN_TYPE, required: true)]
+    protected string $type;
 
     /**
      * @return int
@@ -75,17 +56,5 @@ class Billing extends AbstractEntity
     public function getType(): string
     {
         return $this->type;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_CYCLE => $this->cycle,
-            self::COLUMN_TERM  => $this->term,
-            self::COLUMN_TYPE  => $this->type,
-        ];
     }
 }

@@ -2,8 +2,8 @@
 
 namespace ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * Class ActionFlags
@@ -20,56 +20,35 @@ class ActionFlags extends AbstractEntity
 
     public const COLUMN_CAN_INCREASE_SEATS = 'canIncreaseSeats';
 
-    protected const VALIDATION_RULES = [
-        self::COLUMN_CAN_BE_CANCELLED   => 'required|boolean',
-        self::COLUMN_CAN_BE_REACTIVATED => 'required|boolean',
-        self::COLUMN_CAN_BE_SUSPENDED   => 'required|boolean',
-        self::COLUMN_CAN_DECREASE_SEATS => 'required|boolean',
-        self::COLUMN_CAN_INCREASE_SEATS => 'required|boolean',
-    ];
+    /**
+     * @var bool
+     */
+    #[Property(name: self::COLUMN_CAN_BE_CANCELLED, type: 'bool', required: true)]
+    protected bool $canBeCancelled;
 
     /**
      * @var bool
      */
-    private $canBeCancelled;
+    #[Property(name: self::COLUMN_CAN_BE_REACTIVATED, type: 'bool', required: true)]
+    protected bool $canBeReactivated;
 
     /**
      * @var bool
      */
-    private $canBeReactivated;
+    #[Property(name: self::COLUMN_CAN_BE_SUSPENDED, type: 'bool', required: true)]
+    protected bool $canBeSuspended;
 
     /**
      * @var bool
      */
-    private $canBeSuspended;
+    #[Property(name: self::COLUMN_CAN_DECREASE_SEATS, type: 'bool', required: true)]
+    protected bool $canDecreaseSeats;
 
     /**
      * @var bool
      */
-    private $canDecreaseSeats;
-
-    /**
-     * @var bool
-     */
-    private $canIncreaseSeats;
-
-    /**
-     * ActionFlags constructor.
-     *
-     * @param array $data
-     *
-     * @throws EntityValidationException
-     */
-    public function __construct(array $data)
-    {
-        parent::__construct($data);
-
-        $this->canBeCancelled = $data[self::COLUMN_CAN_BE_CANCELLED];
-        $this->canBeReactivated = $data[self::COLUMN_CAN_BE_REACTIVATED];
-        $this->canBeSuspended = $data[self::COLUMN_CAN_BE_SUSPENDED];
-        $this->canDecreaseSeats = $data[self::COLUMN_CAN_DECREASE_SEATS];
-        $this->canIncreaseSeats = $data[self::COLUMN_CAN_INCREASE_SEATS];
-    }
+    #[Property(name: self::COLUMN_CAN_INCREASE_SEATS, type: 'bool', required: true)]
+    protected bool $canIncreaseSeats;
 
     /**
      * @return bool
@@ -109,19 +88,5 @@ class ActionFlags extends AbstractEntity
     public function getCanIncreaseSeats(): bool
     {
         return $this->canIncreaseSeats;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            'canBeCancelled'   => $this->canBeCancelled,
-            'canBeReactivated' => $this->canBeReactivated,
-            'canBeSuspended'   => $this->canBeSuspended,
-            'canDecreaseSeats' => $this->canDecreaseSeats,
-            'canIncreaseSeats' => $this->canIncreaseSeats,
-        ];
     }
 }
