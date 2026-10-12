@@ -2,8 +2,9 @@
 
 namespace ArrowSphere\PublicApiClient\Partners\Entities;
 
-use ArrowSphere\PublicApiClient\AbstractEntity;
-use ArrowSphere\PublicApiClient\Exception\EntityValidationException;
+use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
+use ArrowSphere\PublicApiClient\Entities\Exception\EntitiesException;
+use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
  * @deprecated This entity is obsolete. Please use OrganizationUnitClient.
@@ -19,56 +20,44 @@ class OrganizationUnit extends AbstractEntity
     /**
      * @var string
      */
-    private $organizationUnitRef;
+    #[Property(name: self::COLUMN_REFERENCE)]
+    protected string $organizationUnitRef = '';
 
     /**
      * @var string
      */
-    private $companyRef;
+    #[Property(name: self::COLUMN_COMPANY_REFERENCE)]
+    protected string $companyRef = '';
 
     /**
      * @var string
      */
-    private $name;
+    #[Property(name: self::COLUMN_NAME)]
+    protected string $name = '';
 
     /**
-     * @var int
+     * @var int Not serialized, hydrated by the constructor
      */
-    private $countUsers;
+    protected int $countUsers = 0;
 
     /**
-     * @var int
+     * @var int Not serialized, hydrated by the constructor
      */
-    private $countCustomers;
+    protected int $countCustomers = 0;
 
     /**
-     * Customer constructor.
+     * OrganizationUnit constructor.
      *
      * @param array $data
      *
-     * @throws EntityValidationException
+     * @throws EntitiesException
      */
     public function __construct(array $data)
     {
         parent::__construct($data);
 
-        $this->organizationUnitRef = $data[self::COLUMN_REFERENCE] ?? '';
-        $this->companyRef = $data[self::COLUMN_COMPANY_REFERENCE] ?? '';
-        $this->name = $data[self::COLUMN_NAME] ?? '';
-        $this->countUsers = $data[self::COLUMN_COUNT_USERS] ?? 0;
-        $this->countCustomers = $data[self::COLUMN_COUNT_CUSTOMERS] ?? 0;
-    }
-
-    /**
-     * @return array
-     */
-    public function jsonSerialize(): array
-    {
-        return [
-            self::COLUMN_REFERENCE  => $this->organizationUnitRef,
-            self::COLUMN_COMPANY_REFERENCE => $this->companyRef,
-            self::COLUMN_NAME => $this->name,
-        ];
+        $this->countUsers = (int) ($data[self::COLUMN_COUNT_USERS] ?? 0);
+        $this->countCustomers = (int) ($data[self::COLUMN_COUNT_CUSTOMERS] ?? 0);
     }
 
     /**
