@@ -65,6 +65,7 @@ class OrganizationUnitClient extends AbstractClient
         while (! $lastPage) {
             $this->setPage($currentPage);
             $rawResponse = $this->getOrganizationUnitsRaw($parameters);
+            /** @var array{data: array[], pagination: array{total_page: int}} $response */
             $response = $this->decodeResponse($rawResponse);
 
             if ($response['pagination']['total_page'] <= $currentPage) {

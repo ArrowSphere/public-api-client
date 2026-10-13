@@ -56,6 +56,7 @@ class OrganizationUnit extends AbstractEntity
     {
         parent::__construct($data);
 
+        /** @var array{countUsers?: int|string|null, countCustomers?: int|string|null} $data */
         $this->countUsers = (int) ($data[self::COLUMN_COUNT_USERS] ?? 0);
         $this->countCustomers = (int) ($data[self::COLUMN_COUNT_CUSTOMERS] ?? 0);
     }

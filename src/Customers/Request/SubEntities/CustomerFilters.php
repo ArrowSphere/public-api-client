@@ -112,6 +112,7 @@ class CustomerFilters extends AbstractEntity
     {
         parent::__construct($data);
 
+        /** @var array<string|null> $data */
         $this->resellerName = $data[self::COLUMN_RESELLER_NAME] ?? null;
         $this->acronym = $data[self::COLUMN_ACRONYM] ?? null;
         $this->companyId = $data[self::COLUMN_COMPANY_ID] ?? null;

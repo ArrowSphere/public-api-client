@@ -62,6 +62,7 @@ class CustomersClient extends AbstractClient
         while (! $lastPage) {
             $this->setPage($currentPage);
             $rawResponse = $this->getCustomersRaw($parameters);
+            /** @var array{data: array{customers: array[]}, pagination: array{total_page: int}} $response */
             $response = $this->decodeResponse($rawResponse);
 
             if ($response['pagination']['total_page'] <= $currentPage) {
@@ -125,6 +126,7 @@ class CustomersClient extends AbstractClient
 
         $rawResponse = $this->post($payload, $parameters);
 
+        /** @var array{data: array{reference: string}} $response */
         $response = $this->decodeResponse($rawResponse);
 
         return $response['data']['reference'];
@@ -161,6 +163,7 @@ class CustomersClient extends AbstractClient
 
         $rawResponse = $this->patch($payload, $parameters);
 
+        /** @var array{customers: array[]} $response */
         $response = $this->getResponseData($rawResponse->__toString());
 
         return new Customer($response['customers'][0]);
@@ -186,6 +189,7 @@ class CustomersClient extends AbstractClient
 
         $rawResponse = $this->get($parameters);
 
+        /** @var array{customers: array[]} $response */
         $response = $this->getResponseData($rawResponse);
 
         return new Customer($response['customers'][0]);
@@ -227,6 +231,7 @@ class CustomersClient extends AbstractClient
     {
         $rawResponse = $this->getInvitationRaw($code, $parameters);
 
+        /** @var array{data: array} $response */
         $response = $this->decodeResponse($rawResponse);
 
         return new Invitation($response['data']);
@@ -256,6 +261,7 @@ class CustomersClient extends AbstractClient
 
         $rawResponse = $this->post($payload, $parameters);
 
+        /** @var array{data: array} $response */
         $response = $this->decodeResponse($rawResponse->__toString());
 
         return new Invitation($response['data']);
@@ -334,6 +340,7 @@ class CustomersClient extends AbstractClient
     {
         do {
             $rawResponse = $this->getGdapListRaw($customerReference, $parameters);
+            /** @var array{relationRecord?: array[], paginationToken?: string|null} $response */
             $response = $this->getResponseData($rawResponse);
 
             if (empty($response['relationRecord'])) {
@@ -402,6 +409,7 @@ class CustomersClient extends AbstractClient
     {
         $rawResponse = $this->getProvisionRaw($customerReference, $program);
 
+        /** @var array{data: array} $response */
         $response = $this->decodeResponse($rawResponse);
 
         return new ProvisionResponse($response['data']);
@@ -438,6 +446,7 @@ class CustomersClient extends AbstractClient
         $this->path = '/customers/checkMicrosoftCustomerAgreement';
 
         $rawResponse = $this->get($parameters);
+        /** @var array{isMcaValidated?: bool} $response */
         $response = $this->getResponseData($rawResponse);
 
         return $response['isMcaValidated'] ?? false;

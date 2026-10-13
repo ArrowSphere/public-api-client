@@ -33,6 +33,7 @@ class CustomersResponse extends AbstractEntity
      */
     public function __construct(array $data)
     {
+        /** @var array{data?: array{customers?: array}, pagination?: array} $data */
         // The customers come from the data of the response, the pagination from its root
         parent::__construct([
             self::CUSTOMERS  => $data['data'][self::CUSTOMERS] ?? [],
