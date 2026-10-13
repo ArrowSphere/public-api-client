@@ -8,16 +8,21 @@ use ReflectionException;
 abstract class AbstractEnum
 {
     /**
-     * @var array
+     * @var array<string, array<string, int|string>>
      */
     private static $constCacheArray = [];
 
+    /**
+     * @return array<string, int|string>
+     */
     private static function getConstants(): array
     {
         $calledClass = static::class;
         if (! array_key_exists($calledClass, self::$constCacheArray)) {
             $reflect = new ReflectionClass($calledClass);
-            self::$constCacheArray[$calledClass] = $reflect->getConstants();
+            /** @var array<string, int|string> $constants the values of an enum are strings or integers */
+            $constants = $reflect->getConstants();
+            self::$constCacheArray[$calledClass] = $constants;
         }
 
         return self::$constCacheArray[$calledClass];
@@ -56,9 +61,9 @@ abstract class AbstractEnum
     }
 
     /**
-     * @param array $values
+     * @param array<int|string> $values
      *
-     * @return array
+     * @return array<int|string>
      *
      * @throws ReflectionException
      */

@@ -17,11 +17,15 @@ use Illuminate\Validation\Factory;
 abstract class AbstractEntity implements \JsonSerializable
 {
     /**
+     * @var array<string, mixed>
+     *
      * @deprecated will be removed with this class in version 1.0
      */
     protected const VALIDATION_RULES = [];
 
     /**
+     * @var array<string, string>
+     *
      * @deprecated will be removed with this class in version 1.0
      */
     protected const VALIDATION_MESSAGES = [];
@@ -85,7 +89,10 @@ abstract class AbstractEntity implements \JsonSerializable
         $validator = $factory->make($data, static::VALIDATION_RULES, $messages);
 
         if (! $validator->passes()) {
-            throw new EntityValidationException(implode('; ', $validator->getMessageBag()->all()));
+            /** @var string[] $errors */
+            $errors = $validator->getMessageBag()->all();
+
+            throw new EntityValidationException(implode('; ', $errors));
         }
     }
 }

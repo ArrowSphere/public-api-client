@@ -91,6 +91,12 @@ abstract class AbstractEntity implements JsonSerializable
             }
 
             if ($attribute->isArray) {
+                if (! is_array($data[$name])) {
+                    $errors[] = sprintf('Invalid value for array field %s: type %s', $name, gettype($data[$name]));
+
+                    continue;
+                }
+
                 $property->setValue($this, array_map(static fn ($value) => $getValue($value), $data[$name]));
             } else {
                 $property->setValue($this, $getValue($data[$name]));

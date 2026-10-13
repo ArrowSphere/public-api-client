@@ -14,7 +14,7 @@ class Pagination implements JsonSerializable
     public const PAGINATION_PREVIOUS_PAGE = 'previous';
 
     /**
-     * @var int
+     * @var int|null
      */
     private $perPage;
 
@@ -43,6 +43,9 @@ class Pagination implements JsonSerializable
      */
     private $previousPage;
 
+    /**
+     * @param array{per_page?: int|null, current_page?: int|null, total_page?: int|null, total?: int|null, next?: string|null, previous?: string|null} $data
+     */
     public function __construct(array $data)
     {
         $this->perPage = $data[self::PAGINATION_PER_PAGE] ?? null;
@@ -69,9 +72,9 @@ class Pagination implements JsonSerializable
     }
 
     /**
-     * @return int
+     * @return int|null
      */
-    public function getPerPage(): int
+    public function getPerPage(): ?int
     {
         return $this->perPage;
     }
