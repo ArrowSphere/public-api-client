@@ -5,6 +5,9 @@ namespace ArrowSphere\PublicApiClient\Catalog;
 use ArrowSphere\PublicApiClient\Catalog\Entities\Offer;
 use ArrowSphere\PublicApiClient\Catalog\Entities\PriceBand;
 
+/**
+ * @phpstan-type LegacyPrice array{min_quantity: int, max_quantity: int|null, recurring_buy_price: float|int, recurring_sell_price: float|int, term: string, unit_type: string, periodicity: string, recurring_time_unit: string, currency: string}
+ */
 trait LegacyOfferConverterTrait
 {
     /**
@@ -45,6 +48,9 @@ trait LegacyOfferConverterTrait
 
     private function convertLegacyOfferPayload(array $data): array
     {
+        /** @var LegacyPrice[] $prices */
+        $prices = $data['prices'];
+
         return [
             Offer::COLUMN_NAME                  => $data['name'],
             Offer::COLUMN_SKU                   => $data['reference'],
@@ -60,7 +66,7 @@ trait LegacyOfferConverterTrait
             Offer::COLUMN_SERVICE_REF           => $data['product'],
             Offer::COLUMN_CATEGORY              => [],
             Offer::COLUMN_ORDERABLE_SKU         => $data['orderableSku'],
-            'prices'                            => $this->convertLegacyPricesPayload($data['prices']),
+            'prices'                            => $this->convertLegacyPricesPayload($prices),
             Offer::COLUMN_BUYING_PROGRAM        => $data['buyingProgram'],
             $data['buyingType'],
             $data['endUserEula'],
@@ -82,6 +88,11 @@ trait LegacyOfferConverterTrait
         ];
     }
 
+    /**
+     * @param LegacyPrice[] $data
+     *
+     * @return array
+     */
     private function convertLegacyPricesPayload(array $data): array
     {
         return array_map(function (array $row) {

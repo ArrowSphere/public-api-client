@@ -54,6 +54,7 @@ class ProgramClient extends AbstractCatalogClient
         while (! $lastPage) {
             $this->setPage($currentPage);
             $rawResponse = $this->getProgramsRaw($classification);
+            /** @var array{data: array[], pagination: array{total_page: int}} $response */
             $response = $this->decodeResponse($rawResponse);
 
             if ($response['pagination']['total_page'] <= $currentPage) {
@@ -106,6 +107,7 @@ class ProgramClient extends AbstractCatalogClient
     public function getProgram(string $classification, string $program): Program
     {
         $rawResponse = $this->getProgramRaw($classification, $program);
+        /** @var array{data: array} $response */
         $response = $this->decodeResponse($rawResponse);
 
         return new Program($response['data']);

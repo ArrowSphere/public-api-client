@@ -32,6 +32,7 @@ class Classification implements JsonSerializable
             throw new EntitiesException(static::class . ': Missing field: ' . self::COLUMN_NAME);
         }
 
+        /** @var array{name: scalar} $data */
         $this->name = (string) $data[self::COLUMN_NAME];
     }
 

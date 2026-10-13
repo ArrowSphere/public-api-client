@@ -71,6 +71,7 @@ class AddonClient extends AbstractCatalogClient
         while (! $lastPage) {
             $this->setPage($currentPage);
             $rawResponse = $this->getAddonsRaw($classification, $program, $serviceRef, $sku);
+            /** @var array{data: array[], pagination: array{total_page: int}} $response */
             $response = $this->decodeResponse($rawResponse);
 
             if ($response['pagination']['total_page'] <= $currentPage) {
@@ -136,6 +137,7 @@ class AddonClient extends AbstractCatalogClient
     public function getAddon(string $classification, string $program, string $serviceRef, string $sku, string $addonSku): Offer
     {
         $rawResponse = $this->getAddonRaw($classification, $program, $serviceRef, $sku, $addonSku);
+        /** @var array{data: array} $response */
         $response = $this->decodeResponse($rawResponse);
 
         return new Offer($this->convertLegacyOfferPayload($response['data']));

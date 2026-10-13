@@ -57,6 +57,7 @@ class ServiceClient extends AbstractCatalogClient
         while (! $lastPage) {
             $this->setPage($currentPage);
             $rawResponse = $this->getServicesRaw($classification, $program);
+            /** @var array{data: array[], pagination: array{total_page: int}} $response */
             $response = $this->decodeResponse($rawResponse);
 
             if ($response['pagination']['total_page'] <= $currentPage) {
@@ -111,6 +112,7 @@ class ServiceClient extends AbstractCatalogClient
     public function getService(string $classification, string $program, string $serviceRef): Service
     {
         $rawResponse = $this->getServiceRaw($classification, $program, $serviceRef);
+        /** @var array{data: array} $response */
         $response = $this->decodeResponse($rawResponse);
 
         return new Service($response['data']);

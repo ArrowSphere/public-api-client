@@ -182,6 +182,7 @@ abstract class AbstractOffer extends AbstractEntity
     {
         parent::__construct($data);
 
+        /** @var array{program?: array{isEnabled?: bool|null}, add_ons?: array, prerequisites?: array} $data */
         $this->programIsEnabled = (bool) ($data['program']['isEnabled'] ?? true);
 
         // An empty list stays an empty list, the attribute hydration would consider it as missing

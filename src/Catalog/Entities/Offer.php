@@ -93,7 +93,7 @@ class Offer extends AbstractOffer
     protected ?string $orderableSku = null;
 
     /**
-     * @var array
+     * @var string[]
      */
     #[Property(name: self::COLUMN_RELATED_OFFERS, type: 'array')]
     protected array $relatedOffers = [];

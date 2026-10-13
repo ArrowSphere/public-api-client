@@ -78,6 +78,7 @@ class FindResult extends AbstractEntity
         $this->postData = $postData;
         $this->parameters = $parameters;
 
+        /** @var array{pagination: array{current_page: int, total_page: int, total: int}, products: array[], filters: array[], topOffers?: array[]} $data */
         $this->currentPage = $data['pagination']['current_page'];
         $this->totalPage = $data['pagination']['total_page'];
         $this->nbResults = $data['pagination']['total'];
@@ -125,6 +126,7 @@ class FindResult extends AbstractEntity
             $this->client->setPage($currentPage);
 
             $rawResponse = $this->client->findRaw($this->postData, $this->parameters);
+            /** @var array{products: array[], pagination: array{total_page: int}} $response */
             $response = $this->client->decodeResponse($rawResponse);
 
             if ($response['pagination']['total_page'] <= $currentPage) {

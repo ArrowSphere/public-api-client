@@ -39,6 +39,7 @@ class ClassificationClient extends AbstractCatalogClient
     public function getClassifications(): Generator
     {
         $rawResponse = $this->getClassificationsRaw();
+        /** @var array{data: array[]} $response */
         $response = $this->decodeResponse($rawResponse);
 
         foreach ($response['data'] as $data) {

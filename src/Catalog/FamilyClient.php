@@ -61,6 +61,7 @@ class FamilyClient extends AbstractCatalogClient
         while (! $lastPage) {
             $this->setPage($currentPage);
             $rawResponse = $this->getFamiliesRaw($vendorCode, $parameters);
+            /** @var array{data: array[], pagination: array{total_page: int}} $response */
             $response = $this->decodeResponse($rawResponse);
 
             if ($response['pagination']['total_page'] <= $currentPage) {
@@ -117,6 +118,7 @@ class FamilyClient extends AbstractCatalogClient
     public function getFamily(string $vendorCode, string $reference, array $parameters = []): Family
     {
         $rawResponse = $this->getFamilyRaw($vendorCode, $reference, $parameters);
+        /** @var array{data: array} $response */
         $response = $this->decodeResponse($rawResponse);
 
         return new Family($response['data']);

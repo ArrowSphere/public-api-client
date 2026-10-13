@@ -135,7 +135,7 @@ class OfferClient extends AbstractCatalogClient
     {
         $this->path = self::FIND_PATH;
 
-        if (isset($postData[self::DATA_FILTERS])) {
+        if (isset($postData[self::DATA_FILTERS]) && is_array($postData[self::DATA_FILTERS])) {
             $postData[self::DATA_FILTERS] = array_map(static function ($row) {
                 return is_array($row) ? array_values($row) : $row;
             }, $postData[self::DATA_FILTERS]);
@@ -234,6 +234,7 @@ class OfferClient extends AbstractCatalogClient
             $this->setPage($currentPage);
 
             $rawResponse = $this->getOffersRaw($classification, $program, $serviceRef, $parameters);
+            /** @var array{data: array[], pagination: array{total_page: int}} $response */
             $response = $this->decodeResponse($rawResponse);
 
             if ($response['pagination']['total_page'] <= $currentPage) {
@@ -300,6 +301,7 @@ class OfferClient extends AbstractCatalogClient
     public function getOffer(string $classification, string $program, string $serviceRef, string $sku, array $parameters = []): Offer
     {
         $rawResponse = $this->getOfferRaw($classification, $program, $serviceRef, $sku, $parameters);
+        /** @var array{data: array} $response */
         $response = $this->decodeResponse($rawResponse);
 
         return new Offer($this->convertLegacyOfferPayload($response['data']));
