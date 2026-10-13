@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+- Deprecated the legacy `AbstractEntity`, its validation rules and its `$enableValidation` flag, which no entity of the library uses anymore: they will be removed in version 1.0, with the `illuminate/validation` dependency; custom entities should extend `Entities\AbstractEntity`
+
 ## [0.11.39] - 2026-10-13
 
 - Fixed `CustomersClient::getProvision()`, which failed for a customer whose provision attribute has no value: `Attribute::getValue()` now returns a nullable string

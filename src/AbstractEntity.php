@@ -9,15 +9,27 @@ use Illuminate\Validation\Factory;
 
 /**
  * Class AbstractEntity
+ *
+ * @deprecated No entity of the library extends this class anymore: extend Entities\AbstractEntity, which hydrates and
+ *             serializes the entities from their #[Property] attributes. This class, its validation and the
+ *             illuminate/validation dependency will be removed in version 1.0.
  */
 abstract class AbstractEntity implements \JsonSerializable
 {
+    /**
+     * @deprecated will be removed with this class in version 1.0
+     */
     protected const VALIDATION_RULES = [];
 
+    /**
+     * @deprecated will be removed with this class in version 1.0
+     */
     protected const VALIDATION_MESSAGES = [];
 
     /**
      * @var bool Whether the validation is enabled or not.
+     *
+     * @deprecated will be removed with this class in version 1.0, with the checks it enables
      */
     public static $enableValidation = false;
 
