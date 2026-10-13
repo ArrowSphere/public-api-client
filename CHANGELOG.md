@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.39] - 2026-10-13
+
 - Fixed `CustomersClient::getProvision()`, which failed for a customer whose provision attribute has no value: `Attribute::getValue()` now returns a nullable string
 - Added explicit getters and property PHPDoc to the request entities of the Customers, Monitoring, Orders and Quotes clients, which only had the magic getters (same names, so callers are not affected)
 - Added `Invitation\Company::COLUMN_REFERENCE` and deprecated the misspelled `COLLUMN_REFERENCE`
@@ -767,7 +769,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.38...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.39...HEAD
+[0.11.39]: https://github.com/ArrowSphere/public-api-client/compare/0.11.38...0.11.39
 [0.11.38]: https://github.com/ArrowSphere/public-api-client/compare/0.11.37...0.11.38
 [0.11.37]: https://github.com/ArrowSphere/public-api-client/compare/0.11.36...0.11.37
 [0.11.36]: https://github.com/ArrowSphere/public-api-client/compare/0.11.35...0.11.36
