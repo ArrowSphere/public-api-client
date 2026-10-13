@@ -25,6 +25,19 @@ class AttributeTest extends AbstractEntityTest
 JSON
                 ,
             ],
+            'null value' => [
+                'fields'   => [
+                    'name'  => 'customerId',
+                    'value' => null,
+                ],
+                'expected' => <<<JSON
+{
+    "name": "customerId",
+    "value": null
+}
+JSON
+                ,
+            ],
         ];
     }
 }
