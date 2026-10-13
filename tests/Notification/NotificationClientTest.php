@@ -185,4 +185,22 @@ class NotificationClientTest extends AbstractClientTest
 
         self::assertSame('3', $this->client->countNotifications(['hasBeenRead' => 0]));
     }
+
+    /**
+     * @throws GuzzleException
+     * @throws NotFoundException
+     */
+    public function testCountNotificationsWithANonArrayData(): void
+    {
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('GET', 'https://www.test.com/notification/count')
+            ->willReturn(new Response(200, [], json_encode(['status' => 200, 'data' => 'none'])));
+
+        $this->expectException(PublicApiClientException::class);
+        $this->expectExceptionMessage('Error: The "data" field of the response is not an array.');
+
+        $this->client->countNotifications();
+    }
 }

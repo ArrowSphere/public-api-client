@@ -271,6 +271,22 @@ JSON;
         self::assertSame(json_decode(self::TEST_COMMENT, true), $issue);
     }
 
+    public function testListAllCommentsWithANonArrayPagination(): void
+    {
+        $response = '{"status": 200, "data": [' . self::TEST_COMMENT . '], "pagination": "none"}';
+
+        $this->httpClient
+            ->expects(self::once())
+            ->method('request')
+            ->with('GET', 'https://www.test.com/support/issues/123/comments')
+            ->willReturn(new Response(200, [], $response));
+
+        $this->expectException(PublicApiClientException::class);
+        $this->expectExceptionMessage('Error: The "pagination" field of the response is not an array.');
+
+        $this->client->listAllComments(123);
+    }
+
     public function testAddComment(): void
     {
         $payload = [];

@@ -101,7 +101,7 @@ abstract class AbstractClient
     protected $perPage;
 
     /**
-     * @var array Some headers to be added to each request
+     * @var string[] Some headers to be added to each request
      */
     protected $defaultHeaders = [
         'Content-Type' => 'application/json',
@@ -228,7 +228,7 @@ abstract class AbstractClient
     }
 
     /**
-     * @param array $defaultHeaders
+     * @param string[] $defaultHeaders
      *
      * @return $this
      */
@@ -331,7 +331,16 @@ abstract class AbstractClient
      */
     protected function getResponseData(string $response): array
     {
-        return $this->decodeResponse($response)[self::DATA] ?? [];
+        $data = $this->decodeResponse($response)[self::DATA] ?? [];
+        if (! is_array($data)) {
+            throw new PublicApiClientException(sprintf(
+                'Error: The "%s" field of the response is not an array. Raw response was: "%s"',
+                self::DATA,
+                $response
+            ));
+        }
+
+        return $data;
     }
 
     /**
@@ -343,7 +352,16 @@ abstract class AbstractClient
      */
     protected function getPagination(string $response): array
     {
-        return $this->decodeResponse($response)[self::PAGINATION] ?? [];
+        $pagination = $this->decodeResponse($response)[self::PAGINATION] ?? [];
+        if (! is_array($pagination)) {
+            throw new PublicApiClientException(sprintf(
+                'Error: The "%s" field of the response is not an array. Raw response was: "%s"',
+                self::PAGINATION,
+                $response
+            ));
+        }
+
+        return $pagination;
     }
 
     /**

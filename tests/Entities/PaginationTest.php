@@ -33,6 +33,20 @@ class PaginationTest extends AbstractEntityTest
 JSON
                 ,
             ],
+            'empty' => [
+                'fields'   => [],
+                'expected' => <<<JSON
+{
+    "per_page": null,
+    "current_page": 1,
+    "total_page": null,
+    "total": null,
+    "next": "",
+    "previous": ""
+}
+JSON
+                ,
+            ],
         ];
     }
 }

@@ -78,7 +78,9 @@ class Preference extends AbstractEntity
                     throw new EntityValidationException(self::KEY_PARAMETERS . '.' . self::KEY_COLUMNS . ' is required if ' . self::KEY_IDENTIFIER . ' is equal to ' . PreferenceTypeEnum::GROUP_BY);
                 }
 
-                $values = PreferenceGroupByColumnsEnum::invalidValues($this->parameters[self::KEY_COLUMNS]);
+                /** @var string[] $columns */
+                $columns = $this->parameters[self::KEY_COLUMNS];
+                $values = PreferenceGroupByColumnsEnum::invalidValues($columns);
                 if (! empty($values)) {
                     throw new EntityValidationException('GroupBy Columns: ' . implode(' ', $values) . ' not supported');
                 }

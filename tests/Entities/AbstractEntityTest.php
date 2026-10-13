@@ -100,6 +100,14 @@ class AbstractEntityTest extends TestCase
         new SampleEntity(['external_id' => ['not', 'scalar']]);
     }
 
+    public function testRejectsANonArrayValueForAnArrayField(): void
+    {
+        $this->expectException(EntitiesException::class);
+        $this->expectExceptionMessage('Invalid value for array field aliases: type string');
+
+        new SampleEntity(['external_id' => 1, 'aliases' => 'not an array']);
+    }
+
     public function testReportsAnUnknownClassType(): void
     {
         $this->expectException(EntitiesException::class);
