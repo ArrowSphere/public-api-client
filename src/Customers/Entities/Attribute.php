@@ -18,10 +18,10 @@ class Attribute extends AbstractEntity
     protected string $name;
 
     /**
-     * @var string
+     * @var string|null Null when the value of the attribute is not filled for the customer
      */
-    #[Property(name: self::COLUMN_VALUE, required: true)]
-    protected string $value;
+    #[Property(name: self::COLUMN_VALUE, serializeNull: true)]
+    protected ?string $value = null;
 
     /**
      * @return string
@@ -32,9 +32,9 @@ class Attribute extends AbstractEntity
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getValue(): string
+    public function getValue(): ?string
     {
         return $this->value;
     }

@@ -20,6 +20,10 @@ class ProvisionResponseTest extends AbstractEntityTest
                 ['status' => 'SUCCESS', 'message' => 'Done', 'attributes' => [['name' => 'tenantId', 'value' => 'abc']]],
                 '{"status":"SUCCESS","message":"Done","attributes":[{"name":"tenantId","value":"abc"}]}',
             ],
+            'attribute without value' => [
+                ['status' => 'Fulfilled', 'message' => 'The company was provisioned successfully', 'attributes' => [['name' => 'customerId', 'value' => null], ['name' => 'qualifications', 'value' => 'Government']]],
+                '{"status":"Fulfilled","message":"The company was provisioned successfully","attributes":[{"name":"customerId","value":null},{"name":"qualifications","value":"Government"}]}',
+            ],
             'without attributes' => [
                 ['status' => 'PENDING', 'message' => '', 'attributes' => []],
                 '{"status":"PENDING","message":"","attributes":[]}',
