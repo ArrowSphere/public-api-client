@@ -116,29 +116,28 @@ public function doSomething(string $bar): string
 - Fluent setters always return `self` (or `static`).
 - Set `$this->path` at the start of each client method, not in the constructor.
 
-### Entities (two systems — both in use)
+### Entities
 
-**Legacy** (`src/AbstractEntity.php`):
-- Constructor receives `array $data`.
-- Field name constants: `COLUMN_FOO = 'foo'` on the entity class.
-- The constructor copies the data into private properties, which the getters return.
+**Legacy** (`src/AbstractEntity.php`) — **deprecated**, removed in 1.0 (#267):
+- No entity of the library extends it anymore; it is kept for the consumers that extend it.
 - Validation via `illuminate/validation` is **disabled by default** (`$enableValidation =
-  false`); it is enabled only in tests via `setUp()`.
+  false`); it is enabled only in tests via `setUp()`. The flag still gates the enum checks of a few
+  Billing entities.
 
-**Newer** (`src/Entities/AbstractEntity.php`):
+**Attribute-based** (`src/Entities/AbstractEntity.php`), used by every entity:
 - PHP 8 `#[Property]` attribute on typed properties.
 - Reflection-based auto-hydration from the input array.
 - Getters are either explicit methods or provided by `__call()` (`getFoo()` / `setFoo()`).
 - `#[Property(serializeNull: true)]` keeps a field in the serialization as `null` when it is null or missing,
   like the legacy entities do for their "present" fields. Optional fields without it can be null too, but are
   omitted from the serialization in that case.
-- ALWAYS USE NEWER STYLE FOR NEW ENTITIES; legacy style is only for existing entities that haven't been migrated yet.
+- ALWAYS USE THIS STYLE; never extend the deprecated legacy class.
 
 ### Exceptions
 
 - `PublicApiClientException` — base; thrown on HTTP 4xx/5xx or JSON decode failure.
 - `NotFoundException` — thrown specifically on HTTP 404.
-- `EntityValidationException` — thrown when legacy entity validation fails.
+- `EntityValidationException` — thrown by the enum checks of some entities (and by the deprecated legacy validation).
 - `EntitiesException` — thrown when an attribute-based entity cannot be built (missing required field, invalid value); extends `PublicApiClientException`.
 
 ---
