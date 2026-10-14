@@ -6,9 +6,11 @@ use ArrowSphere\PublicApiClient\Common\ValueObject\UserAgentHeader;
 use ArrowSphere\PublicApiClient\Exception\NotFoundException;
 use ArrowSphere\PublicApiClient\Exception\PublicApiClientException;
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\BadResponseException;
 use GuzzleHttp\Exception\GuzzleException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\StreamInterface;
+use Throwable;
 
 /**
  * Class AbstractClient for interacting with the Public API endpoints
@@ -263,7 +265,7 @@ abstract class AbstractClient
      */
     protected function get(array $parameters = [], array $headers = []): string
     {
-        $response = $this->client->request(
+        $response = $this->sendRequest(
             'GET',
             $this->generateUrl($parameters),
             [
@@ -285,19 +287,63 @@ abstract class AbstractClient
     protected function getResponse(ResponseInterface $response): StreamInterface
     {
         $statusCode = $response->getStatusCode();
-        if ($statusCode === 404) {
-            throw new NotFoundException(sprintf('Resource not found on URL %s', $this->getUrl()));
-        }
-
         if ($statusCode >= 400 && $statusCode <= 599) {
-            throw new PublicApiClientException(sprintf(
-                'Error: status code: %s. URL: %s',
-                $statusCode,
-                $this->getUrl()
-            ));
+            throw $this->createHttpException($response);
         }
 
         return $response->getBody();
+    }
+
+    /**
+     * Sends a request with the Guzzle client, converting the Guzzle exception of an HTTP error response into an
+     * exception of the library.
+     *
+     * @param string $method
+     * @param string $uri
+     * @param array $options
+     *
+     * @return ResponseInterface
+     *
+     * @throws GuzzleException
+     * @throws NotFoundException
+     * @throws PublicApiClientException
+     */
+    private function sendRequest(string $method, string $uri, array $options): ResponseInterface
+    {
+        try {
+            return $this->client->request($method, $uri, $options);
+        } catch (BadResponseException $exception) {
+            throw $this->createHttpException($exception->getResponse(), $exception);
+        }
+    }
+
+    /**
+     * Creates the exception of an HTTP error response: NotFoundException on a 404 response, PublicApiClientException
+     * otherwise, with the status code as code and the response.
+     *
+     * @param ResponseInterface $response
+     * @param Throwable|null $previous
+     *
+     * @return PublicApiClientException
+     */
+    private function createHttpException(ResponseInterface $response, ?Throwable $previous = null): PublicApiClientException
+    {
+        $statusCode = $response->getStatusCode();
+        if ($statusCode === 404) {
+            return new NotFoundException(sprintf('Resource not found on URL %s', $this->getUrl()), $statusCode, $previous, $response);
+        }
+
+        $body = (string) $response->getBody();
+        if ($response->getBody()->isSeekable()) {
+            $response->getBody()->rewind();
+        }
+
+        return new PublicApiClientException(sprintf(
+            'Error: status code: %s. URL: %s. Response body: %s',
+            $statusCode,
+            $this->getUrl(),
+            $body
+        ), $statusCode, $previous, $response);
     }
 
     /**
@@ -402,7 +448,7 @@ abstract class AbstractClient
      */
     protected function post(array $payload, array $parameters = [], array $headers = []): StreamInterface
     {
-        $response = $this->client->request(
+        $response = $this->sendRequest(
             'POST',
             $this->generateUrl($parameters),
             [
@@ -429,7 +475,7 @@ abstract class AbstractClient
      */
     protected function patch(array $payload, array $parameters = [], array $headers = []): StreamInterface
     {
-        $response = $this->client->request(
+        $response = $this->sendRequest(
             'PATCH',
             $this->generateUrl($parameters),
             [
@@ -456,7 +502,7 @@ abstract class AbstractClient
      */
     protected function put(string $payload = '', array $parameters = [], array $headers = []): StreamInterface
     {
-        $response = $this->client->request(
+        $response = $this->sendRequest(
             'PUT',
             $this->generateUrl($parameters),
             [
@@ -527,7 +573,7 @@ abstract class AbstractClient
      */
     protected function delete(array $parameters = [], array $headers = []): string
     {
-        $response = $this->client->request(
+        $response = $this->sendRequest(
             'DELETE',
             $this->generateUrl($parameters),
             [
