@@ -44,6 +44,9 @@ class PriceBandTest extends AbstractEntityTest
                     'identifiers'     => [
                         'arrowsphere' => [
                             'sku' => 'IBM_5737A82_DK_MS_EMM_PRE_PROD_1M_USD_1_999'
+                        ],
+                        'erp'         => [
+                            'sku' => 'ERP-5737A82-1M'
                         ]
                     ]
                 ],
@@ -76,6 +79,9 @@ class PriceBandTest extends AbstractEntityTest
     "identifiers": {
         "arrowsphere": {
             "sku": "IBM_5737A82_DK_MS_EMM_PRE_PROD_1M_USD_1_999"
+        },
+        "erp": {
+            "sku": "ERP-5737A82-1M"
         }
     }
 }
