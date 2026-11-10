@@ -6,7 +6,7 @@ use ArrowSphere\PublicApiClient\Entities\AbstractEntity;
 use ArrowSphere\PublicApiClient\Entities\Property;
 
 /**
- * Class SaleConstraints
+ * Class Arrowsphere
  */
 class Arrowsphere extends AbstractEntity
 {

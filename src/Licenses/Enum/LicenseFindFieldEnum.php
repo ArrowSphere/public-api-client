@@ -15,6 +15,7 @@ use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\ActionFlags as
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\Billing;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\Identifiers;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\Identifiers\Arrowsphere;
+use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\Identifiers\Erp;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\Prices;
 use ArrowSphere\PublicApiClient\Licenses\Entities\Offer\PriceBand\SaleConstraints;
 
@@ -193,7 +194,11 @@ class LicenseFindFieldEnum extends AbstractEnum
 
     public const OFFER_PRICE_BAND_IDENTIFIERS_ARROWSPHERE = self::OFFER_PRICE_BAND_IDENTIFIERS . '.' . Identifiers::COLUMN_ARROWSPHERE;
 
+    public const OFFER_PRICE_BAND_IDENTIFIERS_ERP = self::OFFER_PRICE_BAND_IDENTIFIERS . '.' . Identifiers::COLUMN_ERP;
+
     public const OFFER_PRICE_BAND_IDENTIFIERS_ARROWSPHERE_SKU = self::OFFER_PRICE_BAND_IDENTIFIERS_ARROWSPHERE . '.' . Arrowsphere::COLUMN_SKU;
+
+    public const OFFER_PRICE_BAND_IDENTIFIERS_ERP_SKU = self::OFFER_PRICE_BAND_IDENTIFIERS_ERP . '.' . Erp::COLUMN_SKU;
 
     public const OFFER_LAST_UPDATE = LicenseOfferFindResult::COLUMN_OFFER . '.' . Offer::COLUMN_LAST_UPDATE;
 
@@ -202,5 +207,6 @@ class LicenseFindFieldEnum extends AbstractEnum
     public const LICENSE_SECURITY = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_SECURITY;
 
     public const LICENSE_ATTRIBUTES = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_ATTRIBUTES;
+
     public const LICENSE_SECURITY_ACTIVE_FRAUD_EVENTS = LicenseOfferFindResult::COLUMN_LICENSE . '.' . License::COLUMN_SECURITY . '.' . Security::COLUMN_ACTIVE_FRAUD_EVENTS;
 }

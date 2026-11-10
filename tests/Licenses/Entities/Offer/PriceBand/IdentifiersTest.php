@@ -27,6 +27,27 @@ class IdentifiersTest extends AbstractEntityTest
 JSON
                 ,
             ],
+            'with erp' => [
+                'fields'   => [
+                    'arrowsphere' => [
+                        'sku' => 'my sku',
+                    ],
+                    'erp'         => [
+                        'sku' => 'my erp sku',
+                    ],
+                ],
+                'expected' => <<<JSON
+{
+    "arrowsphere": {
+        "sku": "my sku"
+    },
+    "erp": {
+        "sku": "my erp sku"
+    }
+}
+JSON
+                ,
+            ],
         ];
     }
 }
