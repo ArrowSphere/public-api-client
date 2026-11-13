@@ -5,6 +5,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.40] - 2026-11-13
+
 - Added the ERP SKU to the offer price bands
 
 - Prepared the shared classes for PHPStan's max level: an entity field declared as a list now throws an `EntitiesException` when it receives another type, `getResponseData()` and `getPagination()` throw a `PublicApiClientException` when the field of the response is not an array, and `Pagination::getPerPage()` returns `null` when the response has no `per_page` instead of failing
@@ -774,7 +776,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Entity Price: use PriceBand now, which is in the Catalog namespace where it belongs
 - Entity Service: the root entity is deprecated, and the one in the Catalog namespace should be used
 
-[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.39...HEAD
+[Unreleased]: https://github.com/ArrowSphere/public-api-client/compare/0.11.40...HEAD
+[0.11.40]: https://github.com/ArrowSphere/public-api-client/compare/0.11.39...0.11.40
 [0.11.39]: https://github.com/ArrowSphere/public-api-client/compare/0.11.38...0.11.39
 [0.11.38]: https://github.com/ArrowSphere/public-api-client/compare/0.11.37...0.11.38
 [0.11.37]: https://github.com/ArrowSphere/public-api-client/compare/0.11.36...0.11.37
